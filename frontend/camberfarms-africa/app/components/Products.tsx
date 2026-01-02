@@ -1,11 +1,12 @@
-"use client"
+'use client'
 import React from 'react'
 import Image from 'next/image'
+import { useTranslation } from 'react-i18next'
 
 type ProductProps = {
-  title: string
-  description: string
-  buttonText?: string
+  titleKey: string          // translation key for title
+  descriptionKey: string    // translation key for description
+  buttonTextKey?: string    // translation key for button text
   imageSrc: string
   imageAlt?: string
   onButtonClick?: () => void
@@ -13,14 +14,16 @@ type ProductProps = {
 }
 
 const Products = ({
-  title,
-  description,
-  buttonText,
+  titleKey,
+  descriptionKey,
+  buttonTextKey,
   imageSrc,
   imageAlt = 'section image',
   onButtonClick,
   buttonClassName
-}:ProductProps) => {
+}: ProductProps) => {
+  const { t } = useTranslation('products') // namespace "products"
+
   return (
     <div className="h-fit w-full">
       <div className="py-20 px-6 xl:py-50.5 xl:px-25 w-full h-full flex flex-col xl:flex-row xl:justify-between items-center gap-15.75">
@@ -36,21 +39,21 @@ const Products = ({
               className="w-4 h-4 md:w-6 md:h-6 xl:w-8 xl:h-8"
             />
             <h2 className="text-2xl font-bold md:text-[48px] md:font-semibold">
-              {title}
+              {t(titleKey)}
             </h2>
           </div>
 
           <p className="mt-6 text-[14px] md:text-[28px]">
-            {description}
+            {t(descriptionKey)}
           </p>
 
-          {buttonText && (
+          {buttonTextKey && (
             <button
-            onClick={onButtonClick}
-            className={`mt-12.5 md:h-12.5 bg-[#1AD329] rounded-[100px] ${buttonClassName}`}
+              onClick={onButtonClick}
+              className={`mt-12.5 md:h-12.5 bg-[#1AD329] rounded-[100px] ${buttonClassName}`}
             >
               <p className="text-white font-bold text-[14px] px-4 py-2.5">
-                {buttonText}
+                {t(buttonTextKey)}
               </p>
             </button>
           )}

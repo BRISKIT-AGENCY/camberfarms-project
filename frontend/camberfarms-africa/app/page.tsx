@@ -1,4 +1,5 @@
 "use client"
+import { useTranslation } from 'react-i18next'
 import Hero from "./components/Hero";
 import Process from "./components/Process";
 import Products from "./components/Products";
@@ -9,50 +10,59 @@ import Contact from "./components/Contact";
 import WhoWeAre from "./components/WhoWeAre";
 import News from "./components/News";
 import Review from "./components/Review";
-import Impact from "./components/Impact"; 
+import Impact from "./components/Impact";
 import MembershipForm from "./components/MembershipForm";
+import FarmFundForm from "./components/FarmFundForm";
+import OurWorks from "./components/OurWorks";
+import MembershipText from "./components/MembershipText";
 
 export default function Home() {
+  const { t } = useTranslation('contact')
   return (
     <div>
       <Hero />
       <Products
-        title="Membership"
-        description="Join the Camberfarm Farmers Network and access the tools, support, and market opportunities you need to grow. Our membership connects you to improved farming practices, reliable off-take channels, training programs and resources that help you increase productivity and earn more from every harvest."
-        buttonText="Sign Up"
+        titleKey="membership_title"
+        descriptionKey="membership_description"
+        buttonTextKey="membership_button"
         imageSrc="/images/membership.png"
         imageAlt="image of members"
         onButtonClick={() => console.log('Sign up clicked')}
         buttonClassName="md:w-40"
       />
+
       <Products
-        title="Farm Fund"
-        description="Join us in building scalable agriculture across Africa. Through Camberfarm, investors can support real agricultural growth, empower farmers, and participate in a transparent system built for impact and you earn in return. If you are interested in learning more, send us a message and our team will reach out with investment details"
-        buttonText="Invest Now"
+        titleKey="farmFund_title"
+        descriptionKey="farmFund_description"
+        buttonTextKey="farmFund_button"
         imageSrc="/images/farm-fund.png"
         imageAlt="image of funds"
-        onButtonClick={() => console.log('Sign up clicked')}
+        onButtonClick={() => console.log('Invest clicked')}
         buttonClassName="md:w-40"
       />
+
       <Products
-        title="Exportation"
-        description="Through our specialized subsidiary, Camberfarm Export, we manage all sourcing, quality control, packaging, and logistics, ensuring that every product leaving Africa meets international standards."
-        buttonText="Visit Camberfarm Export"
+        titleKey="export_title"
+        descriptionKey="export_description"
+        buttonTextKey="export_button"
         imageSrc="/images/exportation.png"
         imageAlt="image of cargo ship"
-        onButtonClick={() => console.log('Sign up clicked')}
+        onButtonClick={() => console.log('Visit Export clicked')}
         buttonClassName="md:w-50"
       />
-      <Process/>
-      <WhoWeAre/>
-      <WhatWeDo/>
-      <Impact/>
-      <Review/>
-      <Partnership/>
-      <Blogs/>
-      <News/>
-      <Contact/>
-      <MembershipForm/>
+
+      <Process />
+      <WhoWeAre />
+      <WhatWeDo />
+      <Impact hColor="#1AD329" pColor="#808080"/>
+      <Review />
+      <Partnership />
+      <Blogs />
+      <News />
+      <Contact  heading={t('heading1')} description={t('description1')} button={t('sendButton1')} placeholder={t('placeholders.message1')}/>
+      <MembershipForm />
+      <FarmFundForm />
+      <MembershipText />
     </div>
   );
 }

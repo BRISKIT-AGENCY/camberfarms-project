@@ -1,0 +1,12 @@
+{
+  "nav": {
+    "about": "Über uns",
+    "ourWork": "Unsere Arbeit",
+    "blog": "Blog",
+    "resources": "Unsere Ressourcen",
+    "contact": "Kontakt"
+  },
+  "buttons": {
+    "explore": "Camberfarms Export erkunden"
+  }
+}

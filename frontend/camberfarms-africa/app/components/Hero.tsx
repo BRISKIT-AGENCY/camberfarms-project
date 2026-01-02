@@ -10,7 +10,7 @@ const Hero = () => {
   {/* Content stays above the gradient */}
   <div className="relative z-10">
     <div className="hidden xl:block">
-          <Navbar />
+          <Navbar logoSrc="/images/logo.png"/>
         </div>
     <div className="flex pb-56 w-full">
         <HeroMain />

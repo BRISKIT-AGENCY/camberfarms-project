@@ -1,39 +1,104 @@
-"use client"
-import React from "react";
-import Image from "next/image";
-import Link from "next/link";
+'use client'
 
-const DesktopNavbar = () => {
+import Link from 'next/link'
+import Image from 'next/image'
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import i18n from '@/i18n'
+
+interface DesktopNavbarProps {
+  logoSrc: string
+  linkTextColor?: string
+  buttonBgColor?: string
+  buttonTextColor?: string
+}
+
+const LANGUAGES = [
+  { label: 'ENG', code: 'en', flag: '/images/flag.png' },
+  { label: 'FRA', code: 'fr', flag: '/images/flag.png' }
+]
+
+const DesktopNavbar = ({
+  logoSrc,
+  linkTextColor = 'text-white',
+  buttonBgColor = 'bg-white',
+  buttonTextColor = 'text-[#1AD329]'
+}: DesktopNavbarProps) => {
+  const [isLangOpen, setIsLangOpen] = useState(false)
+
+  const { t } = useTranslation('nav')
+  const { t: tBtn } = useTranslation('buttons')
+
+  const currentLang =
+    LANGUAGES.find(l => l.code === i18n.resolvedLanguage)?.label ?? 'ENG'
+
   return (
     <div className="items-center justify-between hidden xl:flex">
-      <img src="/images/logo.png" alt="Logo" width={103.35} height={60} />
-      <div className="text-[18px] text-white flex gap-5 font-normal">
-        <Link href="/">Home</Link>
-        <div className="flex justify-center items-center">
-          <Link href="/about">About Us</Link>
+      {/* LOGO */}
+      <Image src={logoSrc} alt="Logo" width={103.35} height={60} />
+
+      {/* NAV LINKS */}
+      <div className={`text-[18px] flex gap-5 font-normal ${linkTextColor}`}>
+        <Link href="/">{t('home')}</Link>
+
+        <div className="flex items-center gap-1">
+          <Link href="/about">{t('about')}</Link>
           <Image src="/images/arrowdown.png" alt="Arrow Down" width={24} height={24} />
         </div>
-        <div className="flex justify-center items-center">
-          <Link href="/about">Our Work</Link>
+
+        <div className="flex items-center gap-1">
+          <Link href="/our-works">{t('ourWork')}</Link>
           <Image src="/images/arrowdown.png" alt="Arrow Down" width={24} height={24} />
         </div>
-        <Link href="/">Blog</Link>
-        <div className="flex justify-center items-center">
-          <Link href="/about">Our Resources</Link>
+
+        <Link href="/blog">{t('blog')}</Link>
+
+        <div className="flex items-center gap-1">
+          <Link href="/resources">{t('resources')}</Link>
           <Image src="/images/arrowdown.png" alt="Arrow Down" width={24} height={24} />
         </div>
-        <Link href="/">Contact Us</Link>
-        <div className="flex justify-center items-center gap-1.25">
-          <Image src="/images/flag.png" alt="flag" width={24} height={24} />
-          <Link href="/about">ENG</Link>
-          <Image src="/images/arrowdown.png" alt="Arrow Down" width={24} height={24} />
+
+        <Link href="/contact">{t('contact')}</Link>
+
+        {/* 🌍 Language dropdown */}
+        <div className="relative">
+          <button
+            onClick={() => setIsLangOpen(prev => !prev)}
+            className="flex items-center gap-1.25"
+          >
+            <Image src="/images/flag.png" alt="flag" width={24} height={24} />
+            <span>{currentLang}</span>
+            <Image src="/images/arrowdown.png" alt="Arrow Down" width={24} height={24} />
+          </button>
+
+          {isLangOpen && (
+            <div className="absolute mt-2 bg-white border rounded-lg shadow-md right-0">
+              {LANGUAGES.map(lang => (
+                <button
+                  key={lang.code}
+                  onClick={() => {
+                    i18n.changeLanguage(lang.code)
+                    setIsLangOpen(false)
+                  }}
+                  className="flex items-center gap-2 px-4 py-2 w-full hover:bg-gray-100 text-black"
+                >
+                  <Image src={lang.flag} alt="flag" width={20} height={20} />
+                  <span>{lang.label}</span>
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
-      <button className="h-12 rounded-xl bg-white px-6">
-        <p className="text-[#1AD329] font-bold">Explore camberfarms export</p>
+
+      {/* CTA BUTTON */}
+      <button className={`h-12 rounded-xl px-6 ${buttonBgColor}`}>
+        <p className={`font-bold ${buttonTextColor}`}>
+          {tBtn('explore')}
+        </p>
       </button>
     </div>
-  );
-};
+  )
+}
 
-export default DesktopNavbar;
+export default DesktopNavbar

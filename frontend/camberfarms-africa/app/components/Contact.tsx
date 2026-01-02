@@ -1,79 +1,149 @@
 'use client'
-import React, { useState } from 'react'
+import React from 'react'
+import axios from 'axios'
+import { useTranslation } from 'react-i18next'
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
 
-const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: ''
+type ContactProps = {
+  heading: string
+  description: string
+  button: string
+  placeholder: string
+}
+
+type ContactFormValues = {
+  name: string
+  email: string
+  phone: string
+  message: string
+}
+
+const Contact = ({ heading, description, button, placeholder }: ContactProps) => {
+  const { t } = useTranslation('contact')
+
+  /* ------------------ Validation Schema ------------------ */
+  const validationSchema = Yup.object({
+    name: Yup.string().required(t('errors.name')),
+    email: Yup.string()
+      .email(t('errors.emailInvalid'))
+      .required(t('errors.email')),
+    phone: Yup.string().required(t('errors.phone')),
+    message: Yup.string().required(t('errors.message'))
   })
 
-  const handleChange = (e: { target: { name: any; value: any } }) => {
-    const { name, value } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }))
-  }
+  /* ------------------ Formik ------------------ */
+  const formik = useFormik<ContactFormValues>({
+    initialValues: {
+      name: '',
+      email: '',
+      phone: '',
+      message: ''
+    },
+    validationSchema,
+    onSubmit: async (values, { resetForm }) => {
+      try {
+        const { data } = await axios.post(
+          'http://localhost:5000/api/contact',
+          values,
+          {
+            headers: { 'Content-Type': 'application/json' }
+          }
+        )
 
-  const handleSubmit = (e: { preventDefault: () => void }) => {
-    e.preventDefault()
-    console.log(formData)
-  }
+        if (data.success) {
+          alert(t('success'))
+          resetForm()
+        } else {
+          alert(data.message)
+        }
+      } catch (error: any) {
+        alert(error?.response?.data?.message || t('error'))
+      }
+    }
+  })
 
   return (
-    <div className='h-fit py-24.5 px-3 md:h-190.75 lg:py-38 lg:px-25'>
-      <div className='w-full h-full '>
-        <h1 className='md:text-[46px] text-[24px] font-bold'>Contact Us</h1>
-        <p className='md:text-[18px] text-[12px] md:mt-2'>
-          Kindly send us a message for Partnership or for Enquiry about CamberFarm Africa
+    <div className="h-fit py-24.5 px-3 md:h-190.75 lg:py-38 lg:px-25">
+      <div className="w-full h-full">
+        <h1 className="md:text-[46px] text-[24px] font-bold">
+          {heading}
+        </h1>
+
+        <p className="md:text-[18px] text-[12px] md:mt-2">
+          {description}
         </p>
 
-        <form className='mt-12.5' onSubmit={handleSubmit}>
-          <div className='flex gap-4.5 flex-col md:flex-row'>
-            <input
-              type="text"
-              name="name"
-              placeholder="Name"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-[#808080] placeholder:text-[#808080] outline-none rounded-[100px] md:placeholder:text-[16px] placeholder:text-[14px] h-12.5 md:h-11"
-            />
+        <form className="mt-12.5" onSubmit={formik.handleSubmit}>
+          {/* ROW */}
+          <div className="flex gap-4.5 flex-col md:flex-row">
+            {/* NAME */}
+            <div className="flex-1">
+              <input
+                type="text"
+                placeholder={t('placeholders.name')}
+                {...formik.getFieldProps('name')}
+                className="w-full px-3 py-2 border border-[#808080] rounded-[100px]"
+              />
+              {formik.touched.name && formik.errors.name && (
+                <p className="text-red-600 text-sm mt-1">
+                  {formik.errors.name}
+                </p>
+              )}
+            </div>
 
-            <input
-              type="email"
-              name="email"
-              placeholder="Email address"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-[#808080] placeholder:text-[#808080] outline-none rounded-[100px] md:placeholder:text-[16px] placeholder:text-[14px] h-12.5 md:h-11"
-            />
+            {/* EMAIL */}
+            <div className="flex-1">
+              <input
+                type="email"
+                placeholder={t('placeholders.email')}
+                {...formik.getFieldProps('email')}
+                className="w-full px-3 py-2 border border-[#808080] rounded-[100px]"
+              />
+              {formik.touched.email && formik.errors.email && (
+                <p className="text-red-600 text-sm mt-1">
+                  {formik.errors.email}
+                </p>
+              )}
+            </div>
 
-            <input
-              type="tel"
-              name="phone"
-              placeholder="Phone number"
-              value={formData.phone}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-[#808080] placeholder:text-[#808080] md:placeholder:text-[16px] placeholder:text-[14px] outline-none rounded-[100px] h-12.5 md:h-11"
-            />
+            {/* PHONE */}
+            <div className="flex-1">
+              <input
+                type="tel"
+                placeholder={t('placeholders.phone')}
+                {...formik.getFieldProps('phone')}
+                className="w-full px-3 py-2 border border-[#808080] rounded-[100px]"
+              />
+              {formik.touched.phone && formik.errors.phone && (
+                <p className="text-red-600 text-sm mt-1">
+                  {formik.errors.phone}
+                </p>
+              )}
+            </div>
           </div>
 
-          <textarea
-            name="message"
-            placeholder="Type your message here"
-            value={formData.message}
-            onChange={handleChange}
-            className="mt-6 md:mt-8 w-full px-3 py-2 rounded-xl border border-[#808080] placeholder:text-[#808080] resize-y outline-none md:placeholder:text-[16px] placeholder:text-[14px] h-25 md:h-35"
-          />
+          {/* MESSAGE */}
+          <div className="mt-6">
+            <textarea
+              placeholder={placeholder}
+              {...formik.getFieldProps('message')}
+              className="w-full px-3 py-2 border border-[#808080] rounded-xl h-25 md:h-35"
+            />
+            {formik.touched.message && formik.errors.message && (
+              <p className="text-red-600 text-sm mt-1">
+                {formik.errors.message}
+              </p>
+            )}
+          </div>
 
-          <div className='flex justify-end'>
+          <div className="flex justify-end">
             <button
               type="submit"
-              className="h-11 md:h-12.5 mt-8 px-6 py-3 bg-[#1AD329] text-white rounded-[100px]"
+              disabled={formik.isSubmitting}
+              className="h-11 mt-8 px-6 bg-[#1AD329] text-white rounded-[100px] disabled:opacity-60"
             >
-              Send message
+              {button}
             </button>
           </div>
         </form>
