@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter, Manrope, Poppins } from 'next/font/google'
 import Footer from './components/Footer'
+import Navbar from './components/Nav/Navbar'
 import './globals.css'
 
 const poppins = Poppins({
@@ -34,6 +35,7 @@ export default function RootLayout({
 			<body
 				className={`${poppins.variable} ${inter.variable} ${manrope.variable} antialiased`}
 			>
+				<Navbar />
 				{children}
 				<Footer />
 			</body>
