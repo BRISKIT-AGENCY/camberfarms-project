@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import contactRouter from "./routes/contactRouter.js";
 import membershipRouter from './routes/membershipRoutes.js'
 import farmFundRouter from "./routes/farmFundRoutes.js";
+import blogRouter from "./routes/blogRoutes.js"
 
 dotenv.config();
 
@@ -33,6 +34,7 @@ await connectDB()
 app.use('/api', contactRouter)
 app.use('/api', membershipRouter)
 app.use('/api', farmFundRouter)
+app.use('/api', blogRouter)
 
 
 
