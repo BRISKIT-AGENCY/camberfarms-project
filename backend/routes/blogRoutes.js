@@ -14,13 +14,9 @@ router.get('/blog', async (req, res) => {
         .sort({  publishedAt: -1 })
         .skip(skip)
         .limit(limit)
-        .select('title slug excerpt image createdAt'), // IMPORTANT
+        .select('title slug excerpt image publishedAt'), // IMPORTANT
       Blog.countDocuments()
     ])
-
-    console.log('Blogs returned from DB:', blogs) // <--- log here
-    console.log('Total blogs in DB:', total)
-    
 
     res.json({
       data: blogs,
@@ -62,6 +58,8 @@ router.get('/blog/search', async (req, res) => {
 
 router.get('/blog/:slug', async (req, res) => {
   try {
+    console.log(req.params.slug);
+    
     const blog = await Blog.findOne({ slug: req.params.slug })
     if (!blog) return res.status(404).json({ message: 'Blog not found' })
 
