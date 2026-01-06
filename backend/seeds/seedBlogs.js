@@ -9,7 +9,7 @@ const blogs = [
         "title": "How Camberfarm Is Building a Future of Responsible Growth",
         "excerpt": "Discover how Camberfarm is driving sustainable agriculture through farmer empowerment, transparency, and innovation.",
         "slug": "camberfarm-responsible-growth",
-        "image": "https://api.camberfarm.com/uploads/blogs/responsible-growth.jpg",
+        "image": "/images/blog.png",
         "publishedAt": "2025-01-05T10:00:00Z",
         "sections": [
             {
@@ -33,7 +33,7 @@ const blogs = [
         "title": "Empowering Smallholder Farmers Across Africa",
         "excerpt": "How education, access to tools, and fair trade are transforming farming communities.",
         "slug": "empowering-smallholder-farmers-africa",
-        "image": "https://api.camberfarm.com/uploads/blogs/smallholder-farmers.jpg",
+        "image": "/images/blog.png",
         "publishedAt": "2025-01-10T09:00:00Z",
         "sections": [
             {
@@ -57,7 +57,7 @@ const blogs = [
         "title": "The Role of Traceability in Global Food Trade",
         "excerpt": "Why transparency and traceability matter in agricultural exports.",
         "slug": "traceability-global-food-trade",
-        "image": "https://api.camberfarm.com/uploads/blogs/traceability.jpg",
+        "image": "/images/blog.png",
         "publishedAt": "2025-01-15T11:30:00Z",
         "sections": [
             {
@@ -81,7 +81,7 @@ const blogs = [
         "title": "Reducing Post-Harvest Losses in African Agriculture",
         "excerpt": "How better storage and logistics reduce waste and increase profits.",
         "slug": "reducing-post-harvest-losses",
-        "image": "https://api.camberfarm.com/uploads/blogs/post-harvest.jpg",
+        "image": "/images/blog.png",
         "publishedAt": "2025-01-18T08:45:00Z",
         "sections": [
             {
@@ -105,7 +105,7 @@ const blogs = [
         "title": "Why Ethical Sourcing Matters More Than Ever",
         "excerpt": "Ethical sourcing builds trust, sustainability, and long-term partnerships.",
         "slug": "why-ethical-sourcing-matters",
-        "image": "https://api.camberfarm.com/uploads/blogs/ethical-sourcing.jpg",
+        "image": "/images/blog.png",
         "publishedAt": "2025-01-22T10:15:00Z",
         "sections": [
             {
@@ -129,7 +129,7 @@ const blogs = [
         "title": "The Green Future of African Agricultural Exports",
         "excerpt": "Sustainability and profitability can coexist in African trade.",
         "slug": "green-future-african-exports",
-        "image": "https://api.camberfarm.com/uploads/blogs/green-future.jpg",
+        "image": "/images/blog.png",
         "publishedAt": "2025-01-25T12:00:00Z",
         "sections": [
             {
@@ -146,7 +146,7 @@ const blogs = [
         "title": "How Technology Is Transforming African Farming",
         "excerpt": "Digital tools are changing how African farmers grow and trade.",
         "slug": "technology-transforming-african-farming",
-        "image": "https://api.camberfarm.com/uploads/blogs/farming-technology.jpg",
+        "image": "/images/blog.png",
         "publishedAt": "2025-01-28T09:30:00Z",
         "sections": [
             {
@@ -163,7 +163,7 @@ const blogs = [
         "title": "Understanding Export Standards for Agricultural Products",
         "excerpt": "What global buyers expect from African exporters.",
         "slug": "export-standards-agricultural-products",
-        "image": "https://api.camberfarm.com/uploads/blogs/export-standards.jpg",
+        "image": "/images/blog.png",
         "publishedAt": "2025-02-01T10:00:00Z",
         "sections": [
             {
@@ -180,7 +180,7 @@ const blogs = [
         "title": "From Farm to Port: Inside Camberfarm’s Supply Chain",
         "excerpt": "A transparent look at how African produce reaches global markets.",
         "slug": "farm-to-port-supply-chain",
-        "image": "https://api.camberfarm.com/uploads/blogs/farm-to-port.jpg",
+        "image": "/images/blog.png",
         "publishedAt": "2025-02-05T14:20:00Z",
         "sections": [
             {
@@ -197,7 +197,7 @@ const blogs = [
         "title": "Why Africa’s Agricultural Future Is Bright",
         "excerpt": "With the right investments, Africa can feed the world sustainably.",
         "slug": "africa-agricultural-future",
-        "image": "https://api.camberfarm.com/uploads/blogs/agriculture-future.jpg",
+        "image": "/images/blog.png",
         "publishedAt": "2025-02-10T16:00:00Z",
         "sections": [
             {

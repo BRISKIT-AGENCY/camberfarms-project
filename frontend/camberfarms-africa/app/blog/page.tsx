@@ -77,7 +77,7 @@ export default async function BlogPage({
                 </p>
 
                 <p className="text-[#808080] md:text-[18px]">
-                  Date: {new Date(blog.publishedAt).toLocaleDateString()}
+                  Date: {new Date(blog.publishedAt).toDateString()}
                 </p>
 
                 <Link
