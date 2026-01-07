@@ -1,34 +1,40 @@
+import "../globals.css";
+
 const values = [
     {
         title: "Integrity",
-        text: "We operate with honesty, transparency, and accountability."
+        text: "We operate with honesty and accountability."
     },
     {
-        title: "Quality First",
-        text: "We prioritize excellence from sourcing to delivery."
+        title: "Quality",
+        text: "Only the finest, certified products leave our hands."
     },
     {
         title: "Sustainability",
-        text: "We support environmentally responsible farming practices."
+        text: "We empower local farmers while preserving our environment."
     },
     {
-        title: "Community Impact",
-        text: "We believe growth is strongest when shared."
+        title: "Partnership",
+        text: "We build long-term, mutually beneficial relationships globally."
     }
-    ];
+];
 
-    export default function CoreValues() {
+export default function CoreValues() {
     return (
         <section className="core-values">
-        <h2>Core Values</h2>
-
-        <div className="values-grid">
-            {values.map((value, index) => (
-            <div key={index} className="value-card">
-                <h4>{value.title}</h4>
-                <p>{value.text}</p>
+        <div className="cv-row">
+            <div className="cv-title">
+            <span className="mv-bar"></span>
+            <h3>Core Values</h3>
             </div>
+
+            <ul className="cv-list">
+            {values.map((value, index) => (
+                <li key={index}>
+                <strong>{value.title}:</strong> {value.text}
+                </li>
             ))}
+            </ul>
         </div>
         </section>
     );

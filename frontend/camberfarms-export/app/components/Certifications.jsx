@@ -1,14 +1,21 @@
+import Image from "next/image"
+import "../globals.css"
+
 export default function Certifications() {
     return (
         <section className="certifications">
-        <h2>Our Certifications & Partnerships</h2>
-
-        <div className="cert-grid">
-            <img src="/images/cert1.png" alt="Certification 1" />
-            <img src="/images/cert2.png" alt="Certification 2" />
-            <img src="/images/cert3.png" alt="Certification 3" />
-            <img src="/images/cert4.png" alt="Certification 4" />
-        </div>
+            <h2>Our Certifications & Partnerships</h2>
+            <p>CamberFarm Export is fully registered and certified by recognized agrictural and trade authorities.
+                Our operations meet both local and international quality control standards,
+                ensuring seamless trade compliance for every shipment</p>
+            <div className="cert-grid">
+                <Image src="/images/cert.png" alt="Certification 1" width={800} height={800} sizes="340px"/>
+                <Image src="/images/cert.png" alt="Certification 2" width={800} height={800} sizes="340px"/>
+                <Image src="/images/cert.png" alt="Certification 3" width={800} height={800} sizes="340px"/>
+                <Image src="/images/cert.png" alt="Certification 4" width={800} height={800} sizes="340px"/>
+                <Image src="/images/cert.png" alt="Certification 3" width={800} height={800} sizes="340px"/>
+                <Image src="/images/cert.png" alt="Certification 4" width={800} height={800} sizes="340px"/>
+            </div>
         </section>
     );
 }

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import "../globals.css"
 export default function AboutHero() {
     return (
         <section className="about-hero">
@@ -14,11 +15,13 @@ export default function AboutHero() {
         </div>
 
         <Image
-        src="/images/farm-produce.jpg"
+        className="about-hero-image"
+        src="/images/farm-produce.png"
         alt="Agricultural produce"
-        width={1100}
-        height={600}
+        width={3000}
+        height={1500}
         priority
+        sizes="(max-width: 768px) 100vw, 1200px"
         />
         </section>
     );
