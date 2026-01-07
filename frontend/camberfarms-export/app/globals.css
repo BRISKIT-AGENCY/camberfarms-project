@@ -34,3 +34,52 @@ body {
 	color: var(--foreground);
 	font-family: var(--font-poppins);
 }
+
+
+.about-hero {
+	text-align: center;
+	padding: 4rem 2rem;
+}
+
+.about-hero-content {
+	max-width: 700px;
+	margin: 0 auto 2.5rem;
+}
+
+.about-hero h1 {
+	color: #1fd655;
+	font-size: 3.5rem;
+	font-weight: 700;
+	margin-bottom: 1rem;
+	margin-top: 5rem;
+}
+
+.about-hero p {
+	font-size: 1rem;
+	color: #444;
+	line-height: 1.6;
+	margin-bottom: 1.5rem;
+}
+
+.contact-btn {
+	background-color: #1fd655;
+	color: #fff;
+	border: none;
+	padding: 0.75rem 1.8rem;
+	border-radius: 999px;
+	font-size: 1.3rem;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+.contact-btn:hover {
+	background-color: #18b947;
+}
+
+.about-hero-image {
+	width: 100%;
+	max-width: 1100px;
+	margin: 0 auto;
+	border-radius: 6px;
+	display: block;
+}
