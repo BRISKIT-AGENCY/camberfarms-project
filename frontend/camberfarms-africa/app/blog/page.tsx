@@ -19,7 +19,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 async function getBlogs(page: number) {
   try {
-    const res = await axios.get(`${API_URL}/api/blog`, {
+    const res = await axios.get(`${API_URL}/api/africa/blog`, {
       params: { page, limit: 3 },
     })
     return res.data
@@ -96,6 +96,9 @@ export default async function BlogPage({
               </div>
             ))}
 
+            
+          </div>
+          <div className='md:hidden mt-12.5 bg-blue-400'>
             <Pagination
               currentPage={pagination.currentPage}
               totalPages={pagination.totalPages}
@@ -103,7 +106,15 @@ export default async function BlogPage({
           </div>
 
           {/* Client-Side Search Component */}
-          <BlogSearchSidebar recentPosts={recentPosts} />
+          <div className=' xl:w-[40%]'>
+            <BlogSearchSidebar recentPosts={recentPosts} />
+          </div>
+        </div>
+        <div className='hidden md:block mt-25 '>
+          <Pagination
+              currentPage={pagination.currentPage}
+              totalPages={pagination.totalPages}
+            />
         </div>
       </div>
     </div>

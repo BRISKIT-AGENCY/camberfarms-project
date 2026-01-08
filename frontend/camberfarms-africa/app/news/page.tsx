@@ -1,9 +1,13 @@
 import React from 'react'
+import News from '../components/News'
+import Sustainability from '../components/Sustainability'
 
-const News = () => {
+const NewsPage = () => {
   return (
-    <div>News</div>
+    <div>
+      <Sustainability/>
+    </div>
   )
 }
 
-export default News
+export default NewsPage

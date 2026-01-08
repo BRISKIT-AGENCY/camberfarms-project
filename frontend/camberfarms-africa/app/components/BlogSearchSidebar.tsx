@@ -31,7 +31,7 @@ export default function BlogSearchSidebar({
       setLoading(true)
       try {
         const res = await fetch(
-          `http://localhost:5000/api/blog/search?q=${debouncedQuery}`
+          `http://localhost:5000/api/africa/blog/search?q=${debouncedQuery}`
         )
         const data = await res.json()
         setResults(data)

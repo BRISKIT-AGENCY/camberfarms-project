@@ -19,7 +19,7 @@ async function getBlog(slug: string): Promise<Blog> {
   try {
     console.log(slug);
     
-    const res = await axios.get(`${API_URL}/api/blog/${slug}`)
+    const res = await axios.get(`${API_URL}/api/africa/blog/${slug}`)
     return res.data
   } catch (error: any) {
     if (error.response?.status === 404) {
@@ -76,7 +76,9 @@ export default async function BlogPage({
         ))}
       </div>
 
-      <BlogSearchSidebar recentPosts={recentPosts} />
+      <div className='md:mt-25 mt-15'>
+        <BlogSearchSidebar recentPosts={recentPosts} />
+      </div>
     </div>
   )
 }

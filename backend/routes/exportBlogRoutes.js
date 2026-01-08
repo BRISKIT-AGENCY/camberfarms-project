@@ -1,5 +1,6 @@
 import express from 'express'
-import Blog from '../models/Blog.js'
+import exportBlog from '../models/exportBlog.js'
+
 const router = express.Router()
 
 
@@ -10,12 +11,12 @@ router.get('/blog', async (req, res) => {
     const skip = (page - 1) * limit
 
     const [blogs, total] = await Promise.all([
-      Blog.find()
+      exportBlog.find()
         .sort({  publishedAt: -1 })
         .skip(skip)
         .limit(limit)
         .select('title slug excerpt image publishedAt'), // IMPORTANT
-      Blog.countDocuments()
+      exportBlog.countDocuments()
     ])
 
     res.json({
@@ -39,7 +40,7 @@ router.get('/blog/search', async (req, res) => {
       return res.status(400).json({ message: 'Search query required' })
     }
 
-    const blogs = await Blog.find({
+    const blogs = await exportBlog.find({
       $or: [
         { title: { $regex: query, $options: 'i' } },
         { excerpt: { $regex: query, $options: 'i' } },
@@ -59,7 +60,7 @@ router.get('/blog/search', async (req, res) => {
 router.get('/blog/:slug', async (req, res) => {
   try {
     
-    const blog = await Blog.findOne({ slug: req.params.slug })
+    const blog = await exportBlog.findOne({ slug: req.params.slug })
     if (!blog) return res.status(404).json({ message: 'Blog not found' })
 
     res.json(blog)
