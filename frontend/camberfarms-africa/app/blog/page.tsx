@@ -98,7 +98,7 @@ export default async function BlogPage({
 
             
           </div>
-          <div className='md:hidden mt-12.5'>
+          <div className='md:hidden mt-12.5 bg-blue-400'>
             <Pagination
               currentPage={pagination.currentPage}
               totalPages={pagination.totalPages}
@@ -106,9 +106,11 @@ export default async function BlogPage({
           </div>
 
           {/* Client-Side Search Component */}
-          <BlogSearchSidebar recentPosts={recentPosts} />
+          <div className=' xl:w-[40%]'>
+            <BlogSearchSidebar recentPosts={recentPosts} />
+          </div>
         </div>
-        <div className='hidden md:block mt-25'>
+        <div className='hidden md:block mt-25 '>
           <Pagination
               currentPage={pagination.currentPage}
               totalPages={pagination.totalPages}

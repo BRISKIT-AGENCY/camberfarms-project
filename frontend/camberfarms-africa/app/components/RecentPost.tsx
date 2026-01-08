@@ -5,7 +5,7 @@ type RecentPost = {
 
 export default async function getRecentPosts(): Promise<RecentPost[]> {
   const res = await fetch(
-    `http://localhost:5000/api/blog?limit=6&page=1`,
+    `http://localhost:5000/api/africa/blog?limit=6&page=1`,
     { cache: 'no-store' }
   )
 
