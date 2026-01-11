@@ -2,6 +2,7 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import Blog from '../models/Blog.js'
 import exportBlog from '../models/exportBlog.js'
+import News from '../models/News.js'
 
 dotenv.config()
 
@@ -446,6 +447,8 @@ async function seedBlogs() {
         await Blog.insertMany(blogs)
         await exportBlog.deleteMany()
         await exportBlog.insertMany(blogs)
+        await News.deleteMany()
+        await News.insertMany(blogs)
 
         console.log('✅ Blogs seeded successfully')
         process.exit()

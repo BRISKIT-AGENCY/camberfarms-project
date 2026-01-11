@@ -55,7 +55,7 @@ const FarmFundForm = () => {
   });
 
   return (
-    <div className="h-fit py-24.5 px-3 md:h-299.5 lg:pt-38 lg:px-25 bg-[#F9FAFB]">
+    <div className="h-fit py-24.5 px-3 lg:py-27.5 lg:px-25 bg-[#F9FAFB]">
       <div className="w-full h-full">
         <h1 className="md:text-[46px] text-[24px] font-bold">
           Farm Fund Expression of Interest Form
