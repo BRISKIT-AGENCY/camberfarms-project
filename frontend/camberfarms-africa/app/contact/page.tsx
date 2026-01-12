@@ -7,7 +7,7 @@ import Contact from '../components/Contact'
 const page = () => {
     const { t } = useTranslation('contact')
     return (
-        <div className='mt-17.5 md:mt-25'>
+        <div className=''>
             <div className='hidden xl:block'>
                 <Navbar logoSrc="/images/logo2.png" linkTextColor="text-black" buttonBgColor="bg-[#1AD329]" buttonTextColor='text-white' />
             </div>

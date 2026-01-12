@@ -89,7 +89,7 @@ const MembershipForm = () => {
   }
 
   return (
-    <div className="h-fit py-24.5 px-3 md:h-299.5 lg:pt-38 lg:px-25 bg-[#F9FAFB]">
+    <div className="h-fit py-24.5 px-3  lg:py-38 lg:px-25 bg-[#F9FAFB]">
       <h1 className="md:text-[46px] text-[24px] font-bold">
         {t('title')}
       </h1>
@@ -161,12 +161,14 @@ const MembershipForm = () => {
           )}
         </div>
 
-        <button
+        <div className='flex justify-end'>
+          <button
           type="submit"
           className="mt-10 px-6 py-3 bg-[#1AD329] text-white rounded-[100px]"
         >
           {t('submit')}
         </button>
+        </div>
       </form>
     </div>
   )

@@ -2,6 +2,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
+import Link from 'next/link'
 
 type ProductProps = {
   titleKey: string          // translation key for title
@@ -11,6 +12,7 @@ type ProductProps = {
   imageAlt?: string
   onButtonClick?: () => void
   buttonClassName?: string
+  link: string
 }
 
 const Products = ({
@@ -20,7 +22,8 @@ const Products = ({
   imageSrc,
   imageAlt = 'section image',
   onButtonClick,
-  buttonClassName
+  buttonClassName,
+  link
 }: ProductProps) => {
   const { t } = useTranslation('products') // namespace "products"
 
@@ -48,14 +51,15 @@ const Products = ({
           </p>
 
           {buttonTextKey && (
-            <button
+            <Link
+            href={link}
               onClick={onButtonClick}
-              className={`mt-12.5 md:h-12.5 bg-[#1AD329] rounded-[100px] ${buttonClassName}`}
+              className={`flex items-center justify-center mt-12.5 md:h-12.5 bg-[#1AD329] rounded-[100px] ${buttonClassName}`}
             >
               <p className="text-white font-bold text-[14px] px-4 py-2.5">
                 {t(buttonTextKey)}
               </p>
-            </button>
+            </Link>
           )}
         </div>
 

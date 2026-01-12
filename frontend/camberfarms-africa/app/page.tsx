@@ -22,6 +22,7 @@ export default function Home() {
     <div>
       <Hero />
       <Products
+        link='/membership'
         titleKey="membership_title"
         descriptionKey="membership_description"
         buttonTextKey="membership_button"
@@ -32,6 +33,7 @@ export default function Home() {
       />
 
       <Products
+        link='/farm-fund'
         titleKey="farmFund_title"
         descriptionKey="farmFund_description"
         buttonTextKey="farmFund_button"
@@ -42,6 +44,7 @@ export default function Home() {
       />
 
       <Products
+        link='/export'
         titleKey="export_title"
         descriptionKey="export_description"
         buttonTextKey="export_button"
@@ -51,18 +54,16 @@ export default function Home() {
         buttonClassName="md:w-50"
       />
 
-      <Process />
+      <Process showImage={false}/>
       <WhoWeAre />
       <WhatWeDo />
-      <Impact hColor="#1AD329" pColor="#808080"/>
+      <Impact hColor="#1AD329" pColor="#808080" />
       <Review />
       <Partnership />
       <Blogs />
       <News />
-      <Contact  heading={t('heading1')} description={t('description1')} button={t('sendButton1')} placeholder={t('placeholders.message1')}/>
-      <MembershipForm />
-      <FarmFundForm />
-      <MembershipText />
+      <Contact heading={t('heading1')} description={t('description1')} button={t('sendButton1')} placeholder={t('placeholders.message1')} />
     </div>
   );
 }
+

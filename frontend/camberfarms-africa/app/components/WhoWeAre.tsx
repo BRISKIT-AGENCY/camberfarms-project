@@ -3,6 +3,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
+import Link from 'next/link'
 
 const WhoWeAre = () => {
   const { t } = useTranslation('whoWeAre') // namespace "whoWeAre"
@@ -19,7 +20,7 @@ const WhoWeAre = () => {
           {t('description')}
         </p>
 
-        <button className='flex mt-6 text-[#1AD329]'>
+        <Link href='/about' className='flex mt-6 text-[#1AD329] cursor-pointer'>
           <p className='md:text-[24px] text-[16px]'>
             {t('buttonText')}
           </p>
@@ -30,7 +31,7 @@ const WhoWeAre = () => {
             height={24}
             className="ml-2"
           />
-        </button>
+        </Link>
       </div>
     </div>
   )

@@ -12,7 +12,18 @@ if (!i18n.isInitialized) {
     .use(initReactI18next)
     .init({
       fallbackLng: 'en',
-      supportedLngs: ['en', 'fr'],
+      supportedLngs: [
+        'en',
+        'fr',
+        'ru',
+        'ar',
+        'zh',
+        'nl',
+        'de',
+        'it',
+        'pt',
+        'es'
+      ],
       ns: ['nav', 'buttons'],
       defaultNS: 'nav',
       backend: {
