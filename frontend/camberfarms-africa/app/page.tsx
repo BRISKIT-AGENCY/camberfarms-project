@@ -9,7 +9,7 @@ import Contact from "./components/Contact";
 import WhoWeAre from "./components/WhoWeAre";
 import News from "./components/News";
 import Review from "./components/Review";
-import Impact from "./components/Impact"; 
+import Impact from "./components/Impact";
 import MembershipForm from "./components/MembershipForm";
 
 export default function Home() {
