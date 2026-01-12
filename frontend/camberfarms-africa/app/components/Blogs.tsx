@@ -70,10 +70,10 @@ const Blogs = () => {
 
               <p className='text-[14px] md:text-[18px] mt-2 text-[#808080]'>
                 Date:{new Date(blog.publishedAt).toLocaleDateString('en-US', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric'
-})}
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
               </p>
 
               <Link
