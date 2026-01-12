@@ -12,7 +12,7 @@ const blogSchema = new mongoose.Schema(
     slug: { type: String, unique: true },
     image: String,
 
-    sections: [sectionSchema], // 👈 IMPORTANT
+    sections: [sectionSchema],
 
     publishedAt: Date
   },
