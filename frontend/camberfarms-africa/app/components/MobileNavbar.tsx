@@ -81,7 +81,7 @@ const MobileNavbar = () => {
               onClick={() => setIsAboutOpen(prev => !prev)}
               className="flex justify-between w-full items-center"
             >
-              <span className={`transition-colors ${isAboutOpen ? 'text-[#1AD329]' : anyAccordionOpen ? 'text-[#808080]' : 'text-black'}`}>{t('about')}</span>
+              <Link href='/about' className={`transition-colors ${isAboutOpen ? 'text-[#1AD329]' : anyAccordionOpen ? 'text-[#808080]' : 'text-black'}`}>{t('about')}</Link>
               <Image
                 src="/images/arrowdown.png"
                 alt="Arrow Down"
@@ -113,7 +113,7 @@ const MobileNavbar = () => {
               onClick={() => setIsOurWorkOpen(prev => !prev)}
               className="flex justify-between w-full items-center"
             >
-              <span className={`transition-colors ${isOurWorkOpen ? 'text-[#1AD329]' : anyAccordionOpen ? 'text-[#808080]' : 'text-black'}`}>{t('ourWork')}</span>
+              <Link href='/our-works' className={`transition-colors ${isOurWorkOpen ? 'text-[#1AD329]' : anyAccordionOpen ? 'text-[#808080]' : 'text-black'}`}>{t('ourWork')}</Link>
               <Image
                 src="/images/arrowdown.png"
                 alt="Arrow Down"

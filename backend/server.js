@@ -9,6 +9,10 @@ import blogRouter from "./routes/blogRoutes.js"
 import exportBlogRouter from './routes/exportBlogRoutes.js'
 import newsRouter from "./routes/newsRoutes.js"
 import adminRouter from './routes/adminRoutes.js';
+import affiliateRouter from './routes/affiliateRoutes.js'
+import feedbackRouter from './routes/feedbackRoutes.js';
+import messageRouter from './routes/messageRoutes.js';
+import productRouter from './routes/productRoutes.js';
 
 dotenv.config();
 
@@ -41,6 +45,10 @@ app.use('/api/africa', blogRouter)
 app.use('/api/export', exportBlogRouter)
 app.use('/api/africa', newsRouter)
 app.use('/api/admin', adminRouter)
+app.use('/api', affiliateRouter)
+app.use('/api/export', feedbackRouter)
+app.use('/api/export', messageRouter)
+app.use('/api/', productRouter)
 
 
 
