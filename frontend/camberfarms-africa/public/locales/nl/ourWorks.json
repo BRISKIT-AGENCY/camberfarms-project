@@ -1,0 +1,15 @@
+{
+  "hero": {
+    "title": "Ons Werk",
+    "description": "We werken nauw samen met boeren in heel Afrika om de productiviteit te verbeteren, plattelandsgemeenschappen te versterken en duurzame landbouwsystemen op te bouwen.",
+    "imageAlt": "heldafbeelding ons werk"
+  },
+
+  "tabs": {
+    "membership": "Lidmaatschap",
+    "farmFund": "Landbouwfonds",
+    "exportation": "Export",
+    "technology": "Onze Technologie",
+    "process": "Ons Proces"
+  }
+}

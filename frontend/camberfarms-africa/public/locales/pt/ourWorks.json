@@ -1,0 +1,15 @@
+{
+  "hero": {
+    "title": "Nosso Trabalho",
+    "description": "Trabalhamos lado a lado com agricultores de toda a África para aumentar a produtividade, fortalecer as comunidades rurais e construir sistemas agrícolas sustentáveis.",
+    "imageAlt": "imagem principal do nosso trabalho"
+  },
+
+  "tabs": {
+    "membership": "Associação",
+    "farmFund": "Fundo Agrícola",
+    "exportation": "Exportação",
+    "technology": "Nossa Tecnologia",
+    "process": "Nosso Processo"
+  }
+}

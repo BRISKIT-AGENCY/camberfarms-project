@@ -1,0 +1,26 @@
+{
+  "heading1": "Contactez-nous",
+  "description1": "Veuillez nous envoyer un message pour un partenariat ou pour toute demande concernant CamberFarm Africa",
+  "heading2": "Envoyez-nous un message",
+  "description2": "Remplissez le formulaire ci-dessous et notre équipe export vous répondra dans les 24 heures.",
+  "sendButton1": "Envoyer le message",
+  "sendButton2": "Envoyer la demande",
+  "success": "Message envoyé avec succès",
+  "error": "Une erreur est survenue",
+
+  "placeholders": {
+    "name": "Nom",
+    "email": "Adresse e-mail",
+    "phone": "Numéro de téléphone",
+    "message1": "Tapez votre message ici...",
+    "message2": "Tapez le message de la demande ici..."
+  },
+
+  "errors": {
+    "name": "Le nom est requis",
+    "email": "L'adresse e-mail est requise",
+    "emailInvalid": "Adresse e-mail invalide",
+    "phone": "Le numéro de téléphone est requis",
+    "message": "Le message est requis"
+  }
+}

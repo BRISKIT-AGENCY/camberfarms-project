@@ -1,0 +1,56 @@
+{
+  "hero": {
+    "title": "Wie We Zijn",
+    "description": "Camberfarm Africa is een doelgerichte agribusiness-platform dat het landbouwsysteem van Afrika transformeert. We verbinden lokale boeren met internationale markten via duurzame praktijken, ethische partnerschappen en wereldklasse exportnormen.",
+    "cta": "Werk met ons samen"
+  },
+
+  "images": {
+    "mobileAlt": "over hero-afbeelding mobiel",
+    "desktopAlt": "over hero-afbeelding desktop"
+  },
+
+  "story": {
+    "title": "Ons Verhaal",
+    "p1": "Gebaseerd op de overtuiging dat de landbouwkracht van Afrika de wereld kan voeden, is Camberfarm Africa opgericht om de kloof tussen lokale boeren en wereldwijde kopers te overbruggen.",
+    "p2": "We stellen boeren in staat toegang te krijgen tot middelen, training en betrouwbare handelskanalen, terwijl we ervoor zorgen dat de producten die in heel Afrika worden geteeld voldoen aan internationale normen.",
+    "p3": "Onze toewijding gaat verder dan handel; het gaat om het bouwen van een duurzame toekomst waarin de Afrikaanse landbouw floreert en wereldwijd gewaardeerd wordt."
+  },
+
+  "mission": {
+    "title": "Missie",
+    "description": "Onze missie is om Afrikaanse boeren te verbinden met wereldmarkten via duurzame, transparante en innovatieve landbouwsystemen. We streven ernaar gemeenschappen te versterken, eerlijke handel te bevorderen en ervoor te zorgen dat elk product dat we exporteren Afrika’s kwaliteit, integriteit en potentieel weerspiegelt."
+  },
+
+  "vision": {
+    "title": "Visie",
+    "description": "Onze visie is om Afrika een wereldleider te maken in ethische en traceerbare landbouwexport. We willen een toekomst opbouwen waarin Afrikaanse producten vertrouwd, gewaardeerd en gevierd worden op internationale markten, en die gedeelde welvaart en lange termijn duurzaamheid voor toekomstige generaties bevordert."
+  },
+
+  "values": {
+    "title": "Kernwaarden",
+    "intro": "In het hart van Camberfarm Africa staan de principes die ons leiden bij groeien, samenwerken en leveren. Deze waarden vormen onze cultuur, sturen onze beslissingen en bepalen hoe we impact hebben op levens binnen het landbouwsysteem.",
+    "items": {
+      "empowerment": {
+        "title": "Empowerment:",
+        "description": "We voorzien boeren en lokale gemeenschappen van de kennis, tools en markttoegang die ze nodig hebben om te gedijen."
+      },
+      "sustainability": {
+        "title": "Duurzaamheid:",
+        "description": "We bevorderen verantwoorde landbouwpraktijken die het milieu beschermen en zorgen voor lange termijn productiviteit voor toekomstige generaties."
+      },
+      "integrity": {
+        "title": "Integriteit:",
+        "description": "We handhaven eerlijkheid en transparantie in elk proces, van sourcing tot export, zodat onze partners altijd op ons werk kunnen vertrouwen."
+      },
+      "innovation": {
+        "title": "Innovatie:",
+        "description": "We omarmen technologie en creativiteit om productiviteit, efficiëntie en traceerbaarheid in de hele landbouwwaardeketen te verbeteren."
+      },
+      "excellence": {
+        "title": "Uitmuntendheid:",
+        "description": "We houden ons aan de hoogste normen en leveren kwaliteitsproducten en ervaringen die Afrika’s potentieel op het wereldtoneel weerspiegelen."
+      }
+    }
+  }
+}

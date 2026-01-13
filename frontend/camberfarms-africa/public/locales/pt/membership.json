@@ -1,0 +1,38 @@
+{
+  "title": "Formulário de Associação",
+  "submit": "Inscrever-se",
+  "success": "Registro bem-sucedido",
+
+  "fields": {
+    "name": "Nome Completo",
+    "email": "Endereço de Email",
+    "phone": "Número de Telefone",
+    "dateOfBirth": "Data de Nascimento",
+    "gender": "Gênero",
+    "address": "Endereço",
+    "country": "País",
+    "state": "Estado",
+    "region": "Região"
+  },
+
+  "upload": {
+    "label": "Envie um documento de identidade válido",
+    "action": "Solte a imagem aqui ou procure",
+    "types": "Tipo de arquivo (PDF, PNG, JPEG)"
+  },
+
+  "errors": {
+    "name": "O nome é obrigatório",
+    "email": "O email é obrigatório",
+    "invalidEmail": "Endereço de email inválido",
+    "phone": "O número de telefone é obrigatório",
+    "dateOfBirth": "A data de nascimento é obrigatória",
+    "gender": "O gênero é obrigatório",
+    "address": "O endereço é obrigatório",
+    "country": "O país é obrigatório",
+    "state": "O estado é obrigatório",
+    "region": "A região é obrigatória",
+    "fileRequired": "É necessário pelo menos um documento de identidade",
+    "generic": "Algo deu errado. Por favor, tente novamente."
+  }
+}

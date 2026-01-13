@@ -1,0 +1,21 @@
+{
+  "heading": "Notícias e Insights",
+  "description": "Explore histórias, atualizações e insights sobre as exportações agrícolas da África, sustentabilidade e tendências do comércio global.",
+  "readMore": "Leia mais",
+  "arrowAlt": "seta para a direita",
+  "post1": {
+    "title": "Foco na Sustentabilidade",
+    "description": "À medida que a demanda global por alimentos de origem ética cresce, os exportadores africanos estão adotando sistemas agrícolas ecológicos e rastreáveis para atender aos padrões internacionais.",
+    "date": "18 de setembro de 2025"
+  },
+  "post2": {
+    "title": "Foco no Mercado de Exportação",
+    "description": "O aumento do investimento em infraestrutura agrícola está ajudando os produtores africanos a acessar novos mercados na Europa e Ásia, com milho e gergelim liderando o crescimento.",
+    "date": "18 de setembro de 2025"
+  },
+  "post3": {
+    "title": "Foco em Tecnologia / Impacto",
+    "description": "De ferramentas digitais de rastreabilidade a logística alimentada por IA, a tecnologia está tornando as exportações agrícolas da África mais transparentes e competitivas.",
+    "date": "18 de setembro de 2025"
+  }
+}

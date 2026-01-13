@@ -1,0 +1,38 @@
+{
+  "title": "会员注册表",
+  "submit": "注册",
+  "success": "注册成功",
+
+  "fields": {
+    "name": "全名",
+    "email": "电子邮箱",
+    "phone": "电话号码",
+    "dateOfBirth": "出生日期",
+    "gender": "性别",
+    "address": "地址",
+    "country": "国家",
+    "state": "州/省",
+    "region": "地区"
+  },
+
+  "upload": {
+    "label": "上传有效身份证",
+    "action": "将图片拖到此处或浏览",
+    "types": "文件类型 (PDF, PNG, JPEG)"
+  },
+
+  "errors": {
+    "name": "姓名为必填项",
+    "email": "邮箱为必填项",
+    "invalidEmail": "无效的邮箱地址",
+    "phone": "电话号码为必填项",
+    "dateOfBirth": "出生日期为必填项",
+    "gender": "性别为必填项",
+    "address": "地址为必填项",
+    "country": "国家为必填项",
+    "state": "州/省为必填项",
+    "region": "地区为必填项",
+    "fileRequired": "至少需要上传一个身份证文件",
+    "generic": "出了点问题，请重试。"
+  }
+}

@@ -1,198 +1,175 @@
 'use client'
+
 import { useState } from 'react'
 import Image from 'next/image'
+import axios from 'axios'
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
+import { useTranslation } from 'react-i18next'
+
+type MembershipFormData = {
+  name: string
+  email: string
+  phone: string
+  dateOfBirth: string
+  gender: string
+  address: string
+  country: string
+  state: string
+  region: string
+}
+
+const initialValues: MembershipFormData = {
+  name: '',
+  email: '',
+  phone: '',
+  dateOfBirth: '',
+  gender: '',
+  address: '',
+  country: '',
+  state: '',
+  region: '',
+}
 
 const MembershipForm = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    dateOfBirth: '',
-    gender: '',
-    address: '',
-    country: '',
-    state: '',
-    region: '',
+  const { t } = useTranslation('membership')
+
+  const [files, setFiles] = useState<File[]>([])
+  const [submitMessage, setSubmitMessage] = useState<string | null>(null)
+
+  const validationSchema = Yup.object({
+    name: Yup.string().required(t('errors.name')),
+    email: Yup.string().email(t('errors.invalidEmail')).required(t('errors.email')),
+    phone: Yup.string().required(t('errors.phone')),
+    dateOfBirth: Yup.string().required(t('errors.dateOfBirth')),
+    gender: Yup.string().required(t('errors.gender')),
+    address: Yup.string().required(t('errors.address')),
+    country: Yup.string().required(t('errors.country')),
+    state: Yup.string().required(t('errors.state')),
+    region: Yup.string().required(t('errors.region')),
   })
 
-  const [files, setFiles] = useState([])
+  const formik = useFormik<MembershipFormData>({
+    initialValues,
+    validationSchema,
+    onSubmit: async (values, { resetForm }) => {
+      if (files.length === 0) {
+        setSubmitMessage(t('errors.fileRequired'))
+        return
+      }
 
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: value,
-    }))
-  }
+      const formData = new FormData()
+      Object.entries(values).forEach(([key, value]) =>
+        formData.append(key, value)
+      )
+      files.forEach(file => formData.append('idFiles', file))
 
-  const handleFilesSelect = (selectedFiles) => {
+      try {
+        const response = await axios.post(
+          'http://localhost:5000/api/membership',
+          formData,
+          { headers: { 'Content-Type': 'multipart/form-data' } }
+        )
+
+        if (response.data.success) {
+          setSubmitMessage(t('success'))
+          resetForm()
+          setFiles([])
+        } else {
+          setSubmitMessage(t('errors.generic'))
+        }
+      } catch {
+        setSubmitMessage(t('errors.generic'))
+      }
+    },
+  })
+
+  const handleFilesSelect = (selectedFiles: FileList) => {
     setFiles(prev => [...prev, ...Array.from(selectedFiles)])
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-
-    console.log('Form Data:', formData)
-    console.log('Files:', files)
-  }
-
   return (
-    <div className='h-fit py-24.5 px-3 md:h-299.5 lg:pt-38 lg:px-25 bg-[#F9FAFB]'>
-      <div className='w-full h-full'>
-        <h1 className='md:text-[46px] text-[24px] font-bold'>
-          Membership Form
-        </h1>
+    <div className="h-fit py-24.5 px-3  lg:py-38 lg:px-25 bg-[#F9FAFB]">
+      <h1 className="md:text-[46px] text-[24px] font-bold">
+        {t('title')}
+      </h1>
 
-        <form className='mt-12.5' onSubmit={handleSubmit}>
-          {/* ROW 1 */}
-          <div className='flex gap-4.5 flex-col md:flex-row'>
+      <form className="mt-12.5" onSubmit={formik.handleSubmit}>
+        {(
+          [
+            'name',
+            'email',
+            'phone',
+            'dateOfBirth',
+            'gender',
+            'address',
+            'country',
+            'state',
+            'region',
+          ] as (keyof MembershipFormData)[]
+        ).map(field => (
+          <div key={field} className="mt-6">
             <input
-              type="text"
-              name="name"
-              placeholder="Name"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-[#808080] placeholder:text-[#808080] outline-none rounded-[100px] md:placeholder:text-[16px] placeholder:text-[14px] h-12.5 md:h-11"
+              type={field === 'dateOfBirth' ? 'date' : 'text'}
+              placeholder={t(`fields.${field}`)}
+              {...formik.getFieldProps(field)}
+              className="w-full px-3 py-2 border border-[#808080] rounded-[100px]"
             />
 
-            <input
-              type="email"
-              name="email"
-              placeholder="Email address"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-[#808080] placeholder:text-[#808080] outline-none rounded-[100px] md:placeholder:text-[16px] placeholder:text-[14px] h-12.5 md:h-11"
-            />
-
-            <input
-              type="tel"
-              name="phone"
-              placeholder="Phone number"
-              value={formData.phone}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-[#808080] placeholder:text-[#808080] md:placeholder:text-[16px] placeholder:text-[14px] outline-none rounded-[100px] h-12.5 md:h-11"
-            />
+            {formik.touched[field] && formik.errors[field] && (
+              <p className="text-red-600 text-sm mt-1">
+                {formik.errors[field]}
+              </p>
+            )}
           </div>
+        ))}
 
-          {/* ROW 2 */}
-          <div className='flex gap-4.5 flex-col md:flex-row mt-8'>
-            <input
-              type="date"
-              name="dateOfBirth"
-              value={formData.dateOfBirth}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-[#808080] outline-none rounded-[100px] md:placeholder:text-[16px] placeholder:text-[14px] h-12.5 md:h-11"
-            />
+        {/* FILE UPLOAD */}
+        <div className="mt-8 p-4 bg-white rounded-xl">
+          <p className="text-[#808080]">{t('upload.label')}</p>
 
-            <input
-              type="text"
-              name="gender"
-              placeholder="Gender"
-              value={formData.gender}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-[#808080] placeholder:text-[#808080] outline-none rounded-[100px] md:placeholder:text-[16px] placeholder:text-[14px] h-12.5 md:h-11"
-            />
-
-            <input
-              type="text"
-              name="address"
-              placeholder="Address"
-              value={formData.address}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-[#808080] placeholder:text-[#808080] outline-none rounded-[100px] h-12.5 md:h-11"
-            />
-          </div>
-
-          {/* ROW 3 */}
-          <div className='flex gap-4.5 flex-col md:flex-row mt-8'>
-            <input
-              type="text"
-              name="country"
-              placeholder="Country"
-              value={formData.country}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-[#808080] placeholder:text-[#808080] outline-none rounded-[100px] h-12.5 md:h-11"
-            />
-
-            <input
-              type="text"
-              name="state"
-              placeholder="State"
-              value={formData.state}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-[#808080] placeholder:text-[#808080] outline-none rounded-[100px] h-12.5 md:h-11"
-            />
-
-            <input
-              type="text"
-              name="region"
-              placeholder="Region"
-              value={formData.region}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-[#808080] placeholder:text-[#808080] outline-none rounded-[100px] h-12.5 md:h-11"
-            />
-          </div>
-
-          {/* DRAG & DROP (Textarea replacement) */}
-          <div className='mt-6 md:mt-8 w-full p-4 rounded-xl h-49.5 md:h-71  bg-white'>
-            <div className='w-full h-full flex flex-col'>
-                <p className='text-[16px] text-[#808080]'>Upload a valid ID Card</p>
-                <label
-            onDragOver={(e) => e.preventDefault()}
-            onDrop={(e) => {
+          <label
+            onDragOver={e => e.preventDefault()}
+            onDrop={e => {
               e.preventDefault()
               handleFilesSelect(e.dataTransfer.files)
             }}
-            className=" w-full flex-1 px-3 py-2 rounded-xl
-                       placeholder:text-[#808080] outline-none
-                       md:placeholder:text-[16px] placeholder:text-[14px]
-                        flex flex-col items-center justify-center
-                       text-[#808080] cursor-pointer bg-[#FAFAFA]"
+            className="mt-3 h-40 flex flex-col items-center justify-center bg-[#FAFAFA] rounded-xl cursor-pointer"
           >
             <input
               type="file"
               multiple
-              className="hidden"
-              onChange={(e) =>
+              hidden
+              onChange={e =>
                 e.target.files && handleFilesSelect(e.target.files)
               }
             />
-            <Image
-              src="/images/upload.png"
-              alt="Upload Icon"
-              width={24}
-              height={24}
-            />
 
-            <p className="text-[12px] md:text-[24px] text-[#333333] font-medium mt-3">
-              Drop image here or browse
+            <Image src="/images/upload.png" alt="Upload" width={24} height={24} />
+            <p className="mt-2 font-medium">
+              {t('upload.action')}
             </p>
-            <p className="text-[12px] md:text-[18px] text-[#ADADAD] mt-1">
-              File type (Pdf, Png, Jpeg)
+            <p className="text-[#ADADAD] text-sm">
+              {t('upload.types')}
             </p>
           </label>
-            </div>
-          </div>
 
-          {/* OPTIONAL: FILE LIST */}
-          {files.length > 0 && (
-            <ul className="mt-3 text-sm text-gray-600">
-              {files.map((file, index) => (
-                <li key={index}>{file.name}</li>
-              ))}
-            </ul>
+          {submitMessage && (
+            <p className="mt-3 text-sm text-red-600">
+              {submitMessage}
+            </p>
           )}
+        </div>
 
-          <div className='flex justify-end mt-12.5'>
-            <button
-              type="submit"
-              className="h-11 md:h-12.5  px-6 py-3 bg-[#1AD329] text-white rounded-[100px]"
-            >
-              Sign Up
-            </button>
-          </div>
-        </form>
-      </div>
+        <div className='flex justify-end'>
+          <button
+          type="submit"
+          className="mt-10 px-6 py-3 bg-[#1AD329] text-white rounded-[100px]"
+        >
+          {t('submit')}
+        </button>
+        </div>
+      </form>
     </div>
   )
 }

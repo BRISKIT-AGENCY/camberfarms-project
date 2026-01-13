@@ -1,0 +1,56 @@
+{
+  "hero": {
+    "title": "Qui nous sommes",
+    "description": "Camberfarm Africa est une plateforme agro-industrielle guidée par une mission claire : transformer l’écosystème agricole africain. Nous connectons les agriculteurs locaux aux marchés internationaux grâce à des pratiques durables, des partenariats éthiques et des normes d’exportation de classe mondiale.",
+    "cta": "Devenez partenaire"
+  },
+
+  "images": {
+    "mobileAlt": "image de présentation mobile",
+    "desktopAlt": "image de présentation bureau"
+  },
+
+  "story": {
+    "title": "Notre histoire",
+    "p1": "Fondée sur la conviction que la puissance agricole de l’Afrique peut nourrir le monde, Camberfarm Africa a été créée pour combler le fossé entre les agriculteurs locaux et les acheteurs internationaux.",
+    "p2": "Nous donnons aux agriculteurs accès aux ressources, à la formation et à des canaux commerciaux fiables, tout en veillant à ce que les produits cultivés en Afrique respectent les normes internationales.",
+    "p3": "Notre engagement va au-delà du commerce : il s’agit de bâtir un avenir durable où l’agriculture africaine prospère et où sa valeur est reconnue à l’échelle mondiale."
+  },
+
+  "mission": {
+    "title": "Mission",
+    "description": "Notre mission est de connecter les agriculteurs africains aux marchés mondiaux grâce à des systèmes agricoles durables, transparents et innovants. Nous œuvrons pour autonomiser les communautés, promouvoir le commerce équitable et garantir que chaque produit exporté reflète la qualité, l’intégrité et le potentiel de l’Afrique."
+  },
+
+  "vision": {
+    "title": "Vision",
+    "description": "Notre vision est de faire de l’Afrique un leader mondial des exportations agricoles éthiques et traçables. Nous aspirons à bâtir un avenir où les produits africains sont dignes de confiance, valorisés et célébrés sur les marchés internationaux."
+  },
+
+  "values": {
+    "title": "Valeurs fondamentales",
+    "intro": "Au cœur de Camberfarm Africa se trouvent les principes qui guident notre croissance, nos partenariats et nos actions.",
+    "items": {
+      "empowerment": {
+        "title": "Autonomisation :",
+        "description": "Nous dotons les agriculteurs et les communautés locales des connaissances, des outils et de l’accès aux marchés nécessaires pour prospérer."
+      },
+      "sustainability": {
+        "title": "Durabilité :",
+        "description": "Nous promouvons des pratiques agricoles responsables qui protègent l’environnement et garantissent une productivité durable pour les générations futures."
+      },
+      "integrity": {
+        "title": "Intégrité :",
+        "description": "Nous maintenons l’honnêteté et la transparence à chaque étape, de l’approvisionnement à l’exportation."
+      },
+      "innovation": {
+        "title": "Innovation :",
+        "description": "Nous adoptons la technologie et la créativité pour améliorer la productivité, l’efficacité et la traçabilité tout au long de la chaîne de valeur agricole."
+      },
+      "excellence": {
+        "title": "Excellence :",
+        "description": "Nous nous imposons les normes les plus élevées afin de refléter le potentiel de l’Afrique sur la scène mondiale."
+      }
+    }
+  }
+}

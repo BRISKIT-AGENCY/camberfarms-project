@@ -1,0 +1,19 @@
+{
+  "title": "Lo Que Hacemos",
+  "item1": {
+    "title": "Abastecimiento de Agricultores Africanos de Confianza",
+    "description": "Colaboramos directamente con pequeños agricultores y cooperativas en toda África, garantizando un abastecimiento ético y comercio justo. A través de capacitación, acceso a recursos y cadenas de suministro transparentes, empoderamos a los agricultores para producir cultivos de clase mundial."
+  },
+  "item2": {
+    "title": "Garantizando Estándares de Calidad Premium",
+    "description": "Cada producto pasa por estrictas inspecciones, clasificación y control de calidad para cumplir con las especificaciones de exportación. Nuestros equipos mantienen estándares internacionales de limpieza, contenido de humedad y clasificación, asegurando fiabilidad en cada envío."
+  },
+  "item3": {
+    "title": "Empaque Listo para Exportación con Cumplimiento Global",
+    "description": "Utilizamos empaques ecológicos de grado exportación diseñados para preservar la frescura y cumplir con los estándares de certificación NAFDAC y Orgánica. Cada envío está completamente documentado y es trazable desde la granja hasta el puerto."
+  },
+  "item4": {
+    "title": "Conectando África con el Mundo",
+    "description": "Desde nuestros centros en Nigeria, Ghana y África Oriental, entregamos excelencia agrícola a clientes en Europa, Asia y América a tiempo y en óptimas condiciones."
+  }
+}

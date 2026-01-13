@@ -1,0 +1,26 @@
+{
+  "heading1": "联系我们",
+  "description1": "请给我们留言，咨询合作或了解 CamberFarm Africa",
+  "heading2": "发送消息给我们",
+  "description2": "请填写下方表格，我们的出口团队将在 24 小时内回复您。",
+  "sendButton1": "发送消息",
+  "sendButton2": "发送咨询",
+  "success": "消息发送成功",
+  "error": "出现错误",
+
+  "placeholders": {
+    "name": "姓名",
+    "email": "电子邮件地址",
+    "phone": "电话号码",
+    "message1": "在此输入您的消息...",
+    "message2": "在此输入咨询内容..."
+  },
+
+  "errors": {
+    "name": "姓名为必填项",
+    "email": "电子邮件为必填项",
+    "emailInvalid": "无效的电子邮件地址",
+    "phone": "电话号码为必填项",
+    "message": "消息内容为必填项"
+  }
+}

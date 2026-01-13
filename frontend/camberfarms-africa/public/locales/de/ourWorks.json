@@ -1,0 +1,15 @@
+{
+  "hero": {
+    "title": "Unsere Arbeit",
+    "description": "Wir arbeiten Hand in Hand mit Landwirten in ganz Afrika, um die Produktivität zu steigern, ländliche Gemeinschaften zu stärken und nachhaltige landwirtschaftliche Systeme aufzubauen.",
+    "imageAlt": "Bild unserer Arbeit"
+  },
+
+  "tabs": {
+    "membership": "Mitgliedschaft",
+    "farmFund": "Bauernfonds",
+    "exportation": "Export",
+    "technology": "Unsere Technologie",
+    "process": "Unser Prozess"
+  }
+}
