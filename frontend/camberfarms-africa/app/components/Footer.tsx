@@ -14,7 +14,7 @@ const Footer = () => {
           <div className='mt-3 md:mt-0 flex flex-col text-[14px] md:text-[16px]'>
             <p className='font-bold text-[16px] md:text-[18px]'>Information</p>
             <Link href="/about" className='mt-4 md:mt-6'>About us</Link>
-            <Link href="/about" className='mt-3 md:hidden'>Our Impact</Link>
+            <Link href="/#impact" className='mt-3 md:hidden'>Our Impact</Link>
             <Link href="/news" className='mt-3'>News</Link>
           </div>
           <div className='flex flex-col text-[14px] md:text-[16px] mt-6 md:mt-0'>
@@ -51,13 +51,17 @@ const Footer = () => {
             </div>
 
             <div className='flex gap-3 mt-4 md:mt-0'>
-              <a href="">
+              <a href="https://www.instagram.com/camberfarms?igsh=Y21ucmtyZWc3YTJx&utm_source=qr"
+                target="_blank"
+                rel="noopener noreferrer">
                 <Image src="/images/instagram.png" alt="instagram icon" width={26.5} height={26.5} />
               </a>
               <a href="">
                 <Image src="/images/twitter.png" alt="twitter icon" width={26.5} height={26.5} />
               </a>
-              <a href="">
+              <a href="https://www.facebook.com/share/17uHp1Yiyx/?mibextid=wwXIfr"
+                target="_blank"
+                rel="noopener noreferrer">
                 <Image src="/images/facebook.png" alt="facebook icon" width={26.5} height={26.5} />
               </a>
               <a href="">

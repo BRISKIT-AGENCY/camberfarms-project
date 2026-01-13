@@ -57,7 +57,9 @@ export default function Home() {
       <Process showImage={false}/>
       <WhoWeAre />
       <WhatWeDo />
-      <Impact hColor="#1AD329" pColor="#808080" />
+      <div id='impact'>
+        <Impact hColor="#1AD329" pColor="#808080" />
+      </div>
       <Review />
       <Partnership />
       <Blogs />

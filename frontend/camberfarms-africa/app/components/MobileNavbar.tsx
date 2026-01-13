@@ -94,13 +94,13 @@ const MobileNavbar = () => {
             {isAboutOpen && (
               <div className="mt-2 flex flex-col gap-2 text-sm text-gray-700">
                 <hr className='border-[0.5px] border-[#1AD329]' />
-                <Link href="/about/vision-mission" onClick={() => setIsMenuOpen(false)} className='mt-3'>
+                <Link href="/about/#mission" onClick={() => setIsMenuOpen(false)} className='mt-3'>
                   Vision & Mission
                 </Link>
                 <Link href="/about/theory-of-change" onClick={() => setIsMenuOpen(false)}>
                   Theory of Change
                 </Link>
-                <Link href="/about/values" onClick={() => setIsMenuOpen(false)}>
+                <Link href="/about/#values" onClick={() => setIsMenuOpen(false)}>
                   Values
                 </Link>
               </div>
