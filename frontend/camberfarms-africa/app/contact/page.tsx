@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import React from 'react'
 import Navbar from '../components/Navbar'
 import Contact from '../components/Contact'
+import Map from '../components/Map'
 
 const page = () => {
     const { t } = useTranslation('contact')
@@ -56,7 +57,9 @@ const page = () => {
             <div >
                 <Contact heading={t('heading2')} description={t('description2')} button={t('sendButton2')} placeholder={t('placeholders.message2')}/>
             </div>
-            <div className='md:px-25 px-6'></div>
+            <div className=''>
+                <Map />
+            </div>
 
         </div>
     )

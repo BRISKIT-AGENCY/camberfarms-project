@@ -98,7 +98,7 @@ export default async function BlogPage({
 
             
           </div>
-          <div className='md:hidden mt-12.5 bg-blue-400'>
+          <div className='md:hidden mt-12.5'>
             <Pagination
               currentPage={pagination.currentPage}
               totalPages={pagination.totalPages}

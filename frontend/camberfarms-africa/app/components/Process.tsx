@@ -54,7 +54,7 @@ const Process = ({
   return (
     <div
       className={`
-        h-230.25 md:h-322 w-full
+        h-fit  w-full
         ${px} ${mdPx}
         ${py} ${mdPy}
       `}
