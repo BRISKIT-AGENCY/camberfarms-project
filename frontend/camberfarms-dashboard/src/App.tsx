@@ -7,10 +7,10 @@ import Products from './pages/products/Products'
 export default function App() {
 	return (
 		<Router>
-			<section className="hidden w-full h-dvh sm:grid grid-cols-[200px_auto] bg-light-grey text-foreground">
+			<section className="hidden w-full h-dvh sm:grid grid-cols-[250px_auto] bg-light-grey text-foreground">
 				<Sidebar />
 				<main className="w-full space-y-6 overflow-y-auto">
-					<Topbar />
+					<Topbar name="john doe" />
 					<Routes>
 						<Route index element={<Dashboard />} />
 						<Route path="/products" element={<Products />} />

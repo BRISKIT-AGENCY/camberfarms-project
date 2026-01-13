@@ -1,14 +1,13 @@
 import type { Metadata } from 'next'
 import { Inter, Manrope, Poppins } from 'next/font/google'
-import Footer from './components/Footer'
-import Navbar from './components/Nav/Navbar'
-import './globals.css'
+import './[locale]/globals.css'
 
 const poppins = Poppins({
 	variable: '--font-poppins',
 	subsets: ['latin'],
 	weight: ['400', '500', '600', '700'],
 })
+
 const manrope = Manrope({
 	variable: '--font-manrope',
 	subsets: ['latin'],
@@ -27,17 +26,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
 	children,
-}: Readonly<{
+}: {
 	children: React.ReactNode
-}>) {
+}) {
 	return (
-		<html lang="en">
+		<html>
 			<body
 				className={`${poppins.variable} ${inter.variable} ${manrope.variable} antialiased`}
 			>
-				<Navbar />
 				{children}
-				<Footer />
 			</body>
 		</html>
 	)

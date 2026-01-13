@@ -1,0 +1,187 @@
+{
+	"common": {
+		"buttons": {
+			"explore": "Explorer Camberfarm Afrique"
+		},
+		"nav": {
+			"home": "Accueil",
+			"about": "À propos",
+			"products": "Nos produits",
+			"blog": "Blog",
+			"contact": "Contactez-nous",
+			"affiliate": "Programme d’affiliation"
+		},
+		"faq": {
+			"heading": "Questions fréquemment posées",
+			"paragraph": "Nous avons soigneusement répondu à certaines questions frément posées, sans toutefois couvrir l’ensemble de vos préoccupations. Veuillez nous envoyer une demande et nous vous répondrons dans les plus brefs délais."
+		}
+	},
+	"home": {
+		"hero": {
+			"title": "Connecter les meilleurs produits agricoles d’Afrique au monde",
+			"info": "Nous exportons des céréales, épices, noix et autres produits agricoles de haute qualité provenant de fermes africaines de confiance vers les marchés internationaux. De manière fiable, durable et ponctuelle.",
+			"contact": "contactez-nous",
+			"address": "Bloc 4, n°24, rue Oladipupo Lawanson, Ikeja, Lagos, Nigeria"
+		},
+		"products": {
+			"heading": "Produits CamberFarm",
+			"paragraph": "Nous nous engageons à être parmi les principaux exportateurs, agriculteurs et fournisseurs d’une large gamme de produits agricoles. Ces produits sont transformés dans des conditions hygiéniques afin d’assurer une longue durée de conservation. Grâce à un excellent emballage et à une livraison rapide, nous avons acquis une position remarquable auprès de nos précieux clients.",
+			"link": "tous les produits"
+		},
+		"offers": {
+			"headingOffers": "Offres spéciales",
+			"paragraphOffers": "Nous avons accès à de nombreux autres produits et leur disponibilité est fluide pour nous. Quels que soient les produits que vous recherchez, nous avons ce qu’il vous faut.",
+			"stats": {
+				"harvest": {
+					"title": "Tonnes de récolte",
+					"number": "7,000"
+				},
+				"bags": {
+					"title": "Sacs emballés",
+					"number": "500,000"
+				},
+				"equipments": {
+					"title": "Unités d’équipements agricoles",
+					"number": "890"
+				}
+			},
+			"headingLocation": ["Nous avons plusieurs sites", "À travers le monde"],
+			"paragraphLocation": "Nous sommes stratégiquement situés au Nigeria avec des agents partenaires à travers la fédération, disposant de toutes les installations requises, y compris des machines et équipements de pointe."
+		},
+		"gallery": {
+			"heading": "Notre galerie",
+			"paragraph": "Découvrez ci-dessous des images de notre ferme et de nos produits"
+		},
+		"testimonials": {
+			"heading": "ce que disent les clients",
+			"users": [
+				{
+					"id": 1,
+					"name": "Lydia Yisa",
+					"content": "« Nous apprécions leur constance en matière de qualité et de service après-vente. Leur collaboration avec les agriculteurs africains ruraux est également louable. » De plus, nous admirons profondément leurs efforts proactifs en faveur de la satisfaction client."
+				},
+				{
+					"id": 2,
+					"name": "Adebayo L",
+					"content": "« Nous apprécions leur constance en matière de qualité et de service après-vente. Leur collaboration avec les agriculteurs africains ruraux est également louable. » De plus, nous admirons profondément leurs efforts proactifs en faveur de la satisfaction client."
+				},
+				{
+					"id": 3,
+					"name": "Chuks David",
+					"content": "« Nous apprécions leur constance en matière de qualité et de service après-vente. Leur collaboration avec les agriculteurs africains ruraux est également louable. » De plus, nous admirons profondément leurs efforts proactifs en faveur de la satisfaction client."
+				}
+			]
+		},
+		"blog": {
+			"heading": "article de blog",
+			"paragraph": "Notre blog est un centre de ressources précieuses, offrant des analyses approfondies de nos produits et services. Il est conçu pour informer nos clients et servir de guide complet pour l’exportation de produits agricoles de manière simple et efficace."
+		},
+		"feedback": {
+			"heading": "envoyez-nous un message",
+			"paragraph": "Veuillez renseigner vos informations dans tous les champs",
+			"placeholders": {
+				"name": "Nom",
+				"country": "Pays",
+				"phone": "Numéro de téléphone",
+				"email": "Adresse e-mail",
+				"message": "Saisissez votre message ici..."
+			},
+			"button": "Envoyer le message"
+		}
+	},
+	"products": {
+		"hero": {
+			"heading": "Nos produits",
+			"paragraphs": [
+				"Voici quelques-uns des produits issus de nos fermes :",
+				"Céréales, fruits, graines de sésame, épices et légumes."
+			]
+		},
+		"products": {
+			"heading": "Les produits que nous produisons, transformons et exportons sont :"
+		}
+	},
+	"product": {},
+	"blogs": {},
+	"blog": {},
+	"contact": {
+		"hero": {
+			"heading": ["Entrez en contact avec", "CamberFarms Export"],
+			"paragraph": "Nous serions ravis d’avoir de vos nouvelles. Que vous soyez importateur, distributeur ou partenaire commercial, notre équipe est prête à vous fournir toutes les informations nécessaires sur nos produits et services d’exportation.",
+			"button": "Envoyer une demande"
+		},
+		"info": {},
+		"form": {
+			"heading": "envoyez-nous un message",
+			"paragraph": "Remplissez le formulaire ci-dessous et notre équipe d’exportation vous contactera dans les 24 heures.",
+			"placeholder": {
+				"name": "Nom",
+				"phone": "Numéro de téléphone",
+				"email": "Adresse e-mail",
+				"message": "Saisissez votre message ici...",
+				"button": "Envoyer une demande"
+			}
+		},
+		"map": {
+			"heading": "Trouvez-nous sur la carte"
+		}
+	},
+	"affiliate": {
+		"hero": {
+			"heading": "programme d’affiliation",
+			"paragraph": "Rejoignez dès aujourd’hui notre réseau mondial de courtiers en agro-export et de marketeurs affiliés et gagnez de l’argent !"
+		},
+		"intro": {
+			"paragraph1": "Êtes-vous passionné par les exportations agricoles, l’expansion des marchés mondiaux et la mise en relation de produits de haute qualité avec des entreprises du monde entier ? Bienvenue dans le programme d’affiliation Camberfarms, où nous vous offrons une opportunité unique d’élargir votre portefeuille et de gagner de manière indépendante tout en réalisant des ventes ensemble. Avec le bon partenariat, les avantages sont mutuels.",
+			"subheading": "Pourquoi s’associer à Camberfarms ?",
+			"paragraph2": "Chez Camberfarms, nous sommes spécialisés dans l’approvisionnement, la transformation et l’exportation de produits agricoles africains de qualité supérieure tels que la fleur d’hibiscus, la fleur de pierre Blackstone, les noix de cajou brutes et d’autres cultures très demandées. Notre mission est de fournir une qualité exceptionnelle, de promouvoir une agriculture durable et d’autonomiser les communautés locales.",
+			"paragraph3": "En tant que partenaire affilié, vous serez au cœur de cette mission, en aidant à connecter nos produits aux clients du monde entier tout en bénéficiant de récompenses attractives pour vos efforts."
+		},
+		"benefits": {
+			"heading": "Avantages de rejoindre notre programme d’affiliation"
+		},
+		"join": {
+			"heading": "Qui peut rejoindre ?"
+		},
+		"commission": {
+			"heading": "GAGNEZ DES COMMISSIONS :",
+			"paragraph1": [
+				"Recevez des commissions pour chaque recommandation réussie et",
+				" vente réalisée grâce à vos efforts."
+			],
+			"subheading": "Pourquoi le secteur de l’agro-export ?",
+			"paragraph2": "La demande mondiale de produits agricoles durables et de haute qualité connaît une croissance rapide, notamment dans les secteurs du bien-être, de l’alimentation et des cosmétiques. En rejoignant le programme d’affiliation Camberfarms, vous entrez sur un marché en pleine expansion avec un potentiel de gains illimité."
+		},
+		"form": {
+			"heading": "COMMENCEZ VOTRE AVENTURE AVEC CAMBERFARMS DÈS AUJOURD’HUI !",
+			"paragraph": "Prêt à faire passer votre carrière de courtier ou de marketeur au niveau supérieur ? Rejoignez le programme d’affiliation Camberfarms et devenez un acteur clé du secteur florissant de l’agro-export.",
+			"placeholder": {
+				"name": "Nom complet",
+				"email": "E-mail",
+				"phone": "Numéro de téléphone",
+				"country": "Pays",
+				"city": "Ville",
+				"terms": {
+					"label": "Comprenez-vous réellement les conditions de commission en tant que courtier à l’exportation ci-dessus ?",
+					"value": ["Oui", "Non"]
+				},
+				"buyer": {
+					"label": "Avez-vous déjà un acheteur ?",
+					"value": ["Oui", "Non"]
+				},
+				"ifYes": "*Si vous avez sélectionné « oui », veuillez renseigner les informations de votre acheteur ci-dessous",
+				"buyerCountry": "Pays de l’acheteur",
+				"buyerProduct": "Produit de l’acheteur",
+				"volume": "Volume du produit",
+				"interest": "Parlez-nous de votre intérêt pour notre programme d’affiliation",
+				"payment": "Comment préférez-vous recevoir vos commissions ?",
+				"referral": [
+					"Comment avez-vous entendu parler de nous ?",
+					"Si autre moyen, veuillez préciser"
+				]
+			},
+			"button": "Soumettre"
+		}
+	},
+	"privacy": {}
+}

@@ -1,0 +1,187 @@
+{
+	"common": {
+		"buttons": {
+			"explore": "Explore Camberfarm Africa"
+		},
+		"nav": {
+			"home": "Home",
+			"about": "About Us",
+			"products": "Our Products",
+			"blog": "Blog",
+			"contact": "Contact Us",
+			"affiliate": "Affiliate Progran"
+		},
+		"faq": {
+			"heading": "Frequently asked questions",
+			"paragraph": "We have carefully answered some well thought out questions but not limited to all your questions, kindly send us an enquiry and we will respond promptly."
+		}
+	},
+	"home": {
+		"hero": {
+			"title": "Connecting Africa's Finest Agricultural Products To The World",
+			"info": "We export high-quality grains, spices, nuts, and other agricultural products from trusted African farms to International markets. Reliably, sustainably, and on time.",
+			"contact": "contact us",
+			"address": "Block 4, No 24, Oladipupo Lawanson street, Ikeja, Lagos, Nigeria"
+		},
+		"products": {
+			"heading": "CamberFarm Products",
+			"paragraph": "We are committed to being among the leading exporter, farmers and suppliers of wide range of agricultural products. These products are proceserysed under hygienic conditions to ensure long shelf life. With excellent packaging and prompt delivery, we have gained a remarkable position in the hearts of our esteemed customers.",
+			"link": "all products"
+		},
+		"offers": {
+			"headingOffers": "Special Offers",
+			"paragraphOffers": "We have access to many other products and the accessibility is seamless for us Regardless of the products you are looking for, we have covered you.",
+			"stats": {
+				"harvest": {
+					"title": "Tons of Harvest",
+					"number": "7,000"
+				},
+				"bags": {
+					"title": "Packaged Bags",
+					"number": "500,000"
+				},
+				"equipments": {
+					"title": "Units of Farm Equipments",
+					"number": "890"
+				}
+			},
+			"headingLocation": ["We Have Multiple Locations", "Around The World"],
+			"paragraphLocation": "We are strategically located in Nigeria with partnering agents across the federation with all requisite facilities including state of the art machines and equipment."
+		},
+		"gallery": {
+			"heading": "Our gallery",
+			"paragraph": "View pictures of our farm and products below"
+		},
+		"testimonials": {
+			"heading": "what customers are saying",
+			"users": [
+				{
+					"id": 1,
+					"name": "Lydia Yisa",
+					"content": "“We appreciate their consistency in quality and after service. Their corporation with rural African farmers is also commendable.” Moreover, we deeply admire their proactive efforts towards customer satisfaction."
+				},
+				{
+					"id": 2,
+					"name": "Adebayo L",
+					"content": "“We appreciate their consistency in quality and after service. Their corporation with rural African farmers is also commendable.” Moreover, we deeply admire their proactive efforts towards customer satisfaction."
+				},
+				{
+					"id": 3,
+					"name": "Chuks David",
+					"content": "“We appreciate their consistency in quality and after service. Their corporation with rural African farmers is also commendable.” Moreover, we deeply admire their proactive efforts towards customer satisfaction."
+				}
+			]
+		},
+		"blog": {
+			"heading": "blog post",
+			"paragraph": "Our blog is a hub of valuable resources, offering in-depth insights into our products and services. It's tailored to educate our customers and serve as a comprehensive guide for exporting agricultural products with ease and efficiency"
+		},
+		"feedback": {
+			"heading": "send us a message",
+			"paragraph": "Kindly input your details in all fields",
+			"placeholders": {
+				"name": "Name",
+				"country": "Country",
+				"phone": "Phone Number",
+				"email": "Email Address",
+				"message": "Type your message here..."
+			},
+			"button": "Send Message"
+		}
+	},
+	"products": {
+		"hero": {
+			"heading": "Our Products",
+			"paragraphs": [
+				"Some of our products from our farms are;",
+				"Grains, Fruits, Sesame seeds, Spices and Vegetables."
+			]
+		},
+		"products": {
+			"heading": "The products we produce, process and export are;"
+		}
+	},
+	"product": {},
+	"blogs": {},
+	"blog": {},
+	"contact": {
+		"hero": {
+			"heading": ["Get In Touch With", "CamberFarms Export"],
+			"paragraph": "We'd love to hear from you. Whether you're an importer, distributor, or trade partner, our team is ready to provide all the information you need about our products and export services.",
+			"button": "Send Enquiry"
+		},
+		"info": {},
+		"form": {
+			"heading": "send us a message",
+			"paragraph": "Fill out the form below and our export team will get back to you within 24 hours.",
+			"placeholder": {
+				"name": "Name",
+				"phone": "Phone Number",
+				"email": "Email Address",
+				"message": "Type your message here...",
+				"button": "Send Enquiry"
+			}
+		},
+		"map": {
+			"heading": "Find Us on the Map"
+		}
+	},
+	"affiliate": {
+		"hero": {
+			"heading": "affiliate program",
+			"paragraph": "Join Our Network of Global Agro-Export Brokers and Affiliate Marketers today and earn for yourself!"
+		},
+		"intro": {
+			"paragraph1": "Are you passionate about Agricultural exports, expanding global markets and connecting high quality products with businesses worldwide? Welcome to Camberfarms Affiliate Program, where we offer you a unique opportunity to expand your portfolio and to earn independently as we make sales together. With the right parthnership, benefits will be gained both ways.",
+			"subheading": "Why Partner With Camberfarms?",
+			"paragraph2": "At Camberfarms, we specialize in sourcing, processing, and exporting premium African agricultural products like Hibiscus flower, Blackstone stone flower, Raw cashew nuts. and other high demands crop. Our mission is to deliver exceptional quality, promote sustainable farming and empower local communities.",
+			"paragraph3": "As an Affiliate partner, you will be at the forefront of this mission, helping to connect our prodcuts with the clients across the globe while enjoying lucrative rewards for your efforts."
+		},
+		"benefits": {
+			"heading": "Benefits Of Joining Our Affiliate Program"
+		},
+		"join": {
+			"heading": "Who Can Join?"
+		},
+		"commission": {
+			"heading": "EARN COMMISSIONS:",
+			"paragraph1": [
+				"Receive commissions for every successful referral and",
+				" sale made through your efforts."
+			],
+			"subheading": "Why The Agro-Export Industry?",
+			"paragraph2": "The global demand sustainably sourced, high-quality agricultural products is skyrocketing, especially in the wellness, food, and cosmetics industries. By joining Camberfarms Affiliate Program, you are entering a rapidly growing market with unlimited earning potential."
+		},
+		"form": {
+			"heading": "START YOUR JOURNEY WITH CAMBERFARMS TODAY!",
+			"paragraph": "Ready to take your brokerage or marketing career to the next level? Join the Camberfarms Affiliate Program and become a key player in the thriving agro-export industry.",
+			"placeholder": {
+				"name": "Full name",
+				"email": "Email",
+				"phone": "Phone Number",
+				"country": "Country",
+				"city": "City",
+				"terms": {
+					"label": "Do you truly understand the terms of commission as an export brokerage above?",
+					"value": ["Yes", "No"]
+				},
+				"buyer": {
+					"label": "Do you have a buyer already?",
+					"value": ["Yes", "No"]
+				},
+				"ifYes": "*If you selected “yes” fill out your buyers details below",
+				"buyerCountry": "Buyer's Country",
+				"buyerProduct": "Buyer's Product",
+				"volume": "Product Volume",
+				"interest": "Tell us about your interest in our affiliate program",
+				"payment": "How would you prefer your commissions to be paid?",
+				"referral": [
+					"How did you hear about us?",
+					"If other medium please state"
+				]
+			},
+			"button": "Submit"
+		}
+	},
+	"privacy": {}
+}
