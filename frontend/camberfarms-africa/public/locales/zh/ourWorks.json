@@ -1,0 +1,15 @@
+{
+  "hero": {
+    "title": "我们的工作",
+    "description": "我们与非洲各地的农民携手合作，提高生产力，强化农村社区，并建立可持续的农业系统。",
+    "imageAlt": "我们的工作英雄图像"
+  },
+
+  "tabs": {
+    "membership": "会员资格",
+    "farmFund": "农业基金",
+    "exportation": "出口业务",
+    "technology": "我们的技术",
+    "process": "我们的流程"
+  }
+}

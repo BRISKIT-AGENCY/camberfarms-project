@@ -1,0 +1,38 @@
+{
+  "title": "Formulario de Membresía",
+  "submit": "Registrarse",
+  "success": "Registro exitoso",
+
+  "fields": {
+    "name": "Nombre Completo",
+    "email": "Correo Electrónico",
+    "phone": "Número de Teléfono",
+    "dateOfBirth": "Fecha de Nacimiento",
+    "gender": "Género",
+    "address": "Dirección",
+    "country": "País",
+    "state": "Estado",
+    "region": "Región"
+  },
+
+  "upload": {
+    "label": "Sube un documento de identidad válido",
+    "action": "Arrastra la imagen aquí o busca",
+    "types": "Tipo de archivo (PDF, PNG, JPEG)"
+  },
+
+  "errors": {
+    "name": "El nombre es obligatorio",
+    "email": "El correo electrónico es obligatorio",
+    "invalidEmail": "Correo electrónico inválido",
+    "phone": "El número de teléfono es obligatorio",
+    "dateOfBirth": "La fecha de nacimiento es obligatoria",
+    "gender": "El género es obligatorio",
+    "address": "La dirección es obligatoria",
+    "country": "El país es obligatorio",
+    "state": "El estado es obligatorio",
+    "region": "La región es obligatoria",
+    "fileRequired": "Se requiere al menos un documento de identidad",
+    "generic": "Algo salió mal. Por favor, inténtalo de nuevo."
+  }
+}

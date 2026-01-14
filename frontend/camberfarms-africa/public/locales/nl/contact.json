@@ -1,0 +1,26 @@
+{
+  "heading1": "Neem contact met ons op",
+  "description1": "Stuur ons een bericht voor een partnerschap of voor een aanvraag over CamberFarm Africa",
+  "heading2": "Stuur ons een bericht",
+  "description2": "Vul het onderstaande formulier in en ons exportteam neemt binnen 24 uur contact met u op.",
+  "sendButton1": "Bericht verzenden",
+  "sendButton2": "Vraag verzenden",
+  "success": "Bericht succesvol verzonden",
+  "error": "Er is iets misgegaan",
+
+  "placeholders": {
+    "name": "Naam",
+    "email": "E-mailadres",
+    "phone": "Telefoonnummer",
+    "message1": "Typ hier uw bericht...",
+    "message2": "Typ hier uw aanvraagbericht..."
+  },
+
+  "errors": {
+    "name": "Naam is verplicht",
+    "email": "E-mail is verplicht",
+    "emailInvalid": "Ongeldig e-mailadres",
+    "phone": "Telefoonnummer is verplicht",
+    "message": "Bericht is verplicht"
+  }
+}

@@ -1,0 +1,243 @@
+@import 'tailwindcss';
+
+:root {
+    --background: #ffffff;
+    --foreground: #171717;
+    --primary: #1ad329;
+    --secondary: #ff741f;
+    --light-grey: #f9fafb;
+    --dark-grey: #333333;
+    --grey: #808080;
+    --light-green: #edfdee;
+}
+
+@theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --font-poppins: var(--font-poppins), sans-serif;
+    --color-primary: var(--primary);
+    --color-secondary: var(--secondary);
+}
+
+body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-poppins);
+}
+
+/* --- HERO SECTION --- */
+.about-hero {
+    text-align: center;
+    padding: 4rem 1rem;
+}
+
+.about-hero-content {
+    max-width: 800px;
+    margin: 0 auto 2.5rem;
+}
+
+.about-hero h1 {
+    color: #1fd655;
+    font-size: 3rem; /* Adjusted for better scale */
+    font-weight: 700;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+}
+
+.about-hero p {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.contact-btn {
+    background-color: #1fd655;
+    color: #fff;
+    padding: 0.75rem 2.5rem;
+    border-radius: 999px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.about-hero-image {
+    width: 100%;
+    max-width: 1200px;
+    margin: 3rem auto 0;
+    border-radius: 12px;
+    display: block;
+}
+
+/* --- MISSION / VISION / VALUES --- */
+.mission-vision, .core-values {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+}
+
+.mv-row, .cv-row {
+    display: flex; /* Changed from Grid to Flex for easier desktop alignment */
+    gap: 4rem;
+    margin-bottom: 4rem;
+    align-items: flex-start;
+}
+
+.mv-title, .cv-title {
+    flex: 0 0 200px; /* Fixed width for labels on desktop */
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.mv-bar {
+    width: 6px; /* Slimmed down to match image */
+    height: 40px;
+    background-color: #ff7a00;
+}
+
+.mv-title h3, .cv-title h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #22c55e;
+    margin: 0;
+}
+
+.mv-row p, .cv-list li {
+    font-size: 1.05rem; /* Adjusted from 1.9rem (which was too large) */
+    line-height: 1.7;
+    color: #333;
+    margin: 0;
+}
+
+.cv-list {
+    list-style: none; /* Custom bullet control */
+    padding: 0;
+}
+
+.cv-list li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.cv-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #333;
+}
+
+/* --- GLOBAL REACH --- */
+.global-reach {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 6rem 2rem;
+    display: flex; /* Flex is better for the order-swap on mobile */
+    align-items: center;
+    gap: 4rem;
+}
+
+.reach-image-container {
+    flex: 1;
+}
+
+.reach-text-container {
+    flex: 1;
+}
+
+.global-reach img {
+    width: 100%;
+    border-radius: 20px;
+}
+
+.global-reach h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #1fd10d;
+    margin-bottom: 1.5rem;
+}
+
+.global-reach p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #4a4a4a;
+}
+
+/* --- CERTIFICATIONS --- */
+.certifications {
+    background-color: #1AD329;
+    padding: 5rem 2rem;
+    text-align: center;
+    color: white;
+}
+
+.certifications h2 {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+}
+
+.certifications p {
+    max-width: 750px;
+    margin: 0 auto 3rem;
+    font-size: 1rem;
+    opacity: 0.95;
+}
+
+.cert-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.cert-logo-box {
+    background: white;
+    padding: 20px;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.cert-logo-box img {
+    width: 80%;
+    height: auto;
+}
+
+/* --- MOBILE RESPONSIVE --- */
+@media (max-width: 768px) {
+    .about-hero h1 { font-size: 2.2rem; }
+    
+    /* Stack Rows */
+    .mv-row, .cv-row {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .mv-title, .cv-title {
+        flex: none;
+    }
+
+    /* Swap Global Reach Order (Text stays on top) */
+    .global-reach {
+        flex-direction: column-reverse; 
+        text-align: left;
+    }
+
+    .cert-grid {
+        grid-template-columns: repeat(3, 1fr); /* Matching the image's 3-column mobile look */
+        gap: 1rem;
+    }
+
+    .cert-logo-box {
+        width: 80px;
+        height: 80px;
+    }
+}

@@ -1,0 +1,56 @@
+{
+  "hero": {
+    "title": "Quem Somos",
+    "description": "A Camberfarm Africa é uma plataforma agroindustrial orientada por propósito, transformando o ecossistema agrícola da África. Conectamos agricultores locais a mercados internacionais por meio de práticas sustentáveis, parcerias éticas e padrões de exportação de classe mundial.",
+    "cta": "Parceria conosco"
+  },
+
+  "images": {
+    "mobileAlt": "imagem principal sobre mobile",
+    "desktopAlt": "imagem principal sobre desktop"
+  },
+
+  "story": {
+    "title": "Nossa História",
+    "p1": "Fundada na crença de que a força agrícola da África pode alimentar o mundo, a Camberfarm Africa foi criada para conectar agricultores locais a compradores globais.",
+    "p2": "Capacitamos agricultores com acesso a recursos, treinamentos e canais de comércio confiáveis, garantindo que os produtos cultivados em toda a África atendam aos padrões internacionais.",
+    "p3": "Nosso compromisso vai além do comércio; trata-se de construir um futuro sustentável onde a agricultura africana prospere e seu valor seja reconhecido globalmente."
+  },
+
+  "mission": {
+    "title": "Missão",
+    "description": "Nossa missão é conectar os agricultores africanos aos mercados globais por meio de sistemas agrícolas sustentáveis, transparentes e inovadores. Buscamos capacitar comunidades, promover comércio justo e garantir que cada produto exportado reflita a qualidade, integridade e potencial da África."
+  },
+
+  "vision": {
+    "title": "Visão",
+    "description": "Nossa visão é tornar a África líder global em exportações agrícolas éticas e rastreáveis. Almejamos construir um futuro onde os produtos africanos sejam confiáveis, valorizados e celebrados nos mercados internacionais, promovendo prosperidade compartilhada e sustentabilidade de longo prazo para as próximas gerações."
+  },
+
+  "values": {
+    "title": "Valores Fundamentais",
+    "intro": "No coração da Camberfarm Africa estão os princípios que orientam como crescemos, fazemos parcerias e entregamos resultados. Esses valores moldam nossa cultura, direcionam nossas decisões e definem como impactamos vidas em todo o ecossistema agrícola.",
+    "items": {
+      "empowerment": {
+        "title": "Capacitação:",
+        "description": "Fornecemos aos agricultores e às comunidades locais o conhecimento, as ferramentas e o acesso ao mercado de que precisam para prosperar."
+      },
+      "sustainability": {
+        "title": "Sustentabilidade:",
+        "description": "Promovemos práticas agrícolas responsáveis que protegem o meio ambiente e garantem produtividade a longo prazo para as futuras gerações."
+      },
+      "integrity": {
+        "title": "Integridade:",
+        "description": "Mantemos honestidade e transparência em todos os processos, do fornecimento à exportação, garantindo que nossos parceiros possam sempre confiar em nosso trabalho."
+      },
+      "innovation": {
+        "title": "Inovação:",
+        "description": "Adotamos tecnologia e criatividade para melhorar a produtividade, eficiência e rastreabilidade em toda a cadeia de valor agrícola."
+      },
+      "excellence": {
+        "title": "Excelência:",
+        "description": "Mantemos os mais altos padrões, oferecendo produtos e experiências de qualidade que refletem o potencial da África no cenário global."
+      }
+    }
+  }
+}

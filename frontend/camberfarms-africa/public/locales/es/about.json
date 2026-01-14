@@ -1,0 +1,56 @@
+{
+  "hero": {
+    "title": "Quiénes Somos",
+    "description": "Camberfarm Africa es una plataforma agroindustrial impulsada por un propósito, que transforma el ecosistema agrícola de África. Conectamos a los agricultores locales con los mercados internacionales mediante prácticas sostenibles, alianzas éticas y estándares de exportación de clase mundial.",
+    "cta": "Asóciate con nosotros"
+  },
+
+  "images": {
+    "mobileAlt": "imagen principal sobre nosotros móvil",
+    "desktopAlt": "imagen principal sobre nosotros escritorio"
+  },
+
+  "story": {
+    "title": "Nuestra Historia",
+    "p1": "Fundada sobre la creencia de que la fortaleza agrícola de África puede impulsar al mundo, Camberfarm Africa fue creada para cerrar la brecha entre los agricultores locales y los compradores globales.",
+    "p2": "Empoderamos a los agricultores con acceso a recursos, formación y canales comerciales confiables, al tiempo que garantizamos que los productos cultivados en África cumplan con los estándares internacionales.",
+    "p3": "Nuestro compromiso va más allá del comercio; se trata de construir un futuro sostenible donde la agricultura africana prospere y su valor sea reconocido a nivel mundial."
+  },
+
+  "mission": {
+    "title": "Misión",
+    "description": "Nuestra misión es conectar a los agricultores africanos con los mercados globales a través de sistemas agrícolas sostenibles, transparentes e innovadores. Buscamos empoderar a las comunidades, promover el comercio justo y garantizar que cada producto que exportamos refleje la calidad, integridad y potencial de África."
+  },
+
+  "vision": {
+    "title": "Visión",
+    "description": "Nuestra visión es convertir a África en un líder mundial en exportaciones agrícolas éticas y trazables. Aspiramos a construir un futuro en el que los productos africanos sean confiables, valorados y celebrados en los mercados internacionales, impulsando la prosperidad compartida y la sostenibilidad a largo plazo para las futuras generaciones."
+  },
+
+  "values": {
+    "title": "Valores Fundamentales",
+    "intro": "En el corazón de Camberfarm Africa se encuentran los principios que guían cómo crecemos, colaboramos y entregamos. Estos valores definen nuestra cultura, impulsan nuestras decisiones y determinan la forma en que impactamos vidas en todo el ecosistema agrícola.",
+    "items": {
+      "empowerment": {
+        "title": "Empoderamiento:",
+        "description": "Dotamos a los agricultores y a las comunidades locales del conocimiento, las herramientas y el acceso al mercado que necesitan para prosperar."
+      },
+      "sustainability": {
+        "title": "Sostenibilidad:",
+        "description": "Promovemos prácticas agrícolas responsables que protegen el medio ambiente y garantizan la productividad a largo plazo para las futuras generaciones."
+      },
+      "integrity": {
+        "title": "Integridad:",
+        "description": "Mantenemos la honestidad y la transparencia en cada proceso, desde el abastecimiento hasta la exportación, asegurando que nuestros socios siempre puedan confiar en nuestro trabajo."
+      },
+      "innovation": {
+        "title": "Innovación:",
+        "description": "Adoptamos la tecnología y la creatividad para mejorar la productividad, la eficiencia y la trazabilidad en toda la cadena de valor agrícola."
+      },
+      "excellence": {
+        "title": "Excelencia:",
+        "description": "Nos exigimos los más altos estándares, ofreciendo productos y experiencias de calidad que reflejan el potencial de África en el escenario global."
+      }
+    }
+  }
+}

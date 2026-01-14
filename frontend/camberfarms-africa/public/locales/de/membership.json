@@ -1,0 +1,38 @@
+{
+  "title": "Mitgliedsformular",
+  "submit": "Registrieren",
+  "success": "Registrierung erfolgreich",
+
+  "fields": {
+    "name": "Vollständiger Name",
+    "email": "E-Mail-Adresse",
+    "phone": "Telefonnummer",
+    "dateOfBirth": "Geburtsdatum",
+    "gender": "Geschlecht",
+    "address": "Adresse",
+    "country": "Land",
+    "state": "Bundesland",
+    "region": "Region"
+  },
+
+  "upload": {
+    "label": "Laden Sie einen gültigen Ausweis hoch",
+    "action": "Bild hier ablegen oder durchsuchen",
+    "types": "Dateityp (PDF, PNG, JPEG)"
+  },
+
+  "errors": {
+    "name": "Name ist erforderlich",
+    "email": "E-Mail ist erforderlich",
+    "invalidEmail": "Ungültige E-Mail-Adresse",
+    "phone": "Telefonnummer ist erforderlich",
+    "dateOfBirth": "Geburtsdatum ist erforderlich",
+    "gender": "Geschlecht ist erforderlich",
+    "address": "Adresse ist erforderlich",
+    "country": "Land ist erforderlich",
+    "state": "Bundesland ist erforderlich",
+    "region": "Region ist erforderlich",
+    "fileRequired": "Mindestens eine Ausweisdokument-Datei ist erforderlich",
+    "generic": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut."
+  }
+}

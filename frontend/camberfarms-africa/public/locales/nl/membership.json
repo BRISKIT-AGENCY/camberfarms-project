@@ -1,0 +1,38 @@
+{
+  "title": "Lidmaatschapsformulier",
+  "submit": "Aanmelden",
+  "success": "Registratie geslaagd",
+
+  "fields": {
+    "name": "Volledige naam",
+    "email": "E-mailadres",
+    "phone": "Telefoonnummer",
+    "dateOfBirth": "Geboortedatum",
+    "gender": "Geslacht",
+    "address": "Adres",
+    "country": "Land",
+    "state": "Provincie / Staat",
+    "region": "Regio"
+  },
+
+  "upload": {
+    "label": "Upload een geldig ID-kaart",
+    "action": "Sleep hier de afbeelding of blader",
+    "types": "Bestandstype (PDF, PNG, JPEG)"
+  },
+
+  "errors": {
+    "name": "Naam is verplicht",
+    "email": "E-mail is verplicht",
+    "invalidEmail": "Ongeldig e-mailadres",
+    "phone": "Telefoonnummer is verplicht",
+    "dateOfBirth": "Geboortedatum is verplicht",
+    "gender": "Geslacht is verplicht",
+    "address": "Adres is verplicht",
+    "country": "Land is verplicht",
+    "state": "Provincie / Staat is verplicht",
+    "region": "Regio is verplicht",
+    "fileRequired": "Ten minste één ID-bestand is vereist",
+    "generic": "Er is iets misgegaan. Probeer het opnieuw."
+  }
+}

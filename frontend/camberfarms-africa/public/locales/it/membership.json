@@ -1,0 +1,38 @@
+{
+  "title": "Modulo di Registrazione",
+  "submit": "Iscriviti",
+  "success": "Registrazione avvenuta con successo",
+
+  "fields": {
+    "name": "Nome Completo",
+    "email": "Indirizzo Email",
+    "phone": "Numero di Telefono",
+    "dateOfBirth": "Data di Nascita",
+    "gender": "Genere",
+    "address": "Indirizzo",
+    "country": "Paese",
+    "state": "Stato",
+    "region": "Regione"
+  },
+
+  "upload": {
+    "label": "Carica un documento d'identità valido",
+    "action": "Trascina l'immagine qui o sfoglia",
+    "types": "Tipi di file (PDF, PNG, JPEG)"
+  },
+
+  "errors": {
+    "name": "Il nome è obbligatorio",
+    "email": "L'email è obbligatoria",
+    "invalidEmail": "Indirizzo email non valido",
+    "phone": "Il numero di telefono è obbligatorio",
+    "dateOfBirth": "La data di nascita è obbligatoria",
+    "gender": "Il genere è obbligatorio",
+    "address": "L'indirizzo è obbligatorio",
+    "country": "Il paese è obbligatorio",
+    "state": "Lo stato è obbligatorio",
+    "region": "La regione è obbligatoria",
+    "fileRequired": "È richiesto almeno un documento d'identità",
+    "generic": "Qualcosa è andato storto. Per favore riprova."
+  }
+}
