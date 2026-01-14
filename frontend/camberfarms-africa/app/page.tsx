@@ -11,10 +11,7 @@ import WhoWeAre from "./components/WhoWeAre";
 import News from "./components/News";
 import Review from "./components/Review";
 import Impact from "./components/Impact";
-import MembershipForm from "./components/MembershipForm";
-import FarmFundForm from "./components/FarmFundForm";
-import OurWorks from "./components/OurWorks";
-import MembershipText from "./components/MembershipText";
+
 
 export default function Home() {
   const { t } = useTranslation('contact')
@@ -57,7 +54,9 @@ export default function Home() {
       <Process showImage={false}/>
       <WhoWeAre />
       <WhatWeDo />
-      <Impact hColor="#1AD329" pColor="#808080" />
+      <div id='impact'>
+        <Impact hColor="#1AD329" pColor="#808080" />
+      </div>
       <Review />
       <Partnership />
       <Blogs />

@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 const ExportationText = () => {
@@ -11,9 +12,9 @@ const ExportationText = () => {
       <p className='md:text-[18px] text-[14px]'>  Our team handles sourcing, quality control, documentation, and logistics, ensuring a seamless experience from order placement to final delivery.</p>
       <p className='md:text-[18px] text-[14px]'>Whether you're an importer, distributor, or a food production company expanding your sourcing channels, Camberfarm Export offers structured export opportunities that guarantee quality, compliance, and dependable delivery.</p>
       <p className='mt-6 md:text-[18px] text-[14px]'>Click out the button below, and our explore our Export Website to see product availability, pricing, logistics, and next steps.</p>
-      <button className='mt-12.5'>
+      <Link href='/'  className='mt-12.5'>
         <p className='bg-[#1AD329] text-white py-2.75 px-6 rounded-[100px] text-[18px]'>Visit Camberfarms Export</p>
-      </button>
+      </Link>
     </div>
   )
 }

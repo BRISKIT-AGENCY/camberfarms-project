@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 
 const HeroMain = () => {
@@ -15,11 +16,11 @@ const HeroMain = () => {
         {t('subtitle')}
       </p>
 
-      <button className="mt-12.5 md:h-16 md:w-60 bg-[#1AD329] p-2.5 md:p-5 rounded-[100px]">
+      <Link href="/our-works" className="mt-12.5 md:h-16 md:w-60 bg-[#1AD329] p-2.5 md:p-5 rounded-[100px]">
         <p className="text-white font-bold md:font-extrabold text-[14px] md:text-[18px]">
           {t('cta')}
         </p>
-      </button>
+      </Link>
     </div>
   )
 }

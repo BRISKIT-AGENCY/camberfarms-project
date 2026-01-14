@@ -30,7 +30,7 @@ const Products = ({
   return (
     <div className="h-fit w-full">
       <div className="py-20 px-6 xl:py-50.5 xl:px-25 w-full h-full flex flex-col xl:flex-row xl:justify-between items-center gap-15.75">
-        
+
         {/* Text Content */}
         <div className="xl:w-[50%] flex flex-col items-center xl:items-start">
           <div className="flex items-center gap-4">
@@ -52,7 +52,7 @@ const Products = ({
 
           {buttonTextKey && (
             <Link
-            href={link}
+              href={link}
               onClick={onButtonClick}
               className={`flex items-center justify-center mt-12.5 md:h-12.5 bg-[#1AD329] rounded-[100px] ${buttonClassName}`}
             >
@@ -64,7 +64,7 @@ const Products = ({
         </div>
 
         {/* Image */}
-        <div className="h-full xl:w-[50%]">
+        <div className="h-full xl:w-[50%] bg-amber-400">
           <img
             src={imageSrc}
             alt={imageAlt}

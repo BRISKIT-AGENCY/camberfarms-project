@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link';
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -55,9 +56,9 @@ const Impact: React.FC<ImpactProps> = ({
         </div>
 
         <div className="mt-25 w-full bg-[#FF741F] flex justify-center items-center h-25 rounded-3xl">
-          <button className="bg-white text-[#1AD329] rounded-[100px] text-[14px] lg:text-[24px] h-[60%] lg:w-75 w-[70%]">
+          <Link href='/contact' className="bg-white flex justify-center items-center text-[#1AD329] rounded-[100px] text-[14px] md:text-[24px] h-[60%] lg:w-75 w-[70%]">
             {t('button')}
-          </button>
+          </Link>
         </div>
       </div>
     </div>

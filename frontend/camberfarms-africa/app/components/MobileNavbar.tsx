@@ -81,7 +81,7 @@ const MobileNavbar = () => {
               onClick={() => setIsAboutOpen(prev => !prev)}
               className="flex justify-between w-full items-center"
             >
-              <span className={`transition-colors ${isAboutOpen ? 'text-[#1AD329]' : anyAccordionOpen ? 'text-[#808080]' : 'text-black'}`}>{t('about')}</span>
+              <Link href='/about' className={`transition-colors ${isAboutOpen ? 'text-[#1AD329]' : anyAccordionOpen ? 'text-[#808080]' : 'text-black'}`}>{t('about')}</Link>
               <Image
                 src="/images/arrowdown.png"
                 alt="Arrow Down"
@@ -94,13 +94,13 @@ const MobileNavbar = () => {
             {isAboutOpen && (
               <div className="mt-2 flex flex-col gap-2 text-sm text-gray-700">
                 <hr className='border-[0.5px] border-[#1AD329]' />
-                <Link href="/about/vision-mission" onClick={() => setIsMenuOpen(false)} className='mt-3'>
+                <Link href="/about/#mission" onClick={() => setIsMenuOpen(false)} className='mt-3'>
                   Vision & Mission
                 </Link>
                 <Link href="/about/theory-of-change" onClick={() => setIsMenuOpen(false)}>
                   Theory of Change
                 </Link>
-                <Link href="/about/values" onClick={() => setIsMenuOpen(false)}>
+                <Link href="/about/#values" onClick={() => setIsMenuOpen(false)}>
                   Values
                 </Link>
               </div>
@@ -113,7 +113,7 @@ const MobileNavbar = () => {
               onClick={() => setIsOurWorkOpen(prev => !prev)}
               className="flex justify-between w-full items-center"
             >
-              <span className={`transition-colors ${isOurWorkOpen ? 'text-[#1AD329]' : anyAccordionOpen ? 'text-[#808080]' : 'text-black'}`}>{t('ourWork')}</span>
+              <Link href='/our-works' className={`transition-colors ${isOurWorkOpen ? 'text-[#1AD329]' : anyAccordionOpen ? 'text-[#808080]' : 'text-black'}`}>{t('ourWork')}</Link>
               <Image
                 src="/images/arrowdown.png"
                 alt="Arrow Down"

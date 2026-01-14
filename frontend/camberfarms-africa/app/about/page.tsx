@@ -68,11 +68,11 @@ const About = () => {
           <p className="text-[24px] mt-4">{t("story.p3")}</p>
         </div>
 
-        <div className="sm:mt-68.25">
+        <div  className="sm:mt-68.25">
           {/* Mission */}
-          <div>
+          <div id="mission">
             <div className="md:border-l-10 border-l-5 border-[#FF741F] pl-9">
-              <h2 className="font-bold text-[24px] md:text-[50px] text-[#1AD329]">
+              <h2  className="font-bold text-[24px] md:text-[50px] text-[#1AD329]">
                 {t("mission.title")}
               </h2>
             </div>
@@ -83,7 +83,7 @@ const About = () => {
           </div>
 
           {/* Vision */}
-          <div className="mt-12.5 md:mt-37.5">
+          <div id="vision" className="mt-12.5 md:mt-37.5">
             <div className="md:border-l-10 border-l-5 border-[#FF741F] pl-9">
               <h2 className="font-bold text-[24px] md:text-[50px] text-[#1AD329]">
                 {t("vision.title")}
@@ -96,7 +96,7 @@ const About = () => {
           </div>
 
           {/* Core Values */}
-          <div className="mt-12.5 md:mt-37.5">
+          <div id='values' className="mt-12.5 md:mt-37.5">
             <div className="md:border-l-10 border-l-5 border-[#FF741F] pl-9">
               <h2 className="font-bold text-[24px] md:text-[50px] text-[#1AD329]">
                 {t("values.title")}
@@ -109,7 +109,8 @@ const About = () => {
           </div>
 
           {/* Values list */}
-          {["empowerment", "sustainability", "integrity", "innovation", "excellence"].map(
+          <div id='values'>
+            {["empowerment", "sustainability", "integrity", "innovation", "excellence"].map(
             (key) => (
               <ul
                 key={key}
@@ -126,6 +127,7 @@ const About = () => {
               </ul>
             )
           )}
+          </div>
         </div>
       </div>
 
