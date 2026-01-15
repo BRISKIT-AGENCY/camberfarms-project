@@ -11,8 +11,12 @@ import { usePathname, useRouter } from '@/i18n/navigation'
 import { useLocale } from 'next-intl'
 
 const LANGUAGES = [
-	{ label: 'ENG', code: 'en', flag: 'https://flagcdn.com/w40/gb.png' },
-	{ label: 'FRA', code: 'fr', flag: 'https://flagcdn.com/w40/fr.png' },
+	{ label: 'English', code: 'en', flag: 'https://flagcdn.com/w40/gb.png' },
+	{ label: 'Français', code: 'fr', flag: 'https://flagcdn.com/w40/fr.png' },
+	{ label: 'Español', code: 'es', flag: 'https://flagcdn.com/w40/es.png' },
+	{ label: 'português', code: 'pt', flag: 'https://flagcdn.com/w40/pt.png' },
+	{ label: 'italiano', code: 'it', flag: 'https://flagcdn.com/w40/it.png' },
+	{ label: 'русский', code: 'ru', flag: 'https://flagcdn.com/w40/ru.png' },
 ]
 
 export default function LocaleSwitcher() {
@@ -51,12 +55,12 @@ export default function LocaleSwitcher() {
 					height={34}
 					className="w-8 aspect-square rounded-full object-center object-cover"
 				/>
-				<span>{currentLang.label}</span>
+				<span className="uppercase">{currentLang.label.slice(0, 3)}</span>
 				<Image src={arrowDown} alt="Arrow Down" width={24} height={24} />
 			</button>
 
 			{isOpen && (
-				<div className="absolute mt-2 bg-white border rounded-lg shadow-md right-0">
+				<div className="absolute mt-2 bg-white border rounded-lg shadow-md right-0 w-max px-2">
 					{LANGUAGES.map((lang) => (
 						<button
 							key={lang.code}

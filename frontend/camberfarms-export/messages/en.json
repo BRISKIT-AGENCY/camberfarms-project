@@ -183,5 +183,51 @@
 			"button": "Submit"
 		}
 	},
-	"privacy": {}
+	"privacy": {},
+	"about": {
+		"hero": {
+			"heading": "About Us",
+			"paragraph": "Connecting Africa’s finest agricultural produce to global markets through quality, integrity, and sustainable partnerships.",
+			"button": "Contact Us"
+		},
+		"missionVission": {
+			"mission": {
+				"heading": "Mission",
+				"paragraph": "To promote Africa's agricultural excellence by providing global access to high-quality, export-ready produce through reliable and ethical trade practices."
+			},
+			"vision": {
+				"heading": "Vision",
+				"paragraph": "To be Africa's most trusted name in agricultural exports, connecting local farmers to the world with efficiency, sustainability, and transparency."
+			}
+		},
+		"coreValues": {
+			"heading": "Core Values",
+			"values": [
+				{
+					"title": "Integrity",
+					"text": " We operate with honesty and accountability."
+				},
+				{
+					"title": "Quality",
+					"text": " Only the finest, certified products leave our hands."
+				},
+				{
+					"title": "Sustainability",
+					"text": " We empower local farmers while preserving our environment."
+				},
+				{
+					"title": "Partnership",
+					"text": " We build long-term, mutually beneficial relationships globally."
+				}
+			]
+		},
+		"globalReach": {
+			"heading": "Our Global Reach",
+			"paragraph": "With a growing network of logistics partners and export hubs, Camberfarm delivers agrictural products to clients across Asia, Europe, and the Americas. Our team manages every stage from sourcing to shipment, ensuring quality and compaliance at each step."
+		},
+		"certification": {
+			"heading": "Our Certifications & Partnerships",
+			"paragraph": "CamberFarm Export is fully registered and certified by recognized agrictural and trade authorities. Our operations meet both local and international quality control standards, ensuring seamless trade compliance for every shipment"
+		}
+	}
 }

@@ -14,8 +14,6 @@ export type iBlogContent = {
 
 async function getBlog(slug: string): Promise<iBlogContent | null> {
 	try {
-		// console.log(slug);
-
 		const res = await axiosInstance.get(`/api/export/blog/${slug}`)
 		return res.data
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any

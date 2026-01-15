@@ -1,0 +1,233 @@
+{
+	"common": {
+		"buttons": {
+			"explore": "Esplora Camberfarm Africa"
+		},
+		"nav": {
+			"home": "Home",
+			"about": "Chi Siamo",
+			"products": "I Nostri Prodotti",
+			"blog": "Blog",
+			"contact": "Contattaci",
+			"affiliate": "Programma di Affiliazione"
+		},
+		"faq": {
+			"heading": "Domande frequenti",
+			"paragraph": "Abbiamo risposto con attenzione ad alcune domande ben formulate, anche se non a tutte le possibili. Vi invitiamo a inviarci una richiesta e risponderemo prontamente."
+		}
+	},
+	"home": {
+		"hero": {
+			"title": "Collegare i migliori prodotti agricoli dell’Africa al mondo",
+			"info": "Esportiamo cereali, spezie, frutta secca e altri prodotti agricoli di alta qualità da aziende agricole africane affidabili verso i mercati internazionali. In modo affidabile, sostenibile e puntuale.",
+			"contact": "contattaci",
+			"address": "Blocco 4, N. 24, Via Oladipupo Lawanson, Ikeja, Lagos, Nigeria"
+		},
+		"products": {
+			"heading": "Prodotti CamberFarm",
+			"paragraph": "Ci impegniamo a essere tra i principali esportatori, agricoltori e fornitori di un’ampia gamma di prodotti agricoli. Questi prodotti vengono lavorati in condizioni igieniche per garantire una lunga durata di conservazione. Con un imballaggio eccellente e consegne puntuali, abbiamo conquistato una posizione di rilievo nel cuore dei nostri stimati clienti.",
+			"link": "tutti i prodotti"
+		},
+		"offers": {
+			"headingOffers": "Offerte Speciali",
+			"paragraphOffers": "Abbiamo accesso a molti altri prodotti e la disponibilità è perfetta per noi. Qualunque prodotto stiate cercando, siamo pronti a soddisfare le vostre esigenze.",
+			"stats": {
+				"harvest": {
+					"title": "Tonnellate di Raccolto",
+					"number": "7,000"
+				},
+				"bags": {
+					"title": "Sacchi Confezionati",
+					"number": "500,000"
+				},
+				"equipments": {
+					"title": "Unità di Attrezzature Agricole",
+					"number": "890"
+				}
+			},
+			"headingLocation": ["Abbiamo più sedi", "In tutto il mondo"],
+			"paragraphLocation": "Siamo strategicamente situati in Nigeria, con agenti partner in tutta la federazione, dotati di tutte le strutture necessarie, comprese macchine e attrezzature all’avanguardia."
+		},
+		"gallery": {
+			"heading": "La nostra galleria",
+			"paragraph": "Visualizza qui sotto le immagini della nostra azienda agricola e dei nostri prodotti"
+		},
+		"testimonials": {
+			"heading": "cosa dicono i clienti",
+			"users": [
+				{
+					"id": 1,
+					"name": "Lydia Yisa",
+					"content": "“Apprezziamo la loro costanza nella qualità e nel servizio post-vendita. Anche la loro collaborazione con gli agricoltori rurali africani è encomiabile.” Inoltre, ammiriamo profondamente i loro sforzi proattivi per la soddisfazione del cliente."
+				},
+				{
+					"id": 2,
+					"name": "Adebayo L",
+					"content": "“Apprezziamo la loro costanza nella qualità e nel servizio post-vendita. Anche la loro collaborazione con gli agricoltori rurali africani è encomiabile.” Inoltre, ammiriamo profondamente i loro sforzi proattivi per la soddisfazione del cliente."
+				},
+				{
+					"id": 3,
+					"name": "Chuks David",
+					"content": "“Apprezziamo la loro costanza nella qualità e nel servizio post-vendita. Anche la loro collaborazione con gli agricoltori rurali africani è encomiabile.” Inoltre, ammiriamo profondamente i loro sforzi proattivi per la soddisfazione del cliente."
+				}
+			]
+		},
+		"blog": {
+			"heading": "articolo del blog",
+			"paragraph": "Il nostro blog è un centro di risorse preziose che offre approfondimenti sui nostri prodotti e servizi. È pensato per educare i nostri clienti e fungere da guida completa per esportare prodotti agricoli con facilità ed efficienza."
+		},
+		"feedback": {
+			"heading": "inviaci un messaggio",
+			"paragraph": "Ti preghiamo di inserire i tuoi dati in tutti i campi",
+			"placeholders": {
+				"name": "Nome",
+				"country": "Paese",
+				"phone": "Numero di telefono",
+				"email": "Indirizzo email",
+				"message": "Scrivi qui il tuo messaggio..."
+			},
+			"button": "Invia messaggio"
+		}
+	},
+	"products": {
+		"hero": {
+			"heading": "I Nostri Prodotti",
+			"paragraphs": [
+				"Alcuni dei prodotti provenienti dalle nostre aziende agricole sono;",
+				"Cereali, frutta, semi di sesamo, spezie e verdure."
+			]
+		},
+		"products": {
+			"heading": "I prodotti che produciamo, trasformiamo ed esportiamo sono;"
+		}
+	},
+	"product": {},
+	"blogs": {},
+	"blog": {},
+	"contact": {
+		"hero": {
+			"heading": ["Mettiti in contatto con", "CamberFarms Export"],
+			"paragraph": "Saremmo lieti di sentirti. Che tu sia un importatore, distributore o partner commerciale, il nostro team è pronto a fornirti tutte le informazioni di cui hai bisogno sui nostri prodotti e servizi di esportazione.",
+			"button": "Invia richiesta"
+		},
+		"info": {},
+		"form": {
+			"heading": "inviaci un messaggio",
+			"paragraph": "Compila il modulo sottostante e il nostro team export ti risponderà entro 24 ore.",
+			"placeholder": {
+				"name": "Nome",
+				"phone": "Numero di telefono",
+				"email": "Indirizzo email",
+				"message": "Scrivi qui il tuo messaggio...",
+				"button": "Invia richiesta"
+			}
+		},
+		"map": {
+			"heading": "Trovaci sulla mappa"
+		}
+	},
+	"affiliate": {
+		"hero": {
+			"heading": "programma di affiliazione",
+			"paragraph": "Unisciti oggi alla nostra rete globale di broker di agro-export e marketer affiliati e guadagna per te stesso!"
+		},
+		"intro": {
+			"paragraph1": "Sei appassionato di esportazioni agricole, espansione dei mercati globali e collegamento di prodotti di alta qualità con aziende in tutto il mondo? Benvenuto nel Programma di Affiliazione Camberfarms, dove ti offriamo un’opportunità unica per ampliare il tuo portafoglio e guadagnare in modo indipendente mentre realizziamo vendite insieme. Con la giusta partnership, entrambe le parti ne trarranno beneficio.",
+			"subheading": "Perché collaborare con Camberfarms?",
+			"paragraph2": "In Camberfarms siamo specializzati nell’approvvigionamento, lavorazione ed esportazione di prodotti agricoli africani premium come fiore di ibisco, fiore di pietra Blackstone, anacardi grezzi e altre colture ad alta domanda. La nostra missione è offrire qualità eccezionale, promuovere l’agricoltura sostenibile e rafforzare le comunità locali.",
+			"paragraph3": "Come partner affiliato, sarai in prima linea in questa missione, aiutando a collegare i nostri prodotti ai clienti di tutto il mondo e godendo di ricompense vantaggiose per i tuoi sforzi."
+		},
+		"benefits": {
+			"heading": "Vantaggi di aderire al nostro programma di affiliazione"
+		},
+		"join": {
+			"heading": "Chi può aderire?"
+		},
+		"commission": {
+			"heading": "GUADAGNA COMMISSIONI:",
+			"paragraph1": [
+				"Ricevi commissioni per ogni segnalazione riuscita e",
+				" vendita effettuata grazie ai tuoi sforzi."
+			],
+			"subheading": "Perché il settore dell’agro-export?",
+			"paragraph2": "La domanda globale di prodotti agricoli sostenibili e di alta qualità è in forte crescita, soprattutto nei settori del benessere, alimentare e cosmetico. Unendoti al Programma di Affiliazione Camberfarms, entri in un mercato in rapida espansione con un potenziale di guadagno illimitato."
+		},
+		"form": {
+			"heading": "INIZIA IL TUO PERCORSO CON CAMBERFARMS OGGI!",
+			"paragraph": "Pronto a portare la tua carriera di intermediazione o marketing al livello successivo? Unisciti al Programma di Affiliazione Camberfarms e diventa un protagonista nel fiorente settore dell’agro-export.",
+			"placeholder": {
+				"name": "Nome completo",
+				"email": "Email",
+				"phone": "Numero di telefono",
+				"country": "Paese",
+				"city": "Città",
+				"terms": {
+					"label": "Comprendi davvero i termini di commissione come broker di esportazione indicati sopra?",
+					"value": ["Sì", "No"]
+				},
+				"buyer": {
+					"label": "Hai già un acquirente?",
+					"value": ["Sì", "No"]
+				},
+				"ifYes": "*Se hai selezionato “sì”, compila di seguito i dati del tuo acquirente",
+				"buyerCountry": "Paese dell’acquirente",
+				"buyerProduct": "Prodotto dell’acquirente",
+				"volume": "Volume del prodotto",
+				"interest": "Parlaci del tuo interesse per il nostro programma di affiliazione",
+				"payment": "Come preferisci ricevere le tue commissioni?",
+				"referral": [
+					"Come ci hai conosciuto?",
+					"Se tramite un altro mezzo, specifica"
+				]
+			},
+			"button": "Invia"
+		}
+	},
+	"privacy": {},
+	"about": {
+		"hero": {
+			"heading": "Chi Siamo",
+			"paragraph": "Colleghiamo i migliori prodotti agricoli dell’Africa ai mercati globali attraverso qualità, integrità e partnership sostenibili.",
+			"button": "Contattaci"
+		},
+		"missionVission": {
+			"mission": {
+				"heading": "Missione",
+				"paragraph": "Promuovere l’eccellenza agricola dell’Africa fornendo accesso globale a prodotti di alta qualità pronti per l’esportazione attraverso pratiche commerciali affidabili ed etiche."
+			},
+			"vision": {
+				"heading": "Visione",
+				"paragraph": "Diventare il nome più affidabile dell’Africa nelle esportazioni agricole, collegando gli agricoltori locali al mondo con efficienza, sostenibilità e trasparenza."
+			}
+		},
+		"coreValues": {
+			"heading": "Valori Fondamentali",
+			"values": [
+				{
+					"title": "Integrità",
+					"text": " Operiamo con onestà e responsabilità."
+				},
+				{
+					"title": "Qualità",
+					"text": " Solo i migliori prodotti certificati lasciano le nostre mani."
+				},
+				{
+					"title": "Sostenibilità",
+					"text": " Rafforziamo gli agricoltori locali preservando l’ambiente."
+				},
+				{
+					"title": "Partnership",
+					"text": " Costruiamo relazioni a lungo termine e reciprocamente vantaggiose a livello globale."
+				}
+			]
+		},
+		"globalReach": {
+			"heading": "La Nostra Presenza Globale",
+			"paragraph": "Con una rete in crescita di partner logistici e hub di esportazione, Camberfarm consegna prodotti agricoli a clienti in Asia, Europa e nelle Americhe. Il nostro team gestisce ogni fase, dall’approvvigionamento alla spedizione, garantendo qualità e conformità in ogni passaggio."
+		},
+		"certification": {
+			"heading": "Le Nostre Certificazioni e Partnership",
+			"paragraph": "CamberFarm Export è pienamente registrata e certificata da autorità agricole e commerciali riconosciute. Le nostre operazioni rispettano gli standard di controllo qualità locali e internazionali, garantendo una conformità commerciale senza intoppi per ogni spedizione."
+		}
+	}
+}

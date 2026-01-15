@@ -183,5 +183,51 @@
 			"button": "Soumettre"
 		}
 	},
-	"privacy": {}
+	"privacy": {},
+	"about": {
+		"hero": {
+			"heading": "À propos de nous",
+			"paragraph": "Relier les meilleurs produits agricoles d’Afrique aux marchés mondiaux grâce à la qualité, à l’intégrité et à des partenariats durables.",
+			"button": "Contactez-nous"
+		},
+		"missionVission": {
+			"mission": {
+				"heading": "Mission",
+				"paragraph": "Promouvoir l’excellence agricole de l’Afrique en offrant un accès mondial à des produits de haute qualité, prêts à l’exportation, grâce à des pratiques commerciales fiables et éthiques."
+			},
+			"vision": {
+				"heading": "Vision",
+				"paragraph": "Devenir le nom le plus digne de confiance en Afrique dans le domaine des exportations agricoles, en reliant les agriculteurs locaux au monde avec efficacité, durabilité et transparence."
+			}
+		},
+		"coreValues": {
+			"heading": "Valeurs fondamentales",
+			"values": [
+				{
+					"title": "Intégrité",
+					"text": "Nous opérons avec honnêteté et responsabilité."
+				},
+				{
+					"title": "Qualité",
+					"text": "Seuls les meilleurs produits certifiés quittent nos installations."
+				},
+				{
+					"title": "Durabilité",
+					"text": "Nous soutenons les agriculteurs locaux tout en préservant notre environnement."
+				},
+				{
+					"title": "Partenariat",
+					"text": "Nous construisons des relations durables et mutuellement bénéfiques à l’échelle mondiale."
+				}
+			]
+		},
+		"globalReach": {
+			"heading": "Notre présence mondiale",
+			"paragraph": "Grâce à un réseau croissant de partenaires logistiques et de plateformes d’exportation, Camberfarm livre des produits agricoles à des clients en Asie, en Europe et dans les Amériques. Notre équipe gère chaque étape, de l’approvisionnement à l’expédition, en garantissant la qualité et la conformité à chaque phase."
+		},
+		"certification": {
+			"heading": "Nos certifications et partenariats",
+			"paragraph": "CamberFarm Export est pleinement enregistré et certifié par des autorités agricoles et commerciales reconnues. Nos opérations respectent les normes locales et internationales de contrôle qualité, garantissant une conformité commerciale fluide pour chaque expédition."
+		}
+	}
 }

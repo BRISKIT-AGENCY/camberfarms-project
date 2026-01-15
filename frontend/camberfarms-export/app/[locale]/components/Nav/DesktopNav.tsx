@@ -35,6 +35,7 @@ export default function DesktopNav({ darkBg }: NavProps) {
 						src={'./logo-white.svg'}
 						alt="camberfarms"
 						fill
+						priority
 						className="object-contain"
 					/>
 				)}
@@ -43,6 +44,7 @@ export default function DesktopNav({ darkBg }: NavProps) {
 						src={'/logo.png'}
 						alt="camberfarms"
 						fill
+						priority
 						className="object-contain"
 					/>
 				)}
@@ -72,8 +74,9 @@ export default function DesktopNav({ darkBg }: NavProps) {
 							onClick={() => setIsOpen(!isOpen)}
 							src={arrowDown}
 							alt=""
-							width={50}
-							height={50}
+							priority
+							// width={50}
+							// height={50}
 							className={`w-5 aspect-square shrink-0 transition-transform duration-300 cursor-pointer ${
 								isOpen ? 'rotate-180' : ''
 							}`}

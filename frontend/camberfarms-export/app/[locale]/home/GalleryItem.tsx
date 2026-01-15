@@ -6,7 +6,7 @@ type GalleryItemProps = {
 
 export default function GalleryItem({ images }: GalleryItemProps) {
 	return (
-		<div className="w-full min-w-[92vw] px-6 h-75 sm:h-155 xl:h-180 grid grid-rows-[1fr_1fr] grid-cols-[1fr_1fr_1fr_1fr_1fr] gap-4 lg:gap-6 flex-1">
+		<div className="w-full h-75 sm:h-155 xl:h-180 grid grid-rows-[1fr_1fr] grid-cols-[1fr_1fr_1fr_1fr_1fr] gap-4 lg:gap-6 flex-1">
 			<Image
 				src={images[0]}
 				alt=""

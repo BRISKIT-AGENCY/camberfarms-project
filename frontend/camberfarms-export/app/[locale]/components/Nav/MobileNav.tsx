@@ -32,6 +32,7 @@ export default function MobileNav() {
 					src={'/logo.png'}
 					alt="camberfarms"
 					fill
+					priority
 					className="object-contain"
 				/>
 			</div>
@@ -47,6 +48,7 @@ export default function MobileNav() {
 						src={closeIcon}
 						alt="camberfarms"
 						fill
+						priority
 						className="object-contain"
 					/>
 				)}
@@ -55,6 +57,7 @@ export default function MobileNav() {
 						src={hamburgerIcon}
 						alt="camberfarms"
 						fill
+						priority
 						className="object-contain"
 					/>
 				)}

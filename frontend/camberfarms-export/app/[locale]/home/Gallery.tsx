@@ -5,11 +5,10 @@ import cashewsImg from '../assets/img/cashews.png'
 import cropsImg from '../assets/img/crops.png'
 import farmerLadyImg from '../assets/img/farmer-veg.png'
 import farmersImg from '../assets/img/farmers.png'
-import Carousel from '../components/Carousel'
 import GalleryItem from './GalleryItem'
 
-// import Carousel from 'react-multi-carousel'
-// import 'react-multi-carousel/lib/styles.css'
+import { Splide, SplideSlide } from 'react-splide-ts'
+import 'react-splide-ts/css'
 
 export default function Gallery() {
 	const t = useTranslations('home.gallery')
@@ -30,13 +29,29 @@ export default function Gallery() {
 			<p className="mt-2 mb-12 mx-4 sm:mx-auto text-base text-center text-dark-grey">
 				{t('paragraph')}
 			</p>
-			<div className="w-full flex items-center gap-6 my-6 mx-auto">
-				<Carousel>
-					<GalleryItem images={images} />
-					<GalleryItem images={images} />
-					<GalleryItem images={images} />
-					<GalleryItem images={images} />
-				</Carousel>
+			<div className="w-full mx-auto">
+				<Splide
+					aria-label="gallery images"
+					// hasTrack={false}
+					options={{
+						rewind: true,
+						autoplay: true,
+						arrows: true,
+					}}
+				>
+					<SplideSlide>
+						<GalleryItem images={images} />
+					</SplideSlide>
+					<SplideSlide>
+						<GalleryItem images={images} />
+					</SplideSlide>
+					<SplideSlide>
+						<GalleryItem images={images} />
+					</SplideSlide>
+					<SplideSlide>
+						<GalleryItem images={images} />
+					</SplideSlide>
+				</Splide>
 			</div>
 		</section>
 	)
