@@ -12,7 +12,7 @@ import tomatoesImg from '../assets/img/tomato-shrubs.png'
 import { getTranslations } from 'next-intl/server'
 
 export default async function Hero() {
-	const t = await getTranslations('home')
+	const t = await getTranslations('home.hero')
 
 	return (
 		<section className="w-full h-dvh flex flex-col items-center justify-center px-6 py-10 bg-black/70 text-white relative">
@@ -38,16 +38,16 @@ export default async function Hero() {
 			/>
 			<div className="w-full sm:w-4/5 md:max-w-3xl flex flex-col items-center justify-center mx-auto mt-10 gap-2 relative z-3">
 				<h1 className="font-poppins font-bold text-center md:text-balance text-[26px] sm:text-3xl md:text-4xl lg:text-[40px] leading-9 md:leading-12">
-					{t('hero.title')}
+					{t('title')}
 				</h1>
 				<p className="font-inter text-base text-center mt-2 text-light-grey">
-					{t('hero.info')}
+					{t('info')}
 				</p>
 				<Link
 					href={'/contact'}
 					className="w-fit flex items-center gap-1 px-4 py-2 rounded-full capitalize bg-primary font-sans font-medium mt-6 transition-all duration-200 hover:gap-4 origin-left"
 				>
-					<span>{t('hero.contact')}</span>
+					<span>{t('contact')}</span>
 					<Image
 						src={arrowIcon}
 						alt="arrow forward"
@@ -97,9 +97,7 @@ export default async function Hero() {
 							className="w-4 lg:w-6 aspect-square"
 						/>
 
-						<address>
-							Block 4, No 24, Oladipupo Lawanson street, Ikeja, Lagos, Nigeria
-						</address>
+						<address>{t('address')}</address>
 					</div>
 				</div>
 			</div>
