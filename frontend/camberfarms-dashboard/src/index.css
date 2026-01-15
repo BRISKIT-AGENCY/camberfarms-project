@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@import 'tailwindcss';
+
+:root {
+	--background: #ffffff;
+	--foreground: #171717;
+	/* custom colors */
+	--primary: #1ad329;
+	--secondary: #ff741f;
+	--light-grey: #f9fafb;
+	--dark-grey: #333333;
+	--grey: #808080;
+	--light-green: #edfdee;
+}
+
+@theme inline {
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	/* fonts */
+	--font-poppins: 'Poppins', sans-serif;
+	--font-inter: 'Inter', sans-serif;
+
+	/* colors */
+	--color-primary: var(--primary);
+	--color-secondary: var(--secondary);
+	--color-light-grey: var(--light-grey);
+	--color-dark-grey: var(--dark-grey);
+	--color-grey: var(--grey);
+	--color-light-green: var(--light-green);
+}
+
+body {
+	margin: 0;
+	/* min-width: 620px; */
+	/* min-height: 100vh; */
+}
+
+@media (prefers-color-scheme: light) {
+	:root {
+		color: var(--foreground);
+		background-color: var(--background);
+	}
+	a:hover {
+		color: var(--primary);
+	}
+	button {
+		background-color: #f9f9f9;
+	}
+}
