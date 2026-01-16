@@ -15,7 +15,7 @@ export default async function Products() {
 
 	return (
 		<section
-			className="w-full bg-light-grey py-28 px-6 md:px-12"
+			className="w-full bg-light-grey text-start py-28 px-6 md:px-12"
 			aria-describedby="products"
 		>
 			<h3 className="font-poppins font-bold text-2xl md:text-3xl" id="products">

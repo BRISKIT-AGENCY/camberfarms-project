@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 import axiosInstance from '../api/axios'
 
 type Inputs = {
@@ -36,9 +37,11 @@ export default function AffiliateForm() {
 		try {
 			const res = await axiosInstance.post('/affiliate', data)
 			console.log(res.data)
+			toast.success('Form submitted successfully!')
 			// clear inputs
 			reset()
 		} catch (error: unknown) {
+			toast.error('Error submitting form')
 			console.error('error submitting form: ', error)
 		} finally {
 			setIsLoading(false)

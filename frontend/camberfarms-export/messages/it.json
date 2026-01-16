@@ -14,6 +14,21 @@
 		"faq": {
 			"heading": "Domande frequenti",
 			"paragraph": "Abbiamo risposto con attenzione ad alcune domande ben formulate, anche se non a tutte le possibili. Vi invitiamo a inviarci una richiesta e risponderemo prontamente."
+		},
+		"footer": {
+			"info": {
+				"heading": "Informazioni",
+				"about": "Chi siamo",
+				"blog": "Blog"
+			},
+			"links": {
+				"heading": "Link utili",
+				"link": "Privacy / Supporto"
+			},
+			"contact": {
+				"heading": "Contattaci"
+			},
+			"copyright": "Copyright 2026 CamberFarm.Export. Tutti i diritti riservati."
 		}
 	},
 	"home": {

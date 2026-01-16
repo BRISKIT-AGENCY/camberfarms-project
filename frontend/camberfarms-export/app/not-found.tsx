@@ -7,7 +7,10 @@ export default function NotFound() {
 				<h1 className="text-4xl font-poppins font-bold text-secondary">
 					Not Found
 				</h1>
-				<p>Could not find the requested resource</p>
+				<p>
+					Could not find the requested resource. The page you are looking does
+					not exist, or it has been moved.
+				</p>
 				<Link
 					href={'/'}
 					className="w-fit mx-auto flex items-center px-6 py-2 rounded-full capitalize bg-primary text-white text-base font-poppins font-medium mt-5 hover:bg-primary/70 transition-colors duration-200"

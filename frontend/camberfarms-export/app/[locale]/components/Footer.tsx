@@ -1,3 +1,4 @@
+import { getTranslations } from 'next-intl/server'
 import Image from 'next/image'
 import Link from 'next/link'
 import callIcon from '../assets/icon/call-white.svg'
@@ -8,7 +9,9 @@ import mailIcon from '../assets/icon/mail-white.svg'
 import twitterIcon from '../assets/icon/twitter-x.svg'
 import bgPatternImg from '../assets/img/bg-pattern-white.png'
 
-export default function Footer() {
+export default async function Footer() {
+	const t = await getTranslations('common.footer')
+
 	return (
 		<footer className="h-164.25 lg:h-94.5 bg-grey w-full flex items-center py-13 px-6 lg:px-25 lg:py-16.5 relative font-inter">
 			<Image
@@ -32,27 +35,27 @@ export default function Footer() {
 					<hr className="w-full h-px outline-0 border-0 bg-light-grey lg:hidden" />
 					<div className="mt-4 md:mt-6 lg:mt-0 flex flex-col text-sm lg:text-base">
 						<h6 className="font-bold text-base lg:text-lg font-poppins">
-							Information
+							{t('info.heading')}
 						</h6>
 						<Link href="/about" className="mt-2 lg:mt-6 w-fit">
-							About us
+							{t('info.about')}
 						</Link>
 						{/* <Link href="/about" className='mt-3'>Our Impact</Link> */}
 						<Link href="/blog" className="mt-3 w-fit">
-							Blogs
+							{t('info.blog')}
 						</Link>
 					</div>
 					<div className="flex flex-col text-sm lg:text-base mt-6 lg:mt-0">
 						<h6 className="font-bold text-base lg:text-lg font-poppins">
-							Helpful links
+							{t('links.heading')}
 						</h6>
 						<Link href="/privacy" className="mt-4 md:mt-6 w-fit">
-							Privacy / Support
+							{t('links.link')}
 						</Link>
 					</div>
 					<div className="flex flex-col lg:gap-6 text-sm lg:text-base mt-6 lg:mt-0">
 						<p className="font-bold text-base lg:text-lg font-poppins">
-							Contact us
+							{t('contact.heading')}
 						</p>
 						<div className="flex gap-3 mt-4 lg:mt-0">
 							<Image src={mailIcon} alt="Email icon" width={24} height={24} />
@@ -109,9 +112,7 @@ export default function Footer() {
 						</div>
 					</div>
 				</div>
-				<p className="text-[10px] sm:text-sm">
-					Copyright 2026 CamberFarm.Export@All Rights Reserved.
-				</p>
+				<p className="text-[10px] sm:text-sm">{t('copyright')}</p>
 			</div>
 		</footer>
 	)

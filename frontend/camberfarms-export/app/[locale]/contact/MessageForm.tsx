@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 import axiosInstance from '../api/axios'
 
 type Inputs = {
@@ -24,13 +25,15 @@ export default function MessageForm() {
 
 	const onSubmit: SubmitHandler<Inputs> = async (data) => {
 		setIsLoading(true)
-		console.log(data)
+		// console.log(data)
 		try {
 			const res = await axiosInstance.post('/export/message', data)
 			console.log(res.data)
+			toast.success('Form submitted successfully!')
 			// clear inputs
 			reset()
 		} catch (error: unknown) {
+			toast.error('Error submitting form')
 			console.error('error submitting form: ', error)
 		} finally {
 			setIsLoading(false)

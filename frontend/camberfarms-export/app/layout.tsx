@@ -24,14 +24,20 @@ export const metadata: Metadata = {
 	description: 'A B2B agricultural export showcase website.',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
 	children,
-}: {
+}: // params,
+{
 	children: React.ReactNode
+	// params: Promise<{ locale: string }>
 }) {
+	// const { locale } = await params
+
 	return (
 		<html>
 			<body
+				// change text direction based on locale
+				dir="auto"
 				className={`${poppins.variable} ${inter.variable} ${manrope.variable} antialiased`}
 			>
 				{children}

@@ -17,6 +17,10 @@ const LANGUAGES = [
 	{ label: 'português', code: 'pt', flag: 'https://flagcdn.com/w40/pt.png' },
 	{ label: 'italiano', code: 'it', flag: 'https://flagcdn.com/w40/it.png' },
 	{ label: 'русский', code: 'ru', flag: 'https://flagcdn.com/w40/ru.png' },
+	{ label: '普通話', code: 'cn', flag: 'https://flagcdn.com/w40/cn.png' },
+	{ label: 'Nederlands', code: 'nl', flag: 'https://flagcdn.com/w40/nl.png' },
+	{ label: 'Deutch', code: 'de', flag: 'https://flagcdn.com/w40/de.png' },
+	{ label: 'العربية', code: 'sa', flag: 'https://flagcdn.com/w40/sa.png' },
 ]
 
 export default function LocaleSwitcher() {
@@ -60,7 +64,7 @@ export default function LocaleSwitcher() {
 			</button>
 
 			{isOpen && (
-				<div className="absolute mt-2 bg-white border rounded-lg shadow-md right-0 w-max px-2">
+				<div className="absolute mt-2 ml-4 bg-white border rounded-lg shadow-md right-0 w-max px-2">
 					{LANGUAGES.map((lang) => (
 						<button
 							key={lang.code}

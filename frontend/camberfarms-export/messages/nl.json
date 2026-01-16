@@ -1,0 +1,248 @@
+{
+	"common": {
+		"buttons": {
+			"explore": "Ontdek Camberfarm Afrika"
+		},
+		"nav": {
+			"home": "Home",
+			"about": "Over ons",
+			"products": "Onze producten",
+			"blog": "Blog",
+			"contact": "Contact",
+			"affiliate": "Affiliateprogramma"
+		},
+		"faq": {
+			"heading": "Veelgestelde vragen",
+			"paragraph": "We hebben zorgvuldig een aantal veelgestelde vragen beantwoord, maar dit dekt niet alle mogelijke vragen. Stuur ons gerust een aanvraag en wij zullen snel reageren."
+		},
+		"footer": {
+			"info": {
+				"heading": "Informatie",
+				"about": "Over ons",
+				"blog": "Blogs"
+			},
+			"links": {
+				"heading": "Handige links",
+				"link": "Privacy / Ondersteuning"
+			},
+			"contact": {
+				"heading": "Contact opnemen"
+			},
+			"copyright": "Copyright © 2026 CamberFarm.Export. Alle rechten voorbehouden."
+		}
+	},
+	"home": {
+		"hero": {
+			"title": "Afrika’s beste landbouwproducten verbinden met de wereld",
+			"info": "Wij exporteren hoogwaardige granen, specerijen, noten en andere landbouwproducten van betrouwbare Afrikaanse boerderijen naar internationale markten. Betrouwbaar, duurzaam en op tijd.",
+			"contact": "contacteer ons",
+			"address": "Blok 4, Nr. 24, Oladipupo Lawansonstraat, Ikeja, Lagos, Nigeria"
+		},
+		"products": {
+			"heading": "CamberFarm-producten",
+			"paragraph": "Wij streven ernaar om tot de toonaangevende exporteurs, boeren en leveranciers van een breed scala aan landbouwproducten te behoren. Deze producten worden onder hygiënische omstandigheden verwerkt om een lange houdbaarheid te garanderen. Met uitstekende verpakking en tijdige levering hebben wij een sterke positie verworven bij onze gewaardeerde klanten.",
+			"link": "alle producten"
+		},
+		"offers": {
+			"headingOffers": "Speciale aanbiedingen",
+			"paragraphOffers": "Wij hebben toegang tot vele andere producten en de beschikbaarheid is voor ons naadloos. Ongeacht welk product u zoekt, wij hebben het voor u.",
+			"stats": {
+				"harvest": {
+					"title": "Ton oogst",
+					"number": "7.000"
+				},
+				"bags": {
+					"title": "Verpakte zakken",
+					"number": "500.000"
+				},
+				"equipments": {
+					"title": "Landbouwmachines",
+					"number": "890"
+				}
+			},
+			"headingLocation": ["Wij hebben meerdere locaties", "wereldwijd"],
+			"paragraphLocation": "Wij zijn strategisch gevestigd in Nigeria en werken samen met partners in het hele land, met alle vereiste faciliteiten, waaronder ultramoderne machines en apparatuur."
+		},
+		"gallery": {
+			"heading": "Onze galerij",
+			"paragraph": "Bekijk hieronder foto’s van onze boerderij en producten"
+		},
+		"testimonials": {
+			"heading": "wat klanten zeggen",
+			"users": [
+				{
+					"id": 1,
+					"name": "Lydia Yisa",
+					"content": "“Wij waarderen hun consistente kwaliteit en aftersalesservice. Hun samenwerking met Afrikaanse plattelandsboeren is ook prijzenswaardig. Daarnaast bewonderen wij hun proactieve inzet voor klanttevredenheid.”"
+				},
+				{
+					"id": 2,
+					"name": "Adebayo L",
+					"content": "“Wij waarderen hun consistente kwaliteit en aftersalesservice. Hun samenwerking met Afrikaanse plattelandsboeren is ook prijzenswaardig. Daarnaast bewonderen wij hun proactieve inzet voor klanttevredenheid.”"
+				},
+				{
+					"id": 3,
+					"name": "Chuks David",
+					"content": "“Wij waarderen hun consistente kwaliteit en aftersalesservice. Hun samenwerking met Afrikaanse plattelandsboeren is ook prijzenswaardig. Daarnaast bewonderen wij hun proactieve inzet voor klanttevredenheid.”"
+				}
+			]
+		},
+		"blog": {
+			"heading": "blogbericht",
+			"paragraph": "Onze blog is een centrum van waardevolle informatie en biedt diepgaande inzichten in onze producten en diensten. Hij is bedoeld om onze klanten te informeren en te dienen als een uitgebreide gids voor het eenvoudig en efficiënt exporteren van landbouwproducten."
+		},
+		"feedback": {
+			"heading": "stuur ons een bericht",
+			"paragraph": "Vul alstublieft alle velden in",
+			"placeholders": {
+				"name": "Naam",
+				"country": "Land",
+				"phone": "Telefoonnummer",
+				"email": "E-mailadres",
+				"message": "Typ hier uw bericht..."
+			},
+			"button": "Bericht verzenden"
+		}
+	},
+	"products": {
+		"hero": {
+			"heading": "Onze producten",
+			"paragraphs": [
+				"Enkele van onze producten van onze boerderijen zijn:",
+				"Granen, fruit, sesamzaad, specerijen en groenten."
+			]
+		},
+		"products": {
+			"heading": "De producten die wij produceren, verwerken en exporteren zijn:"
+		}
+	},
+	"product": {},
+	"blogs": {},
+	"blog": {},
+	"contact": {
+		"hero": {
+			"heading": ["Neem contact op met", "CamberFarms Export"],
+			"paragraph": "Wij horen graag van u. Of u nu importeur, distributeur of handelspartner bent, ons team staat klaar om u alle benodigde informatie te geven over onze producten en exportdiensten.",
+			"button": "Aanvraag versturen"
+		},
+		"info": {},
+		"form": {
+			"heading": "stuur ons een bericht",
+			"paragraph": "Vul het onderstaande formulier in en ons exportteam neemt binnen 24 uur contact met u op.",
+			"placeholder": {
+				"name": "Naam",
+				"phone": "Telefoonnummer",
+				"email": "E-mailadres",
+				"message": "Typ hier uw bericht...",
+				"button": "Aanvraag versturen"
+			}
+		},
+		"map": {
+			"heading": "Vind ons op de kaart"
+		}
+	},
+	"affiliate": {
+		"hero": {
+			"heading": "affiliateprogramma",
+			"paragraph": "Sluit u vandaag nog aan bij ons wereldwijde netwerk van agro-exportmakelaars en affiliate marketeers en verdien voor uzelf!"
+		},
+		"intro": {
+			"paragraph1": "Bent u gepassioneerd over landbouwexport, het uitbreiden van wereldwijde markten en het verbinden van hoogwaardige producten met bedrijven wereldwijd? Welkom bij het Camberfarms Affiliate Programma, waar wij u een unieke kans bieden om uw portfolio uit te breiden en zelfstandig te verdienen terwijl wij samen verkopen. Met het juiste partnerschap profiteren beide partijen.",
+			"subheading": "Waarom samenwerken met Camberfarms?",
+			"paragraph2": "Bij Camberfarms zijn wij gespecialiseerd in het inkopen, verwerken en exporteren van premium Afrikaanse landbouwproducten zoals hibiscusbloem, Blackstone-bloem, rauwe cashewnoten en andere gewilde gewassen. Onze missie is het leveren van uitzonderlijke kwaliteit, het bevorderen van duurzame landbouw en het versterken van lokale gemeenschappen.",
+			"paragraph3": "Als affiliatepartner staat u in de voorhoede van deze missie en helpt u onze producten te verbinden met klanten over de hele wereld, terwijl u aantrekkelijke beloningen ontvangt voor uw inspanningen."
+		},
+		"benefits": {
+			"heading": "Voordelen van deelname aan ons affiliateprogramma"
+		},
+		"join": {
+			"heading": "Wie kan deelnemen?"
+		},
+		"commission": {
+			"heading": "VERDIEN COMMISSIES:",
+			"paragraph1": [
+				"Ontvang commissies voor elke succesvolle doorverwijzing en",
+				"verkoop die via uw inspanningen tot stand komt."
+			],
+			"subheading": "Waarom de agro-exportsector?",
+			"paragraph2": "De wereldwijde vraag naar duurzaam geproduceerde, hoogwaardige landbouwproducten groeit snel, vooral in de wellness-, voedings- en cosmetica-industrie. Door deel te nemen aan het Camberfarms Affiliate Programma betreedt u een snelgroeiende markt met onbeperkt verdienpotentieel."
+		},
+		"form": {
+			"heading": "BEGIN VANDAAG NOG AAN UW REIS MET CAMBERFARMS!",
+			"paragraph": "Klaar om uw makelaars- of marketingcarrière naar een hoger niveau te tillen? Sluit u aan bij het Camberfarms Affiliate Programma en word een sleutelspeler in de bloeiende agro-exportindustrie.",
+			"placeholder": {
+				"name": "Volledige naam",
+				"email": "E-mail",
+				"phone": "Telefoonnummer",
+				"country": "Land",
+				"city": "Stad",
+				"terms": {
+					"label": "Begrijpt u de bovenstaande commissievoorwaarden als exportmakelaar volledig?",
+					"value": ["Ja", "Nee"]
+				},
+				"buyer": {
+					"label": "Heeft u al een koper?",
+					"value": ["Ja", "Nee"]
+				},
+				"ifYes": "*Als u “ja” heeft geselecteerd, vul dan hieronder de gegevens van uw koper in",
+				"buyerCountry": "Land van de koper",
+				"buyerProduct": "Product van de koper",
+				"volume": "Productvolume",
+				"interest": "Vertel ons over uw interesse in ons affiliateprogramma",
+				"payment": "Hoe wilt u uw commissies uitbetaald krijgen?",
+				"referral": [
+					"Hoe heeft u over ons gehoord?",
+					"Indien via een ander kanaal, geef dit dan aan"
+				]
+			},
+			"button": "Verzenden"
+		}
+	},
+	"privacy": {},
+	"about": {
+		"hero": {
+			"heading": "Over ons",
+			"paragraph": "Het verbinden van Afrika’s beste landbouwproducten met wereldwijde markten door kwaliteit, integriteit en duurzame partnerschappen.",
+			"button": "Contacteer ons"
+		},
+		"missionVission": {
+			"mission": {
+				"heading": "Missie",
+				"paragraph": "Het promoten van de landbouwkundige excellentie van Afrika door wereldwijde toegang te bieden tot hoogwaardige, exportklare producten via betrouwbare en ethische handelspraktijken."
+			},
+			"vision": {
+				"heading": "Visie",
+				"paragraph": "De meest vertrouwde naam in Afrikaanse landbouwexport worden, door lokale boeren efficiënt, duurzaam en transparant met de wereld te verbinden."
+			}
+		},
+		"coreValues": {
+			"heading": "Kernwaarden",
+			"values": [
+				{
+					"title": "Integriteit",
+					"text": "Wij werken met eerlijkheid en verantwoordelijkheid."
+				},
+				{
+					"title": "Kwaliteit",
+					"text": "Alleen de beste, gecertificeerde producten verlaten onze handen."
+				},
+				{
+					"title": "Duurzaamheid",
+					"text": "Wij versterken lokale boeren en beschermen tegelijkertijd het milieu."
+				},
+				{
+					"title": "Partnerschap",
+					"text": "Wij bouwen wereldwijd langdurige, wederzijds voordelige relaties op."
+				}
+			]
+		},
+		"globalReach": {
+			"heading": "Ons wereldwijde bereik",
+			"paragraph": "Met een groeiend netwerk van logistieke partners en exporthubs levert Camberfarm landbouwproducten aan klanten in Azië, Europa en Amerika. Ons team beheert elke fase van inkoop tot verzending en waarborgt kwaliteit en naleving bij elke stap."
+		},
+		"certification": {
+			"heading": "Onze certificeringen en partnerschappen",
+			"paragraph": "CamberFarm Export is volledig geregistreerd en gecertificeerd door erkende landbouw- en handelsautoriteiten. Onze activiteiten voldoen aan zowel lokale als internationale kwaliteitsnormen, wat zorgt voor een soepele handelscompliance bij elke zending."
+		}
+	}
+}

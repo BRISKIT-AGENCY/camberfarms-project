@@ -1,0 +1,248 @@
+{
+	"common": {
+		"buttons": {
+			"explore": "Camberfarm Afrika entdecken"
+		},
+		"nav": {
+			"home": "Startseite",
+			"about": "Über uns",
+			"products": "Unsere Produkte",
+			"blog": "Blog",
+			"contact": "Kontakt",
+			"affiliate": "Affiliate-Programm"
+		},
+		"faq": {
+			"heading": "Häufig gestellte Fragen",
+			"paragraph": "Wir haben einige häufige Fragen sorgfältig beantwortet, jedoch nicht alle. Bitte senden Sie uns eine Anfrage, und wir werden umgehend antworten."
+		},
+		"footer": {
+			"info": {
+				"heading": "Informationen",
+				"about": "Über uns",
+				"blog": "Blogs"
+			},
+			"links": {
+				"heading": "Hilfreiche Links",
+				"link": "Datenschutz / Support"
+			},
+			"contact": {
+				"heading": "Kontakt"
+			},
+			"copyright": "Copyright © 2026 CamberFarm.Export. Alle Rechte vorbehalten."
+		}
+	},
+	"home": {
+		"hero": {
+			"title": "Afrikas beste landwirtschaftliche Produkte mit der Welt verbinden",
+			"info": "Wir exportieren hochwertige Getreide, Gewürze, Nüsse und andere landwirtschaftliche Produkte von vertrauenswürdigen afrikanischen Farmen auf internationale Märkte. Zuverlässig, nachhaltig und pünktlich.",
+			"contact": "Kontaktieren Sie uns",
+			"address": "Block 4, Nr. 24, Oladipupo Lawanson Straße, Ikeja, Lagos, Nigeria"
+		},
+		"products": {
+			"heading": "CamberFarm Produkte",
+			"paragraph": "Wir sind bestrebt, zu den führenden Exporteuren, Landwirten und Lieferanten einer breiten Palette landwirtschaftlicher Produkte zu gehören. Diese Produkte werden unter hygienischen Bedingungen verarbeitet, um eine lange Haltbarkeit zu gewährleisten. Mit ausgezeichneter Verpackung und pünktlicher Lieferung haben wir uns eine starke Position bei unseren geschätzten Kunden erarbeitet.",
+			"link": "alle Produkte"
+		},
+		"offers": {
+			"headingOffers": "Sonderangebote",
+			"paragraphOffers": "Wir haben Zugang zu vielen weiteren Produkten, und die Verfügbarkeit ist für uns nahtlos. Unabhängig davon, welches Produkt Sie suchen – wir haben die Lösung für Sie.",
+			"stats": {
+				"harvest": {
+					"title": "Tonnen Ernte",
+					"number": "7.000"
+				},
+				"bags": {
+					"title": "Verpackte Säcke",
+					"number": "500.000"
+				},
+				"equipments": {
+					"title": "Landwirtschaftliche Geräte",
+					"number": "890"
+				}
+			},
+			"headingLocation": ["Wir haben mehrere Standorte", "weltweit"],
+			"paragraphLocation": "Wir sind strategisch in Nigeria ansässig und verfügen über Partneragenten im ganzen Land mit allen erforderlichen Einrichtungen, einschließlich modernster Maschinen und Ausrüstung."
+		},
+		"gallery": {
+			"heading": "Unsere Galerie",
+			"paragraph": "Sehen Sie sich unten Bilder unserer Farm und Produkte an"
+		},
+		"testimonials": {
+			"heading": "Was Kunden sagen",
+			"users": [
+				{
+					"id": 1,
+					"name": "Lydia Yisa",
+					"content": "„Wir schätzen ihre gleichbleibende Qualität und den After-Sales-Service sehr. Ihre Zusammenarbeit mit ländlichen afrikanischen Bauern ist ebenfalls lobenswert. Darüber hinaus bewundern wir ihr proaktives Engagement für die Kundenzufriedenheit.“"
+				},
+				{
+					"id": 2,
+					"name": "Adebayo L",
+					"content": "„Wir schätzen ihre gleichbleibende Qualität und den After-Sales-Service sehr. Ihre Zusammenarbeit mit ländlichen afrikanischen Bauern ist ebenfalls lobenswert. Darüber hinaus bewundern wir ihr proaktives Engagement für die Kundenzufriedenheit.“"
+				},
+				{
+					"id": 3,
+					"name": "Chuks David",
+					"content": "„Wir schätzen ihre gleichbleibende Qualität und den After-Sales-Service sehr. Ihre Zusammenarbeit mit ländlichen afrikanischen Bauern ist ebenfalls lobenswert. Darüber hinaus bewundern wir ihr proaktives Engagement für die Kundenzufriedenheit.“"
+				}
+			]
+		},
+		"blog": {
+			"heading": "Blogbeitrag",
+			"paragraph": "Unser Blog ist eine zentrale Anlaufstelle für wertvolle Ressourcen und bietet tiefgehende Einblicke in unsere Produkte und Dienstleistungen. Er dient der Information unserer Kunden und als umfassender Leitfaden für den einfachen und effizienten Export landwirtschaftlicher Produkte."
+		},
+		"feedback": {
+			"heading": "Senden Sie uns eine Nachricht",
+			"paragraph": "Bitte füllen Sie alle Felder aus",
+			"placeholders": {
+				"name": "Name",
+				"country": "Land",
+				"phone": "Telefonnummer",
+				"email": "E-Mail-Adresse",
+				"message": "Geben Sie hier Ihre Nachricht ein..."
+			},
+			"button": "Nachricht senden"
+		}
+	},
+	"products": {
+		"hero": {
+			"heading": "Unsere Produkte",
+			"paragraphs": [
+				"Einige unserer Produkte aus unseren Farmen sind:",
+				"Getreide, Obst, Sesamsamen, Gewürze und Gemüse."
+			]
+		},
+		"products": {
+			"heading": "Die Produkte, die wir produzieren, verarbeiten und exportieren, sind:"
+		}
+	},
+	"product": {},
+	"blogs": {},
+	"blog": {},
+	"contact": {
+		"hero": {
+			"heading": ["Kontaktieren Sie", "CamberFarms Export"],
+			"paragraph": "Wir freuen uns auf Ihre Nachricht. Ob Importeur, Händler oder Handelspartner – unser Team steht bereit, Ihnen alle Informationen zu unseren Produkten und Exportdienstleistungen bereitzustellen.",
+			"button": "Anfrage senden"
+		},
+		"info": {},
+		"form": {
+			"heading": "Senden Sie uns eine Nachricht",
+			"paragraph": "Füllen Sie das untenstehende Formular aus, und unser Exportteam wird sich innerhalb von 24 Stunden bei Ihnen melden.",
+			"placeholder": {
+				"name": "Name",
+				"phone": "Telefonnummer",
+				"email": "E-Mail-Adresse",
+				"message": "Geben Sie hier Ihre Nachricht ein...",
+				"button": "Anfrage senden"
+			}
+		},
+		"map": {
+			"heading": "Finden Sie uns auf der Karte"
+		}
+	},
+	"affiliate": {
+		"hero": {
+			"heading": "Affiliate-Programm",
+			"paragraph": "Treten Sie noch heute unserem globalen Netzwerk von Agro-Exportmaklern und Affiliate-Marketern bei und verdienen Sie für sich selbst!"
+		},
+		"intro": {
+			"paragraph1": "Sind Sie begeistert von landwirtschaftlichen Exporten, der Erweiterung globaler Märkte und der Verbindung hochwertiger Produkte mit Unternehmen weltweit? Willkommen beim Camberfarms Affiliate-Programm, das Ihnen eine einzigartige Möglichkeit bietet, Ihr Portfolio zu erweitern und unabhängig zu verdienen, während wir gemeinsam verkaufen. Mit der richtigen Partnerschaft profitieren beide Seiten.",
+			"subheading": "Warum mit Camberfarms zusammenarbeiten?",
+			"paragraph2": "Bei Camberfarms sind wir auf die Beschaffung, Verarbeitung und den Export hochwertiger afrikanischer Agrarprodukte wie Hibiskusblüten, Blackstone-Blüten, roher Cashewnüsse und anderer stark nachgefragter Kulturen spezialisiert. Unsere Mission ist es, außergewöhnliche Qualität zu liefern, nachhaltige Landwirtschaft zu fördern und lokale Gemeinschaften zu stärken.",
+			"paragraph3": "Als Affiliate-Partner stehen Sie an vorderster Front dieser Mission, verbinden unsere Produkte mit Kunden auf der ganzen Welt und erhalten attraktive Vergütungen für Ihre Bemühungen."
+		},
+		"benefits": {
+			"heading": "Vorteile der Teilnahme an unserem Affiliate-Programm"
+		},
+		"join": {
+			"heading": "Wer kann teilnehmen?"
+		},
+		"commission": {
+			"heading": "PROVISIONEN VERDIENEN:",
+			"paragraph1": [
+				"Erhalten Sie Provisionen für jede erfolgreiche Empfehlung und",
+				"für jeden Verkauf, der durch Ihre Bemühungen zustande kommt."
+			],
+			"subheading": "Warum die Agro-Exportbranche?",
+			"paragraph2": "Die weltweite Nachfrage nach nachhaltig beschafften, hochwertigen Agrarprodukten wächst rasant, insbesondere in den Bereichen Wellness, Lebensmittel und Kosmetik. Mit dem Beitritt zum Camberfarms Affiliate-Programm betreten Sie einen schnell wachsenden Markt mit unbegrenztem Verdienstpotenzial."
+		},
+		"form": {
+			"heading": "STARTEN SIE NOCH HEUTE IHRE REISE MIT CAMBERFARMS!",
+			"paragraph": "Bereit, Ihre Makler- oder Marketingkarriere auf die nächste Stufe zu heben? Treten Sie dem Camberfarms Affiliate-Programm bei und werden Sie ein Schlüsselakteur in der florierenden Agro-Exportbranche.",
+			"placeholder": {
+				"name": "Vollständiger Name",
+				"email": "E-Mail",
+				"phone": "Telefonnummer",
+				"country": "Land",
+				"city": "Stadt",
+				"terms": {
+					"label": "Verstehen Sie die oben genannten Provisionsbedingungen als Exportmakler vollständig?",
+					"value": ["Ja", "Nein"]
+				},
+				"buyer": {
+					"label": "Haben Sie bereits einen Käufer?",
+					"value": ["Ja", "Nein"]
+				},
+				"ifYes": "*Wenn Sie „Ja“ ausgewählt haben, füllen Sie bitte unten die Angaben zu Ihrem Käufer aus",
+				"buyerCountry": "Land des Käufers",
+				"buyerProduct": "Produkt des Käufers",
+				"volume": "Produktmenge",
+				"interest": "Erzählen Sie uns von Ihrem Interesse an unserem Affiliate-Programm",
+				"payment": "Wie möchten Sie Ihre Provisionen erhalten?",
+				"referral": [
+					"Wie haben Sie von uns erfahren?",
+					"Falls über einen anderen Kanal, bitte angeben"
+				]
+			},
+			"button": "Absenden"
+		}
+	},
+	"privacy": {},
+	"about": {
+		"hero": {
+			"heading": "Über uns",
+			"paragraph": "Afrikas beste landwirtschaftlichen Produkte durch Qualität, Integrität und nachhaltige Partnerschaften mit globalen Märkten verbinden.",
+			"button": "Kontaktieren Sie uns"
+		},
+		"missionVission": {
+			"mission": {
+				"heading": "Mission",
+				"paragraph": "Förderung der landwirtschaftlichen Exzellenz Afrikas durch den globalen Zugang zu hochwertigen, exportfähigen Produkten mittels zuverlässiger und ethischer Handelspraktiken."
+			},
+			"vision": {
+				"heading": "Vision",
+				"paragraph": "Der vertrauenswürdigste Name im afrikanischen Agrar-Export zu werden und lokale Landwirte effizient, nachhaltig und transparent mit der Welt zu verbinden."
+			}
+		},
+		"coreValues": {
+			"heading": "Kernwerte",
+			"values": [
+				{
+					"title": "Integrität",
+					"text": "Wir handeln ehrlich und verantwortungsbewusst."
+				},
+				{
+					"title": "Qualität",
+					"text": "Nur die besten, zertifizierten Produkte verlassen unsere Hände."
+				},
+				{
+					"title": "Nachhaltigkeit",
+					"text": "Wir stärken lokale Landwirte und schützen gleichzeitig die Umwelt."
+				},
+				{
+					"title": "Partnerschaft",
+					"text": "Wir bauen weltweit langfristige, gegenseitig vorteilhafte Beziehungen auf."
+				}
+			]
+		},
+		"globalReach": {
+			"heading": "Unsere globale Reichweite",
+			"paragraph": "Mit einem wachsenden Netzwerk von Logistikpartnern und Exportzentren beliefert Camberfarm Kunden in Asien, Europa und Amerika mit Agrarprodukten. Unser Team steuert jede Phase von der Beschaffung bis zum Versand und gewährleistet Qualität und Compliance in jedem Schritt."
+		},
+		"certification": {
+			"heading": "Unsere Zertifizierungen & Partnerschaften",
+			"paragraph": "CamberFarm Export ist vollständig registriert und von anerkannten Landwirtschafts- und Handelsbehörden zertifiziert. Unsere Prozesse erfüllen sowohl lokale als auch internationale Qualitätsstandards und gewährleisten eine reibungslose Handels-Compliance für jede Lieferung."
+		}
+	}
+}

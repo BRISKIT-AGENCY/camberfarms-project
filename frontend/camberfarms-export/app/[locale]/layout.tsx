@@ -1,3 +1,4 @@
+import { ToastContainer } from 'react-toastify'
 import Footer from './components/Footer'
 import Navbar from './components/Nav/Navbar'
 // import './globals.css'
@@ -13,7 +14,10 @@ export async function generateStaticParams() {
 		{ locale: 'es' },
 		{ locale: 'pt' },
 		{ locale: 'it' },
-		{ locale: 'ru' },
+		{ locale: 'cn' },
+		{ locale: 'de' },
+		{ locale: 'nl' },
+		{ locale: 'sa' },
 	]
 }
 
@@ -29,14 +33,11 @@ export default async function RootLayout({
 	if (!hasLocale(routing.locales, locale)) notFound()
 
 	return (
-		<html lang={locale}>
-			<body>
-				<NextIntlClientProvider>
-					<Navbar />
-					{children}
-					<Footer />
-				</NextIntlClientProvider>
-			</body>
-		</html>
+		<NextIntlClientProvider>
+			<Navbar />
+			{children}
+			<Footer />
+			<ToastContainer />
+		</NextIntlClientProvider>
 	)
 }

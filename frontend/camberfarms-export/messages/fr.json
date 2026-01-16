@@ -14,6 +14,21 @@
 		"faq": {
 			"heading": "Questions fréquemment posées",
 			"paragraph": "Nous avons soigneusement répondu à certaines questions frément posées, sans toutefois couvrir l’ensemble de vos préoccupations. Veuillez nous envoyer une demande et nous vous répondrons dans les plus brefs délais."
+		},
+		"footer": {
+			"info": {
+				"heading": "Informations",
+				"about": "À propos de nous",
+				"blog": "Blogs"
+			},
+			"links": {
+				"heading": "Liens utiles",
+				"link": "Confidentialité / Assistance"
+			},
+			"contact": {
+				"heading": "Contactez-nous"
+			},
+			"copyright": "Copyright 2026 CamberFarm.Export. Tous droits réservés."
 		}
 	},
 	"home": {
