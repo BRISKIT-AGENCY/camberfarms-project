@@ -52,7 +52,7 @@ export default function AffiliateForm() {
 				// submit form on Ctrl+Enter
 				if (e.ctrlKey && e.key === 'Enter') handleSubmit(onSubmit)()
 			}}
-			className="w-full h-fit py-10 px-10 md:px-20 md:py-14 relative font-inter"
+			className="w-full h-fit py-10 px-10 md:px-20 md:py-14 relative font-inter text-dark-grey"
 			id="message"
 		>
 			<h4 className="font-inter uppercase font-medium text-black text-xl sm:text-2xl">
@@ -63,7 +63,7 @@ export default function AffiliateForm() {
 				the Camberfarms Affiliate Program and become a key player in the
 				thriving agro-export industry.
 			</p>
-			<fieldset className="flex flex-col gap-6 mb-6 text-grey">
+			<fieldset className="flex flex-col gap-6 mb-6">
 				<input
 					{...register('fullName', {
 						required: true,
@@ -72,7 +72,7 @@ export default function AffiliateForm() {
 					})}
 					type="text"
 					placeholder="Full name"
-					className="w-full rounded-3xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
+					className="w-full rounded-3xl border outline-0 py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				/>
 				{errors.fullName && (
 					<span className="text-red-500 text-sm -mt-4 ml-4" role="alert">
@@ -84,7 +84,7 @@ export default function AffiliateForm() {
 					{...register('email', { required: true })}
 					type="email"
 					placeholder="Email"
-					className="w-full rounded-3xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
+					className="w-full rounded-3xl border outline-0 py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				/>
 				{errors.email && (
 					<span className="text-red-500 text-sm -mt-4 ml-4" role="alert">
@@ -100,7 +100,7 @@ export default function AffiliateForm() {
 					})}
 					type="tel"
 					placeholder="Phone number"
-					className="w-full rounded-3xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
+					className="w-full rounded-3xl border outline-0 py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				/>
 				{errors.phone && (
 					<span className="text-red-500 text-sm -mt-4 ml-4" role="alert">
@@ -112,7 +112,7 @@ export default function AffiliateForm() {
 					{...register('country', { required: true })}
 					type="text"
 					placeholder="Country"
-					className="w-full rounded-3xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
+					className="w-full rounded-3xl border outline-0 py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				/>
 				{errors.country && (
 					<span className="text-red-500 text-sm -mt-4 ml-4" role="alert">
@@ -124,7 +124,7 @@ export default function AffiliateForm() {
 					{...register('city', { required: true })}
 					type="text"
 					placeholder="City"
-					className="w-full rounded-3xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
+					className="w-full rounded-3xl border outline-0 py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				/>
 				{errors.city && (
 					<span className="text-red-500 text-sm -mt-4 ml-4" role="alert">
@@ -139,7 +139,7 @@ export default function AffiliateForm() {
 				</legend>
 				<label className="flex items-center gap-1 text-grey capitalize mr-4">
 					<input
-						{...register('understandTerms')}
+						{...register('understandTerms', { required: true })}
 						type="radio"
 						// name="understandTerms"
 						value="yes"
@@ -164,7 +164,7 @@ export default function AffiliateForm() {
 				<legend className="flex-1">Do you have a buyer already?</legend>
 				<label className="flex items-center gap-1 text-grey capitalize mr-4">
 					<input
-						{...register('haveABuyer')}
+						{...register('haveABuyer', { required: true })}
 						type="radio"
 						// name="haveABuyer"
 						value="yes"
@@ -185,24 +185,24 @@ export default function AffiliateForm() {
 					<span>no</span>
 				</label>
 			</fieldset>
-			<fieldset className="flex flex-col gap-6 mb-6 text-grey">
+			<fieldset className="flex flex-col gap-6 mb-6">
 				<legend className="mb-4 text-dark-grey">
 					*If you selected “yes” fill out your buyers details below
 				</legend>
 				<input
 					{...register('buyerCountry', {
-						minLength: 3,
+						// minLength: 3,
 						validate: {
 							// if user has a buyer, this field is required
-							checkBuyer: (_, { haveABuyer }) => {
-								if (haveABuyer === 'yes')
+							checkBuyer: (buyerCountry, { haveABuyer }) => {
+								if (haveABuyer === 'yes' && !buyerCountry)
 									return "Please provide your buyer's country"
 							},
 						},
 					})}
 					type="text"
 					placeholder="Buyer's country"
-					className="w-full rounded-3xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
+					className="w-full rounded-3xl border outline-0 py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				/>
 				{errors.buyerCountry && (
 					<span className="text-red-500 text-sm -mt-4 ml-4" role="alert">
@@ -215,15 +215,16 @@ export default function AffiliateForm() {
 						minLength: 3,
 						validate: {
 							// if user has a buyer, this field is required
-							checkBuyer: (_, { haveABuyer }) => {
-								if (haveABuyer === 'yes')
+							checkBuyer: (buyerProduct, { haveABuyer }) => {
+								if (haveABuyer === 'yes' && !buyerProduct)
 									return "Please provide your buyer's selected product"
 							},
 						},
 					})}
 					type="text"
+					autoComplete="off"
 					placeholder="Buyer's products"
-					className="w-full rounded-3xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
+					className="w-full rounded-3xl border outline-0 py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				/>
 				{errors.buyerProduct && (
 					<span className="text-red-500 text-sm -mt-4 ml-4" role="alert">
@@ -233,18 +234,18 @@ export default function AffiliateForm() {
 
 				<input
 					{...register('productVolume', {
-						minLength: 3,
 						validate: {
 							// if user has a buyer, this field is required
-							checkBuyer: (_, { haveABuyer }) => {
-								if (haveABuyer === 'yes')
+							checkBuyer: (productVolume, { haveABuyer }) => {
+								if (haveABuyer === 'yes' && !productVolume)
 									return 'Please provide a valid product volume'
 							},
 						},
 					})}
 					type="text"
+					autoComplete="off"
 					placeholder="Product volume"
-					className="w-full rounded-3xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
+					className="w-full rounded-3xl border outline-0 py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				/>
 				{errors.productVolume && (
 					<span className="text-red-500 text-sm -mt-4 ml-4" role="alert">
@@ -260,7 +261,7 @@ export default function AffiliateForm() {
 					})}
 					type="text"
 					placeholder="Tell us about your interest in our affiliate program"
-					className="w-full rounded-3xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
+					className="w-full rounded-3xl border outline-0 py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				/>
 				{errors.aboutInterest && (
 					<span className="text-red-500 text-sm -mt-4 ml-4" role="alert">
@@ -272,7 +273,7 @@ export default function AffiliateForm() {
 					{...register('aboutCommission', { required: true })}
 					type="text"
 					placeholder="How would you prefer your commissions to be paid?"
-					className="w-full rounded-3xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
+					className="w-full rounded-3xl border outline-0 py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				/>
 				{errors.aboutCommission && (
 					<span className="text-red-500 text-sm -mt-4 ml-4" role="alert">
@@ -293,7 +294,7 @@ export default function AffiliateForm() {
 							},
 						},
 					})}
-					className="w-full rounded-xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
+					className="w-full rounded-xl border outline-0 py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				>
 					<option value="">How did you hear about us?</option>
 					<option value="facebook">Facebook</option>
@@ -321,8 +322,9 @@ export default function AffiliateForm() {
 						},
 					})}
 					type="text"
+					autoComplete="off"
 					placeholder="If other medium please state"
-					className="w-full rounded-3xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
+					className="w-full rounded-3xl border outline-0 py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				/>
 			</fieldset>
 			<button

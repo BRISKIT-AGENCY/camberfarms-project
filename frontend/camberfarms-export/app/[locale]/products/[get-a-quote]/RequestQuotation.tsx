@@ -1,6 +1,7 @@
 'use client'
-
+import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import axiosInstance from '../../api/axios'
 
 type Inputs = {
 	name: string
@@ -11,14 +12,27 @@ type Inputs = {
 }
 
 export default function RequestQuotation() {
+	const [isLoading, setIsLoading] = useState(false)
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
+		reset,
 	} = useForm<Inputs>()
 
-	const onSubmit: SubmitHandler<Inputs> = (data) => {
+	const onSubmit: SubmitHandler<Inputs> = async (data) => {
+		setIsLoading(true)
 		console.log(data)
+		try {
+			const res = await axiosInstance.post('/export/feedback', data)
+			console.log(res.data)
+			// clear inputs
+			reset()
+		} catch (error: unknown) {
+			console.error('error submitting form: ', error)
+		} finally {
+			setIsLoading(false)
+		}
 	}
 
 	return (
@@ -42,7 +56,7 @@ export default function RequestQuotation() {
 					})}
 					type="text"
 					placeholder="Name"
-					className="w-full rounded-3xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
+					className="w-full rounded-3xl border outline-0 py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				/>
 				{errors.name && (
 					<span
@@ -61,7 +75,7 @@ export default function RequestQuotation() {
 					})}
 					type="text"
 					placeholder="Country"
-					className="w-full rounded-3xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
+					className="w-full rounded-3xl border outline-0 py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				/>
 				{errors.country && (
 					<span className="text-red-500 text-sm -mt-4 ml-4" role="alert">
@@ -77,7 +91,7 @@ export default function RequestQuotation() {
 					})}
 					type="tel"
 					placeholder="Phone number"
-					className="w-full rounded-3xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
+					className="w-full rounded-3xl border outline-0 py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				/>
 				{errors.phone && (
 					<span className="text-red-500 text-sm -mt-4 ml-4" role="alert">
@@ -93,7 +107,7 @@ export default function RequestQuotation() {
 					})}
 					type="email"
 					placeholder="Email address"
-					className="w-full rounded-3xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
+					className="w-full rounded-3xl border outline-0 py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				/>
 				{errors.email && (
 					<span className="text-red-500 text-sm -mt-4 ml-4" role="alert">
@@ -115,7 +129,10 @@ export default function RequestQuotation() {
 					</span>
 				)}
 			</fieldset>
-			<button className="w-fit mt-6 flex items-center justify-center px-6 py-2 rounded-full capitalize bg-primary text-white font-sans font-medium cursor-pointer hover:bg-primary/70 transition-colors ease-in-out">
+			<button
+				disabled={isLoading}
+				className="w-fit mt-6 flex items-center justify-center px-6 py-2 rounded-full capitalize bg-primary text-white font-sans font-medium cursor-pointer hover:bg-primary/70 transition-colors ease-in-out disabled:text-dark-grey disabled:cursor-not-allowed"
+			>
 				send message
 			</button>
 		</form>

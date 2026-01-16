@@ -24,10 +24,10 @@ export default function MessageForm() {
 
 	const onSubmit: SubmitHandler<Inputs> = async (data) => {
 		setIsLoading(true)
-		console.log(data)
+		// console.log('raw data: ', data)
 		try {
 			const res = await axiosInstance.post('/export/message', data)
-			console.log(res.data)
+			console.log('Res: ', res.data)
 			// clear inputs
 			reset()
 		} catch (error: unknown) {

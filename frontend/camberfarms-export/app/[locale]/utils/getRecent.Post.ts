@@ -3,10 +3,10 @@ type RecentPost = {
 	slug: string
 }
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL
+const API_URL = 'http://localhost:5000/api'
 
 export default async function getRecentPosts(): Promise<RecentPost[] | null> {
-	const res = await fetch(`${API_URL}/api/export/blog?limit=6&page=1`, {
+	const res = await fetch(`${API_URL}/export/blog?limit=6&page=1`, {
 		cache: 'no-store',
 	})
 

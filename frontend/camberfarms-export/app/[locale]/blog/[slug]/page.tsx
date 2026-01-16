@@ -14,7 +14,7 @@ export type iBlogContent = {
 
 async function getBlog(slug: string): Promise<iBlogContent | null> {
 	try {
-		const res = await axiosInstance.get(`/api/export/blog/${slug}`)
+		const res = await axiosInstance.get(`/export/blog/${slug}`)
 		return res.data
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	} catch (error: any) {
@@ -27,6 +27,7 @@ async function getBlog(slug: string): Promise<iBlogContent | null> {
 		//   error.response?.data || error.message
 		// )
 		// throw Error('Failed to fetch blog')
+		// console.log doesn't work in server components
 		return null
 	}
 }

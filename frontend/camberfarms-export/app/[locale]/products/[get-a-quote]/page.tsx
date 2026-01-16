@@ -1,7 +1,52 @@
 import cashewImg from '@/app/[locale]/assets/img/cashew.webp'
 import Faq from '@/app/[locale]/components/Faq'
+import { notFound } from 'next/navigation'
+import axiosInstance from '../../api/axios'
 import ProductInfo from './ProductInfo'
 import RequestQuotation from './RequestQuotation'
+
+import { ProductType } from '../Products'
+
+async function getProduct(slug: string): Promise<ProductType | null> {
+	try {
+		const res = await axiosInstance.get(`/${slug}`)
+		return res.data
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	} catch (error: any) {
+		if (error.response?.status === 404) {
+			notFound()
+		}
+
+		// console.error(
+		//   'Failed to fetch blog:',
+		//   error.response?.data || error.message
+		// )
+		// throw Error('Failed to fetch blog')
+		// console.log doesn't work in server components
+		return null
+	}
+}
+
+export default async function GetAQuote({
+	params,
+}: {
+	params: Promise<{ slug: string }>
+}) {
+	const { slug } = await params
+	const product = await getProduct(slug)
+
+	// if (!product) return notFound()
+
+	return (
+		<section className="flex flex-col w-full items-center justify-center bg-light-grey text-foreground font-inter relative">
+			<ProductInfo product={product} />
+			<RequestQuotation />
+			<Faq />
+		</section>
+	)
+}
+
+// TODO make this a dynamic route
 
 const sampleProduct = {
 	name: 'raw cashew nuts',
@@ -16,15 +61,3 @@ const sampleProduct = {
 		'Maximum Order: 50 containers (monthly).',
 	],
 }
-
-export default function GetAQuote() {
-	return (
-		<section className="flex flex-col w-full items-center justify-center bg-light-grey text-foreground font-inter relative">
-			<ProductInfo {...sampleProduct} />
-			<RequestQuotation />
-			<Faq />
-		</section>
-	)
-}
-
-// TODO make this a dynamic route

@@ -28,7 +28,7 @@ export default function BlogSearch() {
 			setLoading(true)
 			try {
 				const res = await axiosInstance.get(
-					`/api/export/blog/search?q=${debouncedQuery}`
+					`/export/blog/search?q=${debouncedQuery}`
 				)
 				// const data = await res.json()
 				setResult(res.data)

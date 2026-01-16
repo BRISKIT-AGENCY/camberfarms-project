@@ -10,6 +10,12 @@ const nextConfig: NextConfig = {
 				hostname: 'flagcdn.com',
 				pathname: '/w40/**',
 			},
+			{
+				protocol: 'http',
+				hostname: 'localhost',
+				pathname: '/api/**',
+				port: '5000',
+			},
 		],
 	},
 	// i18n: {

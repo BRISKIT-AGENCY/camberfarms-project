@@ -25,10 +25,11 @@ export default function Feedback() {
 
 	const onSubmit: SubmitHandler<Inputs> = async (data) => {
 		setIsLoading(true)
-		console.log(data)
+		// console.log(data)
 		try {
 			const res = await axiosInstance.post('/export/feedback', data)
-			console.log(res.data)
+			// TODO remove this log
+			console.log('Res: ', res.data)
 			// clear inputs
 			reset()
 		} catch (error: unknown) {
@@ -45,18 +46,18 @@ export default function Feedback() {
 				// submit form on Ctrl+Enter
 				if (e.ctrlKey && e.key === 'Enter') handleSubmit(onSubmit)()
 			}}
-			className="w-full h-fit py-10 px-10 lg:px-12 md:py-14 relative"
+			className="w-full h-fit py-10 px-10 lg:px-12 md:py-14 relative text-dark-grey"
 		>
 			<h4 className="font-poppins capitalize font-bold text-primary text-2xl sm:text-3xl">
 				{t('heading')}
 			</h4>
-			<p className="mt-2 mb-8 text-dark-grey">{t('paragraph')}</p>
+			<p className="mt-2 mb-8">{t('paragraph')}</p>
 			<fieldset className="flex flex-col gap-6">
 				<input
 					{...register('name', { required: true, maxLength: 20, minLength: 3 })}
 					type="text"
 					placeholder={t('placeholders.name')}
-					className="w-full rounded-3xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
+					className="w-full rounded-3xl border outline-0 py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				/>
 				{errors.name && (
 					<span className="text-red-500 text-sm -mt-4 ml-4" role="alert">
@@ -68,7 +69,7 @@ export default function Feedback() {
 					{...register('country', { required: true })}
 					type="text"
 					placeholder={t('placeholders.country')}
-					className="w-full rounded-3xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
+					className="w-full rounded-3xl border outline-0  py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				/>
 				{errors.country && (
 					<span className="text-red-500 text-sm -mt-4 ml-4" role="alert">
@@ -84,7 +85,7 @@ export default function Feedback() {
 					})}
 					type="tel"
 					placeholder={t('placeholders.phone')}
-					className="w-full rounded-3xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
+					className="w-full rounded-3xl border outline-0 py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				/>
 				{errors.phone && (
 					<span className="text-red-500 text-sm -mt-4 ml-4" role="alert">
@@ -96,7 +97,7 @@ export default function Feedback() {
 					{...register('email', { required: true })}
 					type="email"
 					placeholder={t('placeholders.email')}
-					className="w-full rounded-3xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
+					className="w-full rounded-3xl border outline-0 py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				/>
 				{errors.email && (
 					<span className="text-red-500 text-sm -mt-4 ml-4" role="alert">
@@ -111,7 +112,7 @@ export default function Feedback() {
 						maxLength: 250,
 					})}
 					placeholder={t('placeholders.message')}
-					className="w-full h-28 resize-none rounded-2xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
+					className="w-full h-28 resize-none rounded-2xl border outline-0 py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				></textarea>
 				{errors.message && (
 					<span className="text-red-500 text-sm -mt-4 ml-4" role="alert">
