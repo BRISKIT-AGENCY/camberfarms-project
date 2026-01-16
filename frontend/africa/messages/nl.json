@@ -1,0 +1,244 @@
+{
+    "About": {
+        "hero": {
+            "title": "Wie Wij Zijn",
+            "description": "Camberfarm Africa is een doelgerichte agribusiness-platform dat het landbouwsysteem van Afrika transformeert. We verbinden lokale boeren met internationale markten via duurzame praktijken, ethische partnerschappen en exportnormen van wereldklasse.",
+            "cta": "Werk met ons samen"
+        },
+        "images": {
+            "mobileAlt": "over hero afbeelding mobiel",
+            "desktopAlt": "over hero afbeelding desktop"
+        },
+        "story": {
+            "title": "Ons Verhaal",
+            "p1": "Gebaseerd op de overtuiging dat de landbouwkracht van Afrika de wereld kan voeden, is Camberfarm Africa opgericht om de kloof te overbruggen tussen lokale boeren en wereldwijde kopers.",
+            "p2": "We bieden boeren toegang tot middelen, training en betrouwbare handelskanalen, terwijl we ervoor zorgen dat de producten die in Afrika worden geteeld voldoen aan internationale normen.",
+            "p3": "Onze betrokkenheid gaat verder dan handel; het gaat om het opbouwen van een duurzame toekomst waarin de landbouw in Afrika floreert en haar waarde wereldwijd wordt erkend."
+        },
+        "mission": {
+            "title": "Missie",
+            "description": "Onze missie is om Afrikaanse boeren te verbinden met wereldmarkten via duurzame, transparante en innovatieve landbouwsystemen. We streven ernaar gemeenschappen te versterken, eerlijke handel te bevorderen en ervoor te zorgen dat elk product dat we exporteren de kwaliteit, integriteit en potentieel van Afrika weerspiegelt."
+        },
+        "vision": {
+            "title": "Visie",
+            "description": "Onze visie is om van Afrika een wereldleider te maken in ethische en traceerbare landbouwexport. We willen een toekomst opbouwen waarin Afrikaanse producten vertrouwd, gewaardeerd en gevierd worden op internationale markten, en zo gezamenlijke welvaart en duurzaamheid op lange termijn voor toekomstige generaties bevorderen."
+        },
+        "values": {
+            "title": "Kernwaarden",
+            "intro": "In het hart van Camberfarm Africa staan de principes die bepalen hoe we groeien, samenwerken en leveren. Deze waarden vormen onze cultuur, sturen onze beslissingen en definiëren hoe we levens beïnvloeden in het gehele landbouwsysteem.",
+            "items": {
+                "empowerment": {
+                    "title": "Empowerment:",
+                    "description": "We voorzien boeren en lokale gemeenschappen van de kennis, tools en markttoegang die ze nodig hebben om te gedijen."
+                },
+                "sustainability": {
+                    "title": "Duurzaamheid:",
+                    "description": "We promoten verantwoordelijke landbouwpraktijken die het milieu beschermen en zorgen voor lange-termijn productiviteit voor toekomstige generaties."
+                },
+                "integrity": {
+                    "title": "Integriteit:",
+                    "description": "We handhaven eerlijkheid en transparantie in elk proces, van inkoop tot export, zodat onze partners altijd op ons kunnen vertrouwen."
+                },
+                "innovation": {
+                    "title": "Innovatie:",
+                    "description": "We omarmen technologie en creativiteit om productiviteit, efficiëntie en traceerbaarheid in de gehele landbouwketen te verbeteren."
+                },
+                "excellence": {
+                    "title": "Uitmuntendheid:",
+                    "description": "We stellen onszelf de hoogste normen, leveren kwaliteitsproducten en ervaringen die Afrikas potentieel op het wereldtoneel weerspiegelen."
+                }
+            }
+        }
+    },
+    "Blog": {
+        "heading": "Blogs",
+        "description": "Blijf op de hoogte met updates, inzichten en verhalen die de landbouw in Afrika vormgeven.",
+        "readMore": "Lees meer",
+        "arrowAlt": "pijl rechts",
+        "post1": {
+            "title": "Voordelen van Lidmaatschap en Manieren om Winst te Maximaliseren",
+            "description": "Toegenomen investeringen in landbouwinfrastructuur helpen Afrikaanse producenten toegang te krijgen tot nieuwe markten in Europa en Azië, waarbij maïs en sesam de groei aanvoeren.",
+            "date": "Datum: 18 september 2025"
+        },
+        "post2": {
+            "title": "Voordelen van Lidmaatschap en Manieren om Winst te Maximaliseren",
+            "description": "Toegenomen investeringen in landbouwinfrastructuur helpen Afrikaanse producenten toegang te krijgen tot nieuwe markten in Europa en Azië, waarbij maïs en sesam de groei aanvoeren.",
+            "date": "Datum: 18 september 2025"
+        }
+    },
+    "Button": {
+        "explore": "Ontdek Camberfarm-export"
+    },
+    "Common": {
+        "welcome": "Welkom",
+        "description": "Dit is een Next.js-app met i18n"
+    },
+    "Contact": {
+        "heading1": "Neem Contact Op",
+        "description1": "Stuur ons een bericht voor partnerschap of vragen over CamberFarm Africa",
+        "heading2": "Stuur Ons Een Bericht",
+        "description2": "Vul het onderstaande formulier in en ons exportteam neemt binnen 24 uur contact met u op.",
+        "sendButton1": "Bericht verzenden",
+        "sendButton2": "Vraag verzenden",
+        "success": "Bericht succesvol verzonden",
+        "error": "Er is iets misgegaan",
+        "placeholders": {
+            "name": "Naam",
+            "email": "E-mailadres",
+            "phone": "Telefoonnummer",
+            "message1": "Typ hier uw bericht...",
+            "message2": "Typ hier uw vraag..."
+        },
+        "errors": {
+            "name": "Naam is verplicht",
+            "email": "E-mail is verplicht",
+            "emailInvalid": "Ongeldig e-mailadres",
+            "phone": "Telefoonnummer is verplicht",
+            "message": "Bericht is verplicht"
+        }
+    },
+    "Hero": {
+        "title": "Afrika’s Landbouwuitmuntendheid Verbinden met Wereldmarkten",
+        "subtitle": "We ondersteunen boeren, bevorderen duurzame praktijken en leveren Afrika’s beste exportklare producten aan betrouwbare kopers wereldwijd.",
+        "cta": "Lees Meer"
+    },
+    "Impact": {
+        "title": "Impact & Duurzaamheid",
+        "description": "Wij geloven dat de kracht van Afrika’s landbouw in haar mensen ligt. Bij Camberfarm Africa creëren we blijvende impact door boeren te ondersteunen, plattelandsgemeenschappen te versterken en milieuvriendelijke praktijken te promoten die onze planeet beschermen voor toekomstige generaties.",
+        "stat1": "Samenwerkende Boeren in Afrika",
+        "stat2": "Duurzame Landbouwinitiatieven",
+        "stat3": "Milieuvriendelijke Praktijken",
+        "stat4": "Wereldwijde Marktverbindingen",
+        "button": "Werk met ons samen"
+    },
+    "Membership": {
+        "title": "Lidmaatschapsformulier",
+        "submit": "Aanmelden",
+        "success": "Registratie succesvol",
+        "fields": {
+            "name": "Volledige Naam",
+            "email": "E-mailadres",
+            "phone": "Telefoonnummer",
+            "dateOfBirth": "Geboortedatum",
+            "gender": "Geslacht",
+            "address": "Adres",
+            "country": "Land",
+            "state": "Staat",
+            "region": "Regio"
+        },
+        "upload": {
+            "label": "Upload een geldig identiteitsbewijs",
+            "action": "Sleep hier de afbeelding of blader",
+            "types": "Bestandstype (PDF, PNG, JPEG)"
+        },
+        "errors": {
+            "name": "Naam is verplicht",
+            "email": "E-mail is verplicht",
+            "invalidEmail": "Ongeldig e-mailadres",
+            "phone": "Telefoonnummer is verplicht",
+            "dateOfBirth": "Geboortedatum is verplicht",
+            "gender": "Geslacht is verplicht",
+            "address": "Adres is verplicht",
+            "country": "Land is verplicht",
+            "state": "Staat is verplicht",
+            "region": "Regio is verplicht",
+            "fileRequired": "Minstens één ID-bestand is vereist",
+            "generic": "Er is iets misgegaan. Probeer het opnieuw."
+        }
+    },
+    "Nav": {
+        "home": "Home",
+        "about": "Over Ons",
+        "ourWork": "Ons Werk",
+        "blog": "Blog",
+        "resources": "Onze Bronnen",
+        "contact": "Neem Contact Op"
+    },
+    "News": {
+        "heading": "Nieuws en Inzichten",
+        "description": "Verken verhalen, updates en inzichten over Afrikaanse landbouwexport, duurzaamheid en wereldwijde handelstrends.",
+        "readMore": "Lees meer",
+        "arrowAlt": "pijl rechts",
+        "post1": {
+            "title": "Focus op Duurzaamheid",
+            "description": "Naarmate de wereldwijde vraag naar ethisch geproduceerde voeding groeit, schakelen Afrikaanse exporteurs over op milieuvriendelijke en traceerbare landbouwsystemen om aan internationale normen te voldoen.",
+            "date": "18 september 2025"
+        },
+        "post2": {
+            "title": "Focus op Exportmarkten",
+            "description": "Toegenomen investeringen in landbouwinfrastructuur helpen Afrikaanse producenten toegang te krijgen tot nieuwe markten in Europa en Azië, waarbij maïs en sesam de groei aanvoeren.",
+            "date": "18 september 2025"
+        },
+        "post3": {
+            "title": "Focus op Technologie / Impact",
+            "description": "Van digitale traceerbaarheidstools tot AI-gestuurde logistiek, technologie maakt Afrikaanse landbouwexport transparanter en competitiever.",
+            "date": "18 september 2025"
+        }
+    },
+    "OurWorks": {
+        "hero": {
+            "title": "Ons Werk",
+            "description": "We werken nauw samen met boeren in heel Afrika om de productiviteit te verbeteren, plattelandsgemeenschappen te versterken en duurzame landbouwsystemen op te bouwen.",
+            "imageAlt": "ons werk hero afbeelding"
+        },
+        "tabs": {
+            "membership": "Lidmaatschap",
+            "farmFund": "Landbouwfonds",
+            "exportation": "Export",
+            "technology": "Onze Technologie",
+            "process": "Ons Proces"
+        }
+    },
+    "Partnership": {
+        "title": "Sterke Partnerschappen Opbouwen in Hele Afrika",
+        "description": "Ons werk bloeit door samenwerking. Van coöperaties van kleine boeren tot ontwikkelingsorganisaties en wereldwijde kopers, Camberfarm Africa bouwt betrouwbare partnerschappen die landbouwinnovatie, duurzaamheid en economische groei stimuleren.",
+        "altText": "partnerschap afbeelding"
+    },
+    "Process": {
+        "title": "Ons Proces",
+        "description": "We onderzoeken een volledig scala aan landbouwtechnologieoplossingen die maximale waarde garanderen tegen de laagst mogelijke kosten voor kleine boeren en andere belanghebbenden, wat uiteindelijk leidt tot voedselzekerheid voor Afrikanen en de wereld.",
+        "steps": [
+            "Boer Onboarding",
+            "Boer Mapping",
+            "Input Distributie",
+            "Veldmonitoring",
+            "Oogsten",
+            "Voorraadbeheer"
+        ]
+    },
+    "Products": {
+        "membership_title": "Lidmaatschap",
+        "membership_description": "Word lid van het Camberfarm Farmers Network en krijg toegang tot de tools, ondersteuning en markt mogelijkheden die u nodig heeft om te groeien. Ons lidmaatschap verbindt u met verbeterde landbouwpraktijken, betrouwbare afnamekanalen, trainingsprogramma's en bronnen om uw productiviteit te verhogen en meer te verdienen per oogst.",
+        "membership_button": "Aanmelden",
+        "farmFund_title": "Landbouwfonds",
+        "farmFund_description": "Doe mee met het opbouwen van schaalbare landbouw in Afrika. Via Camberfarm kunnen investeerders echte landbouwgroei ondersteunen, boeren empoweren en deelnemen aan een transparant systeem gebouwd voor impact en rendement. Als u meer wilt weten, stuur ons een bericht en ons team neemt contact met u op met investeringsdetails.",
+        "farmFund_button": "Investeer Nu",
+        "export_title": "Export",
+        "export_description": "Via onze gespecialiseerde dochteronderneming Camberfarm Export beheren we alle sourcing, kwaliteitscontrole, verpakking en logistiek, en zorgen we ervoor dat elk product dat Afrika verlaat voldoet aan internationale normen.",
+        "export_button": "Bezoek Camberfarm Export"
+    },
+    "WhatWeDo": {
+        "title": "Wat We Doen",
+        "item1": {
+            "title": "Inkoop bij Vertrouwde Afrikaanse Boeren",
+            "description": "We werken rechtstreeks samen met kleine boeren en coöperaties in heel Afrika, wat zorgt voor ethische inkoop en eerlijke handel. Door training, toegang tot middelen en transparante supply chains stellen we boeren in staat wereldklasse gewassen te produceren."
+        },
+        "item2": {
+            "title": "Zorg voor Premium Kwaliteitsnormen",
+            "description": "Elk product ondergaat strikte inspectie, sortering en kwaliteitscontrole om te voldoen aan export specificaties. Onze teams handhaven internationale normen voor reinheid, vochtgehalte en classificatie, wat betrouwbaarheid in elke zending garandeert."
+        },
+        "item3": {
+            "title": "Exportklaar Verpakken met Wereldwijde Conformiteit",
+            "description": "We gebruiken milieuvriendelijke, exportklare verpakkingen die zijn ontworpen om versheid te behouden en te voldoen aan NAFDAC- en biologische certificeringsnormen. Elke zending is volledig gedocumenteerd en traceerbaar van boerderij tot haven."
+        },
+        "item4": {
+            "title": "Afrika Verbinden met de Wereld",
+            "description": "Vanuit onze hubs in Nigeria, Ghana en Oost-Afrika leveren we landbouwuitmuntendheid aan klanten in Europa, Azië en Amerika op tijd en in topconditie."
+        }
+    },
+    "WhoWeAre": {
+        "title": "Wie Wij Zijn",
+        "description": "CamberFarm Africa is een landbouwbedrijf dat boeren op de eerste plaats zet, toegewijd aan het versterken van plattelandsgemeenschappen en het verbeteren van Afrikaanse voedselsystemen. We werken direct met kleine en middelgrote boeren en bieden hen toegang tot kwaliteitsinputs, training, marktverbindingen en ondersteuning om duurzaam te groeien.",
+        "buttonText": "Leer meer over ons"
+    }
+}

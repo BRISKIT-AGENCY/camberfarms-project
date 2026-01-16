@@ -1,0 +1,244 @@
+{
+    "About": {
+        "hero": {
+            "title": "Chi Siamo",
+            "description": "Camberfarm Africa è una piattaforma agricola con uno scopo, che trasforma l'ecosistema agricolo africano. Connettiamo gli agricoltori locali ai mercati internazionali attraverso pratiche sostenibili, partnership etiche e standard di esportazione di livello mondiale.",
+            "cta": "Collabora con noi"
+        },
+        "images": {
+            "mobileAlt": "immagine principale chi siamo mobile",
+            "desktopAlt": "immagine principale chi siamo desktop"
+        },
+        "story": {
+            "title": "La Nostra Storia",
+            "p1": "Fondata sulla convinzione che la forza agricola dell'Africa possa alimentare il mondo, Camberfarm Africa è stata creata per colmare il divario tra agricoltori locali e acquirenti globali.",
+            "p2": "Offriamo agli agricoltori accesso a risorse, formazione e canali commerciali affidabili, garantendo al contempo che i prodotti coltivati in tutta l'Africa rispettino gli standard internazionali.",
+            "p3": "Il nostro impegno va oltre il commercio; si tratta di costruire un futuro sostenibile in cui l'agricoltura africana prosperi e il suo valore sia riconosciuto a livello globale."
+        },
+        "mission": {
+            "title": "Missione",
+            "description": "La nostra missione è connettere gli agricoltori africani ai mercati globali attraverso sistemi agricoli sostenibili, trasparenti e innovativi. Ci impegniamo a rafforzare le comunità, promuovere il commercio equo e garantire che ogni prodotto esportato rifletta la qualità, l'integrità e il potenziale dell'Africa."
+        },
+        "vision": {
+            "title": "Visione",
+            "description": "La nostra visione è rendere l'Africa un leader globale nelle esportazioni agricole etiche e tracciabili. Miriamo a costruire un futuro in cui i prodotti africani siano affidabili, apprezzati e celebrati nei mercati internazionali, promuovendo prosperità condivisa e sostenibilità a lungo termine per le generazioni future."
+        },
+        "values": {
+            "title": "Valori Fondamentali",
+            "intro": "Al centro di Camberfarm Africa ci sono i principi che guidano come cresciamo, collaboriamo e consegniamo. Questi valori plasmano la nostra cultura, guidano le nostre decisioni e definiscono come impattiamo le vite nell'intero ecosistema agricolo.",
+            "items": {
+                "empowerment": {
+                    "title": "Empowerment:",
+                    "description": "Forniamo agli agricoltori e alle comunità locali le conoscenze, gli strumenti e l'accesso al mercato necessari per prosperare."
+                },
+                "sustainability": {
+                    "title": "Sostenibilità:",
+                    "description": "Promuoviamo pratiche agricole responsabili che proteggono l'ambiente e garantiscono la produttività a lungo termine per le generazioni future."
+                },
+                "integrity": {
+                    "title": "Integrità:",
+                    "description": "Manteniamo onestà e trasparenza in ogni processo, dalla fornitura all'esportazione, assicurando che i nostri partner possano sempre fidarsi del nostro lavoro."
+                },
+                "innovation": {
+                    "title": "Innovazione:",
+                    "description": "Abbracciamo la tecnologia e la creatività per migliorare produttività, efficienza e tracciabilità lungo l'intera catena del valore agricolo."
+                },
+                "excellence": {
+                    "title": "Eccellenza:",
+                    "description": "Ci poniamo i più alti standard, offrendo prodotti ed esperienze di qualità che riflettono il potenziale dell'Africa sulla scena globale."
+                }
+            }
+        }
+    },
+    "Blog": {
+        "heading": "Blog",
+        "description": "Rimani aggiornato con notizie, approfondimenti e storie che stanno plasmando l'agricoltura in Africa.",
+        "readMore": "Leggi di più",
+        "arrowAlt": "freccia destra",
+        "post1": {
+            "title": "Vantaggi della Membership e Modi per Massimizzare i Profitti",
+            "description": "L'aumento degli investimenti nelle infrastrutture agricole sta aiutando i produttori africani ad accedere a nuovi mercati in Europa e Asia, con mais e sesamo in prima linea nella crescita.",
+            "date": "Data: 18 settembre 2025"
+        },
+        "post2": {
+            "title": "Vantaggi della Membership e Modi per Massimizzare i Profitti",
+            "description": "L'aumento degli investimenti nelle infrastrutture agricole sta aiutando i produttori africani ad accedere a nuovi mercati in Europa e Asia, con mais e sesamo in prima linea nella crescita.",
+            "date": "Data: 18 settembre 2025"
+        }
+    },
+    "Button": {
+        "explore": "Esplora le esportazioni di Camberfarm"
+    },
+    "Common": {
+        "welcome": "Benvenuto",
+        "description": "Questa è un'app Next.js con i18n"
+    },
+    "Contact": {
+        "heading1": "Contattaci",
+        "description1": "Inviaci un messaggio per partnership o per informazioni su CamberFarm Africa",
+        "heading2": "Inviaci un Messaggio",
+        "description2": "Compila il modulo qui sotto e il nostro team di export ti risponderà entro 24 ore.",
+        "sendButton1": "Invia messaggio",
+        "sendButton2": "Invia Richiesta",
+        "success": "Messaggio inviato con successo",
+        "error": "Qualcosa è andato storto",
+        "placeholders": {
+            "name": "Nome",
+            "email": "Indirizzo Email",
+            "phone": "Numero di Telefono",
+            "message1": "Scrivi qui il tuo messaggio...",
+            "message2": "Scrivi qui la tua richiesta..."
+        },
+        "errors": {
+            "name": "Il nome è obbligatorio",
+            "email": "L'email è obbligatoria",
+            "emailInvalid": "Indirizzo email non valido",
+            "phone": "Il numero di telefono è obbligatorio",
+            "message": "Il messaggio è obbligatorio"
+        }
+    },
+    "Hero": {
+        "title": "Connettere l’Eccellenza Agricola Africana ai Mercati Globali",
+        "subtitle": "Supportiamo gli agricoltori, promuoviamo pratiche sostenibili e consegniamo i migliori prodotti esportabili africani a compratori affidabili in tutto il mondo.",
+        "cta": "Scopri di più"
+    },
+    "Impact": {
+        "title": "Impatto e Sostenibilità",
+        "description": "Crediamo che la forza agricola dell'Africa risieda nelle sue persone. In Camberfarm Africa, creiamo un impatto duraturo sostenendo gli agricoltori, rafforzando le comunità rurali e promuovendo pratiche ecologiche che proteggono il pianeta per le generazioni future.",
+        "stat1": "Agricoltori Partner in tutta l’Africa",
+        "stat2": "Iniziative Agricole Sostenibili",
+        "stat3": "Pratiche Eco-Sostenibili",
+        "stat4": "Connessioni con Mercati Globali",
+        "button": "Collabora con noi"
+    },
+    "Membership": {
+        "title": "Modulo di Membership",
+        "submit": "Iscriviti",
+        "success": "Registrazione avvenuta con successo",
+        "fields": {
+            "name": "Nome Completo",
+            "email": "Indirizzo Email",
+            "phone": "Numero di Telefono",
+            "dateOfBirth": "Data di Nascita",
+            "gender": "Genere",
+            "address": "Indirizzo",
+            "country": "Paese",
+            "state": "Stato",
+            "region": "Regione"
+        },
+        "upload": {
+            "label": "Carica un documento di identità valido",
+            "action": "Trascina l'immagine qui o cerca",
+            "types": "Tipologia file (PDF, PNG, JPEG)"
+        },
+        "errors": {
+            "name": "Il nome è obbligatorio",
+            "email": "L'email è obbligatoria",
+            "invalidEmail": "Indirizzo email non valido",
+            "phone": "Il numero di telefono è obbligatorio",
+            "dateOfBirth": "La data di nascita è obbligatoria",
+            "gender": "Il genere è obbligatorio",
+            "address": "L'indirizzo è obbligatorio",
+            "country": "Il paese è obbligatorio",
+            "state": "Lo stato è obbligatorio",
+            "region": "La regione è obbligatoria",
+            "fileRequired": "È richiesto almeno un documento di identità",
+            "generic": "Qualcosa è andato storto. Riprova."
+        }
+    },
+    "Nav": {
+        "home": "Home",
+        "about": "Chi Siamo",
+        "ourWork": "Il Nostro Lavoro",
+        "blog": "Blog",
+        "resources": "Le Nostre Risorse",
+        "contact": "Contattaci"
+    },
+    "News": {
+        "heading": "Notizie e Approfondimenti",
+        "description": "Esplora storie, aggiornamenti e approfondimenti sulle esportazioni agricole africane, sostenibilità e tendenze del commercio globale.",
+        "readMore": "Leggi di più",
+        "arrowAlt": "freccia destra",
+        "post1": {
+            "title": "Focus sulla Sostenibilità",
+            "description": "Con la crescente domanda globale di alimenti prodotti eticamente, gli esportatori africani adottano sistemi agricoli eco-compatibili e tracciabili per rispettare gli standard internazionali.",
+            "date": "18 settembre 2025"
+        },
+        "post2": {
+            "title": "Focus sul Mercato di Esportazione",
+            "description": "L'aumento degli investimenti nelle infrastrutture agricole aiuta i produttori africani ad accedere a nuovi mercati in Europa e Asia, con mais e sesamo in prima linea.",
+            "date": "18 settembre 2025"
+        },
+        "post3": {
+            "title": "Focus su Tecnologia / Impatto",
+            "description": "Dagli strumenti digitali di tracciabilità alla logistica con IA, la tecnologia rende le esportazioni agricole africane più trasparenti e competitive.",
+            "date": "18 settembre 2025"
+        }
+    },
+    "OurWorks": {
+        "hero": {
+            "title": "Il Nostro Lavoro",
+            "description": "Lavoriamo mano nella mano con gli agricoltori in tutta l'Africa per migliorare la produttività, rafforzare le comunità rurali e costruire sistemi agricoli sostenibili.",
+            "imageAlt": "immagine hero del nostro lavoro"
+        },
+        "tabs": {
+            "membership": "Membership",
+            "farmFund": "Fondo Agricolo",
+            "exportation": "Esportazione",
+            "technology": "La Nostra Tecnologia",
+            "process": "Il Nostro Processo"
+        }
+    },
+    "Partnership": {
+        "title": "Costruire Partnership Forti in Tutta l’Africa",
+        "description": "Il nostro lavoro prospera grazie alla collaborazione. Dalle cooperative di piccoli agricoltori alle organizzazioni di sviluppo e agli acquirenti globali, Camberfarm Africa costruisce partnership affidabili che guidano innovazione agricola, sostenibilità e crescita economica.",
+        "altText": "immagine partnership"
+    },
+    "Process": {
+        "title": "Il Nostro Processo",
+        "description": "Esploriamo una gamma completa di soluzioni tecnologiche agricole che assicurano il massimo valore al minor costo possibile per i piccoli agricoltori e altre parti interessate, portando infine alla sicurezza alimentare per gli africani e il mondo.",
+        "steps": [
+            "Accoglienza degli Agricoltori",
+            "Mappatura degli Agricoltori",
+            "Distribuzione degli Input",
+            "Monitoraggio dei Campi",
+            "Raccolta",
+            "Gestione dell'Inventario"
+        ]
+    },
+    "Products": {
+        "membership_title": "Membership",
+        "membership_description": "Unisciti alla Rete di Agricoltori di Camberfarm e accedi a strumenti, supporto e opportunità di mercato necessari per crescere. La nostra membership ti connette a migliori pratiche agricole, canali di vendita affidabili, programmi di formazione e risorse per aumentare la produttività e guadagnare di più da ogni raccolto.",
+        "membership_button": "Iscriviti",
+        "farmFund_title": "Fondo Agricolo",
+        "farmFund_description": "Unisciti a noi per costruire un'agricoltura scalabile in tutta l'Africa. Attraverso Camberfarm, gli investitori possono supportare una crescita agricola reale, dare potere agli agricoltori e partecipare a un sistema trasparente creato per l'impatto, ottenendo ritorni. Se vuoi saperne di più, inviaci un messaggio e il nostro team ti contatterà con i dettagli dell'investimento.",
+        "farmFund_button": "Investi Ora",
+        "export_title": "Esportazione",
+        "export_description": "Attraverso la nostra filiale specializzata, Camberfarm Export, gestiamo tutta l'approvvigionamento, il controllo qualità, il confezionamento e la logistica, garantendo che ogni prodotto che lascia l'Africa rispetti gli standard internazionali.",
+        "export_button": "Visita Camberfarm Export"
+    },
+    "WhatWeDo": {
+        "title": "Cosa Facciamo",
+        "item1": {
+            "title": "Approvvigionamento da Agricoltori Africani Affidabili",
+            "description": "Collaboriamo direttamente con piccoli agricoltori e cooperative in tutta l'Africa, garantendo approvvigionamento etico e commercio equo. Attraverso formazione, accesso a risorse e supply chain trasparenti, permettiamo agli agricoltori di produrre colture di livello mondiale."
+        },
+        "item2": {
+            "title": "Garantire Standard di Qualità Premium",
+            "description": "Ogni prodotto passa attraverso ispezioni rigorose, selezione e controllo qualità per soddisfare le specifiche di esportazione. I nostri team mantengono standard internazionali di pulizia, contenuto di umidità e classificazione, assicurando affidabilità in ogni spedizione."
+        },
+        "item3": {
+            "title": "Packaging Pronto per l’Esportazione con Conformità Globale",
+            "description": "Utilizziamo imballaggi ecologici di qualità da esportazione progettati per preservare la freschezza e rispettare gli standard di certificazione NAFDAC e biologici. Ogni spedizione è completamente documentata e tracciabile dalla fattoria al porto."
+        },
+        "item4": {
+            "title": "Connettere l’Africa al Mondo",
+            "description": "Dai nostri hub in Nigeria, Ghana e Africa Orientale, consegniamo eccellenza agricola ai clienti in Europa, Asia e Americhe in tempo e nelle migliori condizioni."
+        }
+    },
+    "WhoWeAre": {
+        "title": "Chi Siamo",
+        "description": "CamberFarm Africa è un’azienda agricola incentrata sull’agricoltore, impegnata a potenziare le comunità rurali e rafforzare i sistemi alimentari africani. Lavoriamo direttamente con agricoltori di piccola e media scala, fornendo loro accesso a input di qualità, formazione, collegamenti di mercato e supporto per crescere in modo sostenibile.",
+        "buttonText": "Scopri di più su di noi"
+    }
+}
