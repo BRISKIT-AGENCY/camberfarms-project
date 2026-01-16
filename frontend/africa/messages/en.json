@@ -1,0 +1,244 @@
+{
+    "About": {
+        "hero": {
+            "title": "Who We Are",
+            "description": "Camberfarm Africa is a purpose-driven agribusiness platform transforming Africa’s agricultural ecosystem. We connect local farmers to international markets through sustainable practices, ethical partnerships, and world-class export standards.",
+            "cta": "Partner with us"
+        },
+        "images": {
+            "mobileAlt": "about hero image mobile",
+            "desktopAlt": "about hero image desktop"
+        },
+        "story": {
+            "title": "Our Story",
+            "p1": "Founded on the belief that Africa’s agricultural strength can power the world, Camberfarm Africa was created to bridge the gap between local farmers and global buyers.",
+            "p2": "We empower farmers with access to resources, training, and reliable trade channels, while ensuring that the produce grown across Africa meets international standards.",
+            "p3": "Our commitment extends beyond trade; it’s about building a sustainable future where African agriculture thrives and its value is recognized globally."
+        },
+        "mission": {
+            "title": "Mission",
+            "description": "Our mission is to connect Africa’s farmers to global markets through sustainable, transparent, and innovative agricultural systems. We strive to empower communities, promote fair trade, and ensure that every product we export reflects Africa’s quality, integrity, and potential."
+        },
+        "vision": {
+            "title": "Vision",
+            "description": "Our vision is to make Africa a global leader in ethical and traceable agricultural exports. We aim to build a future where African produce is trusted, valued, and celebrated across international markets, driving shared prosperity and long-term sustainability for generations to come."
+        },
+        "values": {
+            "title": "Core Values",
+            "intro": "At the heart of Camberfarm Africa are the principles that guide how we grow, partner, and deliver. These values shape our culture, drive our decisions, and define the way we impact lives across the agricultural ecosystem.",
+            "items": {
+                "empowerment": {
+                    "title": "Empowerment:",
+                    "description": "We equip farmers and local communities with the knowledge, tools, and market access they need to thrive."
+                },
+                "sustainability": {
+                    "title": "Sustainability:",
+                    "description": "We promote responsible farming practices that protect the environment and ensure long-term productivity for future generations."
+                },
+                "integrity": {
+                    "title": "Integrity:",
+                    "description": "We maintain honesty and transparency across every process, from sourcing to export, ensuring that our partners can always trust our work."
+                },
+                "innovation": {
+                    "title": "Innovation:",
+                    "description": "We embrace technology and creativity to improve productivity, efficiency, and traceability throughout the agricultural value chain."
+                },
+                "excellence": {
+                    "title": "Excellence:",
+                    "description": "We hold ourselves to the highest standards, delivering quality products and experiences that reflect Africa’s potential on the global stage."
+                }
+            }
+        }
+    },
+    "Blog": {
+        "heading": "Blogs",
+        "description": "Stay informed with updates, insights, and stories shaping agriculture across Africa.",
+        "readMore": "Read more",
+        "arrowAlt": "arrow right",
+        "post1": {
+            "title": "Membership Advantages And Ways To Maximize Profits",
+            "description": "Increased investment in agricultural infrastructure is helping African producers tap into new markets across Europe and Asia, with maize and sesame leading the surge.",
+            "date": "Date: September 18, 2025"
+        },
+        "post2": {
+            "title": "Membership Advantages And Ways To Maximize Profits",
+            "description": "Increased investment in agricultural infrastructure is helping African producers tap into new markets across Europe and Asia, with maize and sesame leading the surge.",
+            "date": "Date: September 18, 2025"
+        }
+    },
+    "Button": {
+        "explore": "Explore Camberfarm exports"
+    },
+    "Common": {
+        "welcome": "Welcome",
+        "description": "This is a Next.js app with i18n"
+    },
+    "Contact": {
+        "heading1": "Contact Us",
+        "description1": "Kindly send us a message for Partnership or for Enquiry about CamberFarm Africa",
+        "heading2": "Send Us a Message",
+        "description2": "Fill out the form below and our export team will get back to you within 24 hours.",
+        "sendButton1": "Send message",
+        "sendButton2": "Send Enquiry",
+        "success": "Message sent successfully",
+        "error": "Something went wrong",
+        "placeholders": {
+            "name": "Name",
+            "email": "Email Address",
+            "phone": "Phone Number",
+            "message1": "Type your message here...",
+            "message2": "Type enquiry message here..."
+        },
+        "errors": {
+            "name": "Name is required",
+            "email": "Email is required",
+            "emailInvalid": "Invalid email address",
+            "phone": "Phone number is required",
+            "message": "Message is required"
+        }
+    },
+    "Hero": {
+        "title": "Connecting Africa's Agricultural Excellence to Global Markets",
+        "subtitle": "We empower farmers, support sustainable practices, and deliver Africa's finest export-ready products to trusted buyers worldwide.",
+        "cta": "Learn More"
+    },
+    "Impact": {
+        "title": "Impact & Sustainability",
+        "description": "We believe that Africa’s agricultural strength lies in its people. At Camberfarm Africa, we create lasting impact by empowering farmers, supporting rural communities, and promoting eco-friendly practices that protect our planet for future generations.",
+        "stat1": "Partnered Farmers Across Africa",
+        "stat2": "Sustainable Farming Initiatives",
+        "stat3": "Eco-Friendly Practices",
+        "stat4": "Global Market Connections",
+        "button": "Partner with us"
+    },
+    "Membership": {
+        "title": "Membership Form",
+        "submit": "Sign Up",
+        "success": "Registration successful",
+        "fields": {
+            "name": "Full Name",
+            "email": "Email Address",
+            "phone": "Phone Number",
+            "dateOfBirth": "Date of Birth",
+            "gender": "Gender",
+            "address": "Address",
+            "country": "Country",
+            "state": "State",
+            "region": "Region"
+        },
+        "upload": {
+            "label": "Upload a valid ID Card",
+            "action": "Drop image here or browse",
+            "types": "File type (PDF, PNG, JPEG)"
+        },
+        "errors": {
+            "name": "Name is required",
+            "email": "Email is required",
+            "invalidEmail": "Invalid email address",
+            "phone": "Phone number is required",
+            "dateOfBirth": "Date of birth is required",
+            "gender": "Gender is required",
+            "address": "Address is required",
+            "country": "Country is required",
+            "state": "State is required",
+            "region": "Region is required",
+            "fileRequired": "At least one ID file is required",
+            "generic": "Something went wrong. Please try again."
+        }
+    },
+    "Nav": {
+        "home": "Home",
+        "about": "About Us",
+        "ourWork": "Our Work",
+        "blog": "Blog",
+        "resources": "Our Resources",
+        "contact": "Contact Us"
+    },
+    "News": {
+        "heading": "News and Insights",
+        "description": "Explore stories, updates, and insights about Africa’s agricultural exports, sustainability, and global trade trends.",
+        "readMore": "Read more",
+        "arrowAlt": "arrow right",
+        "post1": {
+            "title": "Sustainability Focus",
+            "description": "As global demand for ethically sourced food grows, African exporters are turning to eco-friendly and traceable farming systems to meet international standards.",
+            "date": "September 18, 2025"
+        },
+        "post2": {
+            "title": "Export Market Focus",
+            "description": "Increased investment in agricultural infrastructure is helping African producers tap into new markets across Europe and Asia, with maize and sesame leading the surge.",
+            "date": "September 18, 2025"
+        },
+        "post3": {
+            "title": "Technology / Impact Focus",
+            "description": "From digital traceability tools to AI-powered logistics, technology is making Africa’s agricultural exports more transparent and competitive.",
+            "date": "September 18, 2025"
+        }
+    },
+    "OurWorks": {
+        "hero": {
+            "title": "Our Work",
+            "description": "We work hand-in-hand with farmers across Africa to improve productivity, strengthen rural communities, and build sustainable agricultural systems.",
+            "imageAlt": "our work hero image"
+        },
+        "tabs": {
+            "membership": "Membership",
+            "farmFund": "Farm Fund",
+            "exportation": "Exportation",
+            "technology": "Our Technology",
+            "process": "Our Process"
+        }
+    },
+    "Partnership": {
+        "title": "Building Strong Partnerships Across Africa",
+        "description": "Our work thrives on collaboration. From smallholder farmer cooperatives to development organizations and global buyers, Camberfarm Africa builds trusted partnerships that drive agricultural innovation, sustainability, and economic growth.",
+        "altText": "partnership image"
+    },
+    "Process": {
+        "title": "Our Process",
+        "description": "We explore a full range of agricultural technology solutions that ensure maximum value at the least possible cost to smallholder farmers and other relevant stakeholders, ultimately leading to food security for Africans and the world.",
+        "steps": [
+            "Farmer Onboarding",
+            "Farmer Mapping",
+            "Input Distribution",
+            "Field Monitoring",
+            "Harvesting",
+            "Inventory Management"
+        ]
+    },
+    "Products": {
+        "membership_title": "Membership",
+        "membership_description": "Join the Camberfarm Farmers Network and access the tools, support, and market opportunities you need to grow. Our membership connects you to improved farming practices, reliable off-take channels, training programs and resources that help you increase productivity and earn more from every harvest.",
+        "membership_button": "Sign Up",
+        "farmFund_title": "Farm Fund",
+        "farmFund_description": "Join us in building scalable agriculture across Africa. Through Camberfarm, investors can support real agricultural growth, empower farmers, and participate in a transparent system built for impact and you earn in return. If you are interested in learning more, send us a message and our team will reach out with investment details",
+        "farmFund_button": "Invest Now",
+        "export_title": "Exportation",
+        "export_description": "Through our specialized subsidiary, Camberfarm Export, we manage all sourcing, quality control, packaging, and logistics, ensuring that every product leaving Africa meets international standards.",
+        "export_button": "Visit Camberfarm Export"
+    },
+    "WhatWeDo": {
+        "title": "What We Do",
+        "item1": {
+            "title": "Sourcing from Trusted African Farmers",
+            "description": "We partner directly with smallholder farmers and cooperatives across Africa, ensuring ethical sourcing and fair trade. Through training, access to resources, and transparent supply chains, we empower farmers to produce world-class crops."
+        },
+        "item2": {
+            "title": "Ensuring Premium Quality Standards",
+            "description": "Every product undergoes strict inspection, sorting, and quality control to meet export specifications. Our teams maintain international standards of cleanliness, moisture content, and grading ensuring reliability in every shipment."
+        },
+        "item3": {
+            "title": "Export-Ready Packaging with Global Compliance",
+            "description": "We use eco-friendly, export-grade packaging designed to preserve freshness and meet NAFDAC and Organic certification standards. Each shipment is fully documented and traceable from farm to port."
+        },
+        "item4": {
+            "title": "Connecting Africa to the World",
+            "description": "From our hubs in Nigeria, Ghana, and East Africa, we deliver agricultural excellence to clients across Europe, Asia, and the Americas on time and in top condition."
+        }
+    },
+    "WhoWeAre": {
+        "title": "Who We Are",
+        "description": "CamberFarm Africa is a farmer-first agricultural company committed to empowering rural communities and strengthening Africa’s food systems. We work directly with smallholder and medium-scale farmers, providing them with access to quality inputs, training, market linkages, and the support they need to grow sustainably.",
+        "buttonText": "Learn more about us"
+    }
+}
