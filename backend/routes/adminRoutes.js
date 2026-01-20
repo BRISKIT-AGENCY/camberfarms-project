@@ -59,93 +59,73 @@ router.post('/login', async (req, res) => {
 // camberfarm africa blog creation route
 router.post('/africa-blogs', adminAuth, async (req, res) => {
   try {
-    const {
-      title,
-      excerpt,
-      slug,
-      image,
-      sections,
-      publishedAt
-    } = req.body
-
-    // basic validation
-    if (!title || !excerpt || !slug) {
-      return res.status(400).json({ message: 'Missing required fields' })
+      const { title, excerpt, slug, image, sections, publishedAt } = req.body
+  
+      if (!validatePostBody(req.body)) {
+        return res.status(400).json({ message: 'Title, excerpt, and slug are required' })
+      }
+  
+      const blog = new Blog({
+        title,
+        excerpt,
+        slug,
+        image,
+        sections,
+        publishedAt: publishedAt ? new Date(publishedAt) : new Date()
+      })
+  
+      await blog.save()
+      res.status(201).json({ message: 'Blog created successfully', blog })
+    } catch (error) {
+      console.error(error)
+      res.status(500).json({ message: 'Failed to create blog' })
     }
-
-    const blog = await Blog.create({
-      title,
-      excerpt,
-      slug,
-      image,
-      sections,
-      publishedAt
-    })
-
-    res.status(201).json({
-      message: 'Blog created successfully',
-      blog
-    })
-  } catch (err) {
-    if (err.code === 11000) {
-      return res.status(409).json({ message: 'Slug already exists' })
-    }
-
-    res.status(500).json({ message: 'Server error' })
-  }
 })
 
 // camberfarm export blog creation route
 router.post('/export-blogs', adminAuth, async (req, res) => {
   try {
-    const {
+    const { title, excerpt, slug, image, sections, publishedAt } = req.body
+
+    if (!validatePostBody(req.body)) {
+      return res.status(400).json({ message: 'Title, excerpt, and slug are required' })
+    }
+
+    const exportBlog = new ExportBlog({
       title,
       excerpt,
       slug,
       image,
       sections,
-      publishedAt
-    } = req.body
-
-    // basic validation
-    if (!title || !excerpt || !slug) {
-      return res.status(400).json({ message: 'Missing required fields' })
-    }
-
-    const exportBlogs = await exportBlog.create({
-      title,
-      excerpt,
-      slug,
-      image,
-      sections,
-      publishedAt
+      publishedAt: publishedAt ? new Date(publishedAt) : new Date()
     })
 
-    res.status(201).json({
-      message: 'Blog created successfully',
-      exportBlogs
-    })
-  } catch (err) {
-    if (err.code === 11000) {
-      return res.status(409).json({ message: 'Slug already exists' })
-    }
-
-    res.status(500).json({ message: 'Server error' })
+    await exportBlog.save()
+    res.status(201).json({ message: 'ExportBlog created successfully', exportBlog })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Failed to create export blog' })
   }
 })
 
 // GET all contact messages
 router.get('/contacts', adminAuth, async (req, res) => {
   try {
-    const contacts = await contact.find().sort({ createdAt: -1 })
-
-    res.json({
-      count: contacts.length,
-      contacts
-    })
-  } catch (err) {
-    res.status(500).json({ message: 'Server error' })
-  }
+      const contacts = await Contact.find()
+        .sort({ createdAt: -1 }) // latest first
+  
+      res.status(200).json({
+        success: true,
+        total: contacts.length,
+        data: contacts
+      })
+    } catch (error) {
+      console.error('Fetch contacts error:', error)
+      res.status(500).json({
+        success: false,
+        message: 'Failed to fetch contacts'
+      })
+    }
 })
 
 // GET all FarmFund registrations
@@ -181,133 +161,84 @@ router.get('/membership', adminAuth, async (req, res) => {
 // create a news article (admin only)
 router.post('/news', adminAuth, async (req, res) => {
   try {
-    const { title, excerpt, slug, image, sections, publishedAt } = req.body
-
-    // Validate required fields
-    if (!title || !excerpt || !slug) {
-      return res.status(400).json({ message: 'Missing required fields' })
+      const { title, excerpt, slug, image, sections, publishedAt } = req.body
+  
+      if (!validatePostBody(req.body)) {
+        return res.status(400).json({ message: 'Title, excerpt, and slug are required' })
+      }
+  
+      const newsItem = new News({
+        title,
+        excerpt,
+        slug,
+        image,
+        sections,
+        publishedAt: publishedAt ? new Date(publishedAt) : new Date()
+      })
+  
+      await newsItem.save()
+      res.status(201).json({ message: 'News created successfully', newsItem })
+    } catch (error) {
+      console.error(error)
+      res.status(500).json({ message: 'Failed to create news' })
     }
-
-    const news = await News.create({
-      title,
-      excerpt,
-      slug,
-      image,
-      sections,
-      publishedAt
-    })
-
-    res.status(201).json({
-      message: 'News article created successfully',
-      news
-    })
-  } catch (err) {
-    if (err.code === 11000) {
-      return res.status(409).json({ message: 'Slug already exists' })
-    }
-    console.error(err)
-    res.status(500).json({ message: 'Server error' })
-  }
 })
 
 // CREATE PRODUCT
 // POST /api/products
 router.post('/products', adminAuth, async (req, res) => {
-  const {
-    title,
-    image,
-    descriptions,
-    packaging,
-    containerSize,
-    seasons,
-    incoterms,
-    variants
-  } = req.body
-
-  // Required fields (product level)
-  const requiredFields = {
-    title,
-    image,
-    descriptions,
-    packaging,
-    containerSize,
-    seasons,
-    incoterms,
-    variants
-  }
-
-  const missingFields = Object.entries(requiredFields)
-    .filter(([_, value]) => value === undefined || value === null || value === '')
-    .map(([key]) => key)
-
-  if (missingFields.length > 0) {
-    return res.status(400).json({
-      message: 'Missing required fields',
-      missingFields
-    })
-  }
-
-  // Validate arrays
-  if (!Array.isArray(seasons) || seasons.length === 0) {
-    return res.status(400).json({ message: 'Seasons must be a non-empty array' })
-  }
-
-  if (!Array.isArray(incoterms) || incoterms.length === 0) {
-    return res.status(400).json({ message: 'Incoterms must be a non-empty array' })
-  }
-
-  if (!Array.isArray(variants) || variants.length === 0) {
-    return res.status(400).json({
-      message: 'At least one product variant is required'
-    })
-  }
-
-  // Validate each variant
-  for (const variant of variants) {
-    const {
-      name,
-      image,
-      minimumOrder,
-      maximumOrder
-    } = variant
-
-    if (!name || !image || minimumOrder == null || maximumOrder == null) {
-      return res.status(400).json({
-        message: 'Each variant must include name, image, minimumOrder, maximumOrder'
-      })
-    }
-
-    if (Number(minimumOrder) > Number(maximumOrder)) {
-      return res.status(400).json({
-        message: `Minimum order cannot be greater than maximum order for ${name}`
-      })
-    }
-  }
-
   try {
-    const product = new Product({
-      title,
-      image,
-      descriptions,
-      packaging,
-      containerSize,
-      seasons,
-      incoterms,
-      variants
-    })
-
-    await product.save()
-
-    res.status(201).json({
-      message: 'Product created successfully',
-      data: product
-    })
-  } catch (error) {
-    res.status(500).json({
-      message: 'Server error',
-      error: error.message
-    })
-  }
+      const {
+        title,
+        image,
+        descriptions,
+        packaging,
+        containerSize,
+        seasons,
+        incoterms,
+        variants
+      } = req.body
+  
+      // Basic validation
+      if (
+        !title ||
+        !image ||
+        !descriptions ||
+        !packaging ||
+        !containerSize ||
+        !seasons ||
+        !incoterms ||
+        !variants
+      ) {
+        return res.status(400).json({
+          message: 'Missing required fields'
+        })
+      }
+  
+      const product = new Product({
+        title,
+        image,
+        descriptions,
+        packaging,
+        containerSize,
+        seasons,
+        incoterms,
+        variants
+      })
+  
+      await product.save()
+  
+      res.status(201).json({
+        message: 'Product created successfully',
+        product
+      })
+    } catch (error) {
+      console.error(error)
+      res.status(500).json({
+        message: 'Failed to create product',
+        error: error.message
+      })
+    }
 })
 
 

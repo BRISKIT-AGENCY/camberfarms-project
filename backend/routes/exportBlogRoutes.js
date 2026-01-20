@@ -1,5 +1,6 @@
 import express from 'express'
 import exportBlog from '../models/exportBlog.js'
+import adminAuth from '../middleware/adminAuth.js'
 
 const router = express.Router()
 
@@ -96,29 +97,6 @@ router.get('/blog/:slug', async (req, res) => {
   }
 })
 
-router.post('/exportblog', async (req, res) => {
-  try {
-    const { title, excerpt, slug, image, sections, publishedAt } = req.body
 
-    if (!validatePostBody(req.body)) {
-      return res.status(400).json({ message: 'Title, excerpt, and slug are required' })
-    }
-
-    const exportBlog = new ExportBlog({
-      title,
-      excerpt,
-      slug,
-      image,
-      sections,
-      publishedAt: publishedAt ? new Date(publishedAt) : new Date()
-    })
-
-    await exportBlog.save()
-    res.status(201).json({ message: 'ExportBlog created successfully', exportBlog })
-  } catch (error) {
-    console.error(error)
-    res.status(500).json({ message: 'Failed to create export blog' })
-  }
-})
 
 export default router

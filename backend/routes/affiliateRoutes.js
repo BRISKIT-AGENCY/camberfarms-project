@@ -1,5 +1,6 @@
 import express from 'express'
 import Affiliate from '../models/Affiliate.js'
+import adminAuth from '../middleware/adminAuth.js'
 
 const router = express.Router()
 
@@ -85,5 +86,8 @@ router.post('/affiliate', async (req, res) => {
     })
   }
 })
+
+
+
 
 export default router

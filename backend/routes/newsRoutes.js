@@ -1,5 +1,6 @@
 import express from 'express'
 import News from '../models/News.js'
+import adminAuth from '../middleware/adminAuth.js'
 const router = express.Router()
 
 // GET all news (with pagination & locale)
@@ -98,29 +99,5 @@ router.get('/news/:slug', async (req, res) => {
   }
 })
 
-router.post('/news', async (req, res) => {
-  try {
-    const { title, excerpt, slug, image, sections, publishedAt } = req.body
-
-    if (!validatePostBody(req.body)) {
-      return res.status(400).json({ message: 'Title, excerpt, and slug are required' })
-    }
-
-    const newsItem = new News({
-      title,
-      excerpt,
-      slug,
-      image,
-      sections,
-      publishedAt: publishedAt ? new Date(publishedAt) : new Date()
-    })
-
-    await newsItem.save()
-    res.status(201).json({ message: 'News created successfully', newsItem })
-  } catch (error) {
-    console.error(error)
-    res.status(500).json({ message: 'Failed to create news' })
-  }
-})
 
 export default router

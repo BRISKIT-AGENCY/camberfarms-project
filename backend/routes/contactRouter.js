@@ -1,13 +1,10 @@
 import express from 'express';
 import Contact from '../models/contact.js';
+import adminAuth from '../middleware/adminAuth.js';
 
 const router = express.Router();
 
-/**
- * @route   POST /api/contact
- * @desc    Save contact form message
- * @access  Public
- */
+
 router.post('/contact', async (req, res) => {
   try {
     const { name, email, phone, message } = req.body;
@@ -42,5 +39,7 @@ router.post('/contact', async (req, res) => {
     });
   }
 });
+
+
 
 export default router;
