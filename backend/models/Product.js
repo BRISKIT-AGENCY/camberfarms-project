@@ -1,11 +1,14 @@
 import mongoose from 'mongoose'
 
+/**
+ * Variant Schema
+ */
 const variantSchema = new mongoose.Schema(
   {
     name: {
-      type: String, // e.g. "Red Pepper", "Yellow Pepper"
-      required: true,
-      trim: true
+      type: Map,
+      of: String, // { en: "Red Pepper", fr: "Poivron Rouge", de: "Rote Paprika" }
+      required: true
     },
 
     image: {
@@ -26,13 +29,15 @@ const variantSchema = new mongoose.Schema(
   { _id: false }
 )
 
+/**
+ * Product Schema
+ */
 const productSchema = new mongoose.Schema(
   {
-    // GENERAL GROUP
     title: {
-      type: String, // e.g. "Pepper"
-      required: true,
-      trim: true
+      type: Map,
+      of: String, // { en, fr, de, es, it, pt, ar, zh, ru, tr }
+      required: true
     },
 
     image: {
@@ -41,17 +46,20 @@ const productSchema = new mongoose.Schema(
     },
 
     descriptions: {
-      type: String,
+      type: Map,
+      of: String,
       required: true
     },
 
     packaging: {
-      type: String,
+      type: Map,
+      of: String,
       required: true
     },
 
     containerSize: {
-      type: String,
+      type: Map,
+      of: String,
       required: true
     },
 
@@ -65,7 +73,6 @@ const productSchema = new mongoose.Schema(
       required: true
     },
 
-    // VARIANTS UNDER GROUP
     variants: {
       type: [variantSchema],
       required: true
