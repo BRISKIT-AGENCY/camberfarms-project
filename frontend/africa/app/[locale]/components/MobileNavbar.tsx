@@ -42,21 +42,34 @@ const MobileNavbar = () => {
   const currentCountry =
     LANGUAGES.find(l => l.code === locale)?.country ?? 'US'
 
+  /** ✅ Close everything */
+  const closeMenu = () => {
+    setIsMenuOpen(false)
+    setIsLangOpen(false)
+    setIsAboutOpen(false)
+    setIsOurWorkOpen(false)
+    setIsResourcesOpen(false)
+  }
+
   return (
     <div className="relative xl:hidden">
       {/* Top bar */}
       <div className="flex items-center justify-between py-5">
-        <img src="/images/logo2.png" alt="Logo" width={80} height={50} />
+        <Link href="/" aria-label="Go to homepage">
+          <Image
+            src="/images/logo2.png"
+            alt="Logo"
+            width={80}
+            height={50}
+            priority
+          />
+        </Link>
 
         <button
           className="flex flex-col justify-between h-6 w-8"
           onClick={() => {
             setIsMenuOpen(prev => {
-              if (prev) {
-                setIsAboutOpen(false)
-                setIsOurWorkOpen(false)
-                setIsResourcesOpen(false)
-              }
+              if (prev) closeMenu()
               return !prev
             })
           }}
@@ -82,13 +95,13 @@ const MobileNavbar = () => {
             >
               <Link
                 href="/about"
-                className={`transition-colors ${
-                  isAboutOpen
-                    ? 'text-[#1AD329]'
-                    : anyAccordionOpen
+                onClick={closeMenu}
+                className={`transition-colors ${isAboutOpen
+                  ? 'text-[#1AD329]'
+                  : anyAccordionOpen
                     ? 'text-[#808080]'
                     : 'text-black'
-                }`}
+                  }`}
               >
                 {t('about')}
               </Link>
@@ -105,13 +118,13 @@ const MobileNavbar = () => {
             {isAboutOpen && (
               <div className="mt-2 flex flex-col gap-2 text-sm text-gray-700">
                 <hr className="border-[0.5px] border-[#1AD329]" />
-                <Link href="/about/#mission" onClick={() => setIsMenuOpen(false)} className="mt-3">
+                <Link href="/about/#mission" onClick={closeMenu} className="mt-3">
                   Vision & Mission
                 </Link>
-                <Link href="/about" onClick={() => setIsMenuOpen(false)}>
+                <Link href="/about" onClick={closeMenu}>
                   Theory of Change
                 </Link>
-                <Link href="/about/#values" onClick={() => setIsMenuOpen(false)}>
+                <Link href="/about/#values" onClick={closeMenu}>
                   Values
                 </Link>
               </div>
@@ -126,13 +139,13 @@ const MobileNavbar = () => {
             >
               <Link
                 href="/our-works"
-                className={`transition-colors ${
-                  isOurWorkOpen
-                    ? 'text-[#1AD329]'
-                    : anyAccordionOpen
+                onClick={closeMenu}
+                className={`transition-colors ${isOurWorkOpen
+                  ? 'text-[#1AD329]'
+                  : anyAccordionOpen
                     ? 'text-[#808080]'
                     : 'text-black'
-                }`}
+                  }`}
               >
                 {t('ourWork')}
               </Link>
@@ -149,26 +162,31 @@ const MobileNavbar = () => {
             {isOurWorkOpen && (
               <div className="mt-2 flex flex-col gap-2 text-sm text-gray-700">
                 <hr className="border-[0.5px] border-[#1AD329]" />
-                <Link href="/our-works/membership" onClick={() => setIsMenuOpen(false)} className="mt-3">
+                <Link href="/our-works/membership" onClick={closeMenu} className="mt-3">
                   Membership
                 </Link>
-                <Link href="/our-works/farm-fund" onClick={() => setIsMenuOpen(false)}>
+                <Link href="/our-works/farm-fund" onClick={closeMenu}>
                   Farm Fund
                 </Link>
-                <Link href="/our-works/exportation" onClick={() => setIsMenuOpen(false)}>
+                <Link href="/our-works/exportation" onClick={closeMenu}>
                   Exportation
                 </Link>
-                <Link href="/our-works/technology" onClick={() => setIsMenuOpen(false)}>
+                <Link href="/our-works/technology" onClick={closeMenu}>
                   Our Technology
                 </Link>
-                <Link href="/our-works/process" onClick={() => setIsMenuOpen(false)}>
+                <Link href="/our-works/process" onClick={closeMenu}>
                   Our Process
                 </Link>
               </div>
             )}
           </div>
 
-          <Link href="/blog" className={`mt-6 ${anyAccordionOpen ? 'text-[#808080]' : 'text-black'}`}>
+          {/* BLOG */}
+          <Link
+            href="/blog"
+            onClick={closeMenu}
+            className={`mt-6 ${anyAccordionOpen ? 'text-[#808080]' : 'text-black'}`}
+          >
             {t('blog')}
           </Link>
 
@@ -179,13 +197,12 @@ const MobileNavbar = () => {
               className="flex justify-between w-full items-center"
             >
               <span
-                className={`transition-colors ${
-                  isResourcesOpen
-                    ? 'text-[#1AD329]'
-                    : anyAccordionOpen
+                className={`transition-colors ${isResourcesOpen
+                  ? 'text-[#1AD329]'
+                  : anyAccordionOpen
                     ? 'text-[#808080]'
                     : 'text-black'
-                }`}
+                  }`}
               >
                 {t('resources')}
               </span>
@@ -202,17 +219,22 @@ const MobileNavbar = () => {
             {isResourcesOpen && (
               <div className="mt-2 flex flex-col gap-2 text-sm text-gray-700">
                 <hr className="border-[0.5px] border-[#1AD329]" />
-                <Link href="/resources/gallery" onClick={() => setIsMenuOpen(false)} className="mt-3">
+                <Link href="/resources/gallery" onClick={closeMenu} className="mt-3">
                   Gallery
                 </Link>
-                <Link href="/resources/faq" onClick={() => setIsMenuOpen(false)}>
+                <Link href="/resources/faq" onClick={closeMenu}>
                   FAQ
                 </Link>
               </div>
             )}
           </div>
 
-          <Link href="/contact" className={`mt-6 ${anyAccordionOpen ? 'text-[#808080]' : 'text-black'}`}>
+          {/* CONTACT */}
+          <Link
+            href="/contact"
+            onClick={closeMenu}
+            className={`mt-6 ${anyAccordionOpen ? 'text-[#808080]' : 'text-black'}`}
+          >
             {t('contact')}
           </Link>
 
@@ -234,7 +256,7 @@ const MobileNavbar = () => {
                     key={lang.code}
                     onClick={() => {
                       router.replace(pathname, { locale: lang.code })
-                      setIsLangOpen(false)
+                      closeMenu()
                     }}
                     className="flex items-center gap-2 px-4 py-2 w-full hover:bg-gray-100"
                   >
@@ -246,7 +268,10 @@ const MobileNavbar = () => {
             )}
           </div>
 
-          <button className="h-12 rounded-xl bg-[#1AD329] px-6">
+          <button
+            onClick={closeMenu}
+            className="h-12 rounded-xl bg-[#1AD329] px-6"
+          >
             <p className="text-white font-bold">{tBtn('explore')}</p>
           </button>
         </div>

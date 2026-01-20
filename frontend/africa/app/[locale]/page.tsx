@@ -47,7 +47,7 @@ export default async function Home({ params }: PageProps<'/[locale]'>) {
         imageAlt="image of cargo ship"
      
       />
-      <Process showImage={false}/>
+      <Process showImage={false} mdPy='md:py-25' py='py-25' mdMt='md:mt-12.5' mt='mt-6'/>
       <WhoWeAre />
       <WhatWeDo />
       <div id='impact'>

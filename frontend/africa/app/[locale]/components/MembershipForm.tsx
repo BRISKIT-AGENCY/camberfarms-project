@@ -31,7 +31,7 @@ const initialValues: MembershipFormData = {
 }
 
 const MembershipForm = () => {
-  const t= useTranslations('Membership')
+  const t = useTranslations('Membership')
 
   const [files, setFiles] = useState<File[]>([])
   const [submitMessage, setSubmitMessage] = useState<string | null>(null)
@@ -108,11 +108,26 @@ const MembershipForm = () => {
           ] as (keyof MembershipFormData)[]
         ).map(field => (
           <div key={field} className="mt-6">
+            {field === 'dateOfBirth' && (
+              <label className="block mb-2 text-sm text-[#808080]">
+                {t(`fields.${field}`)}
+              </label>
+            )}
+
             <input
               type={field === 'dateOfBirth' ? 'date' : 'text'}
-              placeholder={t(`fields.${field}`)}
+              placeholder={field !== 'dateOfBirth' ? t(`fields.${field}`) : ''}
               {...formik.getFieldProps(field)}
-              className="w-full px-3 py-2 border border-[#808080] rounded-[100px]"
+              className="
+        w-full 
+        max-w-full 
+        box-border
+        px-3 py-2 
+        border border-[#808080] 
+        rounded-[100px]
+        appearance-none
+        [-webkit-appearance:none]
+      "
             />
 
             {formik.touched[field] && formik.errors[field] && (
@@ -122,6 +137,7 @@ const MembershipForm = () => {
             )}
           </div>
         ))}
+
 
         {/* FILE UPLOAD */}
         <div className="mt-8 p-4 bg-white rounded-xl">
@@ -162,11 +178,11 @@ const MembershipForm = () => {
 
         <div className='flex justify-end'>
           <button
-          type="submit"
-          className="mt-10 px-6 py-3 bg-[#1AD329] text-white rounded-[100px]"
-        >
-          {t('submit')}
-        </button>
+            type="submit"
+            className="mt-10 px-6 py-3 bg-[#1AD329] text-white rounded-[100px]"
+          >
+            {t('submit')}
+          </button>
         </div>
       </form>
     </div>

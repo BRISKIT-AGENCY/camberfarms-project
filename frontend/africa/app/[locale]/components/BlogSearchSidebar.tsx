@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useDebounce } from '../hooks/UseDebounce'
+import { useLocale } from 'next-intl'
 
 type Blog = {
   title: string
@@ -15,6 +16,7 @@ export default function BlogSearchSidebar({
 }: {
   recentPosts: Blog[]
 }) {
+  const locale = useLocale() // ✅ get current language
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<Blog[]>([])
   const [loading, setLoading] = useState(false)
@@ -31,7 +33,7 @@ export default function BlogSearchSidebar({
       setLoading(true)
       try {
         const res = await fetch(
-          `http://localhost:5000/api/africa/blog/search?q=${debouncedQuery}`
+          `http://localhost:5000/api/africa/blog/search?q=${debouncedQuery}&lang=${locale}` // ✅ pass locale
         )
         const data = await res.json()
         setResults(data)
@@ -43,52 +45,53 @@ export default function BlogSearchSidebar({
     }
 
     searchBlogs()
-  }, [debouncedQuery])
+  }, [debouncedQuery, locale]) // ✅ refetch whenever query OR language changes
 
   return (
     <div className="h-fit">
       {/* SEARCH INPUT */}
-      <div className="relative w-full bg-white p-9 rounded-3xl">
-        <Image
-          width={20}
-          height={20}
-          alt="search icon"
-          src="/images/Search.png"
-          className="absolute left-13 top-1/2 -translate-y-1/2"
-        />
+      <div className="w-full bg-white p-9 rounded-3xl">
+  {/* INPUT WRAPPER */}
+  <div className="relative">
+    <Image
+      width={20}
+      height={20}
+      alt="search icon"
+      src="/images/Search.png"
+      className="absolute left-3 top-1/2 -translate-y-1/2"
+    />
+    <input
+      type="text"
+      placeholder="Search"
+      value={query}
+      onChange={e => setQuery(e.target.value)}
+      className="w-full rounded-xl border border-gray-300 py-3 pl-10 pr-4 text-sm outline-none focus:border-black"
+    />
+  </div>
 
-        <input
-          type="text"
-          placeholder="Search"
-          value={query}
-          onChange={e => setQuery(e.target.value)}
-          className="w-full rounded-xl border border-gray-300 py-3 pl-10 pr-4 text-sm outline-none focus:border-black"
-        />
+  {/* SEARCH RESULTS */}
+  {query && (
+    <div className="mt-4 space-y-3">
+      {loading && <p className="text-sm text-gray-400">Searching…</p>}
 
-        {/* SEARCH RESULTS */}
-        {query && (
-          <div className="mt-4 space-y-3">
-            {loading && (
-              <p className="text-sm text-gray-400">Searching…</p>
-            )}
+      {!loading && results.length === 0 && (
+        <p className="text-sm text-gray-400">No results found</p>
+      )}
 
-            {!loading && results.length === 0 && (
-              <p className="text-sm text-gray-400">No results found</p>
-            )}
+      {!loading &&
+        results.map(post => (
+          <Link
+            key={post.slug}
+            href={`/blog/${post.slug}`}
+            className="block text-[#1AD329] hover:underline"
+          >
+            {post.title}
+          </Link>
+        ))}
+    </div>
+  )}
+</div>
 
-            {!loading &&
-              results.map(post => (
-                <Link
-                  key={post.slug}
-                  href={`/blog/${post.slug}`}
-                  className="block text-[#1AD329] hover:underline"
-                >
-                  {post.title}
-                </Link>
-              ))}
-          </div>
-        )}
-      </div>
 
       {/* RECENT POSTS */}
       <div className="bg-white mt-6 rounded-3xl p-9">

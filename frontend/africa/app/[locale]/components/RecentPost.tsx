@@ -1,13 +1,15 @@
-type RecentPost = {
+export type RecentPost = {
   title: string
   slug: string
 }
 
-export default async function getRecentPosts(): Promise<RecentPost[]> {
-  const res = await fetch(
-    `http://localhost:5000/api/africa/blog?limit=6&page=1`,
-    { cache: 'no-store' }
-  )
+export default async function getRecentPosts(lang?: string): Promise<RecentPost[]> {
+  const url = new URL(`http://localhost:5000/api/africa/blog`)
+  url.searchParams.append('limit', '6')
+  url.searchParams.append('page', '1')
+  if (lang) url.searchParams.append('lang', lang) // ✅ pass locale to backend
+
+  const res = await fetch(url.toString(), { cache: 'no-store' })
 
   if (!res.ok) return []
 

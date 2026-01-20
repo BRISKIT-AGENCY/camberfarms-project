@@ -20,8 +20,8 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-	title: 'CamberFarms Export',
-	description: 'A B2B agricultural export showcase website.',
+	title: 'CamberFarms Africa',
+	description: 'An agricultural website.',
 }
 
 export default function RootLayout({

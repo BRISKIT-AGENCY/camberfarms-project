@@ -5,6 +5,8 @@ import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import axios from 'axios'
+import { useLocale } from 'next-intl'
+
 
 type Blog = {
   _id: string
@@ -16,29 +18,34 @@ type Blog = {
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
-async function getBlogs(): Promise<Blog[]> {
-  const res = await axios.get(`${API_URL}/api/africa/blog`, {
-    params: {
-      page: 1,
-      limit: 2
-    }
-  })
-
-  // backend returns { data, pagination }
-  return res.data.data
+async function getBlogs(lang: string): Promise<Blog[]> {
+  try {
+    const res = await axios.get(`${API_URL}/api/africa/blog`, {
+      params: {
+        page: 1,
+        limit: 2,
+        lang
+      }
+    })
+    return res.data.data
+  }catch (error: any) {
+    console.error('Failed to fetch blogs:', error.response?.data || error.message)
+    throw new Error('Failed to fetch blogs')
+  }
 }
 
 const Blogs = () => {
-  const t= useTranslations('Blog')
+  const t = useTranslations('Blog')
+  const locale = useLocale()
   const [blogs, setBlogs] = useState<Blog[]>([])
 
   useEffect(() => {
-    getBlogs()
+    getBlogs(locale)
       .then(setBlogs)
       .catch(err => {
         console.error('Failed to fetch blogs', err)
       })
-  }, [])
+  }, [locale])
 
   return (
     <div className='h-fit py-14.5 px-6 w-full md:py-35 md:px-25 bg-[#F2F2F2]'>
