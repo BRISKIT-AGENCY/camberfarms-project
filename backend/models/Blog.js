@@ -1,14 +1,26 @@
 import mongoose from 'mongoose'
 
 const sectionSchema = new mongoose.Schema({
-  heading: String,
-  paragraphs: [String]
+  heading: {
+    type: Map,
+    of: String
+  },
+  paragraphs: {
+    type: Map,
+    of: [String]
+  }
 })
 
 const blogSchema = new mongoose.Schema(
   {
-    title: String,
-    excerpt: String,
+    title: {
+      type: Map,
+      of: String
+    },
+    excerpt: {
+      type: Map,
+      of: String
+    },
     slug: { type: String, unique: true },
     image: String,
 

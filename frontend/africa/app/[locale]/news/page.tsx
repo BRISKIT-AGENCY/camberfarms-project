@@ -1,9 +1,13 @@
+'use client'
+
 import Image from 'next/image'
 import Navbar from '../components/Navbar'
 import Link from 'next/link'
 import Pagination from '../components/Pagination'
-import getRecentNews from '../components/RecentNews'
+import getRecentNews, { type RecentNews } from '../components/RecentNews'
 import axios from 'axios'
+import { useState, useEffect } from 'react'
+import { useLocale } from 'next-intl'
 
 type News = {
   _id: string
@@ -16,28 +20,35 @@ type News = {
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
-async function getNews(page: number) {
-  try {
-    const res = await axios.get(`${API_URL}/api/africa/news`, {
-      params: { page, limit: 3 },
-    })
-    return res.data
-  } catch (error: any) {
-    console.error('Failed to fetch blogs:', error.response?.data || error.message)
-    throw new Error('Failed to fetch blogs')
-  }
-}
+export default function NewsPage({ initialPage = 1 }) {
+  const locale = useLocale()
+  const [newsData, setNewsData] = useState<News[]>([])
+  const [recentNews, setRecentNews] = useState<RecentNews[]>([])
+  const [pagination, setPagination] = useState({ currentPage: 1, totalPages: 1 })
+  const [page, setPage] = useState(initialPage)
 
+  // Fetch news whenever locale or page changes
+  useEffect(() => {
+    async function fetchNews() {
+      try {
+        const res = await axios.get(`${API_URL}/api/africa/news`, {
+          params: { page, limit: 3, lang: locale } // ✅ pass locale
+        })
+        setNewsData(res.data.data)
+        setPagination(res.data.pagination)
+      } catch (err) {
+        console.error('Failed to fetch news:', err)
+      }
+    }
 
-export default async function NewsPage({
-  searchParams
-}: {
-  searchParams?: Promise<{ page?: string }>
-}) {
-  const params = await searchParams; // unwrap the Promise
-  const currentPage = Number(params?.page) || 1;
-  const { data, pagination } = await getNews(currentPage)
-  const recentNews = await getRecentNews()
+    async function fetchRecent() {
+      const data = await getRecentNews(locale)
+      setRecentNews(data)
+    }
+
+    fetchNews()
+    fetchRecent()
+  }, [locale, page])
 
   return (
     <div className="w-full bg-[#F3F5F7] pb-19.5">
@@ -52,13 +63,10 @@ export default async function NewsPage({
 
       <div className="md:pl-19.5 md:pr-30.5 px-6">
         <div className="w-full flex xl:flex-row flex-col gap-16.5 pt-15.5">
-          {/* BLOG POSTS */}
-          <div className="p-9 bg-white w-full rounded-3xl">
-            {data.map((news: News) => (
-              <div
-                key={news._id}
-                className="border-b border-[#EBEBEB] pb-9 mb-12.5"
-              >
+          {/* NEWS POSTS */}
+          <div className="p-9 bg-white xl:w-[60%] rounded-3xl">
+            {newsData.map(news => (
+              <div key={news._id} className="border-b border-[#EBEBEB] pb-9 mb-12.5">
                 <Image
                   src={news.image}
                   alt={news.title}
@@ -80,7 +88,7 @@ export default async function NewsPage({
                 </p>
 
                 <Link
-                  href={`/news/${news.slug}`}
+                  href={`/${locale}/news/${news.slug}`} // ✅ include locale in URL
                   className="flex mt-6 text-[#1AD329]"
                 >
                   <span className="md:text-[24px] text-[16px]">Read More</span>
@@ -94,24 +102,17 @@ export default async function NewsPage({
                 </Link>
               </div>
             ))}
-
-            
-          </div>
-          <div className='md:hidden mt-12.5'>
-            <Pagination
-              currentPage={pagination.currentPage}
-              totalPages={pagination.totalPages}
-            />
           </div>
 
-          {/* Client-Side Search Component */}
-          
+          {/* Client-side search / recent news */}
+          <div className="xl:w-[40%]">
+            {/* You can add a NewsSearchSidebar like BlogSearchSidebar */}
+          </div>
         </div>
-        <div className='hidden md:block mt-25 '>
-          <Pagination
-              currentPage={pagination.currentPage}
-              totalPages={pagination.totalPages}
-            />
+
+        {/* Pagination */}
+        <div className="mt-25">
+          <Pagination currentPage={pagination.currentPage} totalPages={pagination.totalPages} />
         </div>
       </div>
     </div>

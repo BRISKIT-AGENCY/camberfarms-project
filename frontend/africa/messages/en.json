@@ -97,6 +97,18 @@
             "message": "Message is required"
         }
     },
+    "Footer": {
+        "information": "Information",
+        "aboutUs": "About us",
+        "impact": "Our Impact",
+        "news": "News",
+        "helpfulLinks": "Helpful links",
+        "privacy": "Privacy / Support",
+        "contactUs": "Contact us",
+        "emailAlt": "Email icon",
+        "phoneAlt": "Phone icon",
+        "copyright": "Copyright 2025 CamberFarm.Africa@All Rights Reserved."
+    },
     "Hero": {
         "title": "Connecting Africa's Agricultural Excellence to Global Markets",
         "subtitle": "We empower farmers, support sustainable practices, and deliver Africa's finest export-ready products to trusted buyers worldwide.",

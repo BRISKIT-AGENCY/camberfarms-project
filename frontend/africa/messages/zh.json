@@ -97,6 +97,19 @@
             "message": "消息为必填项"
         }
     },
+    "Footer": {
+  "information": "信息",
+  "aboutUs": "关于我们",
+  "impact": "我们的影响",
+  "news": "新闻",
+  "helpfulLinks": "有用链接",
+  "privacy": "隐私 / 支持",
+  "contactUs": "联系我们",
+  "emailAlt": "电子邮件图标",
+  "phoneAlt": "电话图标",
+  "copyright": "© 2025 CamberFarm.Africa 版权所有。"
+},
+
     "Hero": {
         "title": "将非洲的农业卓越连接到全球市场",
         "subtitle": "我们赋能农民，支持可持续实践，并向全球可信赖买家提供非洲最优质的出口产品。",

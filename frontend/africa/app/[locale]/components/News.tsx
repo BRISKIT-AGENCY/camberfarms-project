@@ -5,9 +5,10 @@ import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import axios from 'axios'
 import Link from 'next/link'
+import { useLocale } from 'next-intl'
 
 type NewsItem = {
-  _id: string
+  id: string
   title: string
   excerpt: string
   slug: string
@@ -21,14 +22,20 @@ type NewsProps = {
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
-const fetchNews = async (): Promise<NewsItem[]> => {
-  const res = await axios.get(`${API_URL}/api/africa/news`, {
+const fetchNews = async (lang: string): Promise<NewsItem[]> => {
+  try{
+    const res = await axios.get(`${API_URL}/api/africa/news`, {
     params: {
       page: 1,
-      limit: 3
+      limit: 3,
+      lang
     }
   })
   return res.data.data
+  }catch (error: any) {
+    console.error('Failed to fetch news:', error.response?.data || error.message)
+    throw new Error('Failed to fetch news')
+  }
 }
 
 const formatDate = (date: string) =>
@@ -49,12 +56,13 @@ const News = ({ header }: NewsProps) => {
   const [newsData, setNewsData] = useState<NewsItem[]>([])
   const [activeIndex, setActiveIndex] = useState(0)
   const carouselRef = useRef<HTMLDivElement>(null)
+  const locale = useLocale()
 
   useEffect(() => {
-    fetchNews()
+    fetchNews(locale)
       .then(setNewsData)
       .catch(err => console.error('Failed to fetch news:', err))
-  }, [])
+  }, [locale])
 
   const handleScroll = () => {
     if (!carouselRef.current) return
@@ -81,7 +89,7 @@ const News = ({ header }: NewsProps) => {
         >
           {newsData.map((news, index) => (
             <div
-              key={news._id}
+              key={news.id}
               className='shrink-0 w-full snap-center rounded-lg'
             >
               <Image
@@ -135,7 +143,7 @@ const News = ({ header }: NewsProps) => {
         {/* Desktop grid */}
         <div className='hidden lg:flex w-full flex-row gap-12.5 lg:mt-25 mt-8'>
           {newsData.map((news, index) => (
-            <div key={news._id} className='w-1/3 rounded-lg'>
+            <div key={news.id} className='w-1/3 rounded-lg'>
               <Image
                 src={STATIC_IMAGES[index] || STATIC_IMAGES[0]}
                 alt={news.title}

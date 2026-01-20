@@ -97,6 +97,19 @@
             "message": "Bericht is verplicht"
         }
     },
+    "Footer": {
+  "information": "Informatie",
+  "aboutUs": "Over ons",
+  "impact": "Onze impact",
+  "news": "Nieuws",
+  "helpfulLinks": "Nuttige links",
+  "privacy": "Privacy / Ondersteuning",
+  "contactUs": "Neem contact op",
+  "emailAlt": "E‑mail pictogram",
+  "phoneAlt": "Telefoon pictogram",
+  "copyright": "© 2025 CamberFarm.Africa Alle rechten voorbehouden."
+},
+
     "Hero": {
         "title": "Afrika’s Landbouwuitmuntendheid Verbinden met Wereldmarkten",
         "subtitle": "We ondersteunen boeren, bevorderen duurzame praktijken en leveren Afrika’s beste exportklare producten aan betrouwbare kopers wereldwijd.",
