@@ -1,8 +1,10 @@
-export default function Map() {
+import { getTranslations } from "next-intl/server"
+export default async function Map() {
+	const t = await getTranslations("Map")
 	return (
 		<div className="w-full h-fit py-14 md:py-20 px-10 md:px-20 relative">
 			<h4 className="font-poppins font-bold text-primary text-xl sm:text-2xl mb-8">
-				Find Us on the Map
+				{t("title")}
 			</h4>
 			<div className="relative w-full h-105 md:h-130 shadow">
 				<div className="overflow-hidden bg-none w-full h-full absolute inset-0 rounded-2xl">

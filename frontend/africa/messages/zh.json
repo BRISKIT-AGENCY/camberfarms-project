@@ -51,20 +51,8 @@
         }
     },
     "Blog": {
-        "heading": "博客",
-        "description": "随时了解影响非洲农业的最新动态、见解和故事。",
-        "readMore": "阅读更多",
-        "arrowAlt": "向右箭头",
-        "post1": {
-            "title": "会员优势及利润最大化方法",
-            "description": "对农业基础设施的增加投资正在帮助非洲生产商进入欧洲和亚洲的新市场，其中玉米和芝麻是主要增长品种。",
-            "date": "日期：2025年9月18日"
-        },
-        "post2": {
-            "title": "会员优势及利润最大化方法",
-            "description": "对农业基础设施的增加投资正在帮助非洲生产商进入欧洲和亚洲的新市场，其中玉米和芝麻是主要增长品种。",
-            "date": "日期：2025年9月18日"
-        }
+        "button": " 阅读更多文章",
+        "Date": "日期： "
     },
     "Button": {
         "explore": "探索 Camberfarm 出口产品"
@@ -97,19 +85,42 @@
             "message": "消息为必填项"
         }
     },
-    "Footer": {
-  "information": "信息",
-  "aboutUs": "关于我们",
-  "impact": "我们的影响",
-  "news": "新闻",
-  "helpfulLinks": "有用链接",
-  "privacy": "隐私 / 支持",
-  "contactUs": "联系我们",
-  "emailAlt": "电子邮件图标",
-  "phoneAlt": "电话图标",
-  "copyright": "© 2025 CamberFarm.Africa 版权所有。"
+    "ContactPage": {
+        "title": "携手合作",
+        "description": "无论您是农民、投资者，还是致力于可持续农业的组织，我们都期待与您合作。欢迎联系我们，了解我们在非洲开展的项目、合作伙伴关系以及具有影响力的可持续发展计划。",
+        "button": "联系我们",
+        "email": "电子邮箱",
+        "phone": "电话",
+        "address": "地址",
+        "businessHours": "营业时间",
+        "days": "周一 - 周五"
+    },
+    "FarmFund": {
+  "title": "农业基金意向申请表",
+  "name": "姓名",
+  "email": "电子邮箱地址",
+  "phone": "电话号码",
+  "country": "国家",
+  "state": "居住州/地区",
+  "selectResponse": "请选择我们与您联系的方式",
+  "responseOption1": "电话联系",
+  "responseOption2": "电子邮件",
+  "submit": "提交",
+    "submitting": "正在提交..."
 },
 
+    "Footer": {
+        "information": "信息",
+        "aboutUs": "关于我们",
+        "impact": "我们的影响",
+        "news": "新闻",
+        "helpfulLinks": "有用链接",
+        "privacy": "隐私 / 支持",
+        "contactUs": "联系我们",
+        "emailAlt": "电子邮件图标",
+        "phoneAlt": "电话图标",
+        "copyright": "© 2025 CamberFarm.Africa 版权所有。"
+    },
     "Hero": {
         "title": "将非洲的农业卓越连接到全球市场",
         "subtitle": "我们赋能农民，支持可持续实践，并向全球可信赖买家提供非洲最优质的出口产品。",
@@ -123,6 +134,9 @@
         "stat3": "环保实践",
         "stat4": "全球市场连接",
         "button": "与我们合作"
+    },
+    "Map":{
+        "title":"在地图上找到我们"
     },
     "Membership": {
         "title": "会员表格",

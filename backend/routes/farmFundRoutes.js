@@ -3,10 +3,7 @@ import FarmFund from "../models/FarmFund.js";
 
 const router = express.Router();
 
-/**
- * @route   POST /api/farm-fund
- * @desc    Submit Farm Fund Expression of Interest
- */
+
 router.post("/farm-fund", async (req, res) => {
   try {
     const {
@@ -17,6 +14,7 @@ router.post("/farm-fund", async (req, res) => {
       country,
       residence
     } = req.body;
+    
 
     // Basic validation
     if (

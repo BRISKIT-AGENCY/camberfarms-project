@@ -29,7 +29,7 @@ const initialValues: MembershipFormData = {
   state: '',
   region: '',
 }
-
+const API_URL = process.env.NEXT_PUBLIC_API_URL
 const MembershipForm = () => {
   const t = useTranslations('Membership')
 
@@ -65,7 +65,7 @@ const MembershipForm = () => {
 
       try {
         const response = await axios.post(
-          'http://localhost:5000/api/membership',
+          `${API_URL}/api/membership`,
           formData,
           { headers: { 'Content-Type': 'multipart/form-data' } }
         )
@@ -179,7 +179,7 @@ const MembershipForm = () => {
         <div className='flex justify-end'>
           <button
             type="submit"
-            className="mt-10 px-6 py-3 bg-[#1AD329] text-white rounded-[100px]"
+            className="mt-10 px-6 py-3 bg-[#1AD329] text-white rounded-[100px] cursor-pointer"
           >
             {t('submit')}
           </button>

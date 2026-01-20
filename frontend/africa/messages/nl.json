@@ -51,20 +51,8 @@
         }
     },
     "Blog": {
-        "heading": "Blogs",
-        "description": "Blijf op de hoogte met updates, inzichten en verhalen die de landbouw in Afrika vormgeven.",
-        "readMore": "Lees meer",
-        "arrowAlt": "pijl rechts",
-        "post1": {
-            "title": "Voordelen van Lidmaatschap en Manieren om Winst te Maximaliseren",
-            "description": "Toegenomen investeringen in landbouwinfrastructuur helpen Afrikaanse producenten toegang te krijgen tot nieuwe markten in Europa en Azië, waarbij maïs en sesam de groei aanvoeren.",
-            "date": "Datum: 18 september 2025"
-        },
-        "post2": {
-            "title": "Voordelen van Lidmaatschap en Manieren om Winst te Maximaliseren",
-            "description": "Toegenomen investeringen in landbouwinfrastructuur helpen Afrikaanse producenten toegang te krijgen tot nieuwe markten in Europa en Azië, waarbij maïs en sesam de groei aanvoeren.",
-            "date": "Datum: 18 september 2025"
-        }
+        "button": "Lees meer",
+        "Date": "Datum: "
     },
     "Button": {
         "explore": "Ontdek Camberfarm-export"
@@ -97,19 +85,42 @@
             "message": "Bericht is verplicht"
         }
     },
-    "Footer": {
-  "information": "Informatie",
-  "aboutUs": "Over ons",
-  "impact": "Onze impact",
-  "news": "Nieuws",
-  "helpfulLinks": "Nuttige links",
-  "privacy": "Privacy / Ondersteuning",
-  "contactUs": "Neem contact op",
-  "emailAlt": "E‑mail pictogram",
-  "phoneAlt": "Telefoon pictogram",
-  "copyright": "© 2025 CamberFarm.Africa Alle rechten voorbehouden."
+    "ContactPage": {
+        "title": "Laten we samenwerken",
+        "description": "Of u nu een boer, investeerder of organisatie bent met een passie voor duurzame landbouw, wij werken graag met u samen. Neem contact met ons op om meer te weten te komen over onze programma’s, partnerschappen en impactgerichte initiatieven in Afrika.",
+        "button": "Neem contact op",
+        "email": "E-mail",
+        "phone": "Telefoon",
+        "address": "Adres",
+        "businessHours": "Openingstijden",
+        "days": "Maandag - Vrijdag"
+    },
+    "FarmFund": {
+  "title": "Aanmeldformulier voor het Landbouwfonds",
+  "name": "Naam",
+  "email": "E-mailadres",
+  "phone": "Telefoonnummer",
+  "country": "Land",
+  "state": "Woonplaats / Provincie",
+  "selectResponse": "Kies hoe u van ons wilt horen",
+  "responseOption1": "Telefonisch gesprek",
+  "responseOption2": "E-mail",
+  "submit": "Verzenden",
+    "submitting": "Bezig met verzenden..."
 },
 
+    "Footer": {
+        "information": "Informatie",
+        "aboutUs": "Over ons",
+        "impact": "Onze impact",
+        "news": "Nieuws",
+        "helpfulLinks": "Nuttige links",
+        "privacy": "Privacy / Ondersteuning",
+        "contactUs": "Neem contact op",
+        "emailAlt": "E‑mail pictogram",
+        "phoneAlt": "Telefoon pictogram",
+        "copyright": "© 2025 CamberFarm.Africa Alle rechten voorbehouden."
+    },
     "Hero": {
         "title": "Afrika’s Landbouwuitmuntendheid Verbinden met Wereldmarkten",
         "subtitle": "We ondersteunen boeren, bevorderen duurzame praktijken en leveren Afrika’s beste exportklare producten aan betrouwbare kopers wereldwijd.",
@@ -123,6 +134,9 @@
         "stat3": "Milieuvriendelijke Praktijken",
         "stat4": "Wereldwijde Marktverbindingen",
         "button": "Werk met ons samen"
+    },
+    "Map":{
+        "title":"Vind Ons op de Kaart"
     },
     "Membership": {
         "title": "Lidmaatschapsformulier",
