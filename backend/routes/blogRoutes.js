@@ -7,7 +7,6 @@ const router = express.Router()
 router.get('/blog', async (req, res) => {
   try {
     const lang = req.query.lang || 'en'
-    console.log(lang);
     
     const page = parseInt(req.query.page) || 1
     const limit = parseInt(req.query.limit) || 3
@@ -79,7 +78,6 @@ router.get('/blog/:slug', async (req, res) => {
   try {
     const lang = req.query.lang || 'en'
     const slug = req.params.slug
-    console.log(slug);
     
 
     const blog = await Blog.findOne({ slug })

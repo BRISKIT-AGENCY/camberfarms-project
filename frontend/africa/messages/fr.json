@@ -51,20 +51,8 @@
     }
   },
   "Blog": {
-    "heading": "Blogs",
-    "description": "Restez informé des actualités, analyses et histoires qui façonnent l’agriculture en Afrique.",
-    "readMore": "Lire la suite",
-    "arrowAlt": "flèche droite",
-    "post1": {
-      "title": "Avantages de l’adhésion et moyens de maximiser les profits",
-      "description": "L’augmentation des investissements dans les infrastructures agricoles aide les producteurs africains à accéder à de nouveaux marchés en Europe et en Asie, avec le maïs et le sésame en tête.",
-      "date": "Date : 18 septembre 2025"
-    },
-    "post2": {
-      "title": "Avantages de l’adhésion et moyens de maximiser les profits",
-      "description": "L’augmentation des investissements dans les infrastructures agricoles aide les producteurs africains à accéder à de nouveaux marchés en Europe et en Asie, avec le maïs et le sésame en tête.",
-      "date": "Date : 18 septembre 2025"
-    }
+    "button": "Lire la suite",
+    "Date": "Date: "
   },
   "Button": {
     "explore": "Explorer les exportations Camberfarm"
@@ -97,19 +85,42 @@
       "message": "Le message est requis"
     }
   },
-  "Footer": {
-  "information": "Informations",
-  "aboutUs": "À propos de nous",
-  "impact": "Notre impact",
-  "news": "Actualités",
-  "helpfulLinks": "Liens utiles",
-  "privacy": "Confidentialité / Support",
-  "contactUs": "Contactez‑nous",
-  "emailAlt": "Icône e‑mail",
-  "phoneAlt": "Icône téléphone",
-  "copyright": "© 2025 CamberFarm.Africa Tous droits réservés."
+  "ContactPage": {
+    "title": "Travaillons ensemble",
+    "description": "Que vous soyez agriculteur, investisseur ou organisation passionnée par l’agriculture durable, nous serions ravis de collaborer avec vous. Contactez-nous pour en savoir plus sur nos programmes, partenariats et initiatives à impact à travers l’Afrique.",
+    "button": "Nous contacter",
+    "email": "E-mail",
+    "phone": "Téléphone",
+    "address": "Adresse",
+    "businessHours": "Heures d’ouverture",
+    "days": "Lundi - Vendredi"
+  },
+  "FarmFund": {
+  "title": "Formulaire d’expression d’intérêt du Fonds Agricole",
+  "name": "Nom",
+  "email": "Adresse e-mail",
+  "phone": "Numéro de téléphone",
+  "country": "Pays",
+  "state": "Région de résidence",
+  "selectResponse": "Choisissez comment nous vous contacterons",
+  "responseOption1": "Appel téléphonique",
+  "responseOption2": "E-mail",
+  "submit": "Envoyer",
+  "submitting": "Envoi en cours..."
 },
 
+  "Footer": {
+    "information": "Informations",
+    "aboutUs": "À propos de nous",
+    "impact": "Notre impact",
+    "news": "Actualités",
+    "helpfulLinks": "Liens utiles",
+    "privacy": "Confidentialité / Support",
+    "contactUs": "Contactez‑nous",
+    "emailAlt": "Icône e‑mail",
+    "phoneAlt": "Icône téléphone",
+    "copyright": "© 2025 CamberFarm.Africa Tous droits réservés."
+  },
   "Hero": {
     "title": "Relier l’excellence agricole de l’Afrique aux marchés mondiaux",
     "subtitle": "Nous soutenons les agriculteurs, encourageons des pratiques durables et livrons les meilleurs produits africains prêts à l’exportation à des acheteurs de confiance dans le monde entier.",
@@ -124,6 +135,9 @@
     "stat4": "Connexions aux marchés mondiaux",
     "button": "Devenir partenaire"
   },
+  "Map":{
+        "title":"Trouvez-nous sur la carte"
+    },
   "Membership": {
     "title": "Formulaire d’adhésion",
     "submit": "S’inscrire",

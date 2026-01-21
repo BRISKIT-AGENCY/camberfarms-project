@@ -234,7 +234,7 @@ const DesktopNavbar = ({
         <div className="relative">
           <button
             onClick={() => setIsLangOpen(prev => !prev)}
-            className="flex items-center gap-1.25"
+            className="flex items-center gap-1.25 cursor-pointer"
           >
             <ReactCountryFlag svg countryCode={currentCountry} style={{ width: 24, height: 24 }} />
             <span>{currentLang}</span>
@@ -256,7 +256,7 @@ const DesktopNavbar = ({
                     router.replace(pathname, { locale: lang.code })
                     closeAllDropdowns()
                   }}
-                  className="flex items-center gap-2 px-4 py-2 w-full hover:bg-gray-100 text-black"
+                  className="flex items-center gap-2 px-4 py-2 w-full hover:bg-gray-100 text-black cursor-pointer"
                 >
                   <ReactCountryFlag svg countryCode={lang.country} style={{ width: 20, height: 20 }} />
                   <span>{lang.label}</span>
@@ -268,7 +268,7 @@ const DesktopNavbar = ({
       </div>
 
       {/* CTA */}
-      <button className={`h-12 rounded-xl px-6 ${buttonBgColor}`}>
+      <button className={`h-12 rounded-xl px-6 ${buttonBgColor} cursor-pointer`}>
         <p className={`font-bold ${buttonTextColor}`}>{tBtn('explore')}</p>
       </button>
     </div>

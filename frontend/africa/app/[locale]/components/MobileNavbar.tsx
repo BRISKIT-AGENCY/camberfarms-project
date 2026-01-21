@@ -66,7 +66,7 @@ const MobileNavbar = () => {
         </Link>
 
         <button
-          className="flex flex-col justify-between h-6 w-8"
+          className="flex flex-col justify-between h-6 w-8 cursor-pointer"
           onClick={() => {
             setIsMenuOpen(prev => {
               if (prev) closeMenu()
@@ -111,7 +111,7 @@ const MobileNavbar = () => {
                 alt="Arrow Down"
                 width={24}
                 height={24}
-                className={`transition-transform ${isAboutOpen ? 'rotate-180' : ''}`}
+                className={`transition-transform cursor-pointer ${isAboutOpen ? 'rotate-180' : ''}`}
               />
             </button>
 
@@ -155,7 +155,7 @@ const MobileNavbar = () => {
                 alt="Arrow Down"
                 width={24}
                 height={24}
-                className={`transition-transform ${isOurWorkOpen ? 'rotate-180' : ''}`}
+                className={`transition-transform cursor-pointer ${isOurWorkOpen ? 'rotate-180' : ''}`}
               />
             </button>
 
@@ -194,7 +194,7 @@ const MobileNavbar = () => {
           <div className="flex flex-col w-full mt-6">
             <button
               onClick={() => setIsResourcesOpen(prev => !prev)}
-              className="flex justify-between w-full items-center"
+              className="flex justify-between w-full items-center cursor-pointer"
             >
               <span
                 className={`transition-colors ${isResourcesOpen
@@ -246,11 +246,11 @@ const MobileNavbar = () => {
             >
               <ReactCountryFlag svg countryCode={currentCountry} style={{ width: 24, height: 24 }} />
               <span>{currentLang}</span>
-              <Image src="/images/arrowdown.png" alt="Arrow Down" width={24} height={24} />
+              <Image src="/images/arrowdown.png" alt="Arrow Down" width={24} height={24} className='cursor-pointer'/>
             </button>
 
             {isLangOpen && (
-              <div className="mt-2 bg-white border rounded-lg shadow-md">
+              <div className="mt-2 bg-white border rounded-lg shadow-md cursor-pointer">
                 {LANGUAGES.map(lang => (
                   <button
                     key={lang.code}
@@ -258,7 +258,7 @@ const MobileNavbar = () => {
                       router.replace(pathname, { locale: lang.code })
                       closeMenu()
                     }}
-                    className="flex items-center gap-2 px-4 py-2 w-full hover:bg-gray-100"
+                    className="flex items-center gap-2 px-4 py-2 w-full hover:bg-gray-100 cursor-pointer"
                   >
                     <ReactCountryFlag svg countryCode={lang.country} style={{ width: 20, height: 20 }} />
                     <span>{lang.label}</span>
@@ -270,7 +270,7 @@ const MobileNavbar = () => {
 
           <button
             onClick={closeMenu}
-            className="h-12 rounded-xl bg-[#1AD329] px-6"
+            className="h-12 rounded-xl bg-[#1AD329] px-6 cursor-pointer"
           >
             <p className="text-white font-bold">{tBtn('explore')}</p>
           </button>

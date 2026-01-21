@@ -4,6 +4,7 @@ import Navbar from './Navbar'
 import { useLocale } from 'next-intl'
 import getRecentPosts, { type RecentPost } from './RecentPost'
 import { useEffect, useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 type Blog = {
   title: string
@@ -14,6 +15,14 @@ type Blog = {
 export default function SingleBlogClient({ blog }: { blog: Blog }) {
   const locale = useLocale()
   const [recentPosts, setRecentPosts] = useState<RecentPost[]>([])
+  const t = useTranslations('Blog')
+
+  
+const formattedDate = new Intl.DateTimeFormat(locale, {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+}).format(new Date(blog.publishedAt));
 
   useEffect(() => {
     async function fetchRecent() {
@@ -37,7 +46,7 @@ export default function SingleBlogClient({ blog }: { blog: Blog }) {
       <div className="w-full bg-[#F3F5F7] md:pt-38.25 md:px-25 px-6 pt-15 pb-19.5">
         <h1 className="font-bold md:text-[36px] text-[16px]">{blog.title}</h1>
         <p className="md:text-[18px] text-[#808080] mt-2">
-          Date: {new Date(blog.publishedAt).toDateString()}
+          {t('Date')} {formattedDate}
         </p>
 
         <div className="mt-12">

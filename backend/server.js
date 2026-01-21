@@ -13,6 +13,7 @@ import affiliateRouter from './routes/affiliateRoutes.js'
 import feedbackRouter from './routes/feedbackRoutes.js';
 import messageRouter from './routes/messageRoutes.js';
 import productRouter from './routes/productRoutes.js';
+import { trackVisitor } from "./middleware/trackVisitor.js";
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ const MONGO_URI = process.env.MONGO_URI
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
+app.use(trackVisitor);
 
 const connectDB= async()=>{
     try {

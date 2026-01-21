@@ -10,6 +10,7 @@ import Navbar from '../components/Navbar'
 import Pagination from '../components/Pagination'
 import BlogSearchSidebar from '../components/BlogSearchSidebar'
 import getRecentPosts, { type RecentPost } from '../components/RecentPost'
+import { useTranslations } from 'next-intl'
 
 type Blog = {
   _id: string
@@ -28,6 +29,7 @@ export default function BlogPage({ initialPage = 1 }) {
   const [pagination, setPagination] = useState({ currentPage: 1, totalPages: 1 })
   const [recentPosts, setRecentPosts] = useState<RecentPost[]>([])
   const [page, setPage] = useState(initialPage)
+  const t = useTranslations('Blog')
 
   useEffect(() => {
     async function fetchBlogs() {
@@ -91,7 +93,7 @@ export default function BlogPage({ initialPage = 1 }) {
                   href={`/${locale}/blog/${blog.slug}`}
                   className="flex mt-6 text-[#1AD329]"
                 >
-                  <span className="md:text-[24px] text-[16px]">Read More</span>
+                  <span className="md:text-[24px] text-[16px]">{t('button')}</span>
                   <Image
                     src="/images/greenarrow.png"
                     alt="arrow"

@@ -18,6 +18,7 @@ type ContactFormValues = {
   phone: string
   message: string
 }
+const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 const Contact = ({ heading, description, button, placeholder }: ContactProps) => {
   const t= useTranslations("Contact")
@@ -44,7 +45,7 @@ const Contact = ({ heading, description, button, placeholder }: ContactProps) =>
     onSubmit: async (values, { resetForm }) => {
       try {
         const { data } = await axios.post(
-          'http://localhost:5000/api/contact',
+          `${API_URL}/api/contact`,
           values,
           {
             headers: { 'Content-Type': 'application/json' }

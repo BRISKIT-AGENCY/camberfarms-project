@@ -51,20 +51,8 @@
         }
     },
     "Blog": {
-        "heading": "Blogs",
-        "description": "Stay informed with updates, insights, and stories shaping agriculture across Africa.",
-        "readMore": "Read more",
-        "arrowAlt": "arrow right",
-        "post1": {
-            "title": "Membership Advantages And Ways To Maximize Profits",
-            "description": "Increased investment in agricultural infrastructure is helping African producers tap into new markets across Europe and Asia, with maize and sesame leading the surge.",
-            "date": "Date: September 18, 2025"
-        },
-        "post2": {
-            "title": "Membership Advantages And Ways To Maximize Profits",
-            "description": "Increased investment in agricultural infrastructure is helping African producers tap into new markets across Europe and Asia, with maize and sesame leading the surge.",
-            "date": "Date: September 18, 2025"
-        }
+        "button":"Read more",
+        "Date": "Date:"
     },
     "Button": {
         "explore": "Explore Camberfarm exports"
@@ -97,6 +85,29 @@
             "message": "Message is required"
         }
     },
+    "ContactPage": {
+        "title": "Lets work together",
+        "description": "Whether you’re a farmer, investor, or organization passionate about sustainable agriculture, we’d love to collaborate with you. Reach out to learn more about our programs, partnerships, and impact-driven initiatives across Africa.",
+        "button": "Get in touch",
+        "email": "Email",
+        "phone": "Phone",
+        "address": "Address",
+        "businessHours": "Business Hours",
+        "days": "Monday - Friday"
+    },
+    "FarmFund": {
+        "title": "Farm Fund Expression of Interest Form",
+        "name": "Name",
+        "email": "Email Address",
+        "phone": "Phone Number",
+        "country": "Country",
+        "state": "State of Residence",
+        "selectResponse": "Select how to get a response from us",
+        "responseOption1": "Phone Call",
+        "responseOption2": "Email",
+        "submit": "Submit",
+        "submitting": "Submitting..."
+    },
     "Footer": {
         "information": "Information",
         "aboutUs": "About us",
@@ -122,6 +133,9 @@
         "stat3": "Eco-Friendly Practices",
         "stat4": "Global Market Connections",
         "button": "Partner with us"
+    },
+    "Map":{
+        "title":"Find Us on the Map"
     },
     "Membership": {
         "title": "Membership Form",

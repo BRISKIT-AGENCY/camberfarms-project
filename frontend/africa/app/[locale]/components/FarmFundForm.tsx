@@ -3,6 +3,7 @@ import Image from 'next/image'
 import axios from 'axios';
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import { useTranslations } from 'next-intl';
 
 import { useState, ChangeEvent, FormEvent } from "react";
 
@@ -26,6 +27,7 @@ const farmFundValidationSchema = Yup.object({
   residence: Yup.string().required("State of residence is required")
 });
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL
 const FarmFundForm = () => {
   const formik = useFormik({
     initialValues: {
@@ -39,7 +41,7 @@ const FarmFundForm = () => {
     validationSchema: farmFundValidationSchema,
     onSubmit: async (values, { resetForm, setSubmitting, setStatus }) => {
       try {
-        await axios.post("/api/farm-fund", values);
+        await axios.post(`${API_URL}/api/farm-fund`, values);
         resetForm();
         setStatus({ success: "Form submitted successfully" });
       } catch (error: any) {
@@ -54,11 +56,13 @@ const FarmFundForm = () => {
     }
   });
 
+  const t = useTranslations('FarmFund');
+
   return (
     <div className="h-fit py-24.5 px-3 lg:py-27.5 lg:px-25 bg-[#F9FAFB]">
       <div className="w-full h-full">
         <h1 className="md:text-[46px] text-[24px] font-bold">
-          Farm Fund Expression of Interest Form
+          {t('title')}
         </h1>
 
         <form className="mt-12.5" onSubmit={formik.handleSubmit}>
@@ -67,7 +71,7 @@ const FarmFundForm = () => {
             <input
               type="text"
               name="name"
-              placeholder="Name"
+              placeholder={t('name')}
               value={formik.values.name}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -81,7 +85,7 @@ const FarmFundForm = () => {
             <input
               type="tel"
               name="phone"
-              placeholder="Phone number"
+              placeholder={t('phone')}
               value={formik.values.phone}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -95,7 +99,7 @@ const FarmFundForm = () => {
             <input
               type="email"
               name="email"
-              placeholder="Email address"
+              placeholder={t('email')}
               value={formik.values.email}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -109,7 +113,7 @@ const FarmFundForm = () => {
             <input
               type="text"
               name="country"
-              placeholder="Country"
+              placeholder={t('country')}
               value={formik.values.country}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -123,7 +127,7 @@ const FarmFundForm = () => {
             <input
               type="text"
               name="residence"
-              placeholder="State of residence"
+              placeholder={t('state')}
               value={formik.values.residence}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -145,12 +149,10 @@ const FarmFundForm = () => {
                 className="w-full px-3 py-2 border border-[#808080] text-[#808080] rounded-[100px] h-12.5 md:h-11 bg-white appearance-none"
               >
                 <option value="" disabled>
-                  Select an option
+                  {t('selectResponse')}
                 </option>
-                <option value="option1">Option 1</option>
-                <option value="option2">Option 2</option>
-                <option value="option3">Option 3</option>
-                <option value="option4">Option 4</option>
+                <option value="option1">{t('responseOption1')}</option>
+                <option value="option2">{t('responseOption2')}</option>
               </select>
 
               <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center pr-3.5">
@@ -185,7 +187,7 @@ const FarmFundForm = () => {
               disabled={formik.isSubmitting}
               className="h-11 md:h-12.5 px-6 py-3 bg-[#1AD329] text-white rounded-[100px] disabled:opacity-50"
             >
-              {formik.isSubmitting ? "Submitting..." : "Submit"}
+              {formik.isSubmitting ? t('submitting') : t('submit')}
             </button>
           </div>
         </form>
