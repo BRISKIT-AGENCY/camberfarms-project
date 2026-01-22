@@ -23,29 +23,24 @@ type NewsProps = {
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 const fetchNews = async (lang: string): Promise<NewsItem[]> => {
-  try{
+  try {
     const res = await axios.get(`${API_URL}/api/africa/news`, {
-    params: {
-      page: 1,
-      limit: 3,
-      lang
-    }
-  })
-  return res.data.data
-  }catch (error: any) {
+      params: {
+        page: 1,
+        limit: 3,
+        lang
+      }
+    })
+    return res.data.data
+  } catch (error: any) {
     console.error('Failed to fetch news:', error.response?.data || error.message)
     throw new Error('Failed to fetch news')
   }
 }
 
-const formatDate = (date: string) =>
-  new Date(date).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  })
 
-  const STATIC_IMAGES = [
+
+const STATIC_IMAGES = [
   '/images/news1.png',
   '/images/news2.png',
   '/images/news3.png'
@@ -57,6 +52,8 @@ const News = ({ header }: NewsProps) => {
   const [activeIndex, setActiveIndex] = useState(0)
   const carouselRef = useRef<HTMLDivElement>(null)
   const locale = useLocale()
+
+
 
   useEffect(() => {
     fetchNews(locale)
@@ -108,7 +105,11 @@ const News = ({ header }: NewsProps) => {
                   {news.excerpt}
                 </p>
                 <p className='text-[14px] md:text-[18px] mt-1'>
-                  {formatDate(news.publishedAt)}
+                  {new Intl.DateTimeFormat(locale, {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  }).format(new Date(news.publishedAt))}
                 </p>
 
                 <Link href={`/news/${news.slug}`} className='flex mt-6 text-[#FF741F] items-center'>
@@ -131,11 +132,10 @@ const News = ({ header }: NewsProps) => {
           {newsData.map((_, index) => (
             <span
               key={index}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                activeIndex === index
+              className={`h-2 rounded-full transition-all duration-300 ${activeIndex === index
                   ? 'w-6 bg-[#FF741F]'
                   : 'w-2.5 bg-gray-400'
-              }`}
+                }`}
             />
           ))}
         </div>
@@ -160,7 +160,11 @@ const News = ({ header }: NewsProps) => {
                   {news.excerpt}
                 </p>
                 <p className='text-[14px] md:text-[18px] mt-1'>
-                  {formatDate(news.publishedAt)}
+                  {new Intl.DateTimeFormat(locale, {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  }).format(new Date(news.publishedAt))}
                 </p>
 
                 <Link href={`/news/${news.slug}`} className='flex mt-6 text-[#1AD329] items-center'>

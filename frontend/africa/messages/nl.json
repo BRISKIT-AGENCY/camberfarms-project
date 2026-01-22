@@ -52,7 +52,10 @@
     },
     "Blog": {
         "button": "Lees meer",
-        "Date": "Datum: "
+        "Date": "Datum: ",
+        "arrowAlt": "pijl rechts",
+        "title": "Blog",
+        "description": "Blijf op de hoogte met updates, inzichten en verhalen die de landbouw in Afrika vormgeven."
     },
     "Button": {
         "explore": "Ontdek Camberfarm-export"
@@ -96,19 +99,18 @@
         "days": "Maandag - Vrijdag"
     },
     "FarmFund": {
-  "title": "Aanmeldformulier voor het Landbouwfonds",
-  "name": "Naam",
-  "email": "E-mailadres",
-  "phone": "Telefoonnummer",
-  "country": "Land",
-  "state": "Woonplaats / Provincie",
-  "selectResponse": "Kies hoe u van ons wilt horen",
-  "responseOption1": "Telefonisch gesprek",
-  "responseOption2": "E-mail",
-  "submit": "Verzenden",
-    "submitting": "Bezig met verzenden..."
-},
-
+        "title": "Aanmeldformulier voor het Landbouwfonds",
+        "name": "Naam",
+        "email": "E-mailadres",
+        "phone": "Telefoonnummer",
+        "country": "Land",
+        "state": "Woonplaats / Provincie",
+        "selectResponse": "Kies hoe u van ons wilt horen",
+        "responseOption1": "Telefonisch gesprek",
+        "responseOption2": "E-mail",
+        "submit": "Verzenden",
+        "submitting": "Bezig met verzenden..."
+    },
     "Footer": {
         "information": "Informatie",
         "aboutUs": "Over ons",
@@ -135,8 +137,8 @@
         "stat4": "Wereldwijde Marktverbindingen",
         "button": "Werk met ons samen"
     },
-    "Map":{
-        "title":"Vind Ons op de Kaart"
+    "Map": {
+        "title": "Vind Ons op de Kaart"
     },
     "Membership": {
         "title": "Lidmaatschapsformulier",
@@ -186,21 +188,7 @@
         "description": "Verken verhalen, updates en inzichten over Afrikaanse landbouwexport, duurzaamheid en wereldwijde handelstrends.",
         "readMore": "Lees meer",
         "arrowAlt": "pijl rechts",
-        "post1": {
-            "title": "Focus op Duurzaamheid",
-            "description": "Naarmate de wereldwijde vraag naar ethisch geproduceerde voeding groeit, schakelen Afrikaanse exporteurs over op milieuvriendelijke en traceerbare landbouwsystemen om aan internationale normen te voldoen.",
-            "date": "18 september 2025"
-        },
-        "post2": {
-            "title": "Focus op Exportmarkten",
-            "description": "Toegenomen investeringen in landbouwinfrastructuur helpen Afrikaanse producenten toegang te krijgen tot nieuwe markten in Europa en Azië, waarbij maïs en sesam de groei aanvoeren.",
-            "date": "18 september 2025"
-        },
-        "post3": {
-            "title": "Focus op Technologie / Impact",
-            "description": "Van digitale traceerbaarheidstools tot AI-gestuurde logistiek, technologie maakt Afrikaanse landbouwexport transparanter en competitiever.",
-            "date": "18 september 2025"
-        }
+        "admin": "Door beheerder"
     },
     "OurWorks": {
         "hero": {
@@ -231,6 +219,14 @@
             "Veldmonitoring",
             "Oogsten",
             "Voorraadbeheer"
+        ],
+        "stepDescriptions": [
+            "Wij registreren boeren op ons platform, verifiëren hun identiteit en verzamelen essentiële informatie om een goede toegang tot diensten te garanderen.",
+            "Wij brengen landbouwgronden in kaart met behulp van geolocatietools om de grootte, locatie en landbouwomstandigheden te begrijpen.",
+            "Wij leveren kwalitatieve zaden, meststoffen en andere landbouwinputs op het juiste moment.",
+            "Wij monitoren continu de gewasgroei en veldomstandigheden om een optimale productiviteit te waarborgen.",
+            "Wij ondersteunen boeren tijdens de oogst om verliezen te verminderen en de opbrengstkwaliteit te verbeteren.",
+            "Wij beheren geoogste producten efficiënt door middel van juiste opslag, tracking en logistiek."
         ]
     },
     "Products": {

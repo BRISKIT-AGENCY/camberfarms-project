@@ -52,7 +52,10 @@
     },
     "Blog": {
         "button": "Leggi di più",
-        "Date": "Data: "
+        "Date": "Data: ",
+        "arrowAlt": "freccia destra",
+        "title": "Blog",
+        "description": "Rimani informato con aggiornamenti, approfondimenti e storie che plasmano l’agricoltura in Africa."
     },
     "Button": {
         "explore": "Esplora le esportazioni di Camberfarm"
@@ -96,19 +99,18 @@
         "days": "Lunedì - Venerdì"
     },
     "FarmFund": {
-  "title": "Modulo di manifestazione di interesse per il Fondo Agricolo",
-  "name": "Nome",
-  "email": "Indirizzo email",
-  "phone": "Numero di telefono",
-  "country": "Paese",
-  "state": "Regione di residenza",
-  "selectResponse": "Seleziona come preferisci essere contattato",
-  "responseOption1": "Chiamata telefonica",
-  "responseOption2": "Email",
-  "submit": "Invia",
-    "submitting": "Invio in corso..."
-},
-
+        "title": "Modulo di manifestazione di interesse per il Fondo Agricolo",
+        "name": "Nome",
+        "email": "Indirizzo email",
+        "phone": "Numero di telefono",
+        "country": "Paese",
+        "state": "Regione di residenza",
+        "selectResponse": "Seleziona come preferisci essere contattato",
+        "responseOption1": "Chiamata telefonica",
+        "responseOption2": "Email",
+        "submit": "Invia",
+        "submitting": "Invio in corso..."
+    },
     "Footer": {
         "information": "Informazioni",
         "aboutUs": "Chi siamo",
@@ -135,8 +137,8 @@
         "stat4": "Connessioni con Mercati Globali",
         "button": "Collabora con noi"
     },
-    "Map":{
-        "title":"Trovaci sulla Mappa"
+    "Map": {
+        "title": "Trovaci sulla Mappa"
     },
     "Membership": {
         "title": "Modulo di Membership",
@@ -186,21 +188,7 @@
         "description": "Esplora storie, aggiornamenti e approfondimenti sulle esportazioni agricole africane, sostenibilità e tendenze del commercio globale.",
         "readMore": "Leggi di più",
         "arrowAlt": "freccia destra",
-        "post1": {
-            "title": "Focus sulla Sostenibilità",
-            "description": "Con la crescente domanda globale di alimenti prodotti eticamente, gli esportatori africani adottano sistemi agricoli eco-compatibili e tracciabili per rispettare gli standard internazionali.",
-            "date": "18 settembre 2025"
-        },
-        "post2": {
-            "title": "Focus sul Mercato di Esportazione",
-            "description": "L'aumento degli investimenti nelle infrastrutture agricole aiuta i produttori africani ad accedere a nuovi mercati in Europa e Asia, con mais e sesamo in prima linea.",
-            "date": "18 settembre 2025"
-        },
-        "post3": {
-            "title": "Focus su Tecnologia / Impatto",
-            "description": "Dagli strumenti digitali di tracciabilità alla logistica con IA, la tecnologia rende le esportazioni agricole africane più trasparenti e competitive.",
-            "date": "18 settembre 2025"
-        }
+        "admin": "Da amministratore"
     },
     "OurWorks": {
         "hero": {
@@ -231,6 +219,14 @@
             "Monitoraggio dei Campi",
             "Raccolta",
             "Gestione dell'Inventario"
+        ],
+        "stepDescriptions": [
+            "Registriamo gli agricoltori sulla nostra piattaforma, verifichiamo le loro identità e raccogliamo informazioni essenziali per garantire un accesso adeguato ai servizi.",
+            "Mappiamo i terreni agricoli utilizzando strumenti di geolocalizzazione per comprendere dimensioni, posizione e condizioni del suolo.",
+            "Distribuiamo sementi di qualità, fertilizzanti e altri input agricoli al momento giusto.",
+            "Monitoriamo costantemente la crescita delle colture e le condizioni dei campi per garantire una produttività ottimale.",
+            "Supportiamo gli agricoltori durante la raccolta per ridurre le perdite e migliorare la qualità del raccolto.",
+            "Gestiamo in modo efficiente i prodotti raccolti attraverso un corretto stoccaggio, tracciamento e logistica."
         ]
     },
     "Products": {

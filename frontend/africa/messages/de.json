@@ -52,7 +52,10 @@
     },
     "Blog": {
         "button": " Alle Beiträge anzeigen",
-        "Date": "Datum:"
+        "Date": "Datum:",
+        "arrowAlt": "Pfeil rechts",
+        "title": "Blog",
+      "description": "Bleiben Sie informiert mit Updates, Einblicken und Geschichten, die die Landwirtschaft in Afrika prägen."
     },
     "Button": {
         "explore": "Camberfarm Exporte entdecken"
@@ -96,19 +99,18 @@
         "days": "Montag - Freitag"
     },
     "FarmFund": {
-  "title": "Interessensbekundungsformular für den Agrarfonds",
-  "name": "Name",
-  "email": "E-Mail-Adresse",
-  "phone": "Telefonnummer",
-  "country": "Land",
-  "state": "Bundesland / Wohnort",
-  "selectResponse": "Wählen Sie, wie wir Sie kontaktieren sollen",
-  "responseOption1": "Telefonanruf",
-  "responseOption2": "E-Mail",
-  "submit": "Absenden",
-    "submitting": "Wird gesendet..."
-},
-
+        "title": "Interessensbekundungsformular für den Agrarfonds",
+        "name": "Name",
+        "email": "E-Mail-Adresse",
+        "phone": "Telefonnummer",
+        "country": "Land",
+        "state": "Bundesland / Wohnort",
+        "selectResponse": "Wählen Sie, wie wir Sie kontaktieren sollen",
+        "responseOption1": "Telefonanruf",
+        "responseOption2": "E-Mail",
+        "submit": "Absenden",
+        "submitting": "Wird gesendet..."
+    },
     "Footer": {
         "information": "Informationen",
         "aboutUs": "Über uns",
@@ -135,8 +137,8 @@
         "stat4": "Globale Marktverbindungen",
         "button": "Partner werden"
     },
-    "Map":{
-        "title":"Finden Sie uns auf der Karte"
+    "Map": {
+        "title": "Finden Sie uns auf der Karte"
     },
     "Membership": {
         "title": "Mitgliedsformular",
@@ -186,21 +188,7 @@
         "description": "Entdecken Sie Geschichten, Updates und Einblicke über Afrikas Agrarexporte, Nachhaltigkeit und globale Handelstrends.",
         "readMore": "Weiterlesen",
         "arrowAlt": "Pfeil rechts",
-        "post1": {
-            "title": "Fokus auf Nachhaltigkeit",
-            "description": "Da die globale Nachfrage nach ethisch produzierten Lebensmitteln steigt, setzen afrikanische Exporteure auf umweltfreundliche und rückverfolgbare Anbausysteme, um internationale Standards zu erfüllen.",
-            "date": "18. September 2025"
-        },
-        "post2": {
-            "title": "Fokus auf Exportmärkte",
-            "description": "Erhöhte Investitionen in die landwirtschaftliche Infrastruktur helfen afrikanischen Produzenten, neue Märkte in Europa und Asien zu erschließen, wobei Mais und Sesam an der Spitze des Wachstums stehen.",
-            "date": "18. September 2025"
-        },
-        "post3": {
-            "title": "Fokus auf Technologie / Wirkung",
-            "description": "Von digitalen Rückverfolgbarkeitstools bis hin zu KI-gestützter Logistik macht Technologie Afrikas Agrarexporte transparenter und wettbewerbsfähiger.",
-            "date": "18. September 2025"
-        }
+        "admin": "Vom Administrator"
     },
     "OurWorks": {
         "hero": {
@@ -231,6 +219,14 @@
             "Feldüberwachung",
             "Ernte",
             "Bestandsmanagement"
+        ],
+        "stepDescriptions": [
+            "Wir registrieren Landwirte auf unserer Plattform, überprüfen ihre Identitäten und erfassen wichtige Informationen, um einen reibungslosen Zugang zu unseren Dienstleistungen zu gewährleisten.",
+            "Wir kartieren landwirtschaftliche Flächen mithilfe von Geolokalisierungs-Tools, um Größe, Standort und Anbaubedingungen zu verstehen.",
+            "Wir verteilen hochwertige Saatgüter, Düngemittel und andere landwirtschaftliche Betriebsmittel zum richtigen Zeitpunkt.",
+            "Wir überwachen kontinuierlich das Pflanzenwachstum und die Feldbedingungen, um eine optimale Produktivität sicherzustellen.",
+            "Wir unterstützen Landwirte während der Ernte, um Verluste zu minimieren und die Qualität der Erträge zu verbessern.",
+            "Wir verwalten die geernteten Produkte effizient durch sachgerechte Lagerung, Nachverfolgung und Logistik."
         ]
     },
     "Products": {

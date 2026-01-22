@@ -51,8 +51,11 @@
         }
     },
     "Blog": {
-        "button":"Read more",
-        "Date": "Date:"
+        "button": "Read more",
+        "Date": "Date:",
+        "arrowAlt": "arrow right",
+        "title": "Blog",
+        "description": "Stay informed with updates, insights, and stories shaping agriculture in Africa."
     },
     "Button": {
         "explore": "Explore Camberfarm exports"
@@ -134,8 +137,8 @@
         "stat4": "Global Market Connections",
         "button": "Partner with us"
     },
-    "Map":{
-        "title":"Find Us on the Map"
+    "Map": {
+        "title": "Find Us on the Map"
     },
     "Membership": {
         "title": "Membership Form",
@@ -185,21 +188,7 @@
         "description": "Explore stories, updates, and insights about Africa’s agricultural exports, sustainability, and global trade trends.",
         "readMore": "Read more",
         "arrowAlt": "arrow right",
-        "post1": {
-            "title": "Sustainability Focus",
-            "description": "As global demand for ethically sourced food grows, African exporters are turning to eco-friendly and traceable farming systems to meet international standards.",
-            "date": "September 18, 2025"
-        },
-        "post2": {
-            "title": "Export Market Focus",
-            "description": "Increased investment in agricultural infrastructure is helping African producers tap into new markets across Europe and Asia, with maize and sesame leading the surge.",
-            "date": "September 18, 2025"
-        },
-        "post3": {
-            "title": "Technology / Impact Focus",
-            "description": "From digital traceability tools to AI-powered logistics, technology is making Africa’s agricultural exports more transparent and competitive.",
-            "date": "September 18, 2025"
-        }
+        "admin":"By admin"
     },
     "OurWorks": {
         "hero": {
@@ -230,6 +219,14 @@
             "Field Monitoring",
             "Harvesting",
             "Inventory Management"
+        ],
+        "stepDescriptions": [
+            "We register farmers into our platform, verify their identities, and collect essential information to ensure proper access to services.",
+            "We map farmlands using geo-location tools to understand land size, location, and farming conditions.",
+            "We distribute quality seeds, fertilizers, and other farm inputs to farmers at the right time.",
+            "We continuously monitor crop growth and field conditions to ensure optimal productivity.",
+            "We support farmers during harvest to reduce losses and improve yield quality.",
+            "We manage harvested produce efficiently through proper storage, tracking, and logistics."
         ]
     },
     "Products": {

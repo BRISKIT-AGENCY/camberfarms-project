@@ -52,7 +52,10 @@
     },
     "Blog": {
         "button": "Leia mais",
-        "Date": "Data: "
+        "Date": "Data: ",
+        "arrowAlt": "seta direita",
+        "title": "Blog",
+        "description": "Mantenha-se informado com atualizações, insights e histórias que moldam a agricultura na África."
     },
     "Button": {
         "explore": "Explore as exportações da Camberfarm"
@@ -96,19 +99,18 @@
         "days": "Segunda - Sexta-feira"
     },
     "FarmFund": {
-  "title": "Formulário de Manifestação de Interesse do Fundo Agrícola",
-  "name": "Nome",
-  "email": "Endereço de e-mail",
-  "phone": "Número de telefone",
-  "country": "País",
-  "state": "Estado de residência",
-  "selectResponse": "Selecione como deseja receber nossa resposta",
-  "responseOption1": "Chamada telefônica",
-  "responseOption2": "E-mail",
-  "submit": "Enviar",
-    "submitting": "Enviando..."
-},
-
+        "title": "Formulário de Manifestação de Interesse do Fundo Agrícola",
+        "name": "Nome",
+        "email": "Endereço de e-mail",
+        "phone": "Número de telefone",
+        "country": "País",
+        "state": "Estado de residência",
+        "selectResponse": "Selecione como deseja receber nossa resposta",
+        "responseOption1": "Chamada telefônica",
+        "responseOption2": "E-mail",
+        "submit": "Enviar",
+        "submitting": "Enviando..."
+    },
     "Footer": {
         "information": "Informações",
         "aboutUs": "Sobre nós",
@@ -135,8 +137,8 @@
         "stat4": "Conexões com Mercados Globais",
         "button": "Faça Parceria Conosco"
     },
-    "Map":{
-        "title":"Encontre-nos no Mapa"
+    "Map": {
+        "title": "Encontre-nos no Mapa"
     },
     "Membership": {
         "title": "Formulário de Associação",
@@ -186,21 +188,7 @@
         "description": "Explore histórias, atualizações e insights sobre exportações agrícolas da África, sustentabilidade e tendências do comércio global.",
         "readMore": "Leia mais",
         "arrowAlt": "seta direita",
-        "post1": {
-            "title": "Foco em Sustentabilidade",
-            "description": "À medida que a demanda global por alimentos de origem ética cresce, exportadores africanos estão adotando sistemas agrícolas ecológicos e rastreáveis para atender aos padrões internacionais.",
-            "date": "18 de setembro de 2025"
-        },
-        "post2": {
-            "title": "Foco no Mercado de Exportação",
-            "description": "O aumento do investimento em infraestrutura agrícola está ajudando produtores africanos a acessar novos mercados na Europa e Ásia, com destaque para milho e gergelim.",
-            "date": "18 de setembro de 2025"
-        },
-        "post3": {
-            "title": "Foco em Tecnologia / Impacto",
-            "description": "De ferramentas digitais de rastreabilidade a logística com IA, a tecnologia torna as exportações agrícolas africanas mais transparentes e competitivas.",
-            "date": "18 de setembro de 2025"
-        }
+        "admin": "Por administrador"
     },
     "OurWorks": {
         "hero": {
@@ -231,6 +219,14 @@
             "Monitoramento de Campo",
             "Colheita",
             "Gestão de Estoque"
+        ],
+        "stepDescriptions": [
+            "Registramos os agricultores na nossa plataforma, verificamos as suas identidades e recolhemos informações essenciais para garantir o acesso adequado aos serviços.",
+            "Mapeamos as terras agrícolas utilizando ferramentas de geolocalização para compreender o tamanho, a localização e as condições do terreno.",
+            "Distribuímos sementes de qualidade, fertilizantes e outros insumos agrícolas no momento certo.",
+            "Monitoramos continuamente o crescimento das culturas e as condições do campo para garantir uma produtividade ideal.",
+            "Apoiamos os agricultores durante a colheita para reduzir perdas e melhorar a qualidade da produção.",
+            "Gerimos os produtos colhidos de forma eficiente através de armazenamento adequado, rastreamento e logística."
         ]
     },
     "Products": {

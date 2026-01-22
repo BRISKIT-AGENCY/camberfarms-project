@@ -52,7 +52,10 @@
     },
     "Blog": {
         "button": "Leer más",
-        "Date": "Fecha: "
+        "Date": "Fecha: ",
+        "arrowAlt": "flecha derecha",
+        "title": "Blog",
+        "description": "Mantente informado con actualizaciones, ideas e historias que dan forma a la agricultura en África."
     },
     "Button": {
         "explore": "Explorar exportaciones de Camberfarm"
@@ -96,19 +99,18 @@
         "days": "Lunes - Viernes"
     },
     "FarmFund": {
-  "title": "Formulario de expresión de interés del Fondo Agrícola",
-  "name": "Nombre",
-  "email": "Dirección de correo electrónico",
-  "phone": "Número de teléfono",
-  "country": "País",
-  "state": "Estado de residencia",
-  "selectResponse": "Selecciona cómo deseas que te contactemos",
-  "responseOption1": "Llamada telefónica",
-  "responseOption2": "Correo electrónico",
-  "submit": "Enviar",
-    "submitting": "Enviando..."
-},
-
+        "title": "Formulario de expresión de interés del Fondo Agrícola",
+        "name": "Nombre",
+        "email": "Dirección de correo electrónico",
+        "phone": "Número de teléfono",
+        "country": "País",
+        "state": "Estado de residencia",
+        "selectResponse": "Selecciona cómo deseas que te contactemos",
+        "responseOption1": "Llamada telefónica",
+        "responseOption2": "Correo electrónico",
+        "submit": "Enviar",
+        "submitting": "Enviando..."
+    },
     "Footer": {
         "information": "Información",
         "aboutUs": "Sobre nosotros",
@@ -135,8 +137,8 @@
         "stat4": "Conexiones con Mercados Globales",
         "button": "Asóciate con nosotros"
     },
-    "Map":{
-        "title":"Encuentranos en el Mapa"
+    "Map": {
+        "title": "Encuentranos en el Mapa"
     },
     "Membership": {
         "title": "Formulario de Membresía",
@@ -186,21 +188,7 @@
         "description": "Explora historias, actualizaciones y perspectivas sobre exportaciones agrícolas de África, sostenibilidad y tendencias del comercio global.",
         "readMore": "Leer más",
         "arrowAlt": "flecha derecha",
-        "post1": {
-            "title": "Enfoque en Sostenibilidad",
-            "description": "A medida que crece la demanda global de alimentos éticamente producidos, los exportadores africanos recurren a sistemas agrícolas ecológicos y trazables para cumplir con los estándares internacionales.",
-            "date": "18 de septiembre de 2025"
-        },
-        "post2": {
-            "title": "Enfoque en Mercados de Exportación",
-            "description": "El aumento de la inversión en infraestructura agrícola ayuda a los productores africanos a acceder a nuevos mercados en Europa y Asia, con maíz y sésamo liderando el crecimiento.",
-            "date": "18 de septiembre de 2025"
-        },
-        "post3": {
-            "title": "Enfoque en Tecnología / Impacto",
-            "description": "Desde herramientas digitales de trazabilidad hasta logística con IA, la tecnología hace que las exportaciones agrícolas de África sean más transparentes y competitivas.",
-            "date": "18 de septiembre de 2025"
-        }
+        "admin": "Por administrador"
     },
     "OurWorks": {
         "hero": {
@@ -231,6 +219,14 @@
             "Monitoreo de Campos",
             "Cosecha",
             "Gestión de Inventarios"
+        ],
+        "stepDescriptions": [
+            "Registramos a los agricultores en nuestra plataforma, verificamos sus identidades y recopilamos información esencial para garantizar el acceso adecuado a los servicios.",
+            "Mapeamos las tierras agrícolas utilizando herramientas de geolocalización para comprender el tamaño, la ubicación y las condiciones del terreno.",
+            "Distribuimos semillas de calidad, fertilizantes y otros insumos agrícolas en el momento adecuado.",
+            "Monitoreamos continuamente el crecimiento de los cultivos y las condiciones del campo para garantizar una productividad óptima.",
+            "Apoyamos a los agricultores durante la cosecha para reducir pérdidas y mejorar la calidad del rendimiento.",
+            "Gestionamos eficientemente los productos cosechados mediante un almacenamiento adecuado, seguimiento y logística."
         ]
     },
     "Products": {

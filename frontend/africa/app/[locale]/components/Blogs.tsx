@@ -28,7 +28,7 @@ async function getBlogs(lang: string): Promise<Blog[]> {
       }
     })
     return res.data.data
-  }catch (error: any) {
+  } catch (error: any) {
     console.error('Failed to fetch blogs:', error.response?.data || error.message)
     throw new Error('Failed to fetch blogs')
   }
@@ -52,7 +52,7 @@ const Blogs = () => {
       <div className='w-full h-full'>
         <div>
           <h1 className='md:text-[46px] text-[24px] font-bold text-center'>
-            {t('heading')}
+            {t('title')}
           </h1>
           <p className='md:text-[20px] text-[12px] text-center mt-1'>
             {t('description')}
@@ -87,7 +87,7 @@ const Blogs = () => {
                 href={`/blog/${blog.slug}`}
                 className='flex mt-6 text-[#1AD329]'
               >
-                <p className='text-[14px]'>{t('readMore')}</p>
+                <p className='text-[14px]'>{t('button')}</p>
                 <Image
                   src='/images/greenarrow.png'
                   alt={t('arrowAlt')}

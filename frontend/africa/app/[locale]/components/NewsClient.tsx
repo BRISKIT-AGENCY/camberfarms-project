@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Navbar from './Navbar'
 import News from './News' // The component showing recent news
 import { useLocale } from 'next-intl'
+import { useTranslations } from 'next-intl'
 
 type Section = {
   heading?: string
@@ -22,15 +23,15 @@ interface NewsClientProps {
   news: NewsType
 }
 
-const formatDate = (date: string) =>
-  new Date(date).toLocaleDateString('en-US', {
+export default function NewsClient({ news }: NewsClientProps) {
+  const locale = useLocale()
+  const t= useTranslations('News')
+
+  const formattedDate = new Intl.DateTimeFormat(locale, {
     year: 'numeric',
     month: 'long',
     day: 'numeric'
-  })
-
-export default function NewsClient({ news }: NewsClientProps) {
-  const locale = useLocale()
+  }).format(new Date(news.publishedAt));
 
   return (
     <div>
@@ -57,8 +58,8 @@ export default function NewsClient({ news }: NewsClientProps) {
             height={500}
           />
           <div className='flex md:mt-6 mt-2 md:gap-12 gap-4'>
-            <p>By Admin</p>
-            <p>{formatDate(news.publishedAt)}</p>
+            <p>{t("admin")}</p>
+            <p>{formattedDate}</p>
           </div>
         </div>
 
