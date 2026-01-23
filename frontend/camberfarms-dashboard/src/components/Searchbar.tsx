@@ -9,7 +9,13 @@ type SearchResult = {
 	slug: string
 }
 
-export default function Searchbar({ url }: { url: string }) {
+export default function Searchbar({
+	url,
+	placeholder = 'Search',
+}: {
+	url: string
+	placeholder?: string
+}) {
 	const [query, setQuery] = useState('')
 	const [result, setResult] = useState<SearchResult[]>([])
 	const [loading, setLoading] = useState(false)
@@ -62,7 +68,7 @@ export default function Searchbar({ url }: { url: string }) {
 					name="search"
 					id="search"
 					className="w-full bg-transparent outline-0 font-inter font-normal"
-					placeholder="Search"
+					placeholder={placeholder}
 					value={query}
 					onChange={(e) => setQuery(e.target.value)}
 				/>

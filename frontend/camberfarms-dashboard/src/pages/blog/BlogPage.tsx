@@ -1,12 +1,12 @@
 import { Outlet } from 'react-router-dom'
-import Products from './Products'
-import ProductsHeader from './ProductsHeader'
+import BlogContainer from './BlogContainer'
+import BlogHeader from './BlogHeader'
 
-export default function ProductsPage() {
+export default function BlogPage() {
 	return (
 		<section className="w-full p-6">
-			<ProductsHeader />
-			<Products />
+			<BlogHeader />
+			<BlogContainer />
 			{/* This will render the overlay */}
 			<Outlet />
 		</section>

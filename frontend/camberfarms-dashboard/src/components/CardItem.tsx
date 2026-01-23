@@ -8,6 +8,7 @@ type CardItemProps = {
 	primaryBtnClick: () => void
 	secondaryBtnText: string
 	secondaryBtnClick: () => void
+	cardVariant?: string
 }
 
 export default function CardItem({
@@ -20,9 +21,12 @@ export default function CardItem({
 	primaryBtnClick,
 	secondaryBtnText,
 	secondaryBtnClick,
+	cardVariant,
 }: CardItemProps) {
 	return (
-		<div className="w-full flex flex-col relative shadow-2xs bg-white text-black rounded-xl">
+		<div
+			className={`w-full flex flex-col relative shadow-2xs bg-white text-black rounded-xl ${cardVariant}`}
+		>
 			{image && (
 				<img
 					src={image}
@@ -32,7 +36,7 @@ export default function CardItem({
 			{flag && (
 				<p
 					className="font-poppins text-sm px-2 py-1 rounded-2xl absolute top-4 right-4 capitalize"
-					style={{ color: flagColor, backgroundColor: `${flagColor}17` }}
+					style={{ color: flagColor, backgroundColor: `${flagColor}20` }}
 				>
 					{flag}
 				</p>
@@ -43,18 +47,18 @@ export default function CardItem({
 				</h4>
 			)}
 			{children}
-			<div className="w-full px-2 py-4 mt-auto flex flex-nowrap items-center justify-between gap-6 font-poppins font-semibold text-base">
+			<div className="w-full px-2 py-4 mt-auto flex flex-nowrap items-center justify-center gap-6 font-poppins font-semibold text-base">
 				<button
 					type="button"
 					onClick={primaryBtnClick}
-					className="bg-primary text-white py-2 px-10 cursor-pointer rounded-xl capitalize w-full"
+					className="bg-primary text-white py-2 px-10 cursor-pointer rounded-xl capitalize"
 				>
 					{primaryBtnText}
 				</button>
 				<button
 					type="button"
 					onClick={secondaryBtnClick}
-					className="bg-red-500/15 text-red-500 py-2 px-10 cursor-pointer rounded-xl capitalize w-full"
+					className="bg-red-500/15 text-red-500 py-2 px-10 cursor-pointer rounded-xl capitalize"
 				>
 					{secondaryBtnText}
 				</button>

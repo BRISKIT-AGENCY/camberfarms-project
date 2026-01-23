@@ -17,7 +17,7 @@ export default function Sidebar() {
 					to={l.url}
 					key={l.title}
 					className={({ isActive }) =>
-						`flex items-center justify-start gap-2 py-2 px-2 w-full capitalize rounded-lg focus-within:outline-0 focus-within:border-l-3 focus-within:rounded-l-sm focus-within:border-l-white ${
+						`flex items-center justify-start gap-2 py-2 px-2 w-full capitalize rounded-lg focus-within:outline-0 focus-within:border-l-3 focus-within:rounded-l-sm focus-within:border-l-white transition-all ease-in-out duration-200 transition-discrete ${
 							isActive
 								? 'bg-white text-primary border-secondary border-r-4 font-poppins font-bold'
 								: 'text-white font-inter bg-transparent'

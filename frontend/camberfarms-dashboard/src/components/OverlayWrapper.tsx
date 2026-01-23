@@ -9,11 +9,11 @@ type OverlayProps = {
 export default function OverlayWrapper({ children }: OverlayProps) {
 	return createPortal(
 		<section
-			className="w-full px-10 min-h-dvh flex items-center justify-center bg-grey/60 fixed z-30 inset-0"
+			className="w-full p-10 h-dvh flex items-center justify-center bg-grey/60 fixed z-30 inset-0"
 			role="dialog"
 			aria-labelledby="page-title"
 		>
-			<div className="w-full max-w-xl xl:max-w-3xl bg-white rounded-lg p-6">
+			<div className="w-full h-full max-w-xl xl:max-w-3xl bg-white rounded-lg p-6 overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
 				{children}
 			</div>
 		</section>,

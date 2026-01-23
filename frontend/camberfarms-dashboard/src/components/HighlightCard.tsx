@@ -11,6 +11,7 @@ export type HighlightCardProps = {
 	info: string
 	Tcolor?: string
 	Icolor?: string
+	showArrowUp?: boolean
 }
 
 export default function HighlightCard({
@@ -22,6 +23,7 @@ export default function HighlightCard({
 	url,
 	Icolor = 'black',
 	Tcolor = 'black',
+	showArrowUp = true,
 }: HighlightCardProps) {
 	return (
 		<Link
@@ -34,8 +36,8 @@ export default function HighlightCard({
 				<Icon className={`text-5xl bg-light-grey p-2 rounded-xl ${Icolor}`} />
 			</div>
 			<div className="flex items-center gap-1 text-primary font-light">
-				<FaArrowUp className="text-lg" />
-				<p className="ml-2">{percent}</p>
+				{showArrowUp && <FaArrowUp className="text-lg pr-1" />}
+				<p className="">{percent}</p>
 				<p className="text-grey">{info}</p>
 			</div>
 		</Link>

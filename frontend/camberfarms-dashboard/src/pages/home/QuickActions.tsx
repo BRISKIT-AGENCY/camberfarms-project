@@ -31,7 +31,7 @@ const actions: QuickActionCardProps[] = [
 	{
 		title: 'add new products',
 		desc: 'Create new agricultural products',
-		url: '/products',
+		url: '/products/new',
 		Icon: FaPlus,
 		Icolor: 'bg-[#00C0E8]',
 	},

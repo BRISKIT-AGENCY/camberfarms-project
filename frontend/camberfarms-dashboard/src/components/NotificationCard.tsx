@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom'
 import { IconRenderer } from '../utils/IconRenderer'
 
-type notiesProps = {
+export type NotiesProps = {
 	iconName: string
 	title: string
 	desc: string
 	Icolor: string
+	id: string | number
 	time?: string
 	round?: string
 }
@@ -15,18 +16,19 @@ export default function NotificationCard({
 	desc,
 	Icolor,
 	time,
+	id,
 	round = 'full',
-}: notiesProps) {
+}: NotiesProps) {
 	return (
 		<Link
-			to={`/${iconName}`}
+			to={`/${iconName}/${id}`}
 			className="w-full block bg-white rounded-lg py-1 hover:bg-light-grey"
 		>
 			<div className="w-full flex flex-nowrap items-center gap-3">
 				<IconRenderer
 					iconName={iconName}
 					color={Icolor}
-					className={`text-xl h-12 w-12 rounded-${round} p-2`}
+					className={`text-xl h-12 w-12 object-contain rounded-${round} p-2`}
 					style={{ backgroundColor: `${Icolor}17` }}
 				/>
 				<div className="flex-1 flex flex-col justify-between">
