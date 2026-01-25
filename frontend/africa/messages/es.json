@@ -52,11 +52,25 @@
     },
     "Blog": {
         "button": "Leer más",
-        "Date": "Fecha: ",
+        "Date": "Fecha:",
         "arrowAlt": "flecha derecha",
         "title": "Blog",
-        "description": "Mantente informado con actualizaciones, ideas e historias que dan forma a la agricultura en África."
+        "description": "Mantente informado con actualizaciones, análisis e historias que dan forma a la agricultura en África.",
+        "loading": "Cargando blogs...",
+        "empty": "No hay publicaciones disponibles.",
+        "errors": {
+            "loadFailed": "No se pudieron cargar los blogs. Por favor, inténtalo de nuevo más tarde."
+        }
     },
+    "BlogSidebar": {
+    "searchPlaceholder": "Buscar",
+    "searching": "Buscando…",
+    "noResults": "No se encontraron resultados",
+    "searchError": "Algo salió mal. Por favor, inténtalo de nuevo.",
+    "recentPosts": "Publicaciones recientes",
+    "noRecentPosts": "No hay publicaciones recientes disponibles",
+    "searchIconAlt": "icono de búsqueda"
+  },
     "Button": {
         "explore": "Explorar exportaciones de Camberfarm"
     },
@@ -98,6 +112,16 @@
         "businessHours": "Horario de atención",
         "days": "Lunes - Viernes"
     },
+    "exportationText": {
+        "title": "Exportación",
+        "imgAlt": "imagen de los miembros",
+        "p1": "Camberfarm Export conecta a compradores internacionales con productos agrícolas de alta calidad y totalmente certificados provenientes de toda África. Trabajamos estrechamente con agricultores, agregadores y procesadores de confianza para garantizar que cada envío cumpla con los estándares globales de calidad, seguridad y fiabilidad.",
+        "p2": "A través de nuestro programa de exportación, los clientes pueden asegurar suministros constantes de granos, especias, semillas oleaginosas, frutas, verduras y otros productos agrícolas, todos procesados, envasados y entregados mediante un sistema de exportación transparente y bien estructurado.",
+        "p3": "Nuestro equipo se encarga del abastecimiento, control de calidad, documentación y logística, garantizando una experiencia fluida desde la realización del pedido hasta la entrega final.",
+        "p4": "Ya sea que sea un importador, distribuidor o una empresa de producción alimentaria que busca ampliar sus canales de suministro, Camberfarm Export ofrece oportunidades de exportación estructuradas que garantizan calidad, cumplimiento y entregas confiables.",
+        "p5": "Haga clic en el botón de abajo y explore nuestro sitio web de exportación para ver la disponibilidad de productos, precios, logística y los próximos pasos.",
+        "button": "Visitar exportación de CamberFarms"
+    },
     "FarmFund": {
         "title": "Formulario de expresión de interés del Fondo Agrícola",
         "name": "Nombre",
@@ -110,6 +134,20 @@
         "responseOption2": "Correo electrónico",
         "submit": "Enviar",
         "submitting": "Enviando..."
+    },
+    "FarmFundText": {
+        "title": "Fondo Agrícola",
+        "imgAlt": "Imagen del Fondo Agrícola",
+        "p1": "El Fondo Agrícola de Camberfarm ofrece a los inversores la oportunidad de apoyar un crecimiento agrícola real mientras contribuyen a un sistema alimentario más sostenible en toda África.",
+        "p2": "A través del Fondo Agrícola, los inversores pueden expresar interés en proyectos agrícolas estructurados que impactan a los agricultores, fortalecen la producción local y crean valor a largo plazo en toda la cadena de suministro.",
+        "p3": "Trabajamos con redes de agricultores de confianza, grupos agrícolas verificados y sistemas de producción probados para garantizar transparencia, gestión responsable y resultados medibles.",
+        "p4": "Al unirse al Fondo Agrícola, usted pasa a formar parte de un sistema que:",
+        "p5": "Si está explorando oportunidades de inversión agrícola y busca claridad, estructura e impacto, complete el formulario de expresión de interés a continuación. Nuestro equipo se pondrá en contacto con usted con los proyectos disponibles, los requisitos y los próximos pasos.",
+        "l1": "empodera a los agricultores con recursos y formación,",
+        "l2": "amplía la producción agrícola de forma sostenible,",
+        "l3": "reduce las pérdidas posteriores a la cosecha,",
+        "l4": "y promueve un crecimiento compartido tanto para las comunidades como para los inversores.",
+        "button": "Invertir ahora"
     },
     "Footer": {
         "information": "Información",
@@ -175,6 +213,16 @@
             "generic": "Algo salió mal. Por favor, inténtalo de nuevo."
         }
     },
+    "MembershipText": {
+        "title": "Membresía",
+        "imgAlt": "imagen de miembros",
+        "p1": "La Membresía Camberfarm está abierta a todos los que desean formar parte del creciente ecosistema agrícola de África. Agricultores, inversionistas, socios, agripreneurs o personas que creen en el desarrollo agrícola. Al unirte a nuestra comunidad de membresía, obtienes acceso a valiosas oportunidades según tu interés:",
+        "p2": "La membresía te brinda una conexión directa con la red de Camberfarm, manteniéndote informado, comprometido y empoderado. Ya sea que busques hacer crecer tu granja, explorar opciones de inversión o simplemente mantenerte conectado con nuestro trabajo, Camberfarm ofrece la plataforma y el apoyo para ayudarte a prosperar.",
+        "l1": "Los agricultores reciben apoyo mediante insumos, capacitación y acceso a mercados.",
+        "l2": "Los inversionistas se conectan con oportunidades agrícolas transparentes y de impacto real.",
+        "l3": "Los socios y las personas se convierten en parte de una red que impulsa el crecimiento sostenible en África.",
+        "button": "Registrarse"
+    },
     "Nav": {
         "home": "Inicio",
         "about": "Sobre Nosotros",
@@ -188,7 +236,9 @@
         "description": "Explora historias, actualizaciones y perspectivas sobre exportaciones agrícolas de África, sostenibilidad y tendencias del comercio global.",
         "readMore": "Leer más",
         "arrowAlt": "flecha derecha",
-        "admin": "Por administrador"
+        "admin": "Por administrador",
+        "heading2": "MÁS NOTICIAS Y ANÁLISIS",
+        "loadFiled":"No se pueden cargar las publicaciones. Por favor, inténtelo de nuevo más tarde."
     },
     "OurWorks": {
         "hero": {

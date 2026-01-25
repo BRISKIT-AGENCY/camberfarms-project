@@ -55,7 +55,21 @@
         "Date": "Date:",
         "arrowAlt": "arrow right",
         "title": "Blog",
-        "description": "Stay informed with updates, insights, and stories shaping agriculture in Africa."
+        "description": "Stay informed with updates, insights, and stories shaping agriculture in Africa.",
+        "loading": "Loading blogs...",
+        "empty": "No blog posts available.",
+        "errors": {
+            "loadFailed": "Unable to load blog posts. Please try again later."
+        }
+    },
+    "BlogSidebar": {
+        "searchPlaceholder": "Search",
+        "searching": "Searching…",
+        "noResults": "No results found",
+        "searchError": "Something went wrong. Please try again.",
+        "recentPosts": "Recent posts",
+        "noRecentPosts": "No recent posts available",
+        "searchIconAlt": "search icon"
     },
     "Button": {
         "explore": "Explore Camberfarm exports"
@@ -98,6 +112,16 @@
         "businessHours": "Business Hours",
         "days": "Monday - Friday"
     },
+    "exportationText": {
+        "title": "Exportation",
+        "imgAlt": "imiage of members",
+        "p1": "Camberfarm Export connects international buyers with high-quality, fully certified agricultural products sourced across Africa. We work closely with trusted farmers, aggregators, and processors to ensure that every shipment meets global standards for quality, safety, and reliability.",
+        "p2": "Through our export program, clients can secure consistent supplies of grains, spices, oilseeds, fruits, vegetables, and other agricultural commodities, all processed, packaged, and delivered through a transparent and well-structured export system.",
+        "p3": "Our team handles sourcing, quality control, documentation, and logistics, ensuring a seamless experience from order placement to final delivery.",
+        "p4": "Whether you're an importer, distributor, or a food production company expanding your sourcing channels, Camberfarm Export offers structured export opportunities that guarantee quality, compliance, and dependable delivery.",
+        "p5": "Click out the button below, and our explore our Export Website to see product availability, pricing, logistics, and next steps.",
+        "button": "Visit CamberFarms export"
+    },
     "FarmFund": {
         "title": "Farm Fund Expression of Interest Form",
         "name": "Name",
@@ -110,6 +134,20 @@
         "responseOption2": "Email",
         "submit": "Submit",
         "submitting": "Submitting..."
+    },
+    "FarmFundText": {
+        "title": "Farm Fund",
+        "imgAlt": "Farm Fund image",
+        "p1": "The Camberfarm Farm Fund gives investors an opportunity to support real agricultural growth while contributing to a more sustainable food system across Africa.",
+        "p2": "Through the Farm Fund, investors can express interest in structured agricultural projects that impact farmers, strengthen local production, and create long-term value across the supply chain.",
+        "p3": "We work with trusted farmer networks, verified farm clusters, and proven production systems to ensure transparency, responsible management, and measurable results.",
+        "p4": "By joining the Farm Fund, you become part of a system that:",
+        "p5": "If you're exploring agricultural investment opportunities and want clarity, structure, and impact, complete the expression-of-interest form below. Our team will reach out with available projects, requirements, and next steps.",
+        "l1": "empowers farmers with resources and training,",
+        "l2": "scales agricultural production sustainably,",
+        "l3": "reduces post-harvest losses,",
+        "l4": "and drives shared growth for both communities and investors.",
+        "button": "Invest Now"
     },
     "Footer": {
         "information": "Information",
@@ -175,6 +213,16 @@
             "generic": "Something went wrong. Please try again."
         }
     },
+    "MembershipText": {
+        "title": "Membership",
+        "imgAlt": "image of members",
+        "p1": "The Camberfarm Membership is open to everyone who wants to be part of Africa’s growing agricultural ecosystem. Farmers, investors, partners, agripreneurs, or individuals who believe in agricultural development. By joining our membership community, you gain access to valuable opportunities based on your interest:",
+        "p2": "Membership gives you a direct connection to the Camberfarm network, keeping you informed, engaged, and empowered. Whether you're looking to grow your farm, explore investment options, or simply stay connected to our work, Camberfarm provides the platform and support to help you thrive.",
+        "l1": "Farmers receive support through inputs, training, and market access.",
+        "l2": "Investors connect with transparent agricultural opportunities and real impact.",
+        "l3": "Partners and individuals become part of a network driving sustainable growth across Africa.",
+        "button": "Sign up"
+    },
     "Nav": {
         "home": "Home",
         "about": "About Us",
@@ -188,7 +236,9 @@
         "description": "Explore stories, updates, and insights about Africa’s agricultural exports, sustainability, and global trade trends.",
         "readMore": "Read more",
         "arrowAlt": "arrow right",
-        "admin":"By admin"
+        "admin": "By admin",
+        "heading2": "MORE NEWS AND INSIGHT",
+        "loadFailed": "Unable to load  posts. Please try again later."
     },
     "OurWorks": {
         "hero": {

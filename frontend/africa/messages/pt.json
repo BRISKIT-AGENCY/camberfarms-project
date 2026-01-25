@@ -52,10 +52,24 @@
     },
     "Blog": {
         "button": "Leia mais",
-        "Date": "Data: ",
-        "arrowAlt": "seta direita",
+        "Date": "Data:",
+        "arrowAlt": "seta para a direita",
         "title": "Blog",
-        "description": "Mantenha-se informado com atualizações, insights e histórias que moldam a agricultura na África."
+        "description": "Fique informado com atualizações, análises e histórias que moldam a agricultura na África.",
+        "loading": "Carregando blogs...",
+        "empty": "Nenhuma publicação disponível.",
+        "errors": {
+            "loadFailed": "Não foi possível carregar os blogs. Tente novamente mais tarde."
+        }
+    },
+    "BlogSidebar": {
+        "searchPlaceholder": "Pesquisar",
+        "searching": "Pesquisando…",
+        "noResults": "Nenhum resultado encontrado",
+        "searchError": "Algo deu errado. Tente novamente.",
+        "recentPosts": "Publicações recentes",
+        "noRecentPosts": "Nenhuma publicação recente disponível",
+        "searchIconAlt": "ícone de pesquisa"
     },
     "Button": {
         "explore": "Explore as exportações da Camberfarm"
@@ -98,6 +112,16 @@
         "businessHours": "Horário de funcionamento",
         "days": "Segunda - Sexta-feira"
     },
+    "exportationText": {
+        "title": "Exportação",
+        "imgAlt": "imagem dos membros",
+        "p1": "A Camberfarm Export conecta compradores internacionais a produtos agrícolas de alta qualidade e totalmente certificados provenientes de toda a África. Trabalhamos em estreita colaboração com agricultores, agregadores e processadores confiáveis para garantir que cada remessa atenda aos padrões globais de qualidade, segurança e confiabilidade.",
+        "p2": "Por meio do nosso programa de exportação, os clientes podem garantir fornecimentos consistentes de grãos, especiarias, oleaginosas, frutas, legumes e outros produtos agrícolas, todos processados, embalados e entregues por meio de um sistema de exportação transparente e bem estruturado.",
+        "p3": "Nossa equipe cuida do fornecimento, controle de qualidade, documentação e logística, garantindo uma experiência perfeita desde o pedido até a entrega final.",
+        "p4": "Seja você um importador, distribuidor ou empresa de produção de alimentos que busca expandir seus canais de fornecimento, a Camberfarm Export oferece oportunidades estruturadas de exportação que garantem qualidade, conformidade e entrega confiável.",
+        "p5": "Clique no botão abaixo e explore nosso site de exportação para ver disponibilidade de produtos, preços, logística e próximos passos.",
+        "button": "Visitar exportação da CamberFarms"
+    },
     "FarmFund": {
         "title": "Formulário de Manifestação de Interesse do Fundo Agrícola",
         "name": "Nome",
@@ -110,6 +134,20 @@
         "responseOption2": "E-mail",
         "submit": "Enviar",
         "submitting": "Enviando..."
+    },
+    "FarmFundText": {
+        "title": "Fundo Agrícola",
+        "imgAlt": "Imagem do Fundo Agrícola",
+        "p1": "O Fundo Agrícola da Camberfarm oferece aos investidores a oportunidade de apoiar um crescimento agrícola real enquanto contribuem para um sistema alimentar mais sustentável em toda a África.",
+        "p2": "Por meio do Fundo Agrícola, os investidores podem demonstrar interesse em projetos agrícolas estruturados que impactam os agricultores, fortalecem a produção local e criam valor de longo prazo em toda a cadeia de suprimentos.",
+        "p3": "Trabalhamos com redes de agricultores confiáveis, clusters agrícolas verificados e sistemas de produção comprovados para garantir transparência, gestão responsável e resultados mensuráveis.",
+        "p4": "Ao participar do Fundo Agrícola, você passa a fazer parte de um sistema que:",
+        "p5": "Se você está explorando oportunidades de investimento agrícola e busca clareza, estrutura e impacto, preencha o formulário de manifestação de interesse abaixo. Nossa equipe entrará em contato com projetos disponíveis, requisitos e próximos passos.",
+        "l1": "capacita agricultores com recursos e treinamento,",
+        "l2": "expande a produção agrícola de forma sustentável,",
+        "l3": "reduz perdas pós-colheita,",
+        "l4": "e impulsiona o crescimento compartilhado para comunidades e investidores.",
+        "button": "Investir agora"
     },
     "Footer": {
         "information": "Informações",
@@ -175,6 +213,16 @@
             "generic": "Algo deu errado. Por favor, tente novamente."
         }
     },
+    "MembershipText": {
+        "title": "Associação",
+        "imgAlt": "imagem dos membros",
+        "p1": "A Associação Camberfarm está aberta a todos que desejam fazer parte do crescente ecossistema agrícola da África. Agricultores, investidores, parceiros, agripreneurs ou indivíduos que acreditam no desenvolvimento agrícola. Ao ingressar na nossa comunidade, você tem acesso a oportunidades valiosas de acordo com seu interesse:",
+        "p2": "A associação oferece uma conexão direta com a rede Camberfarm, mantendo você informado, engajado e capacitado. Seja para expandir sua fazenda, explorar opções de investimento ou simplesmente acompanhar nosso trabalho, a Camberfarm fornece a plataforma e o suporte para você prosperar.",
+        "l1": "Agricultores recebem apoio com insumos, treinamento e acesso ao mercado.",
+        "l2": "Investidores se conectam a oportunidades agrícolas transparentes e de impacto real.",
+        "l3": "Parceiros e indivíduos tornam-se parte de uma rede que impulsiona o crescimento sustentável na África.",
+        "button": "Inscreva-se"
+    },
     "Nav": {
         "home": "Início",
         "about": "Sobre Nós",
@@ -188,7 +236,9 @@
         "description": "Explore histórias, atualizações e insights sobre exportações agrícolas da África, sustentabilidade e tendências do comércio global.",
         "readMore": "Leia mais",
         "arrowAlt": "seta direita",
-        "admin": "Por administrador"
+        "admin": "Por administrador",
+        "heading2": "MAIS NOTÍCIAS E ANÁLISES",
+        "loadFailed":"Não foi possível carregar as postagens. Por favor, tente novamente mais tarde."
     },
     "OurWorks": {
         "hero": {

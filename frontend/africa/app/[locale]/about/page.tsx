@@ -4,6 +4,7 @@ import Partnership from "../components/Partnership"
 import Navbar from "../components/Navbar"
 import Image from "next/image"
 import { getTranslations } from "next-intl/server"
+import Link from "next/link"
 
 
 const VALUE_KEYS = [
@@ -39,14 +40,14 @@ const About = async () => {
                         {t("hero.description")}
                     </p>
 
-                    <button
-                        type="submit"
+                    <Link
+                        href='/contact'
                         className="mt-9"
                     >
                         <p className="md:text-[24px] font-bold bg-[#1AD329] text-white py-2.75 px-11.25 rounded-[100px] text-[14px]">
                             {t("hero.cta")}
                         </p>
-                    </button>
+                    </Link>
                 </div>
 
                 {/* Mobile image */}

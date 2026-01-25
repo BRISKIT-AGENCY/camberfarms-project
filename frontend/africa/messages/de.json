@@ -51,11 +51,25 @@
         }
     },
     "Blog": {
-        "button": " Alle Beiträge anzeigen",
+        "button": "Mehr lesen",
         "Date": "Datum:",
-        "arrowAlt": "Pfeil rechts",
+        "arrowAlt": "Pfeil nach rechts",
         "title": "Blog",
-      "description": "Bleiben Sie informiert mit Updates, Einblicken und Geschichten, die die Landwirtschaft in Afrika prägen."
+        "description": "Bleiben Sie informiert mit Updates, Einblicken und Geschichten, die die Landwirtschaft in Afrika prägen.",
+        "loading": "Blogs werden geladen...",
+        "empty": "Keine Blogbeiträge verfügbar.",
+        "errors": {
+            "loadFailed": "Blogs konnten nicht geladen werden. Bitte versuchen Sie es später erneut."
+        }
+    },
+    "BlogSidebar": {
+        "searchPlaceholder": "Suchen",
+        "searching": "Suche läuft…",
+        "noResults": "Keine Ergebnisse gefunden",
+        "searchError": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
+        "recentPosts": "Neueste Beiträge",
+        "noRecentPosts": "Keine aktuellen Beiträge verfügbar",
+        "searchIconAlt": "Suchsymbol"
     },
     "Button": {
         "explore": "Camberfarm Exporte entdecken"
@@ -98,6 +112,16 @@
         "businessHours": "Geschäftszeiten",
         "days": "Montag - Freitag"
     },
+    "exportationText": {
+        "title": "Export",
+        "imgAlt": "Bild der Mitglieder",
+        "p1": "Camberfarm Export verbindet internationale Käufer mit hochwertigen, vollständig zertifizierten landwirtschaftlichen Produkten aus ganz Afrika. Wir arbeiten eng mit vertrauenswürdigen Landwirten, Aggregatoren und Verarbeitern zusammen, um sicherzustellen, dass jede Lieferung den globalen Standards für Qualität, Sicherheit und Zuverlässigkeit entspricht.",
+        "p2": "Über unser Exportprogramm können Kunden eine konstante Versorgung mit Getreide, Gewürzen, Ölsaaten, Obst, Gemüse und anderen landwirtschaftlichen Erzeugnissen sichern, die alle über ein transparentes und gut strukturiertes Exportsystem verarbeitet, verpackt und geliefert werden.",
+        "p3": "Unser Team übernimmt Beschaffung, Qualitätskontrolle, Dokumentation und Logistik und sorgt für einen reibungslosen Ablauf von der Bestellung bis zur endgültigen Lieferung.",
+        "p4": "Ob Importeur, Distributor oder Lebensmittelproduktionsunternehmen auf der Suche nach erweiterten Beschaffungskanälen – Camberfarm Export bietet strukturierte Exportmöglichkeiten mit garantierter Qualität, Compliance und zuverlässiger Lieferung.",
+        "p5": "Klicken Sie auf die Schaltfläche unten und besuchen Sie unsere Export-Website, um Produktverfügbarkeit, Preise, Logistik und nächste Schritte zu sehen.",
+        "button": "CamberFarms Export besuchen"
+    },
     "FarmFund": {
         "title": "Interessensbekundungsformular für den Agrarfonds",
         "name": "Name",
@@ -110,6 +134,20 @@
         "responseOption2": "E-Mail",
         "submit": "Absenden",
         "submitting": "Wird gesendet..."
+    },
+    "FarmFundText": {
+        "title": "Agrarfonds",
+        "imgAlt": "Bild des Agrarfonds",
+        "p1": "Der Camberfarm Agrarfonds bietet Investoren die Möglichkeit, echtes landwirtschaftliches Wachstum zu unterstützen und gleichzeitig zu einem nachhaltigeren Lebensmittelsystem in ganz Afrika beizutragen.",
+        "p2": "Über den Agrarfonds können Investoren ihr Interesse an strukturierten landwirtschaftlichen Projekten bekunden, die Landwirte stärken, die lokale Produktion fördern und langfristigen Wert entlang der gesamten Lieferkette schaffen.",
+        "p3": "Wir arbeiten mit vertrauenswürdigen Landwirt-Netzwerken, verifizierten Agrarclustern und bewährten Produktionssystemen, um Transparenz, verantwortungsvolle Verwaltung und messbare Ergebnisse sicherzustellen.",
+        "p4": "Durch die Teilnahme am Agrarfonds werden Sie Teil eines Systems, das:",
+        "p5": "Wenn Sie landwirtschaftliche Investitionsmöglichkeiten prüfen und Klarheit, Struktur und Wirkung suchen, füllen Sie bitte das untenstehende Interessenformular aus. Unser Team wird sich mit verfügbaren Projekten, Anforderungen und den nächsten Schritten bei Ihnen melden.",
+        "l1": "Landwirte mit Ressourcen und Schulungen stärkt,",
+        "l2": "die landwirtschaftliche Produktion nachhaltig skaliert,",
+        "l3": "Nachernteverluste reduziert,",
+        "l4": "und gemeinsames Wachstum für Gemeinschaften und Investoren fördert.",
+        "button": "Jetzt investieren"
     },
     "Footer": {
         "information": "Informationen",
@@ -175,6 +213,16 @@
             "generic": "Etwas ist schief gelaufen. Bitte versuchen Sie es erneut."
         }
     },
+    "MembershipText": {
+        "title": "Mitgliedschaft",
+        "imgAlt": "Bild von Mitgliedern",
+        "p1": "Die Camberfarm-Mitgliedschaft steht allen offen, die Teil des wachsenden landwirtschaftlichen Ökosystems Afrikas sein möchten. Landwirte, Investoren, Partner, Agripreneure oder Einzelpersonen, die an landwirtschaftliche Entwicklung glauben. Durch den Beitritt zu unserer Gemeinschaft erhalten Sie Zugang zu wertvollen Möglichkeiten entsprechend Ihren Interessen:",
+        "p2": "Die Mitgliedschaft bietet Ihnen eine direkte Verbindung zum Camberfarm-Netzwerk und hält Sie informiert, engagiert und gestärkt. Ob Sie Ihren Betrieb ausbauen, Investitionsmöglichkeiten erkunden oder einfach mit unserer Arbeit verbunden bleiben möchten – Camberfarm bietet die Plattform und Unterstützung, um erfolgreich zu sein.",
+        "l1": "Landwirte erhalten Unterstützung durch Betriebsmittel, Schulungen und Marktzugang.",
+        "l2": "Investoren erhalten Zugang zu transparenten landwirtschaftlichen Chancen mit echter Wirkung.",
+        "l3": "Partner und Einzelpersonen werden Teil eines Netzwerks, das nachhaltiges Wachstum in Afrika vorantreibt.",
+        "button": "Registrieren"
+    },
     "Nav": {
         "home": "Startseite",
         "about": "Über Uns",
@@ -188,7 +236,9 @@
         "description": "Entdecken Sie Geschichten, Updates und Einblicke über Afrikas Agrarexporte, Nachhaltigkeit und globale Handelstrends.",
         "readMore": "Weiterlesen",
         "arrowAlt": "Pfeil rechts",
-        "admin": "Vom Administrator"
+        "admin": "Vom Administrator",
+        "heading2": "MEHR NACHRICHTEN UND EINBLICKE",
+        "loadFiled":"Beiträge konnten nicht geladen werden. Bitte versuchen Sie es später erneut."
     },
     "OurWorks": {
         "hero": {

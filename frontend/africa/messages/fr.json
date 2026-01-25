@@ -52,10 +52,24 @@
   },
   "Blog": {
     "button": "Lire la suite",
-    "Date": "Date: ",
+    "Date": "Date :",
     "arrowAlt": "flèche droite",
     "title": "Blog",
-    "description": "Restez informé avec des mises à jour, des analyses et des histoires façonnant l’agriculture en Afrique."
+    "description": "Restez informé des actualités, analyses et histoires qui façonnent l’agriculture en Afrique.",
+    "loading": "Chargement des articles...",
+    "empty": "Aucun article disponible.",
+    "errors": {
+      "loadFailed": "Impossible de charger les articles. Veuillez réessayer plus tard."
+    }
+  },
+  "BlogSidebar": {
+    "searchPlaceholder": "Rechercher",
+    "searching": "Recherche en cours…",
+    "noResults": "Aucun résultat trouvé",
+    "searchError": "Une erreur s’est produite. Veuillez réessayer.",
+    "recentPosts": "Articles récents",
+    "noRecentPosts": "Aucun article récent disponible",
+    "searchIconAlt": "icône de recherche"
   },
   "Button": {
     "explore": "Explorer les exportations Camberfarm"
@@ -98,6 +112,16 @@
     "businessHours": "Heures d’ouverture",
     "days": "Lundi - Vendredi"
   },
+  "exportationText": {
+    "title": "Exportation",
+    "imgAlt": "image des membres",
+    "p1": "Camberfarm Export met en relation des acheteurs internationaux avec des produits agricoles de haute qualité et entièrement certifiés provenant de toute l’Afrique. Nous travaillons en étroite collaboration avec des agriculteurs, des agrégateurs et des transformateurs de confiance afin de garantir que chaque expédition respecte les normes mondiales de qualité, de sécurité et de fiabilité.",
+    "p2": "Grâce à notre programme d’exportation, les clients peuvent sécuriser des approvisionnements constants en céréales, épices, oléagineux, fruits, légumes et autres produits agricoles, tous transformés, emballés et livrés via un système d’exportation transparent et bien structuré.",
+    "p3": "Notre équipe gère l’approvisionnement, le contrôle qualité, la documentation et la logistique, garantissant une expérience fluide de la commande à la livraison finale.",
+    "p4": "Que vous soyez importateur, distributeur ou entreprise agroalimentaire cherchant à élargir vos canaux d’approvisionnement, Camberfarm Export propose des opportunités d’exportation structurées garantissant qualité, conformité et fiabilité des livraisons.",
+    "p5": "Cliquez sur le bouton ci-dessous et explorez notre site d’exportation pour consulter la disponibilité des produits, les prix, la logistique et les prochaines étapes.",
+    "button": "Visiter l’export CamberFarms"
+  },
   "FarmFund": {
     "title": "Formulaire d’expression d’intérêt du Fonds Agricole",
     "name": "Nom",
@@ -110,6 +134,20 @@
     "responseOption2": "E-mail",
     "submit": "Envoyer",
     "submitting": "Envoi en cours..."
+  },
+  "FarmFundText": {
+    "title": "Fonds Agricole",
+    "imgAlt": "Image du Fonds Agricole",
+    "p1": "Le Fonds Agricole Camberfarm offre aux investisseurs l’opportunité de soutenir une croissance agricole réelle tout en contribuant à un système alimentaire plus durable à travers l’Afrique.",
+    "p2": "Grâce au Fonds Agricole, les investisseurs peuvent manifester leur intérêt pour des projets agricoles structurés qui ont un impact sur les agriculteurs, renforcent la production locale et créent une valeur durable tout au long de la chaîne d’approvisionnement.",
+    "p3": "Nous travaillons avec des réseaux d’agriculteurs de confiance, des clusters agricoles vérifiés et des systèmes de production éprouvés afin de garantir la transparence, une gestion responsable et des résultats mesurables.",
+    "p4": "En rejoignant le Fonds Agricole, vous faites partie d’un système qui :",
+    "p5": "Si vous explorez des opportunités d’investissement agricole et recherchez clarté, structure et impact, remplissez le formulaire d’expression d’intérêt ci-dessous. Notre équipe vous contactera avec les projets disponibles, les exigences et les prochaines étapes.",
+    "l1": "donne aux agriculteurs les ressources et la formation nécessaires,",
+    "l2": "développe la production agricole de manière durable,",
+    "l3": "réduit les pertes après récolte,",
+    "l4": "et favorise une croissance partagée pour les communautés et les investisseurs.",
+    "button": "Investir maintenant"
   },
   "Footer": {
     "information": "Informations",
@@ -175,6 +213,16 @@
       "generic": "Une erreur s’est produite. Veuillez réessayer."
     }
   },
+  "MembershipText": {
+    "title": "Adhésion",
+    "imgAlt": "image des membres",
+    "p1": "L’adhésion Camberfarm est ouverte à tous ceux qui souhaitent faire partie de l’écosystème agricole en pleine croissance de l’Afrique. Agriculteurs, investisseurs, partenaires, agripreneurs ou personnes qui croient au développement agricole. En rejoignant notre communauté de membres, vous accédez à des opportunités précieuses selon vos intérêts :",
+    "p2": "L’adhésion vous offre une connexion directe au réseau Camberfarm, vous permettant de rester informé, engagé et autonome. Que vous cherchiez à développer votre ferme, explorer des options d’investissement ou simplement rester connecté à notre travail, Camberfarm fournit la plateforme et le soutien nécessaires pour réussir.",
+    "l1": "Les agriculteurs bénéficient d’un soutien en intrants, formation et accès au marché.",
+    "l2": "Les investisseurs accèdent à des opportunités agricoles transparentes et à fort impact.",
+    "l3": "Les partenaires et individus rejoignent un réseau favorisant une croissance durable à travers l’Afrique.",
+    "button": "S’inscrire"
+  },
   "Nav": {
     "home": "Accueil",
     "about": "À propos",
@@ -188,7 +236,9 @@
     "description": "Découvrez des histoires, des mises à jour et des analyses sur les exportations agricoles africaines, la durabilité et les tendances du commerce mondial.",
     "readMore": "Lire la suite",
     "arrowAlt": "flèche droite",
-    "admin": "Par l'administrateur"
+    "admin": "Par l'administrateur",
+    "heading2": "PLUS D’ACTUALITÉS ET D’ANALYSES",
+    "loadFiled":"Impossible de charger les publications. Veuillez réessayer plus tard."
   },
   "OurWorks": {
     "hero": {
