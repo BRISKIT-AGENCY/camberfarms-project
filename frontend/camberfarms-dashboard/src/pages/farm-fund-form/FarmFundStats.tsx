@@ -10,7 +10,7 @@ import HighlightCard, {
 
 export default function FarmFundStats() {
 	return (
-		<div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-8 items-center bg-light-grey py-4">
+		<div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-8 items-center bg-light-grey dark:bg-dark-grey py-4">
 			{stats.map((card, index) => (
 				<HighlightCard key={index} {...card} showArrowUp={false} />
 			))}
@@ -20,7 +20,7 @@ export default function FarmFundStats() {
 
 const stats: HighlightCardProps[] = [
 	{
-		title: 'total applications',
+		title: 'total investors',
 		count: '12,012',
 		percent: '+12%',
 		info: 'from last month',
@@ -29,7 +29,7 @@ const stats: HighlightCardProps[] = [
 		url: '#',
 	},
 	{
-		title: 'pending applications',
+		title: 'pending replies',
 		count: '23',
 		percent: '+3%',
 		info: 'from last week',
@@ -39,7 +39,7 @@ const stats: HighlightCardProps[] = [
 		url: '#',
 	},
 	{
-		title: 'approved affiliate',
+		title: 'sent messages',
 		count: '1,156',
 		percent: '+92.7%',
 		info: 'verified rate',
@@ -49,7 +49,7 @@ const stats: HighlightCardProps[] = [
 		url: '#',
 	},
 	{
-		title: 'new applications',
+		title: 'new messages',
 		count: '202',
 		percent: '+8%',
 		info: 'new inputs',

@@ -20,7 +20,7 @@ export default function GalleryContainer() {
 		navigate(`edit/${image.id}`, { state: { image } })
 	}
 	return (
-		<section className="w-full bg-light-grey mb-20">
+		<section className="w-full bg-light-grey dark:bg-dark-grey mb-20">
 			<div className="w-full grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 items-stretch gap-x-10 gap-y-6 mt-6">
 				{images.map((item) => (
 					<CardItem

@@ -31,7 +31,9 @@ export default function AffiliateMembership() {
 					<IoClose size={30} className="cursor-pointer" onClick={goBack} />
 				</div>
 				<div className="w-full min-h-40 bg-grey/10 p-6 rounded-lg mb-6">
-					<h6 className="text-black font-semibold mb-6">User Information</h6>
+					<h6 className="text-black dark:text-white font-semibold mb-6">
+						User Information
+					</h6>
 					<div className="grid grid-cols-2 items-start gap-4 w-full h-full">
 						<label className="flex flex-col gap-1">
 							<span className="text-sm text-grey">Name</span>
@@ -39,7 +41,7 @@ export default function AffiliateMembership() {
 								type="text"
 								value={farmer?.name}
 								readOnly
-								className="text-black text-base capitalize select-all outline-0 border-0"
+								className="text-black dark:text-white text-base capitalize select-all outline-0 border-0"
 							/>
 						</label>
 						<label className="flex flex-col gap-1">
@@ -48,7 +50,7 @@ export default function AffiliateMembership() {
 								type="text"
 								value={farmer?.phone}
 								readOnly
-								className="text-black text-base w-fit select-all outline-0 border-0"
+								className="text-black dark:text-white text-base w-fit select-all outline-0 border-0"
 							/>
 						</label>
 						<label className="flex flex-col gap-1">
@@ -59,7 +61,7 @@ export default function AffiliateMembership() {
 								type="text"
 								value={farmer?.email}
 								readOnly
-								className="text-black text-base w-fit select-all outline-0 border-0"
+								className="text-black dark:text-white text-base w-fit select-all outline-0 border-0"
 							/>
 						</label>
 						<label className="flex flex-col gap-1">
@@ -68,7 +70,7 @@ export default function AffiliateMembership() {
 								type="text"
 								value={farmer?.country}
 								readOnly
-								className="text-black text-base w-fit select-all capitalize outline-0 border-0"
+								className="text-black dark:text-white text-base w-fit select-all capitalize outline-0 border-0"
 							/>
 						</label>
 						<label className="flex flex-col gap-1">
@@ -77,7 +79,7 @@ export default function AffiliateMembership() {
 								type="text"
 								value={farmer?.gender}
 								readOnly
-								className="text-black text-base w-fit select-all capitalize outline-0 border-0"
+								className="text-black dark:text-white text-base w-fit select-all capitalize outline-0 border-0"
 							/>
 						</label>
 						<label className="flex flex-col gap-1">
@@ -86,7 +88,7 @@ export default function AffiliateMembership() {
 								type="text"
 								value={farmer?.state}
 								readOnly
-								className="text-black text-base w-fit select-all capitalize outline-0 border-0"
+								className="text-black dark:text-white text-base w-fit select-all capitalize outline-0 border-0"
 							/>
 						</label>
 						<label className="flex flex-col gap-1">
@@ -95,7 +97,7 @@ export default function AffiliateMembership() {
 								type="text"
 								value={farmer?.dob}
 								readOnly
-								className="text-black text-base w-fit select-all capitalize outline-0 border-0"
+								className="text-black dark:text-white text-base w-fit select-all capitalize outline-0 border-0"
 							/>
 						</label>
 						<label className="flex flex-col gap-1">
@@ -104,13 +106,13 @@ export default function AffiliateMembership() {
 								type="text"
 								value={farmer?.region}
 								readOnly
-								className="text-black text-base w-fit select-all capitalize outline-0 border-0"
+								className="text-black dark:text-white text-base w-fit select-all capitalize outline-0 border-0"
 							/>
 						</label>
 					</div>
 				</div>
 				<div className="w-full min-h-40 bg-grey/10 p-6 rounded-lg mb-6">
-					<h6 className="text-black font-semibold mb-4">
+					<h6 className="text-black dark:text-white font-semibold mb-4">
 						Buyer's Information (*If Available)
 					</h6>
 					<div className="grid grid-cols-2 items-start gap-2 w-full h-full">
@@ -121,7 +123,7 @@ export default function AffiliateMembership() {
 								type="text"
 								value={farmer?.name}
 								readOnly
-								className="text-black text-base capitalize select-all outline-0 border-0"
+								className="text-black dark:text-white text-base capitalize select-all outline-0 border-0"
 							/>
 						</label>
 						{/* product */}
@@ -131,7 +133,7 @@ export default function AffiliateMembership() {
 								type="text"
 								value={farmer?.buyerProduct}
 								readOnly
-								className="text-black text-base w-fit capitalize select-all outline-0 border-0"
+								className="text-black dark:text-white text-base w-fit capitalize select-all outline-0 border-0"
 							/>
 						</label>
 						{/* country */}
@@ -141,7 +143,7 @@ export default function AffiliateMembership() {
 								type="text"
 								value={farmer?.buyerCountry}
 								readOnly
-								className="text-black text-base w-fit capitalize select-all outline-0 border-0"
+								className="text-black dark:text-white text-base w-fit capitalize select-all outline-0 border-0"
 							/>
 						</label>
 						{/* volume */}
@@ -151,13 +153,13 @@ export default function AffiliateMembership() {
 								type="text"
 								value={farmer?.productVolume}
 								readOnly
-								className="text-black text-base w-fit capitalize select-all outline-0 border-0"
+								className="text-black dark:text-white text-base w-fit capitalize select-all outline-0 border-0"
 							/>
 						</label>
 					</div>
 				</div>
 				<h6 className="my-1 text-base">Form Fields</h6>
-				<ul className="w-full list-disc list-inside bg-grey/10 px-4 py-2 rounded-lg mb-4 text-grey">
+				<ul className="w-full list-disc list-inside bg-grey/10 px-4 py-2 rounded-lg mb-4 text-grey dark:text-light-grey">
 					<li>
 						Heard about CamberFarms from:{' '}
 						<span className="capitalize">{farmer?.referralPlatform}</span>
@@ -173,7 +175,7 @@ export default function AffiliateMembership() {
 					id=""
 					value={farmer?.aboutInterest}
 					readOnly
-					className="w-full resize-none border border-black bg-grey/10 px-4 py-2 rounded-lg text-grey"
+					className="w-full resize-none border border-black dark:border-dark-grey bg-grey/10 px-4 py-2 rounded-lg text-grey dark:text-light-grey"
 				></textarea>
 
 				<div className="w-full flex gap-6 items-center justify-end py-4 mt-4 border-t border-grey/40">

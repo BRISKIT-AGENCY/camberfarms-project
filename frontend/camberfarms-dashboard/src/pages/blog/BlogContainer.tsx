@@ -9,6 +9,7 @@ export type Blog = {
 	excerpt: string
 	views: number
 	date: string
+	website: 'africa' | 'export'
 	id: string | number
 }
 
@@ -19,8 +20,10 @@ export default function BlogContainer() {
 		navigate(`edit/${blog.id}`, { state: { blog } })
 	}
 	return (
-		<section className="w-full bg-light-grey mb-20">
-			<h4 className="text-black text-2xl font-semibold">blog post</h4>
+		<section className="w-full bg-light-grey dark:bg-dark-grey mb-20">
+			<h4 className="text-black dark:text-white text-2xl font-semibold">
+				blog post
+			</h4>
 			<p className="text-sm text-grey mb-6 mt-2">
 				({blog.length}) articles found
 			</p>
@@ -32,6 +35,8 @@ export default function BlogContainer() {
 						title={item.title}
 						// image={item.image}
 						primaryBtnText="edit"
+						flag={item.website}
+						flagColor={item.website === 'africa' ? '#16A34A' : '#FF741F'}
 						primaryBtnClick={() => editBlog(item)}
 						secondaryBtnText="delete"
 						secondaryBtnClick={() => {}}
@@ -61,6 +66,7 @@ const blog: Blog[] = [
 		views: 100,
 		date: '2025-11-12',
 		id: 1,
+		website: 'africa',
 	},
 	{
 		title: 'Organic Farming Practices Show 25% Increase in Soil Health',
@@ -69,6 +75,7 @@ const blog: Blog[] = [
 		views: 100,
 		date: '2025-11-12',
 		id: 2,
+		website: 'export',
 	},
 	{
 		title: 'Precision Agriculture: GPS-Guided Tractors Improve Efficiency',
@@ -77,5 +84,6 @@ const blog: Blog[] = [
 		views: 100,
 		date: '2025-11-12',
 		id: 3,
+		website: 'africa',
 	},
 ]

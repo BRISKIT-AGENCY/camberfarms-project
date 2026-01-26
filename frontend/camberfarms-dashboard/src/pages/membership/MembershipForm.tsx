@@ -31,7 +31,9 @@ export default function MembershipForm() {
 					<IoClose size={30} className="cursor-pointer" onClick={goBack} />
 				</div>
 				<div className="w-full min-h-40 bg-grey/10 p-6 rounded-lg mb-6">
-					<h6 className="text-black font-semibold mb-6">User Information</h6>
+					<h6 className="text-black dark:text-white font-semibold mb-6">
+						User Information
+					</h6>
 					<div className="grid grid-cols-2 items-start gap-4 w-full h-full">
 						<label className="flex flex-col gap-1">
 							<span className="text-sm text-grey">Name</span>
@@ -39,7 +41,7 @@ export default function MembershipForm() {
 								type="text"
 								value={farmer?.name}
 								readOnly
-								className="text-black text-base capitalize select-all outline-0 border-0"
+								className="text-black dark:text-white text-base capitalize select-all outline-0 border-0"
 							/>
 						</label>
 						<label className="flex flex-col gap-1">
@@ -48,7 +50,7 @@ export default function MembershipForm() {
 								type="text"
 								value={farmer?.phone}
 								readOnly
-								className="text-black text-base w-fit select-all outline-0 border-0"
+								className="text-black dark:text-white text-base w-fit select-all outline-0 border-0"
 							/>
 						</label>
 						<label className="flex flex-col gap-1">
@@ -59,7 +61,7 @@ export default function MembershipForm() {
 								type="text"
 								value={farmer?.email}
 								readOnly
-								className="text-black text-base w-fit select-all outline-0 border-0"
+								className="text-black dark:text-white text-base w-fit select-all outline-0 border-0"
 							/>
 						</label>
 						<label className="flex flex-col gap-1">
@@ -68,7 +70,7 @@ export default function MembershipForm() {
 								type="text"
 								value={farmer?.country}
 								readOnly
-								className="text-black text-base w-fit select-all capitalize outline-0 border-0"
+								className="text-black dark:text-white text-base w-fit select-all capitalize outline-0 border-0"
 							/>
 						</label>
 						<label className="flex flex-col gap-1">
@@ -77,7 +79,7 @@ export default function MembershipForm() {
 								type="text"
 								value={farmer?.gender}
 								readOnly
-								className="text-black text-base w-fit select-all capitalize outline-0 border-0"
+								className="text-black dark:text-white text-base w-fit select-all capitalize outline-0 border-0"
 							/>
 						</label>
 						<label className="flex flex-col gap-1">
@@ -86,7 +88,7 @@ export default function MembershipForm() {
 								type="text"
 								value={farmer?.state}
 								readOnly
-								className="text-black text-base w-fit select-all capitalize outline-0 border-0"
+								className="text-black dark:text-white text-base w-fit select-all capitalize outline-0 border-0"
 							/>
 						</label>
 						<label className="flex flex-col gap-1">
@@ -95,7 +97,7 @@ export default function MembershipForm() {
 								type="text"
 								value={farmer?.dob}
 								readOnly
-								className="text-black text-base w-fit select-all capitalize outline-0 border-0"
+								className="text-black dark:text-white text-base w-fit select-all capitalize outline-0 border-0"
 							/>
 						</label>
 						<label className="flex flex-col gap-1">
@@ -104,13 +106,15 @@ export default function MembershipForm() {
 								type="text"
 								value={farmer?.region}
 								readOnly
-								className="text-black text-base w-fit select-all capitalize outline-0 border-0"
+								className="text-black dark:text-white text-base w-fit select-all capitalize outline-0 border-0"
 							/>
 						</label>
 					</div>
 				</div>
 				<div className="w-full bg-grey/10 p-4 rounded-lg mb-6">
-					<h6 className="text-black font-semibold mb-4">Valid ID</h6>
+					<h6 className="text-black dark:text-white font-semibold mb-4">
+						Valid ID
+					</h6>
 					<div className="w-full h-50 relative flex items-center justify-center border border-grey/20 border-dashed rounded-lg">
 						<img
 							src={farmer?.validID}

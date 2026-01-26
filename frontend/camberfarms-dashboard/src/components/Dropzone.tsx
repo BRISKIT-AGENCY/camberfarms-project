@@ -52,7 +52,7 @@ export function Dropzone({
 	return (
 		<div
 			{...getRootProps()}
-			className={`rounded-lg h-50 flex flex-col items-center justify-center bg-light-grey shadow-sm border-2 cursor-pointer ${
+			className={`rounded-lg h-50 flex flex-col items-center justify-center bg-light-grey dark:bg-dark-grey shadow-sm border-2 cursor-pointer ${
 				isDragActive
 					? 'border-primary border-solid'
 					: 'border-grey/40 border-dashed'
@@ -62,7 +62,7 @@ export function Dropzone({
 			{isDragActive ? (
 				<p>Drop the file here ...</p>
 			) : !preview ? (
-				<div className="flex flex-col w-full h-full py-6 bg-white items-center justify-center gap-3 text-center">
+				<div className="flex flex-col w-full h-full py-6 bg-white dark:bg-black items-center justify-center gap-3 text-center">
 					<IoImageOutline
 						size={40}
 						className="w-fit object-contain aspect-square"
@@ -115,7 +115,5 @@ function handleFileChange(file: File): string | undefined {
 			return
 		}
 		return URL.createObjectURL(file)
-
-		// return imgFile
 	}
 }

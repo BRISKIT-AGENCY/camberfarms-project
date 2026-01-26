@@ -9,7 +9,7 @@ import QuickActionCard, {
 
 export default function QuickActions() {
 	return (
-		<div className="w-full py-4 px-6 shadow-xs bg-white text-black rounded-2xl space-y-6">
+		<div className="w-full py-4 px-6 shadow-xs bg-white text-black rounded-2xl space-y-6 dark:text-white dark:bg-black">
 			<h4 className="text-base lg:text-2xl font-semibold font-poppins capitalize py-2">
 				quick actions
 			</h4>
@@ -38,7 +38,7 @@ const actions: QuickActionCardProps[] = [
 	{
 		title: 'upload blogs',
 		desc: 'Publish latest industry stories',
-		url: '/blogs',
+		url: '/blog/new',
 		Icon: FiUpload,
 		Icolor: 'bg-[#FF741F]',
 	},
@@ -66,7 +66,7 @@ const actions: QuickActionCardProps[] = [
 	{
 		title: 'upload news',
 		desc: 'Publish latest industry news and insights',
-		url: '/news',
+		url: '/news/new',
 		Icon: FiUpload,
 		Icolor: 'bg-[#0088FF]',
 	},

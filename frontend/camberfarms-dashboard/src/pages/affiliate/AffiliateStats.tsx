@@ -10,7 +10,7 @@ import HighlightCard, {
 
 export default function AffiliateStats() {
 	return (
-		<div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-8 items-center bg-light-grey py-4">
+		<div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-8 items-center bg-light-grey dark:bg-dark-grey py-4">
 			{stats.map((card, index) => (
 				<HighlightCard key={index} {...card} showArrowUp={false} />
 			))}

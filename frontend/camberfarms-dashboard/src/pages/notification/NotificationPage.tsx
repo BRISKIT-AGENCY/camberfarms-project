@@ -13,11 +13,11 @@ export default function NotificationPage() {
 	}, [location, navigate])
 
 	return (
-		<section className="w-full bg-light-grey px-6 pt-6">
-			<h3 className="text-2xl lg:text-3xl xl:text-4xl font-poppins font-bold text-black mb-2">
+		<section className="w-full bg-light-grey dark:bg-dark-grey px-6 pt-6">
+			<h3 className="text-2xl lg:text-3xl xl:text-4xl font-poppins font-bold text-black dark:text-white mb-2">
 				Notifications
 			</h3>
-			<nav className="w-full flex justify-start gap-6 border-b border-grey/20 mb-4 text-lg font-poppins text-grey">
+			<nav className="w-full flex justify-start gap-6 border-b border-grey/20 mb-4 text-lg font-poppins text-grey dark:text-light-grey/70">
 				<NavLink
 					to={'africa'}
 					className={({ isActive }) =>

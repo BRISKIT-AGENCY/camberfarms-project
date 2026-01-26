@@ -7,7 +7,7 @@ export default function ExportNitifications() {
 	return (
 		<div className="w-full grid grid-cols-1 gap-4 my-6 pb-20">
 			{notification.map((item, index) => (
-				<div className="w-full bg-white p-4 rounded-lg">
+				<div className="w-full bg-white dark:bg-black p-4 rounded-lg">
 					<NotificationCard
 						key={index}
 						{...item}

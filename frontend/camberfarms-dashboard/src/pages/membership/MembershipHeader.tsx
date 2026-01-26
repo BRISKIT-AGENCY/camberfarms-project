@@ -9,10 +9,10 @@ export default function AffiliateHeader() {
 		<section className="w-full flex flex-col">
 			<div className="w-full flex items-center justify-between gap-6">
 				<div className="w-fit">
-					<h3 className="text-2xl lg:text-3xl xl:text-4xl font-poppins font-bold text-black mb-2">
+					<h3 className="text-2xl lg:text-3xl xl:text-4xl font-poppins font-bold text-black dark:text-white mb-2">
 						Membership Form
 					</h3>
-					<p className="text-grey text-sm lg:text-base font-inter">
+					<p className="text-grey dark:text-light-grey text-sm lg:text-base font-inter">
 						Manage and view membership form details
 					</p>
 				</div>
@@ -33,12 +33,12 @@ export default function AffiliateHeader() {
 				</div>
 			</div>
 			<AffiliateStats />
-			<div className="w-full bg-white mb-10 p-6 grid grid-cols-[2fr_1fr] items-center justify-between gap-6 flex-nowrap rounded-lg shadow-2xs">
+			<div className="w-full bg-white dark:bg-black mb-10 p-6 grid grid-cols-[2fr_1fr] items-center justify-between gap-6 flex-nowrap rounded-lg shadow-2xs">
 				<Searchbar placeholder="Search forms by name, email..." url="" />
 				<select
 					name="status"
 					id="status"
-					className="bg-white px-4 py-2 rounded-xl w-full border-2 border-grey inline-flex outline-0"
+					className="bg-white dark:bg-black px-4 py-2 rounded-xl w-full border-2 border-grey inline-flex outline-0"
 				>
 					<option value="all">All Status</option>
 				</select>

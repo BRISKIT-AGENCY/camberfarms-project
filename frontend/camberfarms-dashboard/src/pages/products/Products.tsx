@@ -22,11 +22,11 @@ export default function Products() {
 		navigate(`edit/${product.id}`, { state: { product } })
 	}
 	return (
-		<section className="w-full bg-light-grey mb-20">
-			<h4 className="text-black text-2xl font-semibold">
+		<section className="w-full bg-light-grey dark:bg-dark-grey mb-20">
+			<h4 className="text-black dark:text-white text-2xl font-semibold">
 				Products ({products.length})
 			</h4>
-			<p className="text-sm text-grey mb-6 mt-2">
+			<p className="text-sm text-grey dark:text-light-grey mb-6 mt-2">
 				Manage your products inventory
 			</p>
 			<div className="w-full grid grid-cols-2 xl:grid-cols-3 items-stretch gap-x-10 gap-y-6 mt-6">

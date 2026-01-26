@@ -43,7 +43,7 @@ export default function ReplyEnquiry() {
 								type="text"
 								value={enquiry?.name}
 								readOnly
-								className="text-grey text-base capitalize select-all outline-0 border rounded-lg w-full p-2"
+								className="text-grey dark:text-light-grey text-base capitalize select-all outline-0 border dark:border-grey rounded-lg w-full p-2"
 							/>
 						</label>
 						{/* subject */}
@@ -53,7 +53,7 @@ export default function ReplyEnquiry() {
 								type="text"
 								value={enquiry?.subject}
 								readOnly
-								className="text-grey text-base select-all outline-0 border rounded-lg w-full p-2"
+								className="text-grey dark:text-light-grey dark:border-grey text-base select-all outline-0 border rounded-lg w-full p-2"
 							/>
 						</label>
 						{/* message */}
@@ -70,7 +70,7 @@ export default function ReplyEnquiry() {
 				</form>
 
 				<h6 className="my-1 text-base">Original message</h6>
-				<div className="w-full flex flex-col bg-light-grey px-4 py-2 rounded-lg mb-2 text-grey">
+				<div className="w-full flex flex-col bg-light-grey px-4 py-2 rounded-lg mb-2 text-grey dark:bg-dark-grey dark:text-light-grey">
 					<p>
 						From: <span className="capitalize">{enquiry?.name}</span>{' '}
 						{`<${enquiry?.email}>`}
@@ -84,14 +84,14 @@ export default function ReplyEnquiry() {
 					id=""
 					value={enquiry?.message}
 					readOnly
-					className="w-full resize-none bg-light-grey px-4 py-2 rounded-lg text-grey"
+					className="w-full resize-none bg-light-grey dark:bg-dark-grey px-4 py-2 rounded-lg text-grey dark:text-light-grey"
 				></textarea>
 
 				<div className="w-full flex gap-6 items-center justify-end py-4 mt-4 border-t border-grey/40">
 					<button
 						type="button"
 						onClick={goBack}
-						className="bg-light-grey text-grey font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer capitalize"
+						className="bg-light-grey text-grey dark:text-light-grey dark:bg-dark-grey font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer capitalize"
 					>
 						cancel
 					</button>

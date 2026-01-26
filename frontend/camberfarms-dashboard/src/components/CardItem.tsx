@@ -25,7 +25,7 @@ export default function CardItem({
 }: CardItemProps) {
 	return (
 		<div
-			className={`w-full flex flex-col relative shadow-2xs bg-white text-black rounded-xl ${cardVariant}`}
+			className={`w-full flex flex-col relative shadow-2xs bg-white text-black rounded-xl ${cardVariant} dark:bg-black dark:text-white`}
 		>
 			{image && (
 				<img
@@ -42,7 +42,9 @@ export default function CardItem({
 				</p>
 			)}
 			{title && (
-				<h4 className="text-lg font-poppins font-semibold text-black p-2 capitalize">
+				<h4
+					className={`text-lg font-poppins font-semibold text-black dark:text-white p-2 capitalize line-clamp-2 ${!image ? 'w-[97%]' : 'w-full'}`}
+				>
 					{title}
 				</h4>
 			)}

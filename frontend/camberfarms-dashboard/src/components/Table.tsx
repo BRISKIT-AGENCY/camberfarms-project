@@ -17,8 +17,8 @@ export function Table<T extends { id: string | number }>({
 	wrapContent = false,
 }: TableProps<T>) {
 	return (
-		<table className="w-full table-auto bg-white shadow-2xs px-4">
-			<thead className="bg-grey/10 text-[#030303] capitalize rounded-2xl">
+		<table className="w-full table-auto bg-white dark:bg-black shadow-2xs px-4">
+			<thead className="bg-grey/10 text-[#030303] dark:bg-grey dark:text-light-grey capitalize rounded-2xl">
 				<tr>
 					{columns.map((col) => (
 						<th
@@ -35,7 +35,7 @@ export function Table<T extends { id: string | number }>({
 				{data.map((item) => (
 					<tr
 						key={item.id}
-						className="border-t border-grey/20 text-dark-grey font-inter"
+						className="border-t border-grey/20 text-dark-grey dark:text-light-grey dark:border-light-grey/20 font-inter"
 					>
 						{columns.map((col) => (
 							<td

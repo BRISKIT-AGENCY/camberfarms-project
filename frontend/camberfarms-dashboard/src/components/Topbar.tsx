@@ -10,7 +10,7 @@ export default function Topbar({ name = 'a' }: { name: string }) {
 	const year = now.getFullYear()
 
 	return (
-		<div className="w-full p-8 shadow-xs flex items-center justify-between gap-4 bg-background text-foreground">
+		<div className="w-full p-8 shadow-xs flex items-center justify-between gap-4 light:bg-background dark:bg-foreground light:text-foreground dark:text-background">
 			<div className="flex items-center gap-2 capitalize font-inter">
 				<LuCalendar className="text-lg" />
 				<p>

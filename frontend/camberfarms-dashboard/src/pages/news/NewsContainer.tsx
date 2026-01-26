@@ -22,8 +22,10 @@ export default function NewsContainer() {
 		navigate(`edit/${news.id}`, { state: { news } })
 	}
 	return (
-		<section className="w-full bg-light-grey mb-20">
-			<h4 className="text-black text-2xl font-semibold">News &amp; Insights</h4>
+		<section className="w-full bg-light-grey dark:bg-dark-grey mb-20">
+			<h4 className="text-black dark:text-white text-2xl font-semibold">
+				News &amp; Insights
+			</h4>
 			<p className="text-sm text-grey mb-6 mt-2">
 				({news.length}) articles found
 			</p>

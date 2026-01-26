@@ -56,8 +56,8 @@ export default function Searchbar({
 	}, [debouncedQuery, url])
 
 	return (
-		<div className="w-full md:bg-white rounded-2xl relative">
-			<label className="w-full bg-white flex items-center gap-2 p-2 text-grey border border-grey rounded-xl has-[input]:focus-within:border-primary transition-all ease-in-out duration-200">
+		<div className="w-full md:bg-white rounded-2xl relative dark:bg-black">
+			<label className="w-full bg-white flex items-center gap-2 p-2 text-grey border border-grey rounded-xl has-[input]:focus-within:border-primary transition-all ease-in-out duration-200 dark:bg-black">
 				<img
 					src={searchIcon}
 					alt="search"
@@ -74,7 +74,7 @@ export default function Searchbar({
 				/>
 			</label>
 			{debouncedQuery && (
-				<div className="w-full min-h-32 bg-white rounded-2xl shadow-xl p-10 flex flex-col space-y-2 absolute top-full left-1/2 -translate-x-1/2 z-10 transition-discrete transition-all duration-200 ease-in-out text-grey">
+				<div className="w-full min-h-32 bg-white rounded-2xl shadow-xl p-10 flex flex-col space-y-2 absolute top-full left-1/2 -translate-x-1/2 z-10 transition-discrete transition-all duration-200 ease-in-out text-grey dark:bg-dark-grey dark:text-light-grey">
 					{loading && <p className="text-sm text-gray-400">Searching…</p>}
 
 					{!loading && result.length === 0 && (

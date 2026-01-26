@@ -4,7 +4,7 @@ import { IconRenderer } from '../utils/IconRenderer'
 
 export default function Sidebar() {
 	return (
-		<nav className="w-full flex flex-col bg-grey/98 bg-[url('./assets/img/bg-pattern-white.png')] bg-blend-color text-white px-4 pt-2 pb-10 space-y-6">
+		<nav className="w-full h-full flex flex-col bg-grey/98 bg-[url('./assets/img/bg-pattern-white.png')] bg-blend-color text-white px-4 pt-2 pb-10 space-y-6 dark:bg-black/80 dark:bg-none">
 			<div className="w-full h-10 lg:h-28 mb-8 flex items-center justify-center lg:p-6 border-b border-light-grey">
 				<img
 					src={logo}

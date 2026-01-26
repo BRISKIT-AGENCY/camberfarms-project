@@ -30,7 +30,7 @@ export default function ViewEnquiry() {
 					<IoClose size={30} className="cursor-pointer" onClick={goBack} />
 				</div>
 				<div className="w-full min-h-40 bg-grey/10 p-6 rounded-lg mb-6">
-					<h6 className="text-black font-semibold mb-6">
+					<h6 className="text-black dark:text-white font-semibold mb-6">
 						Customer Information
 					</h6>
 					<div className="grid grid-cols-2 items-start gap-6 w-full h-full">
@@ -41,7 +41,7 @@ export default function ViewEnquiry() {
 								type="text"
 								value={enquiry?.name}
 								readOnly
-								className="text-black text-base capitalize select-all outline-0 border-0"
+								className="text-black dark:text-white text-base capitalize select-all outline-0 border-0"
 							/>
 						</label>
 						{/* email */}
@@ -53,7 +53,7 @@ export default function ViewEnquiry() {
 								type="text"
 								value={enquiry?.email}
 								readOnly
-								className="text-black text-base w-fit select-all outline-0 border-0"
+								className="text-black dark:text-white text-base w-fit select-all outline-0 border-0"
 							/>
 						</label>
 						{/* phone number */}
@@ -63,7 +63,7 @@ export default function ViewEnquiry() {
 								type="text"
 								value={enquiry?.phone}
 								readOnly
-								className="text-black text-base w-fit select-all outline-0 border-0"
+								className="text-black dark:text-white text-base w-fit select-all outline-0 border-0"
 							/>
 						</label>
 						{/* date */}
@@ -73,13 +73,15 @@ export default function ViewEnquiry() {
 								type="text"
 								value={enquiry?.date}
 								readOnly
-								className="text-black text-base w-fit select-all capitalize outline-0 border-0"
+								className="text-black dark:text-white text-base w-fit select-all capitalize outline-0 border-0"
 							/>
 						</label>
 					</div>
 				</div>
 				<div className="w-full min-h-40 bg-grey/10 p-6 rounded-lg mb-6">
-					<h6 className="text-black font-semibold mb-4">Enquiry Details</h6>
+					<h6 className="text-black dark:text-white font-semibold mb-4">
+						Enquiry Details
+					</h6>
 					<div className="grid grid-cols-[2fr_1fr] items-start gap-2 w-full h-full">
 						{/* subject */}
 						<label className="flex flex-col gap-1">
@@ -88,7 +90,7 @@ export default function ViewEnquiry() {
 								type="text"
 								value={enquiry?.subject}
 								readOnly
-								className="text-black text-base capitalize select-all outline-0 border-0"
+								className="text-black dark:text-white text-base capitalize select-all outline-0 border-0"
 							/>
 						</label>
 						{/* status */}
@@ -110,14 +112,14 @@ export default function ViewEnquiry() {
 					id=""
 					value={enquiry?.message}
 					readOnly
-					className="w-full resize-none bg-grey/10 px-4 py-2 rounded-lg text-grey border-0 outline-0 focus-within:border focus-within:border-primary"
+					className="w-full resize-none bg-grey/10 px-4 py-2 rounded-lg text-grey dark:text-light-grey border-0 outline-0 focus-within:border focus-within:border-primary"
 				></textarea>
 
 				<div className="w-full flex gap-6 items-center justify-end py-4 mt-4 border-t border-grey/40">
 					<button
 						type="button"
 						onClick={goBack}
-						className="bg-light-grey text-black font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer capitalize"
+						className="bg-light-grey text-black dark:text-white dark:bg-dark-grey font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer capitalize"
 					>
 						cancel
 					</button>
