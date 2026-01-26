@@ -52,7 +52,24 @@
     },
     "Blog": {
         "button": "Lees meer",
-        "Date": "Datum: "
+        "Date": "Datum:",
+        "arrowAlt": "pijl naar rechts",
+        "title": "Blog",
+        "description": "Blijf op de hoogte met updates, inzichten en verhalen die de landbouw in Afrika vormgeven.",
+        "loading": "Blogs worden geladen...",
+        "empty": "Geen blogberichten beschikbaar.",
+        "errors": {
+            "loadFailed": "Kan blogs niet laden. Probeer het later opnieuw."
+        }
+    },
+    "BlogSidebar": {
+        "searchPlaceholder": "Zoeken",
+        "searching": "Bezig met zoeken…",
+        "noResults": "Geen resultaten gevonden",
+        "searchError": "Er is iets misgegaan. Probeer het opnieuw.",
+        "recentPosts": "Recente berichten",
+        "noRecentPosts": "Geen recente berichten beschikbaar",
+        "searchIconAlt": "zoekicoon"
     },
     "Button": {
         "explore": "Ontdek Camberfarm-export"
@@ -95,20 +112,43 @@
         "businessHours": "Openingstijden",
         "days": "Maandag - Vrijdag"
     },
+    "exportationText": {
+        "title": "Export",
+        "imgAlt": "afbeelding van leden",
+        "p1": "Camberfarm Export verbindt internationale kopers met hoogwaardige, volledig gecertificeerde landbouwproducten uit heel Afrika. Wij werken nauw samen met betrouwbare boeren, aggregators en verwerkers om ervoor te zorgen dat elke zending voldoet aan wereldwijde normen voor kwaliteit, veiligheid en betrouwbaarheid.",
+        "p2": "Via ons exportprogramma kunnen klanten consistente leveringen veiligstellen van granen, specerijen, oliehoudende zaden, fruit, groenten en andere landbouwproducten, allemaal verwerkt, verpakt en geleverd via een transparant en goed gestructureerd exportsysteem.",
+        "p3": "Ons team verzorgt sourcing, kwaliteitscontrole, documentatie en logistiek, en garandeert een naadloze ervaring van bestelling tot uiteindelijke levering.",
+        "p4": "Of u nu een importeur, distributeur of voedselproductiebedrijf bent dat zijn inkoopkanalen wil uitbreiden, Camberfarm Export biedt gestructureerde exportmogelijkheden die kwaliteit, naleving en betrouwbare levering garanderen.",
+        "p5": "Klik op de knop hieronder en verken onze exportwebsite voor productbeschikbaarheid, prijzen, logistiek en volgende stappen.",
+        "button": "Bezoek CamberFarms export"
+    },
     "FarmFund": {
-  "title": "Aanmeldformulier voor het Landbouwfonds",
-  "name": "Naam",
-  "email": "E-mailadres",
-  "phone": "Telefoonnummer",
-  "country": "Land",
-  "state": "Woonplaats / Provincie",
-  "selectResponse": "Kies hoe u van ons wilt horen",
-  "responseOption1": "Telefonisch gesprek",
-  "responseOption2": "E-mail",
-  "submit": "Verzenden",
-    "submitting": "Bezig met verzenden..."
-},
-
+        "title": "Aanmeldformulier voor het Landbouwfonds",
+        "name": "Naam",
+        "email": "E-mailadres",
+        "phone": "Telefoonnummer",
+        "country": "Land",
+        "state": "Woonplaats / Provincie",
+        "selectResponse": "Kies hoe u van ons wilt horen",
+        "responseOption1": "Telefonisch gesprek",
+        "responseOption2": "E-mail",
+        "submit": "Verzenden",
+        "submitting": "Bezig met verzenden..."
+    },
+    "FarmFundText": {
+        "title": "Landbouwfonds",
+        "imgAlt": "Afbeelding van het Landbouwfonds",
+        "p1": "Het Camberfarm Landbouwfonds biedt investeerders de mogelijkheid om echte landbouwgroei te ondersteunen en tegelijkertijd bij te dragen aan een duurzamer voedselsysteem in heel Afrika.",
+        "p2": "Via het Landbouwfonds kunnen investeerders hun interesse tonen in gestructureerde landbouwprojecten die boeren ondersteunen, de lokale productie versterken en op lange termijn waarde creëren binnen de toeleveringsketen.",
+        "p3": "Wij werken met betrouwbare boerennetwerken, geverifieerde landbouwclusters en bewezen productiesystemen om transparantie, verantwoord beheer en meetbare resultaten te waarborgen.",
+        "p4": "Door deel te nemen aan het Landbouwfonds wordt u onderdeel van een systeem dat:",
+        "p5": "Als u landbouwinvesteringsmogelijkheden onderzoekt en op zoek bent naar duidelijkheid, structuur en impact, vul dan het interesseformulier hieronder in. Ons team neemt contact met u op met beschikbare projecten, vereisten en volgende stappen.",
+        "l1": "boeren voorziet van middelen en training,",
+        "l2": "landbouwproductie duurzaam opschaalt,",
+        "l3": "verliezen na de oogst vermindert,",
+        "l4": "en gezamenlijke groei stimuleert voor zowel gemeenschappen als investeerders.",
+        "button": "Nu investeren"
+    },
     "Footer": {
         "information": "Informatie",
         "aboutUs": "Over ons",
@@ -135,8 +175,8 @@
         "stat4": "Wereldwijde Marktverbindingen",
         "button": "Werk met ons samen"
     },
-    "Map":{
-        "title":"Vind Ons op de Kaart"
+    "Map": {
+        "title": "Vind Ons op de Kaart"
     },
     "Membership": {
         "title": "Lidmaatschapsformulier",
@@ -173,6 +213,16 @@
             "generic": "Er is iets misgegaan. Probeer het opnieuw."
         }
     },
+    "MembershipText": {
+        "title": "Lidmaatschap",
+        "imgAlt": "afbeelding van leden",
+        "p1": "Het Camberfarm-lidmaatschap staat open voor iedereen die deel wil uitmaken van het groeiende agrarische ecosysteem van Afrika. Boeren, investeerders, partners, agripreneurs of personen die geloven in landbouwontwikkeling. Door lid te worden van onze gemeenschap krijg je toegang tot waardevolle kansen op basis van je interesse:",
+        "p2": "Het lidmaatschap biedt een directe verbinding met het Camberfarm-netwerk en houdt je geïnformeerd, betrokken en versterkt. Of je nu je boerderij wilt laten groeien, investeringsmogelijkheden wilt verkennen of gewoon verbonden wilt blijven met ons werk, Camberfarm biedt het platform en de ondersteuning om te groeien.",
+        "l1": "Boeren ontvangen ondersteuning via inputs, training en markttoegang.",
+        "l2": "Investeerders krijgen toegang tot transparante landbouwkansen met echte impact.",
+        "l3": "Partners en individuen worden onderdeel van een netwerk dat duurzame groei in Afrika stimuleert.",
+        "button": "Aanmelden"
+    },
     "Nav": {
         "home": "Home",
         "about": "Over Ons",
@@ -186,21 +236,9 @@
         "description": "Verken verhalen, updates en inzichten over Afrikaanse landbouwexport, duurzaamheid en wereldwijde handelstrends.",
         "readMore": "Lees meer",
         "arrowAlt": "pijl rechts",
-        "post1": {
-            "title": "Focus op Duurzaamheid",
-            "description": "Naarmate de wereldwijde vraag naar ethisch geproduceerde voeding groeit, schakelen Afrikaanse exporteurs over op milieuvriendelijke en traceerbare landbouwsystemen om aan internationale normen te voldoen.",
-            "date": "18 september 2025"
-        },
-        "post2": {
-            "title": "Focus op Exportmarkten",
-            "description": "Toegenomen investeringen in landbouwinfrastructuur helpen Afrikaanse producenten toegang te krijgen tot nieuwe markten in Europa en Azië, waarbij maïs en sesam de groei aanvoeren.",
-            "date": "18 september 2025"
-        },
-        "post3": {
-            "title": "Focus op Technologie / Impact",
-            "description": "Van digitale traceerbaarheidstools tot AI-gestuurde logistiek, technologie maakt Afrikaanse landbouwexport transparanter en competitiever.",
-            "date": "18 september 2025"
-        }
+        "admin": "Door beheerder",
+        "heading2": "MEER NIEUWS EN INZICHTEN",
+        "loadFailed":"Kan de berichten niet laden. Probeer het later opnieuw."
     },
     "OurWorks": {
         "hero": {
@@ -231,6 +269,14 @@
             "Veldmonitoring",
             "Oogsten",
             "Voorraadbeheer"
+        ],
+        "stepDescriptions": [
+            "Wij registreren boeren op ons platform, verifiëren hun identiteit en verzamelen essentiële informatie om een goede toegang tot diensten te garanderen.",
+            "Wij brengen landbouwgronden in kaart met behulp van geolocatietools om de grootte, locatie en landbouwomstandigheden te begrijpen.",
+            "Wij leveren kwalitatieve zaden, meststoffen en andere landbouwinputs op het juiste moment.",
+            "Wij monitoren continu de gewasgroei en veldomstandigheden om een optimale productiviteit te waarborgen.",
+            "Wij ondersteunen boeren tijdens de oogst om verliezen te verminderen en de opbrengstkwaliteit te verbeteren.",
+            "Wij beheren geoogste producten efficiënt door middel van juiste opslag, tracking en logistiek."
         ]
     },
     "Products": {

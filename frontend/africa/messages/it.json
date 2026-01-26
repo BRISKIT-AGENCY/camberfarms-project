@@ -52,7 +52,24 @@
     },
     "Blog": {
         "button": "Leggi di più",
-        "Date": "Data: "
+        "Date": "Data:",
+        "arrowAlt": "freccia destra",
+        "title": "Blog",
+        "description": "Resta informato con aggiornamenti, approfondimenti e storie che plasmano l’agricoltura in Africa.",
+        "loading": "Caricamento dei blog...",
+        "empty": "Nessun articolo disponibile.",
+        "errors": {
+            "loadFailed": "Impossibile caricare i blog. Riprova più tardi."
+        }
+    },
+    "BlogSidebar": {
+        "searchPlaceholder": "Cerca",
+        "searching": "Ricerca in corso…",
+        "noResults": "Nessun risultato trovato",
+        "searchError": "Qualcosa è andato storto. Riprova.",
+        "recentPosts": "Post recenti",
+        "noRecentPosts": "Nessun post recente disponibile",
+        "searchIconAlt": "icona di ricerca"
     },
     "Button": {
         "explore": "Esplora le esportazioni di Camberfarm"
@@ -95,20 +112,43 @@
         "businessHours": "Orari di lavoro",
         "days": "Lunedì - Venerdì"
     },
+    "exportationText": {
+        "title": "Esportazione",
+        "imgAlt": "immagine dei membri",
+        "p1": "Camberfarm Export collega acquirenti internazionali a prodotti agricoli di alta qualità e completamente certificati provenienti da tutta l’Africa. Collaboriamo strettamente con agricoltori, aggregatori e trasformatori affidabili per garantire che ogni spedizione soddisfi gli standard globali di qualità, sicurezza e affidabilità.",
+        "p2": "Attraverso il nostro programma di esportazione, i clienti possono assicurarsi forniture costanti di cereali, spezie, semi oleosi, frutta, verdura e altri prodotti agricoli, tutti lavorati, confezionati e consegnati tramite un sistema di esportazione trasparente e ben strutturato.",
+        "p3": "Il nostro team gestisce l’approvvigionamento, il controllo qualità, la documentazione e la logistica, garantendo un’esperienza fluida dall’ordine alla consegna finale.",
+        "p4": "Che siate importatori, distributori o aziende alimentari che desiderano ampliare i propri canali di approvvigionamento, Camberfarm Export offre opportunità di esportazione strutturate che garantiscono qualità, conformità e consegne affidabili.",
+        "p5": "Clicca sul pulsante qui sotto ed esplora il nostro sito di esportazione per vedere disponibilità dei prodotti, prezzi, logistica e i prossimi passaggi.",
+        "button": "Visita l’export CamberFarms"
+    },
     "FarmFund": {
-  "title": "Modulo di manifestazione di interesse per il Fondo Agricolo",
-  "name": "Nome",
-  "email": "Indirizzo email",
-  "phone": "Numero di telefono",
-  "country": "Paese",
-  "state": "Regione di residenza",
-  "selectResponse": "Seleziona come preferisci essere contattato",
-  "responseOption1": "Chiamata telefonica",
-  "responseOption2": "Email",
-  "submit": "Invia",
-    "submitting": "Invio in corso..."
-},
-
+        "title": "Modulo di manifestazione di interesse per il Fondo Agricolo",
+        "name": "Nome",
+        "email": "Indirizzo email",
+        "phone": "Numero di telefono",
+        "country": "Paese",
+        "state": "Regione di residenza",
+        "selectResponse": "Seleziona come preferisci essere contattato",
+        "responseOption1": "Chiamata telefonica",
+        "responseOption2": "Email",
+        "submit": "Invia",
+        "submitting": "Invio in corso..."
+    },
+    "FarmFundText": {
+        "title": "Fondo Agricolo",
+        "imgAlt": "Immagine del Fondo Agricolo",
+        "p1": "Il Fondo Agricolo Camberfarm offre agli investitori l’opportunità di sostenere una crescita agricola reale contribuendo a un sistema alimentare più sostenibile in tutta l’Africa.",
+        "p2": "Attraverso il Fondo Agricolo, gli investitori possono esprimere interesse per progetti agricoli strutturati che hanno un impatto sugli agricoltori, rafforzano la produzione locale e creano valore a lungo termine lungo la catena di approvvigionamento.",
+        "p3": "Collaboriamo con reti di agricoltori affidabili, cluster agricoli verificati e sistemi di produzione collaudati per garantire trasparenza, gestione responsabile e risultati misurabili.",
+        "p4": "Entrando a far parte del Fondo Agricolo, diventi parte di un sistema che:",
+        "p5": "Se stai esplorando opportunità di investimento agricolo e desideri chiarezza, struttura e impatto, compila il modulo di manifestazione di interesse qui sotto. Il nostro team ti contatterà con i progetti disponibili, i requisiti e i prossimi passi.",
+        "l1": "rafforza gli agricoltori con risorse e formazione,",
+        "l2": "scala la produzione agricola in modo sostenibile,",
+        "l3": "riduce le perdite post-raccolta,",
+        "l4": "e promuove una crescita condivisa per comunità e investitori.",
+        "button": "Investi ora"
+    },
     "Footer": {
         "information": "Informazioni",
         "aboutUs": "Chi siamo",
@@ -135,8 +175,8 @@
         "stat4": "Connessioni con Mercati Globali",
         "button": "Collabora con noi"
     },
-    "Map":{
-        "title":"Trovaci sulla Mappa"
+    "Map": {
+        "title": "Trovaci sulla Mappa"
     },
     "Membership": {
         "title": "Modulo di Membership",
@@ -173,6 +213,16 @@
             "generic": "Qualcosa è andato storto. Riprova."
         }
     },
+    "MembershipText": {
+        "title": "Adesione",
+        "imgAlt": "immagine dei membri",
+        "p1": "L’adesione a Camberfarm è aperta a chiunque desideri far parte del crescente ecosistema agricolo africano. Agricoltori, investitori, partner, agripreneurs o individui che credono nello sviluppo agricolo. Unendoti alla nostra comunità di membri, avrai accesso a opportunità di valore in base ai tuoi interessi:",
+        "p2": "L’adesione ti offre una connessione diretta alla rete Camberfarm, mantenendoti informato, coinvolto e supportato. Che tu voglia far crescere la tua azienda agricola, esplorare opportunità di investimento o semplicemente restare in contatto con il nostro lavoro, Camberfarm fornisce la piattaforma e il supporto per aiutarti a crescere.",
+        "l1": "Gli agricoltori ricevono supporto tramite input, formazione e accesso al mercato.",
+        "l2": "Gli investitori accedono a opportunità agricole trasparenti e di impatto reale.",
+        "l3": "Partner e individui entrano a far parte di una rete che promuove una crescita sostenibile in Africa.",
+        "button": "Iscriviti"
+    },
     "Nav": {
         "home": "Home",
         "about": "Chi Siamo",
@@ -186,21 +236,9 @@
         "description": "Esplora storie, aggiornamenti e approfondimenti sulle esportazioni agricole africane, sostenibilità e tendenze del commercio globale.",
         "readMore": "Leggi di più",
         "arrowAlt": "freccia destra",
-        "post1": {
-            "title": "Focus sulla Sostenibilità",
-            "description": "Con la crescente domanda globale di alimenti prodotti eticamente, gli esportatori africani adottano sistemi agricoli eco-compatibili e tracciabili per rispettare gli standard internazionali.",
-            "date": "18 settembre 2025"
-        },
-        "post2": {
-            "title": "Focus sul Mercato di Esportazione",
-            "description": "L'aumento degli investimenti nelle infrastrutture agricole aiuta i produttori africani ad accedere a nuovi mercati in Europa e Asia, con mais e sesamo in prima linea.",
-            "date": "18 settembre 2025"
-        },
-        "post3": {
-            "title": "Focus su Tecnologia / Impatto",
-            "description": "Dagli strumenti digitali di tracciabilità alla logistica con IA, la tecnologia rende le esportazioni agricole africane più trasparenti e competitive.",
-            "date": "18 settembre 2025"
-        }
+        "admin": "Da amministratore",
+        "heading2": "ALTRE NOTIZIE E APPROFONDIMENTI",
+        "loadFailed":"Impossibile caricare i post. Riprova più tardi."
     },
     "OurWorks": {
         "hero": {
@@ -231,6 +269,14 @@
             "Monitoraggio dei Campi",
             "Raccolta",
             "Gestione dell'Inventario"
+        ],
+        "stepDescriptions": [
+            "Registriamo gli agricoltori sulla nostra piattaforma, verifichiamo le loro identità e raccogliamo informazioni essenziali per garantire un accesso adeguato ai servizi.",
+            "Mappiamo i terreni agricoli utilizzando strumenti di geolocalizzazione per comprendere dimensioni, posizione e condizioni del suolo.",
+            "Distribuiamo sementi di qualità, fertilizzanti e altri input agricoli al momento giusto.",
+            "Monitoriamo costantemente la crescita delle colture e le condizioni dei campi per garantire una produttività ottimale.",
+            "Supportiamo gli agricoltori durante la raccolta per ridurre le perdite e migliorare la qualità del raccolto.",
+            "Gestiamo in modo efficiente i prodotti raccolti attraverso un corretto stoccaggio, tracciamento e logistica."
         ]
     },
     "Products": {

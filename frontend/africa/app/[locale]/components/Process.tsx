@@ -37,14 +37,7 @@ const Process = ({
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
 
-  const stepDescriptions: string[] = [
-    'We register farmers into our platform, verify their identities, and collect essential information to ensure proper access to services.',
-    'We map farmlands using geo-location tools to understand land size, location, and farming conditions.',
-    'We distribute quality seeds, fertilizers, and other farm inputs to farmers at the right time.',
-    'We continuously monitor crop growth and field conditions to ensure optimal productivity.',
-    'We support farmers during harvest to reduce losses and improve yield quality.',
-    'We manage harvested produce efficiently through proper storage, tracking, and logistics.'
-  ]
+  const stepDescriptions = t.raw('stepDescriptions') as string[]
 
 
   return (

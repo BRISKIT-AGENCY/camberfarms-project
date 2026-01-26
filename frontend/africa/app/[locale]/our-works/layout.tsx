@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Navbar from '../components/Navbar';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 
 export default function OurWorksLayout({
   children
@@ -12,14 +12,22 @@ export default function OurWorksLayout({
 }) {
   const pathname = usePathname();
   const t= useTranslations('OurWorks');
+  const locale=useLocale()
+const defaultLocale = 'en'; // replace with your actual defaultLocale
 
-  const links = [
-    { label: t('tabs.membership'), href: '/our-works/membership' },
-    { label: t('tabs.farmFund'), href: '/our-works/farm-fund' },
-    { label: t('tabs.exportation'), href: '/our-works/exportation' },
-    { label: t('tabs.technology'), href: '/our-works/technology' },
-    { label: t('tabs.process'), href: '/our-works/process' }
-  ];
+const links = [
+  { label: t('tabs.membership'), path: '/our-works/membership' },
+  { label: t('tabs.farmFund'), path: '/our-works/farm-fund' },
+  { label: t('tabs.exportation'), path: '/our-works/exportation' },
+  { label: t('tabs.technology'), path: '/our-works/technology' },
+  { label: t('tabs.process'), path: '/our-works/process' },
+];
+
+// Add locale prefix only if it's not the default
+const linksWithHref = links.map(link => ({
+  ...link,
+  href: locale === defaultLocale ? link.path : `/${locale}${link.path}`
+}));
 
   return (
     <div className="w-full">
@@ -67,23 +75,17 @@ export default function OurWorksLayout({
             text-[16px]
           "
         >
-          {links.map(link => {
-            const isActive = pathname === link.href;
+          {linksWithHref.map(link => {
+  const isActive = pathname === link.href;
 
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="relative pb-2 font-medium shrink-0"
-              >
-                {link.label}
+  return (
+    <Link key={link.href} href={link.href} className="relative pb-2 font-medium shrink-0">
+      {link.label}
+      {isActive && <span className="absolute left-0 bottom-0 w-full h-0.75 bg-[#1AD329]" />}
+    </Link>
+  );
+})}
 
-                {isActive && (
-                  <span className="absolute left-0 bottom-0 w-full h-0.75 bg-[#1AD329]" />
-                )}
-              </Link>
-            );
-          })}
         </div>
       </div>
 

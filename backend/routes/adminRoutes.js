@@ -1,5 +1,5 @@
 import express from 'express'
-import bcrypt from 'bcrypt'
+import * as bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 import Blog from '../models/Blog.js'
@@ -18,6 +18,7 @@ import { blogUpload } from '../middleware/blogUpload.js'
 import { exportBlogUpload } from '../middleware/exportBlogUpload.js'
 import { newsUpload } from '../middleware/newsUpload.js'
 import Visitor from '../models/Visitor.js'
+import Admin from '../models/Admin.js'
 
 dotenv.config();
 
@@ -25,40 +26,97 @@ const router = express.Router()
 
 // Admin login route
 router.post('/login', async (req, res) => {
-    const { username, password } = req.body
+  const { username, password } = req.body
 
-    if (username !== process.env.ADMIN_USERNAME) {
-        return res.status(401).json({ message: 'Invalid credentials' })
+  const admin = await Admin.findOne({ username })
+  if (!admin) {
+    return res.status(401).json({ message: 'Invalid credentials' })
+  }
+
+  const isMatch = await bcrypt.compare(password, admin.passwordHash)
+  if (!isMatch) {
+    return res.status(401).json({ message: 'Invalid credentials' })
+  }
+
+  const token = jwt.sign(
+    { adminId: admin._id, role: admin.role },
+    process.env.JWT_SECRET,
+    { expiresIn: '1d' }
+  )
+
+  res.json({ token })
+})
+
+
+router.post('/reset-password/request', async (req, res) => {
+  const { username } = req.body
+
+  if (username !== process.env.ADMIN_USERNAME) {
+    return res.status(404).json({ message: 'Admin not found' })
+  }
+
+  const resetToken = jwt.sign(
+    { role: 'admin', type: 'password_reset' },
+    process.env.JWT_SECRET,
+    { expiresIn: '15m' }
+  )
+
+  // In real apps, email this token
+  res.json({
+    message: 'Password reset token generated',
+    resetToken
+  })
+})
+
+router.post('/reset-password/confirm', async (req, res) => {
+  const { token, newPassword } = req.body
+
+  if (!token || !newPassword) {
+    return res.status(400).json({ message: 'Token and new password required' })
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET)
+
+    if (decoded.role !== 'admin' || decoded.type !== 'password_reset') {
+      return res.status(403).json({ message: 'Invalid reset token' })
     }
 
-    const adminHash = process.env.ADMIN_PASSWORD_HASH
+    const newHash = await bcrypt.hash(newPassword, 10)
 
-    if (!adminHash) {
-        throw new Error('ADMIN_PASSWORD_HASH not set')
-    }
-
-    // Exact password check (bcrypt)
-    const isMatch = await bcrypt.compare(
-        password,
-        adminHash
-    )
-
-    if (!isMatch) {
-        return res.status(401).json({ message: 'Invalid credentials' })
-    }
-
-    // Generate JWT
-    const token = jwt.sign(
-        { role: 'admin' },
-        process.env.JWT_SECRET,
-        { expiresIn: '1d' }
-    )
+    // Save securely — update ENV, DB, or secrets manager
+    // Example (NOT for production):
+    // process.env.ADMIN_PASSWORD_HASH = newHash
 
     res.json({
-        message: 'Admin login successful',
-        token
+      message: 'Password reset successful',
+      newPasswordHash: newHash
     })
+  } catch (err) {
+    return res.status(401).json({ message: 'Token expired or invalid' })
+  }
 })
+
+router.post('/reset-password', adminAuth, async (req, res) => {
+  const { oldPassword, newPassword } = req.body
+
+  const admin = await Admin.findById(req.admin.adminId)
+
+  if (!admin) {
+    return res.status(404).json({ message: 'Admin not found' })
+  }
+
+  const isMatch = await bcrypt.compare(oldPassword, admin.passwordHash)
+  if (!isMatch) {
+    return res.status(401).json({ message: 'Old password incorrect' })
+  }
+
+  admin.passwordHash = await bcrypt.hash(newPassword, 10)
+  await admin.save()
+
+  res.json({ message: 'Password updated successfully' })
+})
+
 
 
 // camberfarm africa blog creation route

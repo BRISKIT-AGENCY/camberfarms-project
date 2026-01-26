@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 
-dotenv.config();
+dotenv.config()
 
 export const adminAuth = (req, res, next) => {
   const authHeader = req.headers.authorization
@@ -18,9 +18,15 @@ export const adminAuth = (req, res, next) => {
       return res.status(403).json({ message: 'Access denied' })
     }
 
+    // 👇 THIS is the key addition
+    req.admin = {
+      adminId: decoded.adminId,
+      role: decoded.role
+    }
+
     next()
-  } catch {
-    res.status(401).json({ message: 'Invalid token' })
+  } catch (err) {
+    return res.status(401).json({ message: 'Invalid token' })
   }
 }
 
