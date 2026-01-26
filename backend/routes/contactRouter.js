@@ -1,5 +1,5 @@
 import express from 'express';
-import Contact from '../models/contact.js';
+import contact from '../models/contact.js';
 import adminAuth from '../middleware/adminAuth.js';
 
 const router = express.Router();
@@ -19,7 +19,7 @@ router.post('/contact', async (req, res) => {
       });
     }
 
-    const newContact = await Contact.create({
+    const newContact = await contact.create({
       name,
       email,
       phone,
