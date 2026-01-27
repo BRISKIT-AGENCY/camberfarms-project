@@ -25,7 +25,8 @@ const MONGO_URI = process.env.MONGO_URI
 const allowedOrigins = [
   "https://africa-neon.vercel.app",
   "https://camberfarms-export.vercel.app",
-  "https://camberfarms-dashboard.vercel.app"
+  "https://camberfarms-dashboard.vercel.app",
+  "http://localhost:3000"
 ];
 
 app.use(
