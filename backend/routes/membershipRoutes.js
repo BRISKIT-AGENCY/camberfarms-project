@@ -25,8 +25,6 @@ router.post(
         state,
         region
       } = req.body;
-
-      console.log(name);
       
 
       if (

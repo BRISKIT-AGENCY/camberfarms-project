@@ -8,7 +8,6 @@ const router = express.Router();
 router.post('/contact', async (req, res) => {
   try {
     const { name, email, phone, message } = req.body;
-    console.log(name);
     
 
     // Basic validation
