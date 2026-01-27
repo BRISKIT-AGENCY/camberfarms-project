@@ -76,8 +76,6 @@ router.get('/news/:slug', async (req, res) => {
   try {
     const lang = req.query.lang || 'en'
     const slug = req.params.slug
-    console.log(slug);
-    console.log(lang);
     
     
 
