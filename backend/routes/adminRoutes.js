@@ -42,6 +42,28 @@ router.post('/login', async (req, res) => {
   }
 
   const token = jwt.sign(
+    {
+      adminId: admin._id,
+      role: admin.role
+    },
+    process.env.JWT_SECRET,
+    { expiresIn: '1d' }
+  )
+
+  res.status(200).json({
+    message: 'Login successful',
+    token,
+    admin: {
+      id: admin._id,
+      username: admin.username,
+      role: admin.role,
+      profilePhoto: admin.profilePhoto
+    }
+  })
+})
+
+
+  const token = jwt.sign(
     { adminId: admin._id, role: admin.role },
     process.env.JWT_SECRET,
     { expiresIn: '1d' }
