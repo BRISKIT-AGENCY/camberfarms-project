@@ -19,6 +19,7 @@ export default function BlogContainer() {
 	const editBlog = (blog: Blog) => {
 		navigate(`edit/${blog.id}`, { state: { blog } })
 	}
+
 	return (
 		<section className="w-full bg-light-grey dark:bg-dark-grey mb-20">
 			<h4 className="text-black dark:text-white text-2xl font-semibold">

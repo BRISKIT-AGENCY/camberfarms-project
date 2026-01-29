@@ -1,4 +1,5 @@
 import axiosInstance from '@/app/[locale]/api/axios'
+import { getLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import BlogSidebar from '../BlogSidebar'
 import BlogContent from './BlogContent'
@@ -12,9 +13,14 @@ export type iBlogContent = {
 	}[]
 }
 
-async function getBlog(slug: string): Promise<iBlogContent | null> {
+async function getBlog(
+	slug: string,
+	locale: string,
+): Promise<iBlogContent | null> {
 	try {
-		const res = await axiosInstance.get(`/api/export/blog/${slug}`)
+		const res = await axiosInstance.get(`/api/export/blog/${slug}`, {
+			params: { lang: locale },
+		})
 		return res.data
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	} catch (error: any) {
@@ -37,8 +43,9 @@ export default async function SingleBlog({
 	params: Promise<{ slug: string }>
 }) {
 	const { slug } = await params
+	const locale = await getLocale()
 
-	const blog = await getBlog(slug)
+	const blog = await getBlog(slug, locale)
 
 	return (
 		<main className="w-full py-20 md:py-28 px-6 md:px-10 lg:px-20 bg-light-grey space-y-10 relative">

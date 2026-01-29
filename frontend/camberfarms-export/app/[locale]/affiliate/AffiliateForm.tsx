@@ -35,7 +35,7 @@ export default function AffiliateForm() {
 		setIsLoading(true)
 		console.log(data)
 		try {
-			const res = await axiosInstance.post('/affiliate', data)
+			const res = await axiosInstance.post('/api/affiliate', data)
 			console.log(res.data)
 			toast.success('Form submitted successfully!')
 			// clear inputs
@@ -289,7 +289,7 @@ export default function AffiliateForm() {
 							// user must select a referral platform or fill the field below
 							selectPlatform: (
 								referralPlatform,
-								{ referralPlatformOthers }
+								{ referralPlatformOthers },
 							) => {
 								if (!referralPlatformOthers && !referralPlatform)
 									return 'Please how did you hear about us?'

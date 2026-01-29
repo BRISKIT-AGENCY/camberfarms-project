@@ -23,7 +23,9 @@ export default function FaqItem({ faq, isOpen, onToggle }: FaqItemProps) {
 				className="flex w-full items-center justify-between gap-4 cursor-pointer"
 				aria-expanded={isOpen}
 			>
-				<span className="text-left text-sm md:text-base">{faq.question}</span>
+				<span className="text-left text-sm md:text-base capitalize">
+					{faq.question}
+				</span>
 				<Image
 					src={arrowDown}
 					alt=""

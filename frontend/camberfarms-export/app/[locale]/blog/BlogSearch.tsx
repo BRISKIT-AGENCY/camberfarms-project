@@ -1,5 +1,6 @@
 'use client'
 import searchIcon from '@/app/[locale]/assets/icon/search-icon.svg'
+import { useLocale } from 'next-intl'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
@@ -13,34 +14,57 @@ type Blog = {
 
 export default function BlogSearch() {
 	const [query, setQuery] = useState('')
-	const [result, setResult] = useState<Blog[]>([])
+	const [result, setResult] = useState<Blog[] | []>([])
 	const [loading, setLoading] = useState(false)
+	const [error, setError] = useState(false)
+	const locale = useLocale()
 
 	const debouncedQuery = useDebounce(query)
 
 	useEffect(() => {
 		if (!debouncedQuery) {
 			setResult([])
+			setError(false)
 			return
 		}
 
+		const controller = new AbortController()
+
 		async function searchBlogs() {
 			setLoading(true)
+			setError(false)
+
 			try {
 				const res = await axiosInstance.get(
-					`/api/export/blog/search?q=${debouncedQuery}`
+					`/api/export/blog/search?q=${debouncedQuery}&lang=${locale}`,
+					{ signal: controller.signal },
 				)
-				// const data = await res.json()
-				setResult(res.data)
-			} catch (error) {
-				console.error('Search failed', error)
+
+				const data = await res.data
+
+				if (!Array.isArray(data)) {
+					throw new Error('Invalid response')
+				}
+
+				setResult(data)
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			} catch (err: any) {
+				if (err.name !== 'AbortError') {
+					console.error('Search failed:', err)
+					setError(true)
+					setResult([])
+				}
 			} finally {
 				setLoading(false)
 			}
 		}
 
 		searchBlogs()
-	}, [debouncedQuery])
+
+		return () => {
+			controller.abort()
+		}
+	}, [debouncedQuery, locale])
 
 	return (
 		<div className="w-full md:bg-white md:p-10 rounded-2xl relative">
@@ -66,7 +90,7 @@ export default function BlogSearch() {
 				<div className="w-full min-h-32 bg-white rounded-2xl shadow-xl p-10 flex flex-col space-y-2 absolute top-full left-1/2 -translate-x-1/2 z-10 transition-discrete transition-all duration-200 ease-in-out text-grey">
 					{loading && <p className="text-sm text-gray-400">Searching…</p>}
 
-					{!loading && result.length === 0 && (
+					{!loading && error && (
 						<p className="text-sm text-gray-400">No results found</p>
 					)}
 					{!loading &&

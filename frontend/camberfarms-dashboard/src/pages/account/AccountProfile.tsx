@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { IoClose } from 'react-icons/io5'
 import { MdVerified } from 'react-icons/md'
-import editIcon from '../../assets/icon/Edit.svg'
+import editIcon from '../../assets/icon/edit.svg'
 import userAvatar from '../../assets/img/user-avatar.png'
 import { Dropzone } from '../../components/Dropzone'
 import OverlayWrapper from '../../components/OverlayWrapper'

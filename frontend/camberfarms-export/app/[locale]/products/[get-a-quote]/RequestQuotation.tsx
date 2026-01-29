@@ -1,6 +1,9 @@
 'use client'
 
+import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
+import axiosInstance from '../../api/axios'
 
 type Inputs = {
 	name: string
@@ -15,10 +18,25 @@ export default function RequestQuotation() {
 		register,
 		handleSubmit,
 		formState: { errors },
+		reset,
 	} = useForm<Inputs>()
+	const [isLoading, setIsLoading] = useState(false)
 
-	const onSubmit: SubmitHandler<Inputs> = (data) => {
-		console.log(data)
+	const onSubmit: SubmitHandler<Inputs> = async (data) => {
+		setIsLoading(true)
+		// console.log(data)
+		try {
+			const res = await axiosInstance.post('/api/export/feedback', data)
+			console.log(res.data)
+			toast.success('Form submitted successfully!')
+			// clear inputs
+			reset()
+		} catch (error: unknown) {
+			toast.error('Error submitting form')
+			console.error('error submitting form: ', error)
+		} finally {
+			setIsLoading(false)
+		}
 	}
 
 	return (
@@ -115,7 +133,10 @@ export default function RequestQuotation() {
 					</span>
 				)}
 			</fieldset>
-			<button className="w-fit mt-6 flex items-center justify-center px-6 py-2 rounded-full capitalize bg-primary text-white font-sans font-medium cursor-pointer hover:bg-primary/70 transition-colors ease-in-out">
+			<button
+				disabled={isLoading}
+				className="w-fit mt-6 flex items-center justify-center px-6 py-2 rounded-full capitalize bg-primary text-white font-sans font-medium cursor-pointer hover:bg-primary/70 transition-colors ease-in-out disabled:opacity-40"
+			>
 				send message
 			</button>
 		</form>

@@ -27,7 +27,7 @@ export default function MessageForm() {
 		setIsLoading(true)
 		// console.log(data)
 		try {
-			const res = await axiosInstance.post('/export/message', data)
+			const res = await axiosInstance.post('/api/export/message', data)
 			console.log(res.data)
 			toast.success('Form submitted successfully!')
 			// clear inputs

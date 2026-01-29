@@ -21,7 +21,7 @@ async function getBlogs(): Promise<iBlog[] | null> {
 
 export default async function Blog() {
 	// temporarily fill data with dummy local content (if fetch fails)
-	const data = (await getBlogs()) || blogData
+	const data = await getBlogs()
 	const t = await getTranslations('home.blog')
 
 	return (
@@ -62,7 +62,7 @@ export default async function Blog() {
 								alt=""
 								width={300}
 								height={300}
-								placeholder="blur"
+								// placeholder="blur"
 								className="w-14 lg:w-20 aspect-square rounded-full object-fill object-center"
 							/>
 						</div>
@@ -89,23 +89,23 @@ export default async function Blog() {
 	)
 }
 
-const blogData: iBlog[] = [
-	{
-		_id: '1',
-		title: 'The Authoritative Guide To Buying Grain Seeds In Bulk',
-		excerpt:
-			'For international procurement managers, commodity traders, and product developers, sourcing sourcing',
-		image: userAvatar,
-		slug: 'the-authority',
-		publishedAt: '',
-	},
-	{
-		_id: '2',
-		title: 'The Authoritative Guide To Buying Grain Seeds In Bulk',
-		excerpt:
-			'For international procurement managers, commodity traders, and product developers, sourcing sourcing',
-		image: userAvatar,
-		slug: 'the-authority',
-		publishedAt: '',
-	},
-]
+// const blogData: iBlog[] = [
+// 	{
+// 		_id: '1',
+// 		title: 'The Authoritative Guide To Buying Grain Seeds In Bulk',
+// 		excerpt:
+// 			'For international procurement managers, commodity traders, and product developers, sourcing sourcing',
+// 		image: userAvatar,
+// 		slug: 'the-authority',
+// 		publishedAt: '',
+// 	},
+// 	{
+// 		_id: '2',
+// 		title: 'The Authoritative Guide To Buying Grain Seeds In Bulk',
+// 		excerpt:
+// 			'For international procurement managers, commodity traders, and product developers, sourcing sourcing',
+// 		image: userAvatar,
+// 		slug: 'the-authority',
+// 		publishedAt: '',
+// 	},
+// ]

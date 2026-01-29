@@ -1,9 +1,66 @@
+import { useForm } from 'react-hook-form'
+import { toast } from 'react-hot-toast'
 import { IoClose } from 'react-icons/io5'
+import { useNavigate } from 'react-router-dom'
 import OverlayWrapper from '../../components/OverlayWrapper'
+import { useCreateBlog } from '../../hooks/useCreateBlog'
 import { useGoBack } from '../../hooks/useGoBack'
+import type { CreateBlogFormValues } from '../../types/blog'
+
+const initialState = {
+	title: '',
+	image: null,
+	publishedAt: '',
+	slug: '',
+	body: '',
+}
 
 export default function AddBlog() {
-	const goBack = useGoBack('/news')
+	const goBack = useGoBack('/blog')
+	const navigate = useNavigate()
+	const blogToast = () => toast.success('Blog created successfully')
+	const {
+		mutate: postToAfrica,
+		isPending: africaPending,
+		isSuccess: africaBlogSuccess,
+	} = useCreateBlog('/africa-blogs')
+	const {
+		mutate: postToExport,
+		isPending: exportPending,
+		isSuccess: exportBlogSuccess,
+	} = useCreateBlog('/export-blogs')
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors },
+	} = useForm({ defaultValues: initialState })
+
+	const submitToAfrica = (data: CreateBlogFormValues) => {
+		postToAfrica(data)
+
+		if (!africaBlogSuccess) return
+
+		blogToast()
+		reset()
+
+		setTimeout(() => {
+			navigate('/blog')
+		}, 1000)
+	}
+
+	const submitToExport = (data: CreateBlogFormValues) => {
+		postToExport(data)
+
+		if (!exportBlogSuccess) return
+
+		blogToast()
+		reset()
+
+		setTimeout(() => {
+			navigate('/blog')
+		}, 1000)
+	}
 
 	return (
 		<OverlayWrapper>
@@ -24,11 +81,12 @@ export default function AddBlog() {
 							<span className="text-grey text-sm">Blog Title</span>
 							<input
 								type="text"
-								required
+								{...register('title', { required: true })}
 								className="w-full p-2 border-2 border-grey/40 rounded-md focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
 								placeholder="Enter title"
-								name="title"
+								// name="title"
 							/>
+							{errors.title && <p>{errors.title.message}</p>}
 						</label>
 
 						<fieldset className="w-full grid grid-cols-2 gap-6">
@@ -36,47 +94,61 @@ export default function AddBlog() {
 							<label className="w-full flex flex-col gap-1">
 								<span className="text-grey text-sm">Date</span>
 								<input
-									type="date"
-									required
+									type="datetime-local"
+									{...register('publishedAt', { required: true })}
 									className="w-full p-2 border-2 border-grey/40 rounded-md focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
 									placeholder="Select date"
-									name="date"
+									// name="date"
 								/>
+								{errors.publishedAt && <p>{errors.publishedAt.message}</p>}
 							</label>
 							{/* image */}
 							<label className="w-full flex flex-col gap-1">
 								<span className="text-grey text-sm">Upload image</span>
 								<input
 									type="file"
-									name="image"
+									{...register('image', { required: true })}
 									id="image"
 									accept="image/*"
 									multiple={false}
 									className="w-full p-2 border-2 border-grey/40 rounded-md focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
 								/>
 							</label>
+							{errors.image && <p>{errors.image.message}</p>}
 						</fieldset>
 
 						<label className="w-full flex flex-col gap-1 mt-6">
 							<span className="text-grey text-sm">Write Post</span>
 							<textarea
-								name="description"
+								// name="description"
 								id="description"
+								{...register('body', {
+									required: true,
+									minLength: {
+										value: 200,
+										message: 'Blog content is too short',
+									},
+								})}
 								placeholder="Write your blog contents here..."
 								className="w-full h-28 p-2 resize-y border-2 border-grey/40 rounded-md field-sizing-content focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
 							></textarea>
+							{errors.body && <p>{errors.body.message}</p>}
 						</label>
 						<div className="w-full flex gap-6 items-center justify-end py-6 mt-8 border-t border-grey/50">
 							<button
 								type="button"
+								disabled={exportPending}
+								onClick={handleSubmit(submitToExport)}
 								// onClick={goBack}
-								className="bg-transparent text-secondary border-2 border-secondary font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer"
+								className="bg-transparent text-secondary border-2 border-secondary font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer disabled:opacity-40"
 							>
 								Upload to Export
 							</button>
 							<button
-								// type="submit"
-								className="bg-primary text-white font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer"
+								type="button"
+								disabled={africaPending}
+								onClick={handleSubmit(submitToAfrica)}
+								className="bg-primary text-white font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer disabled:opacity-40"
 							>
 								Upload to Africa
 							</button>

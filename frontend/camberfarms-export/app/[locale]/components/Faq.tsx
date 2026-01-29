@@ -38,28 +38,39 @@ export default function Faq() {
 
 const faqs = [
 	{
-		question: 'Do you have Agricultural products?',
+		question:
+			'DO YOU HAVE ALL AGRICULTURAL ALLIED PRODUCTS AVAILABLE AT ALL TIMES?',
 		answer:
-			'We appreciate their consistency in quality and after service. Their corporation with rural African farmers is also commendable.” Moreover, we deeply admire their proactive efforts towards customer satisfaction.',
+			'Product availability depends on the specific season in which the request is made. Seasonal cycles also influence pricing and supply levels.',
 	},
 	{
-		question: 'Do you have Agricultural products?',
-		answer: 'yes',
+		question: 'HOW COMPETITIVE ARE YOUR PRICES?',
+		answer:
+			'We maintain direct relationships with our farmers, managing the supply chain from farm gate through processing to final delivery. This streamlined approach allows us to offer highly competitive pricing without compromising on quality.',
 	},
 	{
-		question: 'Do you have Agricultural products?',
-		answer: 'yes',
+		question: 'DO YOU HAVE THE FINANCIAL CAPACITY TO FULFILL LARGE ORDERS?',
+		answer:
+			'Yes, we do. We are well positioned to handle high-volume orders and support transactions through advance payments and financial instruments such as letters of credit, ensuring efficient processing and timely delivery.',
 	},
 	{
-		question: 'Do you have Agricultural products?',
-		answer: 'yes',
+		question: 'HOW TIMELY IS YOUR DELIVERY?',
+		answer:
+			'Shipment preparation typically takes approximately two weeks, followed by an estimated sea transit time of 30 to 45 days, depending on the destination and shipping conditions.',
 	},
 	{
-		question: 'Do you have Agricultural products?',
-		answer: 'yes',
+		question: 'HOW DO YOU CONDUCT SHIPMENT INSPECTION FOR YOUR PRODUCTS?',
+		answer:
+			'We operate a rigorous and efficient quality control system throughout our production and export processes. In addition, we readily accommodate independent third-party inspection services such as SGS, Bureau Veritas, and similar internationally recognized agencies.',
 	},
 	{
-		question: 'Do you have Agricultural products?',
-		answer: 'yes',
+		question: 'WHAT ARE YOUR PAYMENT TERMS?',
+		answer:
+			'Our standard terms require a 30% advance payment, with the remaining balance payable upon receipt of scanned copies of the original shipping documents. Telex release or courier dispatch is completed once full payment has been confirmed',
+	},
+	{
+		question: 'WHICH DOCUMENTS ARE REQUIRED FOR CONSIGNMENT CLEARANCE?',
+		answer:
+			'We provide all standard export documentation required for clearance, including the original bill of lading, certificate of origin, phytosanitary certificate, fumigation certificate, packing list, and commercial invoice.',
 	},
 ]

@@ -1,6 +1,9 @@
+import { useQuery } from '@tanstack/react-query'
+// import Cookies from 'js-cookie'
 import { MdOutlineRemoveRedEye } from 'react-icons/md'
 import { RiReplyLine } from 'react-icons/ri'
 import { useNavigate } from 'react-router-dom'
+import axiosInstance from '../../api/axios'
 import { Table } from '../../components/Table'
 
 export type FarmFundEnquiry = {
@@ -17,6 +20,11 @@ export type FarmFundEnquiry = {
 
 export default function FarmFundTable() {
 	const navigate = useNavigate()
+	// const token = Cookies.get('token')
+	const { data, error, isPending } = useQuery({
+		queryKey: ['farm-fund'],
+		queryFn: async () => await axiosInstance.get('/farm-fund'),
+	})
 
 	const viewInfo = (enquiry: FarmFundEnquiry) => {
 		navigate(`${enquiry.id}`, { state: { enquiry } })
@@ -24,6 +32,11 @@ export default function FarmFundTable() {
 	const ReplyInfo = (enquiry: FarmFundEnquiry) => {
 		navigate(`reply/${enquiry.id}`, { state: { enquiry } })
 	}
+
+	console.log('data: ', data)
+	console.log('error: ', error)
+	console.log('isPending: ', isPending)
+	// console.log('token: ', token)
 
 	// temporarily putting this within the component to pass state across
 	const EnquiryColumns = [

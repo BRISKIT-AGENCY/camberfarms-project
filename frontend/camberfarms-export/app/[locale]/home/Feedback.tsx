@@ -26,9 +26,9 @@ export default function Feedback() {
 
 	const onSubmit: SubmitHandler<Inputs> = async (data) => {
 		setIsLoading(true)
-		console.log(data)
+		// console.log(data)
 		try {
-			const res = await axiosInstance.post('/export/feedback', data)
+			const res = await axiosInstance.post('/api/export/feedback', data)
 			console.log(res.data)
 			toast.success('Form submitted successfully!')
 			// clear inputs

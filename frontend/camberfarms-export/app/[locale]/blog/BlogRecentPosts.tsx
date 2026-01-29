@@ -1,8 +1,10 @@
+import { getLocale } from 'next-intl/server'
 import Link from 'next/link'
 import getRecentPosts from '../utils/getRecent.Post'
 
 export default async function BlogRecentPosts() {
-	const recentPosts = (await getRecentPosts()) || recentBlogs
+	const locale = await getLocale()
+	const recentPosts = await getRecentPosts(locale)
 
 	return (
 		<div className="w-full md:bg-white md:p-8 shadow-2xs space-y-4 capitalize font-inter rounded-2xl">
@@ -17,7 +19,7 @@ export default async function BlogRecentPosts() {
 						{b.title}
 					</Link>
 				))}
-			{!recentPosts.length && (
+			{!recentPosts?.length && (
 				<p className="w-fit min-h-20 px-2 py-4 text-base text-grey lg:min-h-0 lg:p-0">
 					No recent blog posts yet.
 				</p>
@@ -26,29 +28,29 @@ export default async function BlogRecentPosts() {
 	)
 }
 
-const recentBlogs = [
-	{
-		title: 'Nigerian Export Rules',
-		slug: 'nigeria-export',
-	},
-	{
-		title: 'Market Pricing and Export Inflation',
-		slug: 'nigeria-pricing',
-	},
-	{
-		title: 'The Best Guide To Buying Wheat Grains in Bulk',
-		slug: 'nigeria-guide',
-	},
-	{
-		title: 'Market Pricing and Export Inflation',
-		slug: 'nigeria-inflation',
-	},
-	{
-		title: 'Premium Quality From CamberFarm',
-		slug: 'nigeria-quality',
-	},
-	{
-		title: 'The Best Guide To Buying Wheat Grains in Bulk',
-		slug: 'nigeria-wheat',
-	},
-]
+// const recentBlogs = [
+// 	{
+// 		title: 'Nigerian Export Rules',
+// 		slug: 'nigeria-export',
+// 	},
+// 	{
+// 		title: 'Market Pricing and Export Inflation',
+// 		slug: 'nigeria-pricing',
+// 	},
+// 	{
+// 		title: 'The Best Guide To Buying Wheat Grains in Bulk',
+// 		slug: 'nigeria-guide',
+// 	},
+// 	{
+// 		title: 'Market Pricing and Export Inflation',
+// 		slug: 'nigeria-inflation',
+// 	},
+// 	{
+// 		title: 'Premium Quality From CamberFarm',
+// 		slug: 'nigeria-quality',
+// 	},
+// 	{
+// 		title: 'The Best Guide To Buying Wheat Grains in Bulk',
+// 		slug: 'nigeria-wheat',
+// 	},
+// ]

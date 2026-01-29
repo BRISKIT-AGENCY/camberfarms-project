@@ -3,12 +3,17 @@ type RecentPost = {
 	slug: string
 }
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL
+const API_URL = 'https://camberfarms-project.onrender.com'
 
-export default async function getRecentPosts(): Promise<RecentPost[] | null> {
-	const res = await fetch(`${API_URL}/api/export/blog?limit=6&page=1`, {
-		cache: 'no-store',
-	})
+export default async function getRecentPosts(
+	locale: string,
+): Promise<RecentPost[] | null> {
+	const res = await fetch(
+		`${API_URL}/api/export/blog?limit=6&page=1&lang=${locale}`,
+		{
+			cache: 'no-store',
+		},
+	)
 
 	if (!res.ok) return null
 

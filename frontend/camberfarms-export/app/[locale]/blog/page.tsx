@@ -1,4 +1,5 @@
-import wheatImg from '@/app/[locale]/assets/img/wheat.png'
+// import wheatImg from '@/app/[locale]/assets/img/wheat.png'
+import { getLocale } from 'next-intl/server'
 import { StaticImageData } from 'next/image'
 import axiosInstance from '../api/axios'
 import BlogMain from './BlogMain'
@@ -13,11 +14,11 @@ export type iBlog = {
 	slug: string
 }
 
-async function getBlogs(page: number) {
+async function getBlogs(page: number, locale: string) {
 	try {
 		// using an instance of axios with baseURL set
 		const res = await axiosInstance.get(`/api/export/blog`, {
-			params: { page, limit: 3 },
+			params: { page, limit: 3, lang: locale },
 		})
 		return res.data
 	} catch (_) {
@@ -45,41 +46,42 @@ export default async function BlogHome({
 }: {
 	searchParams?: Promise<{ page?: string }>
 }) {
+	const locale = await getLocale()
 	const params = await searchParams
 	const currentPage = Number(params?.page) || 1
-	const { data, pagination } = await getBlogs(currentPage)
+	const { data, pagination } = await getBlogs(currentPage, locale)
 
 	return (
 		<main className="w-full py-20 md:py-52 px-6 md:px-10 lg:px-20 bg-light-grey grid grid-cols-1 md:grid-cols-[55%_auto] gap-32 md:gap-20 items-start relative">
-			<BlogMain blogs={articles} pagination={pagination} />
+			<BlogMain blogs={data} pagination={pagination} />
 			<BlogSidebar />
 		</main>
 	)
 }
 
-const articles: iBlog[] = [
-	{
-		title: 'The Best Guide To Buying Wheat Grains in Bulk',
-		image: undefined,
-		excerpt:
-			'Increased investment in agricultural infrastructure is helping African producers tap into new markets across Europe and Asia, with maize and sesame leading the surge.',
-		publishedAt: 'September 18, 2025',
-		slug: 'the-guide',
-	},
-	{
-		title: 'The Best Guide To Buying Wheat Grains in Bulk',
-		image: wheatImg,
-		excerpt:
-			'Increased investment in agricultural infrastructure is helping African producers tap into new markets across Europe and Asia, with maize and sesame leading the surge.',
-		publishedAt: 'September 18, 2025',
-		slug: 'guide-the',
-	},
-	{
-		title: 'The Best Guide To Buying Wheat Grains in Bulk',
-		image: undefined,
-		excerpt:
-			'Increased investment in agricultural infrastructure is helping African producers tap into new markets across Europe and Asia, with maize and sesame leading the surge.',
-		publishedAt: 'September 18, 2025',
-		slug: 'best-guide',
-	},
-]
+// const articles: iBlog[] = [
+// 	{
+// 		title: 'The Best Guide To Buying Wheat Grains in Bulk',
+// 		image: undefined,
+// 		excerpt:
+// 			'Increased investment in agricultural infrastructure is helping African producers tap into new markets across Europe and Asia, with maize and sesame leading the surge.',
+// 		publishedAt: 'September 18, 2025',
+// 		slug: 'the-guide',
+// 	},
+// 	{
+// 		title: 'The Best Guide To Buying Wheat Grains in Bulk',
+// 		image: wheatImg,
+// 		excerpt:
+// 			'Increased investment in agricultural infrastructure is helping African producers tap into new markets across Europe and Asia, with maize and sesame leading the surge.',
+// 		publishedAt: 'September 18, 2025',
+// 		slug: 'guide-the',
+// 	},
+// 	{
+// 		title: 'The Best Guide To Buying Wheat Grains in Bulk',
+// 		image: undefined,
+// 		excerpt:
+// 			'Increased investment in agricultural infrastructure is helping African producers tap into new markets across Europe and Asia, with maize and sesame leading the surge.',
+// 		publishedAt: 'September 18, 2025',
+// 		slug: 'best-guide',
+// 	},
+// ]

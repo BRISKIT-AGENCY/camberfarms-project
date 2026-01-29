@@ -57,7 +57,8 @@ export default function ContactInfo() {
 						Address
 					</h6>
 					<address className="text-sm text-light-grey not-italic">
-						123 Trade Zone, Lagos, Nigeria
+						Graceland Plaza, by Mobil Junction along Nkpolu-Rumuigbo east west
+						road, Port Harcourt Rivers State Nigeria.
 					</address>
 				</div>
 			</div>

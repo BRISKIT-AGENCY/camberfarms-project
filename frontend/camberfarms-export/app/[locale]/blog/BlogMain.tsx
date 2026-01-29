@@ -30,7 +30,7 @@ export default function BlogMain({
 										src={blog.image}
 										alt={blog.title}
 										fill
-										placeholder="blur"
+										// placeholder="blur"
 										className="w-full object-cover object-center rounded-2xl"
 									/>
 								</div>

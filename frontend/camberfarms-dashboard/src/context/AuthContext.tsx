@@ -1,0 +1,99 @@
+import Cookies from 'js-cookie'
+import {
+	createContext,
+	useEffect,
+	useReducer,
+	useState,
+	type Dispatch,
+	type ReactNode,
+} from 'react'
+import { setAuthToken } from '../api/axios'
+
+interface User {
+	id: number
+	email: string
+	username?: string
+}
+
+interface AuthState {
+	user: User | null
+	token: string | null
+}
+
+type AuthAction =
+	| { type: 'LOGIN'; user: User | null; token: string }
+	| { type: 'LOGOUT' }
+
+interface AuthContextType extends AuthState {
+	dispatch: Dispatch<AuthAction>
+	authIsReady: boolean
+}
+
+export const AuthContext = createContext<AuthContextType | undefined>(undefined)
+
+function reducer(state: AuthState, action: AuthAction): AuthState {
+	switch (action.type) {
+		case 'LOGIN':
+			return {
+				user: action.user,
+				token: action.token,
+			}
+
+		case 'LOGOUT':
+			return {
+				user: null,
+				token: null,
+			}
+
+		default:
+			return state
+	}
+}
+
+export function AuthContextProvider({ children }: { children: ReactNode }) {
+	const [state, dispatch] = useReducer(reducer, {
+		user: null,
+		token: null,
+	})
+
+	const [authIsReady, setAuthIsReady] = useState(false)
+
+	useEffect(() => {
+		function loadUser() {
+			const token = Cookies.get('token')
+
+			if (!token) {
+				setAuthToken(null)
+				dispatch({ type: 'LOGOUT' })
+				setAuthIsReady(true)
+				return
+			}
+
+			setAuthToken(token)
+			dispatch({
+				type: 'LOGIN',
+				user: null,
+				token,
+			})
+			setAuthIsReady(true)
+		}
+		// async function loadUser() {
+		// 	try {
+		// 		const res = await api.get<User>('edit-profile/')
+		// 	} catch (err) {
+		// 		console.error(err)
+		// 		localStorage.removeItem('token')
+		// 		setAuthToken(null)
+		// 		dispatch({ type: 'LOGOUT' })
+		// 	} finally {
+		// 	}
+
+		loadUser()
+	}, [])
+
+	return (
+		<AuthContext.Provider value={{ ...state, dispatch, authIsReady }}>
+			{children}
+		</AuthContext.Provider>
+	)
+}

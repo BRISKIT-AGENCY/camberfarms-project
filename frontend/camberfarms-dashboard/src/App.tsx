@@ -1,4 +1,5 @@
 import { Suspense, lazy } from 'react'
+import { Toaster } from 'react-hot-toast'
 import {
 	Navigate,
 	Route,
@@ -8,6 +9,7 @@ import {
 import Loading from './components/Loading'
 import Sidebar from './components/Sidebar'
 import Topbar from './components/Topbar'
+import Login from './pages/Login'
 import NotFound from './pages/NotFound'
 const ForgotPassword = lazy(() => import('./pages/account/ForgotPassword'))
 const PasswordSuccess = lazy(() => import('./pages/account/PasswordSuccess'))
@@ -124,6 +126,8 @@ export default function App() {
 								<Route path="reset-password" element={<ResetPassword />} />
 								<Route path="reset-success" element={<PasswordSuccess />} />
 							</Route>
+							{/* login */}
+							<Route path="login" element={<Login />} />
 							{/* 404 */}
 							<Route path="*" element={<NotFound />} />
 						</Routes>
@@ -136,6 +140,7 @@ export default function App() {
 				>
 					This site requires a larger screen to function properly.
 				</div>
+				<Toaster />
 			</Suspense>
 		</Router>
 	)

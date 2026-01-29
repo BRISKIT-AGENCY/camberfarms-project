@@ -5,6 +5,7 @@ import callIcon from '../assets/icon/call-white.svg'
 import facebookIcon from '../assets/icon/facebook-f.svg'
 import instagramIcon from '../assets/icon/instagram.svg'
 import linkedinIcon from '../assets/icon/linkedin-in.svg'
+import locationIcon from '../assets/icon/location-white.svg'
 import mailIcon from '../assets/icon/mail-white.svg'
 import twitterIcon from '../assets/icon/twitter-x.svg'
 import bgPatternImg from '../assets/img/bg-pattern-white.png'
@@ -57,6 +58,13 @@ export default async function Footer() {
 						<p className="font-bold text-base lg:text-lg font-poppins">
 							{t('contact.heading')}
 						</p>
+						<div className="flex gap-3 mt-4 lg:mt-0 max-w-lg">
+							<Image src={locationIcon} alt="location" />
+							<address className="not-italic decoration-0">
+								Graceland Plaza, by Mobil Junction along Nkpolu-Rumuigbo east
+								west road, Port Harcourt Rivers State Nigeria.
+							</address>
+						</div>
 						<div className="flex gap-3 mt-4 lg:mt-0">
 							<Image src={mailIcon} alt="Email icon" width={24} height={24} />
 							<a href="mailto:camberfarmexport@gmail.com">
