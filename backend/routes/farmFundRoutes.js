@@ -12,7 +12,8 @@ router.post("/farm-fund", async (req, res) => {
       phone,
       category,
       country,
-      residence
+      residence,
+      message
     } = req.body;
     
 
@@ -23,7 +24,8 @@ router.post("/farm-fund", async (req, res) => {
       !phone ||
       !category ||
       !country ||
-      !residence
+      !residence ||
+      !message
     ) {
       return res.status(400).json({
         message: "All fields are required"
@@ -36,7 +38,8 @@ router.post("/farm-fund", async (req, res) => {
       phone,
       category,
       country,
-      residence
+      residence,
+      message
     });
 
     res.status(201).json({

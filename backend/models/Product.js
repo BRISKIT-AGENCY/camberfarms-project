@@ -1,84 +1,80 @@
 import mongoose from 'mongoose'
 
-/**
- * Variant Schema
- */
-const variantSchema = new mongoose.Schema(
-  {
-    name: {
-      type: Map,
-      of: String, // { en: "Red Pepper", fr: "Poivron Rouge", de: "Rote Paprika" }
-      required: true
-    },
-
-    image: {
-      type: String,
-      required: true
-    },
-
-    minimumOrder: {
-      type: Number,
-      required: true
-    },
-
-    maximumOrder: {
-      type: Number,
-      required: true
-    }
-  },
-  { _id: false }
-)
-
-/**
- * Product Schema
- */
 const productSchema = new mongoose.Schema(
   {
-    title: {
-      type: Map,
-      of: String, // { en, fr, de, es, it, pt, ar, zh, ru, tr }
-      required: true
+    name: {
+      type: String,
+      required: true,
+      trim: true
     },
 
-    image: {
-      type: String, // group cover image
-      required: true
+    category: {
+      type: String,
+      required: true,
+      trim: true
+      // e.g. "Grains", "Legumes", "Oil Seeds"
     },
 
-    descriptions: {
-      type: Map,
-      of: String,
-      required: true
+    type: {
+      type: String,
+      required: true,
+      trim: true
+      // e.g. "White Maize", "Yellow Maize"
     },
 
-    packaging: {
-      type: Map,
-      of: String,
-      required: true
+    images: [
+      {
+        type: String,
+        required: true
+      }
+    ],
+
+    description: {
+      type: String,
+      required: true,
+      trim: true
     },
 
-    containerSize: {
-      type: Map,
-      of: String,
-      required: true
+    stockQuantity: {
+      type: Number,
+      required: true,
+      min: 0
     },
 
-    seasons: {
-      type: [String],
-      required: true
+    status: {
+      type: String,
+      enum: ['active', 'sold_out'],
+      default: 'active'
     },
 
-    incoterms: {
-      type: [String],
-      required: true
+    moistureContent: {
+      type: Number,
+      min: 0,
+      max: 100
     },
 
-    variants: {
-      type: [variantSchema],
+    proteinContent: {
+      type: Number,
+      min: 0,
+      max: 100
+    },
+
+    cropYear: {
+      type: Number,
       required: true
     }
   },
-  { timestamps: true }
+  {
+    timestamps: true
+  }
 )
+
+// 🔁 Auto update status when stock is zero
+productSchema.pre('save', function (next) {
+  if (this.stockQuantity === 0) {
+    this.status = 'sold_out'
+  }
+  next()
+})
 
 export default mongoose.model('Product', productSchema)

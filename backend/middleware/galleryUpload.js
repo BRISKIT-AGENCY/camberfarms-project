@@ -2,13 +2,13 @@ import multer from 'multer'
 import path from 'path'
 import fs from 'fs'
 
-// Ensure upload directory exists
-const UPLOAD_DIR = 'uploads/products'
+// Upload folder
+const UPLOAD_DIR = 'uploads/gallery'
 if (!fs.existsSync(UPLOAD_DIR)) {
   fs.mkdirSync(UPLOAD_DIR, { recursive: true })
 }
 
-// Multer storage config
+// Multer storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, UPLOAD_DIR)
@@ -19,7 +19,7 @@ const storage = multer.diskStorage({
   }
 })
 
-// File filter (accept only images)
+// File filter (images only)
 const fileFilter = (req, file, cb) => {
   const allowedTypes = /jpeg|jpg|png/
   const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase())
@@ -29,11 +29,8 @@ const fileFilter = (req, file, cb) => {
 }
 
 // Multer upload instance
-const upload = multer({
+export const galleryUpload = multer({
   storage,
   fileFilter,
   limits: { fileSize: 5 * 1024 * 1024 } // 5MB
 })
-
-// Middleware for product upload: 1 main + multiple variants
-export const productUpload = upload.array('images', 20)

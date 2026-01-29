@@ -24,7 +24,8 @@ const farmFundValidationSchema = Yup.object({
   phone: Yup.string().required("Phone number is required"),
   category: Yup.string().required("Category is required"),
   country: Yup.string().required("Country is required"),
-  residence: Yup.string().required("State of residence is required")
+  residence: Yup.string().required("State of residence is required"),
+  message: Yup.string().required("Message is required")
 });
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
@@ -36,7 +37,8 @@ const FarmFundForm = () => {
       phone: "",
       category: "",
       country: "",
-      residence: ""
+      residence: "",
+      message: ""
     },
     validationSchema: farmFundValidationSchema,
     onSubmit: async (values, { resetForm, setSubmitting, setStatus }) => {
@@ -136,6 +138,17 @@ const FarmFundForm = () => {
             {formik.touched.residence && formik.errors.residence && (
               <p className="mt-1 text-sm text-red-500">
                 {formik.errors.residence}
+              </p>
+            )}
+
+            <textarea
+              placeholder='message'
+              {...formik.getFieldProps('message')}
+              className="w-full px-3 py-2 border border-[#808080] rounded-xl h-25 md:h-35 mt-6 md:mt-4.5"
+            />
+            {formik.touched.message && formik.errors.message && (
+              <p className="text-red-600 text-sm mt-1">
+                {formik.errors.message}
               </p>
             )}
 

@@ -18,6 +18,21 @@ const messageSchema = new mongoose.Schema(
       lowercase: true,
       trim: true
     },
+    status: {
+      type: String,
+      enum: ["pending", "read"],
+      default: "pending"
+    },
+    adminReply: {
+      type: String,
+      trim: true,
+      default: ''
+    },
+    source: {
+      type: String,
+      default: 'export',
+      immutable: true
+    },
     message: {
       type: String,
       required: true,

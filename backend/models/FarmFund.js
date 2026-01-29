@@ -1,7 +1,5 @@
 import mongoose, { Schema } from "mongoose";
 
-
-
 const FarmFundSchema = new Schema(
   {
     name: {
@@ -31,6 +29,25 @@ const FarmFundSchema = new Schema(
     residence: {
       type: String,
       required: true
+    },
+    message: {
+      type: String,
+      trim: true
+    },
+    status: {
+      type: String,
+      enum: ["pending", "read"],
+      default: "pending"
+    },
+    adminReply: {
+      type: String,
+      trim: true,
+      default: ''
+    },
+    source: {
+      type: String,
+      default: 'africa',
+      immutable: true
     }
   },
   {

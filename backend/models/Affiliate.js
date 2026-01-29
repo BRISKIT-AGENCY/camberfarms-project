@@ -68,6 +68,12 @@ const affiliateSchema = new mongoose.Schema(
     referralPlatformOthers: {
       type: String,
       default: ''
+    },
+
+    status: {
+      type: String,
+      enum: ['pending', 'approved', 'rejected'],
+      default: 'pending'
     }
   },
   { timestamps: true }

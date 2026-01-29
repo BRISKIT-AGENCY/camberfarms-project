@@ -42,6 +42,16 @@ const membershipSchema = new mongoose.Schema(
       type: String,
       required: true
     },
+    status: {
+      type: String,
+      enum: ["pending", "reject","approved"],
+      default: "pending"
+    },
+    source: {
+      type: String,
+      default: 'africa',
+      immutable: true
+    },
     idFiles: [
       {
         type: String // stored file paths or URLs
