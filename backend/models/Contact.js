@@ -22,6 +22,23 @@ const contactSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true
+    },
+
+    adminReply: {
+      type: String,
+      trim: true,
+      default: ''
+    },
+
+    status: {
+      type: String,
+      enum: ['pending', 'read'],
+      default: 'pending'
+    },
+    source: {
+      type: String,
+      default: 'africa',
+      immutable: true
     }
   },
   {

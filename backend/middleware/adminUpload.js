@@ -2,13 +2,13 @@ import multer from 'multer'
 import path from 'path'
 import fs from 'fs'
 
-// Ensure upload directory exists
-const UPLOAD_DIR = 'uploads/products'
+// Directory for admin profile photos
+const UPLOAD_DIR = 'uploads/admins'
 if (!fs.existsSync(UPLOAD_DIR)) {
   fs.mkdirSync(UPLOAD_DIR, { recursive: true })
 }
 
-// Multer storage config
+// Storage config
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, UPLOAD_DIR)
@@ -19,7 +19,7 @@ const storage = multer.diskStorage({
   }
 })
 
-// File filter (accept only images)
+// File filter: only images
 const fileFilter = (req, file, cb) => {
   const allowedTypes = /jpeg|jpg|png/
   const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase())
@@ -32,8 +32,7 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
   storage,
   fileFilter,
-  limits: { fileSize: 5 * 1024 * 1024 } // 5MB
+  limits: { fileSize: 5 * 1024 * 1024 } // 5MB max
 })
 
-// Middleware for product upload: 1 main + multiple variants
-export const productUpload = upload.array('images', 20)
+export const adminUpload = upload.single('profilePhoto') // single image

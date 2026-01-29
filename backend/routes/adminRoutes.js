@@ -19,6 +19,9 @@ import { exportBlogUpload } from '../middleware/exportBlogUpload.js'
 import { newsUpload } from '../middleware/newsUpload.js'
 import Visitor from '../models/Visitor.js'
 import Admin from '../models/Admin.js'
+import { galleryUpload } from '../middleware/galleryUpload.js'
+import Gallery from '../models/Gallery.js'
+import { adminUpload } from '../middleware/adminUpload.js'
 
 dotenv.config();
 
@@ -97,6 +100,34 @@ router.post('/reset-password/confirm', async (req, res) => {
   }
 })
 
+// Upload or update the single admin's profile photo
+router.post('/admin/profile-photo', adminAuth, adminUpload, async (req, res) => {
+  try {
+    // Assuming there is only one admin in the collection
+    const admin = await Admin.findOne()
+    if (!admin) {
+      return res.status(404).json({ success: false, message: 'Admin not found' })
+    }
+
+    if (!req.file) {
+      return res.status(400).json({ success: false, message: 'No file uploaded' })
+    }
+
+    // Save file path to admin document
+    admin.profilePhoto = `/uploads/admins/${req.file.filename}`
+    await admin.save()
+
+    res.status(200).json({
+      success: true,
+      message: 'Profile photo updated successfully',
+      profilePhoto: admin.profilePhoto
+    })
+  } catch (error) {
+    console.error('Upload profile photo error:', error)
+    res.status(500).json({ success: false, message: 'Failed to upload profile photo' })
+  }
+})
+
 router.post('/reset-password', adminAuth, async (req, res) => {
   const { oldPassword, newPassword } = req.body
 
@@ -117,7 +148,54 @@ router.post('/reset-password', adminAuth, async (req, res) => {
   res.json({ message: 'Password updated successfully' })
 })
 
+router.post('/gallery', adminAuth, galleryUpload.array('images', 20), async (req, res) => {
+  try {
+    if (!req.files || req.files.length === 0)
+      return res.status(400).json({ message: 'At least one image is required' })
 
+    const images = req.files.map(file => `/uploads/gallery/${file.filename}`)
+
+    const gallery = new Gallery({ images })
+    await gallery.save()
+
+    res.status(201).json({ message: 'Gallery created successfully', gallery })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Failed to create gallery', error: error.message })
+  }
+})
+
+router.delete('/gallery/:id', adminAuth, async (req, res) => {
+  try {
+    const gallery = await Gallery.findByIdAndDelete(req.params.id)
+    if (!gallery) return res.status(404).json({ success: false, message: 'Gallery not found' })
+    res.status(200).json({ success: true, message: 'Gallery deleted successfully' })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ success: false, message: 'Failed to delete gallery' })
+  }
+})
+
+// GET all Africa blogs
+router.get('/africa-blogs', async (req, res) => {
+  try {
+    // Fetch all blogs, newest first
+    const blogs = await Blog.find().sort({ createdAt: -1 })
+
+    res.status(200).json({
+      success: true,
+      total: blogs.length,
+      blogs
+    })
+  } catch (error) {
+    console.error('Failed to fetch blogs:', error)
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch blogs',
+      error: error.message
+    })
+  }
+})
 
 // camberfarm africa blog creation route
 router.post('/africa-blogs', adminAuth, blogUpload.single('image'), async (req, res) => {
@@ -149,7 +227,7 @@ router.post('/africa-blogs', adminAuth, blogUpload.single('image'), async (req, 
 
     await blog.save()
 
-    res.status(201).json({ message: 'Blog created successfully', blog })
+    res.status(201).json({ message: 'Blog created successfully', blogId: blog._id, blog })
   } catch (error) {
     console.error(error)
     res.status(500).json({ message: 'Failed to create blog', error: error.message })
@@ -223,7 +301,7 @@ router.delete('/africa-blogs/:id', adminAuth, async (req, res) => {
 
 
 // GET africa blog stats
-router.get('/africa-blogs', adminAuth, async (req, res) => {
+router.get('/africa-blogs/stats', adminAuth, async (req, res) => {
   try {
     const stats = await Blog.aggregate([
       {
@@ -270,6 +348,26 @@ router.get('/africa-blogs', adminAuth, async (req, res) => {
   }
 })
 
+// GET all export blogs
+router.get('/export-blogs', async (req, res) => {
+  try {
+    // Fetch all blogs, newest first
+    const exportBlogs = await exportBlog.find().sort({ createdAt: -1 })
+
+    res.status(200).json({
+      success: true,
+      total: exportBlogs.length,
+      exportBlogs
+    })
+  } catch (error) {
+    console.error('Failed to fetch export blogs:', error)
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch export blogs',
+      error: error.message
+    })
+  }
+})
 
 // camberfarm export blog creation route
 router.post(
@@ -305,7 +403,7 @@ router.post(
 
       await exportBlogs.save()
 
-      res.status(201).json({ message: 'ExportBlog created successfully', exportBlogs })
+      res.status(201).json({ message: 'ExportBlog created successfully', exportBlogId: exportBlogs._id, exportBlogs })
     } catch (error) {
       console.error(error)
       res.status(500).json({ message: 'Failed to create ExportBlog', error: error.message })
@@ -383,7 +481,7 @@ router.delete('/export-blogs/:id', adminAuth, async (req, res) => {
 
 
 // GET export blog stats
-router.get('/export-blogs', adminAuth, async (req, res) => {
+router.get('/export-blogs/stats', adminAuth, async (req, res) => {
   try {
     const stats = await exportBlog.aggregate([
       {
@@ -430,25 +528,103 @@ router.get('/export-blogs', adminAuth, async (req, res) => {
   }
 })
 
-// GET all contact messages
+// GET all contact messages (admin)
 router.get('/contacts', adminAuth, async (req, res) => {
   try {
-      const contacts = await contact.find()
-        .sort({ createdAt: -1 }) // latest first
-  
-      res.status(200).json({
-        success: true,
-        total: contacts.length,
-        data: contacts
-      })
-    } catch (error) {
-      console.error('Fetch contacts error:', error)
-      res.status(500).json({
+    const contacts = await contact.find()
+      .select('_id name email phone message adminReply status source createdAt')
+      .sort({ createdAt: -1 }) // latest first
+
+    res.status(200).json({
+      success: true,
+      total: contacts.length,
+      data: contacts
+    })
+  } catch (error) {
+    console.error('Fetch contacts error:', error)
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch contacts'
+    })
+  }
+})
+
+// GET single contact message by ID (admin)
+router.get('/contacts/:id', adminAuth, async (req, res) => {
+  try {
+    const contact = await contact.findById(req.params.id)
+
+    if (!contact) {
+      return res.status(404).json({
         success: false,
-        message: 'Failed to fetch contacts'
+        message: 'Contact message not found'
       })
     }
+
+    res.status(200).json({
+      success: true,
+      data: contact
+    })
+  } catch (error) {
+    console.error('Fetch contact error:', error)
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch contact'
+    })
+  }
 })
+
+// POST admin reply to contact + update status
+router.post('/contacts/:id', adminAuth, async (req, res) => {
+  try {
+    const { adminReply, status } = req.body
+
+    if (!adminReply && !status) {
+      return res.status(400).json({
+        success: false,
+        message: 'Nothing to update'
+      })
+    }
+
+    // validate status if provided
+    if (status && !['pending', 'read'].includes(status)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid status value'
+      })
+    }
+
+    const updatedContact = await contact.findByIdAndUpdate(
+      req.params.id,
+      {
+        ...(adminReply && { adminReply }),
+        ...(status && { status })
+      },
+      { new: true }
+    )
+
+    if (!updatedContact) {
+      return res.status(404).json({
+        success: false,
+        message: 'Contact message not found'
+      })
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Contact updated successfully',
+      data: updatedContact
+    })
+  } catch (error) {
+    console.error('Reply contact error:', error)
+    res.status(500).json({
+      success: false,
+      message: 'Failed to update contact'
+    })
+  }
+})
+
+
 
 // GET all FarmFund registrations
 router.get('/farm-fund', adminAuth, async (req, res) => {
@@ -465,6 +641,62 @@ router.get('/farm-fund', adminAuth, async (req, res) => {
   }
 })
 
+// PATCH /api/admin/farm-fund/:id
+// Admin can reply and/or change status
+router.patch('/farm-fund/:id', adminAuth, async (req, res) => {
+  try {
+    const { status, adminReply } = req.body
+
+    // Validate status if provided
+    if (status && !["pending", "read"].includes(status)) {
+      return res.status(400).json({ message: "Invalid status value" })
+    }
+
+    const updateData = {}
+    if (status) updateData.status = status
+    if (adminReply) updateData.adminReply = adminReply
+
+    const updatedRegistration = await FarmFund.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true }
+    )
+
+    if (!updatedRegistration) {
+      return res.status(404).json({ message: "FarmFund registration not found" })
+    }
+
+    res.status(200).json({
+      message: "FarmFund updated successfully",
+      data: updatedRegistration
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: "Server error" })
+  }
+})
+
+// GET /api/admin/farm-fund/:id
+// Fetch a single registration
+router.get('/farm-fund/:id', adminAuth, async (req, res) => {
+  try {
+    const registration = await FarmFund.findById(req.params.id)
+
+    if (!registration) {
+      return res.status(404).json({ message: "FarmFund registration not found" })
+    }
+
+    res.status(200).json({
+      success: true,
+      data: registration
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: "Server error" })
+  }
+})
+
+
 // GET all members (admin only)
 router.get('/membership', adminAuth, async (req, res) => {
   try {
@@ -477,6 +709,79 @@ router.get('/membership', adminAuth, async (req, res) => {
     })
   } catch (error) {
     res.status(500).json({ message: 'Server error' })
+  }
+})
+
+// GET /api/admin/membership/:id
+// Fetch a single membership form
+router.get('/membership/:id', adminAuth, async (req, res) => {
+  try {
+    const membership = await Membership.findById(req.params.id)
+
+    if (!membership) {
+      return res.status(404).json({ message: "Membership form not found" })
+    }
+
+    res.status(200).json({
+      success: true,
+      data: membership
+    })
+  } catch (error) {
+    console.error('Fetch membership error:', error)
+    res.status(500).json({ message: "Server error" })
+  }
+})
+
+// PATCH /api/admin/membership/:id/status
+// Admin can approve, reject, or set pending
+router.patch('/membership/:id/status', adminAuth, async (req, res) => {
+  try {
+    const { status } = req.body
+
+    // Validate status
+    if (!["pending", "reject", "approved"].includes(status)) {
+      return res.status(400).json({ message: "Invalid status value" })
+    }
+
+    const updatedMembership = await Membership.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      { new: true }
+    )
+
+    if (!updatedMembership) {
+      return res.status(404).json({ message: "Membership form not found" })
+    }
+
+    res.status(200).json({
+      message: "Membership status updated successfully",
+      data: updatedMembership
+    })
+  } catch (error) {
+    console.error('Update membership status error:', error)
+    res.status(500).json({ message: "Server error" })
+  }
+})
+
+
+// GET all news articles (admin or public)
+router.get('/news', async (req, res) => {
+  try {
+    // Fetch all news, sorted by newest first
+    const newsItems = await News.find().sort({ createdAt: -1 })
+
+    res.status(200).json({
+      success: true,
+      total: newsItems.length,
+      news: newsItems
+    })
+  } catch (error) {
+    console.error('Failed to fetch news:', error)
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch news',
+      error: error.message
+    })
   }
 })
 
@@ -508,7 +813,7 @@ router.post('/news', adminAuth, newsUpload.single('image'), async (req, res) => 
     })
 
     await newsItem.save()
-    res.status(201).json({ message: 'News created successfully', newsItem })
+    res.status(201).json({ message: 'News created successfully', newsItem, id:newsItem._id })
   } catch (error) {
     console.error(error)
     res.status(500).json({ message: 'Failed to create news', error: error.message })
@@ -573,7 +878,7 @@ router.delete('/news/:id', adminAuth, async (req, res) => {
 
 
 // GET news stats
-router.get('/news', adminAuth, async (req, res) => {
+router.get('/news/stats', adminAuth, async (req, res) => {
   try {
     const stats = await News.aggregate([
       {
@@ -774,7 +1079,7 @@ router.delete('/products/:id', adminAuth, async (req, res) => {
       })
     }
 
-  if (deletedProduct.image) fs.unlinkSync(`.${deletedProduct.image}`)
+    if (deletedProduct.image) fs.unlinkSync(`.${deletedProduct.image}`)
 
     res.status(200).json({
       message: 'Product deleted successfully'
@@ -872,22 +1177,77 @@ router.get('/products/images/count', adminAuth, async (req, res) => {
 
 
 // ✅ ADMIN – GET ALL FEEDBACK
-// GET /api/feedback
-router.get('/feedback',adminAuth, async (_req, res) => {
+// GET /api/admin/feedback
+router.get('/feedback', adminAuth, async (_req, res) => {
   try {
-    const feedbacks = await Feedback.find().sort({ createdAt: -1 })
+    const feedbacks = await Feedback.find()
+      .select('_id name email phone country message status adminReply source createdAt')
+      .sort({ createdAt: -1 })
 
     res.status(200).json({
       total: feedbacks.length,
       data: feedbacks
     })
   } catch (error) {
+    console.error('Fetch feedback error:', error)
     res.status(500).json({
       message: 'Failed to fetch feedback',
       error: error.message
     })
   }
 })
+
+// GET /api/admin/feedback/:id
+router.get('/feedback/:id', adminAuth, async (req, res) => {
+  try {
+    const feedback = await Feedback.findById(req.params.id)
+
+    if (!feedback) {
+      return res.status(404).json({ message: 'Feedback form not found' })
+    }
+
+    res.status(200).json({ success: true, data: feedback })
+  } catch (error) {
+    console.error('Fetch single feedback error:', error)
+    res.status(500).json({ message: 'Server error' })
+  }
+})
+
+// PATCH /api/admin/feedback/:id
+// Admin can reply and change status (pending -> read)
+router.patch('/feedback/:id', adminAuth, async (req, res) => {
+  try {
+    const { status, adminReply } = req.body
+
+    // Validate status if provided
+    if (status && !['pending', 'read'].includes(status)) {
+      return res.status(400).json({ message: 'Invalid status value' })
+    }
+
+    const updateData = {}
+    if (status) updateData.status = status
+    if (adminReply) updateData.adminReply = adminReply
+
+    const updatedFeedback = await Feedback.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true }
+    )
+
+    if (!updatedFeedback) {
+      return res.status(404).json({ message: 'Feedback form not found' })
+    }
+
+    res.status(200).json({
+      message: 'Feedback updated successfully',
+      data: updatedFeedback
+    })
+  } catch (error) {
+    console.error('Update feedback error:', error)
+    res.status(500).json({ message: 'Server error' })
+  }
+})
+
 
 // ✅ ADMIN – GET ALL MESSAGES
 // GET /api/messages
@@ -912,101 +1272,334 @@ router.get('/messages', adminAuth, async (req, res) => {
 })
 
 
-// ✅ ADMIN – GET ALL AFFILIATES
-// GET /api/affiliate
-router.get('/affiliate', async (_req, res) => {
+// GET /api/admin/affiliate
+router.get('/affiliate', adminAuth, async (_req, res) => {
   try {
-    const affiliates = await Affiliate.find().sort({ createdAt: -1 })
+    const affiliates = await Affiliate.find()
+      .select('_id fullName email phone country city understandTerms haveABuyer buyerCountry buyerProduct productVolume aboutInterest aboutCommission referralPlatform referralPlatformOthers status createdAt')
+      .sort({ createdAt: -1 });
 
     res.status(200).json({
       total: affiliates.length,
       data: affiliates
-    })
+    });
   } catch (error) {
+    console.error('Fetch affiliates error:', error);
     res.status(500).json({
       message: 'Failed to fetch affiliates',
       error: error.message
-    })
+    });
   }
-})
+});
 
-// GET africa notifications
+// GET /api/admin/affiliate/:id
+router.get('/affiliate/:id', adminAuth, async (req, res) => {
+  try {
+    const affiliate = await Affiliate.findById(req.params.id);
+
+    if (!affiliate) {
+      return res.status(404).json({
+        message: 'Affiliate not found'
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: affiliate
+    });
+  } catch (error) {
+    console.error('Fetch affiliate error:', error);
+    res.status(500).json({
+      message: 'Failed to fetch affiliate',
+      error: error.message
+    });
+  }
+});
+
+// PATCH /api/admin/affiliate/:id/status
+router.patch('/affiliate/:id/status', adminAuth, async (req, res) => {
+  try {
+    const { status } = req.body;
+
+    // Validate status
+    if (!['pending', 'approved', 'rejected'].includes(status)) {
+      return res.status(400).json({ message: 'Invalid status value' });
+    }
+
+    const updatedAffiliate = await Affiliate.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      { new: true }
+    );
+
+    if (!updatedAffiliate) {
+      return res.status(404).json({ message: 'Affiliate not found' });
+    }
+
+    res.status(200).json({
+      message: 'Status updated successfully',
+      data: updatedAffiliate
+    });
+  } catch (error) {
+    console.error('Update affiliate status error:', error);
+    res.status(500).json({
+      message: 'Failed to update status',
+      error: error.message
+    });
+  }
+});
+
+// GET unified africa notifications
+// GET /api/admin/africa/notifications?limit=10
 router.get('/africa/notifications', adminAuth, async (req, res) => {
   try {
-    // Fetch latest 5 entries from each collection
-    const [latestBlogs, latestContacts, latestFarmFunds, latestMemberships, latestNews] = await Promise.all([
-      Blog.find().sort({ createdAt: -1 }).limit(5),
-      contact.find().sort({ createdAt: -1 }).limit(5),
-      FarmFund.find().sort({ createdAt: -1 }).limit(5),
-      Membership.find().sort({ createdAt: -1 }).limit(5),
-      News.find().sort({ createdAt: -1 }).limit(5)
-    ])
+    // Optional limit query param (default 10)
+    const limit = parseInt(req.query.limit) || 10;
 
-    // Return combined result
+    // Fetch all latest entries (without limit yet)
+    const [blogs, contacts, farmFunds, memberships, news] = await Promise.all([
+      Blog.find().lean(),
+      Contact.find().lean(),
+      FarmFund.find().lean(),
+      Membership.find().lean(),
+      News.find().lean()
+    ]);
+
+    // Tag each entry with a "type" so you know its source
+    const tagged = [
+      ...blogs.map(b => ({ ...b, type: 'blog' })),
+      ...contacts.map(c => ({ ...c, type: 'contact' })),
+      ...farmFunds.map(f => ({ ...f, type: 'farmFund' })),
+      ...memberships.map(m => ({ ...m, type: 'membership' })),
+      ...news.map(n => ({ ...n, type: 'news' }))
+    ];
+
+    // Sort all by createdAt descending
+    const sorted = tagged.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+    // Apply the limit
+    const limited = sorted.slice(0, limit);
+
     res.status(200).json({
-      blogs: latestBlogs,
-      contacts: latestContacts,
-      farmFunds: latestFarmFunds,
-      memberships: latestMemberships,
-      news: latestNews
-    })
+      total: limited.length,
+      notifications: limited
+    });
   } catch (error) {
-    console.error(error)
+    console.error('Fetch unified notifications error:', error);
     res.status(500).json({
-      message: 'Failed to fetch dashboard notifications',
+      message: 'Failed to fetch unified notifications',
       error: error.message
-    })
+    });
   }
-})
+});
 
-// GET export notifications
+// GET export notifications (combined)
 router.get('/export/notifications', adminAuth, async (req, res) => {
   try {
-    // Fetch latest 5 entries from each collection
-    const [latestExportBlogs, latestAffiliates, latestFeedback, latestMessage, latestProducts] = await Promise.all([
-      exportBlog.find().sort({ createdAt: -1 }).limit(5),
-      Affiliate.find().sort({ createdAt: -1 }).limit(5),
-      Feedback.find().sort({ createdAt: -1 }).limit(5),
-      Message.find().sort({ createdAt: -1 }).limit(5),
-      Product.find().sort({ createdAt: -1 }).limit(5)
-    ])
+    // Optional limit query param
+    const limit = req.query.limit ? parseInt(req.query.limit) : null;
 
-    // Return combined result
+    // Fetch latest entries from each collection
+    const [exportBlogs, affiliates, feedbacks, messages, products] = await Promise.all([
+      exportBlog.find().lean(),
+      Affiliate.find().lean(),
+      Feedback.find().lean(),
+      Message.find().lean(),
+      Product.find().lean()
+    ]);
+
+    // Combine all entries into a single array
+    const combined = [
+      ...exportBlogs.map(item => ({ ...item, type: 'exportBlog' })),
+      ...affiliates.map(item => ({ ...item, type: 'affiliate' })),
+      ...feedbacks.map(item => ({ ...item, type: 'feedback' })),
+      ...messages.map(item => ({ ...item, type: 'message' })),
+      ...products.map(item => ({ ...item, type: 'product' }))
+    ];
+
+    // Sort by createdAt descending
+    const sorted = combined.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+    // Apply limit if set
+    const limited = limit ? sorted.slice(0, limit) : sorted;
+
     res.status(200).json({
-      exportBlogs: latestExportBlogs,
-      affiliates: latestAffiliates,
-      feedback: latestFeedback,
-      messages: latestMessage,
-      products: latestProducts
-    })
+      total: limited.length,
+      notifications: limited
+    });
   } catch (error) {
-    console.error(error)
+    console.error(error);
     res.status(500).json({
       message: 'Failed to fetch dashboard notifications',
       error: error.message
-    })
+    });
   }
-})
+});
 
-// Get counts for specific pages
+// GET /api/admin/enquiries?limit=10
+router.get('/enquiries', adminAuth, async (req, res) => {
+  try {
+    const limit = req.query.limit ? parseInt(req.query.limit) : null;
+
+    const [feedbacks, contacts, messages] = await Promise.all([
+      Feedback.find().lean(),
+      Contact.find().lean(),
+      Message.find().lean()
+    ]);
+
+    // Combine all entries into a single array
+    const combined = [
+      ...feedbacks.map(item => ({ ...item, type: 'feedback' })),
+      ...contacts.map(item => ({ ...item, type: 'contact' })),
+      ...messages.map(item => ({ ...item, type: 'message' }))
+    ];
+
+    // Sort by newest first
+    const sorted = combined.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+    // Apply limit if provided
+    const limited = limit ? sorted.slice(0, limit) : sorted;
+
+    res.status(200).json({
+      total: limited.length,
+      enquiries: limited
+    });
+  } catch (error) {
+    console.error('Fetch enquiries error:', error);
+    res.status(500).json({
+      message: 'Failed to fetch enquiries',
+      error: error.message
+    });
+  }
+});
+
+// GET /api/admin/enquiries/:type/:id
+router.get('/enquiries/:type/:id', adminAuth, async (req, res) => {
+  try {
+    const { type, id } = req.params;
+    let enquiry;
+
+    switch (type) {
+      case 'feedback':
+        enquiry = await Feedback.findById(id);
+        break;
+      case 'contact':
+        enquiry = await Contact.findById(id);
+        break;
+      case 'message':
+        enquiry = await Message.findById(id);
+        break;
+      default:
+        return res.status(400).json({ message: 'Invalid enquiry type' });
+    }
+
+    if (!enquiry) return res.status(404).json({ message: 'Enquiry not found' });
+
+    res.status(200).json({ enquiry });
+  } catch (error) {
+    console.error('Fetch single enquiry error:', error);
+    res.status(500).json({ message: 'Failed to fetch enquiry', error: error.message });
+  }
+});
+
+// POST /api/admin/enquiries/:type/:id/reply
+router.post('/enquiries/:type/:id/reply', adminAuth, async (req, res) => {
+  try {
+    const { type, id } = req.params;
+    const { status, adminReply } = req.body;
+
+    if (!status || !["pending", "read"].includes(status)) {
+      return res.status(400).json({ message: 'Invalid status' });
+    }
+
+    let updated;
+
+    switch (type) {
+      case 'feedback':
+        updated = await Feedback.findByIdAndUpdate(
+          id,
+          { status, adminReply },
+          { new: true }
+        );
+        break;
+      case 'contact':
+        updated = await Contact.findByIdAndUpdate(
+          id,
+          { status, adminReply },
+          { new: true }
+        );
+        break;
+      case 'message':
+        updated = await Message.findByIdAndUpdate(
+          id,
+          { status, adminReply },
+          { new: true }
+        );
+        break;
+      default:
+        return res.status(400).json({ message: 'Invalid enquiry type' });
+    }
+
+    if (!updated) return res.status(404).json({ message: 'Enquiry not found' });
+
+    res.status(200).json({
+      message: 'Enquiry updated successfully',
+      enquiry: updated
+    });
+  } catch (error) {
+    console.error('Update enquiry error:', error);
+    res.status(500).json({ message: 'Failed to update enquiry', error: error.message });
+  }
+});
+
+
+// GET overall stats
 router.get('/track-visit', async (req, res) => {
   try {
     const homeVisits = await Visitor.countDocuments({ path: '/' })
     const blogVisits = await Visitor.countDocuments({ path: '/blogs' })
     const newsVisits = await Visitor.countDocuments({ path: '/news' })
-    const singleBlogVisits = await Visitor.countDocuments({path: `/blogs/${slug}`
-})
-
 
     res.status(200).json({
       home: homeVisits,
       blogs: blogVisits,
-      news: newsVisits,
-      singleBlog: singleBlogVisits
+      news: newsVisits
     })
   } catch (error) {
+    console.error(error)
     res.status(500).json({ message: 'Failed to fetch stats' })
   }
 })
+
+// GET single blog views
+router.get('/track-visit/blog/:slug', async (req, res) => {
+  try {
+    const { slug } = req.params
+    if (!slug) return res.status(400).json({ message: 'Blog slug is required' })
+
+    const views = await Visitor.countDocuments({ path: `/blogs/${slug}` })
+
+    res.status(200).json({ slug, views })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Failed to fetch blog views' })
+  }
+})
+
+// GET single news views
+router.get('/track-visit/news/:slug', async (req, res) => {
+  try {
+    const { slug } = req.params
+    if (!slug) return res.status(400).json({ message: 'News slug is required' })
+
+    const views = await Visitor.countDocuments({ path: `/news/${slug}` })
+
+    res.status(200).json({ slug, views })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Failed to fetch news views' })
+  }
+})
+
 
 export default router

@@ -14,6 +14,10 @@ const adminSchema = new mongoose.Schema({
     type: String,
     default: 'admin'
   },
+  profilePhoto: {
+    type: String, // store URL or path to the profile image
+    default: ''    // optional default empty string
+  },
   createdAt: {
     type: Date,
     default: Date.now
@@ -21,3 +25,4 @@ const adminSchema = new mongoose.Schema({
 })
 
 export default mongoose.model('Admin', adminSchema)
+
