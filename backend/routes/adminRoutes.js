@@ -63,15 +63,6 @@ router.post('/login', async (req, res) => {
 })
 
 
-  const token = jwt.sign(
-    { adminId: admin._id, role: admin.role },
-    process.env.JWT_SECRET,
-    { expiresIn: '1d' }
-  )
-
-  res.json({ token })
-})
-
 
 router.post('/reset-password/request', async (req, res) => {
   const { username } = req.body
