@@ -1,21 +1,43 @@
+import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 import { IoClose } from 'react-icons/io5'
 import { MdVerified } from 'react-icons/md'
+import axiosInstance from '../../api/axios'
 import editIcon from '../../assets/icon/edit.svg'
 import userAvatar from '../../assets/img/user-avatar.png'
 import { Dropzone } from '../../components/Dropzone'
 import OverlayWrapper from '../../components/OverlayWrapper'
+import { useAuth } from '../../hooks/useAuth'
 
 export default function AccountProfile() {
+	const { user } = useAuth()
 	const [profileImg, setProfileImg] = useState<File | null>(null)
 	const [showForm, setShowForm] = useState(false)
-	console.log(profileImg)
+	const { mutateAsync, data, isPending } = useMutation({
+		mutationFn: async (data: FormData) => {
+			const res = await axiosInstance.post('/admin/profile-photo', data)
+			return res.data
+		},
+	})
+
+	async function handleSubmit() {
+		const formData = new FormData()
+		if (!profileImg) {
+			throw new Error('Image is required')
+		}
+
+		formData.append('file', profileImg)
+		await mutateAsync(formData)
+		console.log('data: ', data)
+		setShowForm(false)
+	}
+
 	return (
 		<div className="w-full mb-4 rounded-t-xl bg-[url('./account-bg1.png')] bg-no-repeat bg-cover bg-top-left">
 			<div className="w-full from-[#11881A99] via-[#11881A90] to-[#1AD32999] bg-linear-360 text-white px-6 py-10 mt-6 rounded-t-xl flex items-center">
 				<div className="w-28 lg:w-32 aspect-square ml-2 mr-6">
 					<img
-						src={userAvatar}
+						src={user?.profilePhoto || userAvatar}
 						alt=""
 						className="object-fill object-center w-full rounded-full"
 					/>
@@ -45,7 +67,8 @@ export default function AccountProfile() {
 							<Dropzone setState={setProfileImg} />
 							<button
 								type="button"
-								disabled={profileImg === null}
+								onClick={handleSubmit}
+								disabled={profileImg === null || isPending}
 								className="flex items-center mt-6 bg-primary text-white py-2 px-4 rounded-lg font-semibold cursor-pointer disabled:opacity-50"
 							>
 								Save changes

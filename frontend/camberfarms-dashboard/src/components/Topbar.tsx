@@ -2,7 +2,7 @@ import { LuCalendar } from 'react-icons/lu'
 import { RiNotification2Fill } from 'react-icons/ri'
 import { Link } from 'react-router-dom'
 
-export default function Topbar({ name = 'a' }: { name: string }) {
+export default function Topbar({ name = 'admin' }: { name?: string }) {
 	const now = new Date()
 	const dayOfWeek = now.toLocaleDateString('en-US', { weekday: 'long' })
 	const month = now.toLocaleDateString('en-US', { month: 'short' })

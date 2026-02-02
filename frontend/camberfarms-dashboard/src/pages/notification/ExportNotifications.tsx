@@ -3,16 +3,15 @@ import NotificationCard, {
 	type NotiesProps,
 } from '../../components/NotificationCard'
 
-export default function ExportNitifications() {
+export default function ExportNotifications() {
 	return (
 		<div className="w-full grid grid-cols-1 gap-4 my-6 pb-20">
-			{notification.map((item, index) => (
-				<div className="w-full bg-white dark:bg-black p-4 rounded-lg">
-					<NotificationCard
-						key={index}
-						{...item}
-						time={formatDistanceToNow(item.time!)}
-					/>
+			{notification.map((item) => (
+				<div
+					className="w-full bg-white dark:bg-black p-4 rounded-lg"
+					key={item.id}
+				>
+					<NotificationCard {...item} time={formatDistanceToNow(item.time!)} />
 				</div>
 			))}
 		</div>

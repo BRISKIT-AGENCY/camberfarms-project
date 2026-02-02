@@ -9,6 +9,7 @@ import {
 import Loading from './components/Loading'
 import Sidebar from './components/Sidebar'
 import Topbar from './components/Topbar'
+import { useAuth } from './hooks/useAuth'
 import Login from './pages/Login'
 import NotFound from './pages/NotFound'
 const ForgotPassword = lazy(() => import('./pages/account/ForgotPassword'))
@@ -42,10 +43,10 @@ const MembershipPage = lazy(() => import('./pages/membership/MembershipPage'))
 const AddNews = lazy(() => import('./pages/news/AddNews'))
 const EditNews = lazy(() => import('./pages/news/EditNews'))
 const NewsPage = lazy(() => import('./pages/news/NewsPage'))
-const AfricaNitifications = lazy(
-	() => import('./pages/notification/AfricaNitifications'),
+const AfricaNotifications = lazy(
+	() => import('./pages/notification/AfricaNotifications'),
 )
-const ExportNitifications = lazy(
+const ExportNotifications = lazy(
 	() => import('./pages/notification/ExportNotifications'),
 )
 const NotificationPage = lazy(
@@ -56,92 +57,121 @@ const EditProduct = lazy(() => import('./pages/products/EditProduct'))
 const ProductsPage = lazy(() => import('./pages/products/ProductsPage'))
 const AccountPage = lazy(() => import('./pages/account/AccountPage'))
 
+// route validation
+import LoginRoute from './utils/LoginRoute'
+import ProtectedRoute from './utils/ProtectedRoute'
+
 export default function App() {
+	const { authIsReady, user } = useAuth()
+
 	return (
-		<Router>
-			<Suspense fallback={<Loading />}>
-				<section className="hidden w-full min-h-screen sm:grid grid-cols-[75px_auto] lg:grid-cols-[250px_auto] bg-light-grey dark:bg-dark-grey text-foreground dark:text-background">
-					<Sidebar />
-					<main className="w-full space-y-6 overflow-y-auto dark:bg-dark-grey">
-						<Topbar name="john doe" />
-						<Routes>
-							{/* home */}
-							<Route index element={<Dashboard />} />
-							{/* products */}
-							<Route path="products" element={<ProductsPage />}>
-								<Route path="new" element={<AddProduct />} />
-								<Route path="edit/:productId" element={<EditProduct />} />
-								{/* if user goes to products/[id] redirect back to products */}
-								<Route path=":id" element={<Navigate to={'/products'} />} />
-							</Route>
-							{/* news */}
-							<Route path="news" element={<NewsPage />}>
-								<Route path="new" element={<AddNews />} />
-								<Route path="edit/:newsId" element={<EditNews />} />
-								{/* if user goes to news/[id] redirect back to news */}
-								<Route path=":id" element={<Navigate to={'/news'} />} />
-							</Route>
-							{/* blog */}
-							<Route path="blog" element={<BlogPage />}>
-								<Route path="new" element={<AddBlog />} />
-								<Route path="edit/:blogId" element={<EditBlog />} />
-								{/* if user goes to blog/[id] redirect back to blog */}
-								<Route path=":id" element={<Navigate to={'/blog'} />} />
-							</Route>
-							{/* gallery */}
-							<Route path="gallery" element={<GalleryPage />}>
-								<Route path="new" element={<AddGallery />} />
-								<Route path="edit/:imageId" element={<EditGallery />} />
-							</Route>
-							{/* notifications */}
-							<Route path="notification" element={<NotificationPage />}>
-								<Route path="africa" element={<AfricaNitifications />} />
-								<Route path="export" element={<ExportNitifications />} />
-							</Route>
-							{/* affiliate */}
-							<Route path="affiliate" element={<AffiliatePage />}>
-								<Route path=":id" element={<AffiliateMembership />} />
-							</Route>
-							{/* Enquiries */}
-							<Route path="enquiries" element={<EnquiriesPage />}>
-								<Route path=":enquiryId" element={<ViewEnquiry />} />
-								<Route path="reply/:enquiryId" element={<ReplyEnquiry />} />
-							</Route>
-							{/* membership */}
-							<Route path="membership" element={<MembershipPage />}>
-								<Route path=":id" element={<MembershipForm />} />
-							</Route>
-							{/* farm fund form */}
-							<Route path="farm-fund-form" element={<FarmFundPage />}>
-								<Route path=":enquiryId" element={<ViewFarmFundEnquiry />} />
-								<Route
-									path="reply/:enquiryId"
-									element={<ReplyFarmFundEnquiry />}
-								/>
-							</Route>
-							{/* account */}
-							<Route path="account" element={<AccountPage />}>
-								<Route path="theme" element={<Theme />} />
-								<Route path="iforgot" element={<ForgotPassword />} />
-								<Route path="reset-password" element={<ResetPassword />} />
-								<Route path="reset-success" element={<PasswordSuccess />} />
-							</Route>
-							{/* login */}
-							<Route path="login" element={<Login />} />
-							{/* 404 */}
-							<Route path="*" element={<NotFound />} />
-						</Routes>
-					</main>
-				</section>
-				{/* hide from users on mobile */}
-				<div
-					className="sm:hidden w-full h-screen flex items-center justify-center p-10 text-center"
-					role="alert"
-				>
-					This site requires a larger screen to function properly.
-				</div>
-				<Toaster />
-			</Suspense>
-		</Router>
+		<>
+			{authIsReady && (
+				<Router>
+					<Suspense fallback={<Loading />}>
+						<section className="hidden w-full min-h-screen sm:grid grid-cols-[75px_auto] lg:grid-cols-[250px_auto] bg-light-grey dark:bg-dark-grey text-foreground dark:text-background">
+							<Sidebar />
+							<main className="w-full space-y-6 overflow-y-auto dark:bg-dark-grey">
+								<Topbar name={user?.username} />
+								<Routes>
+									<Route element={<ProtectedRoute />}>
+										{/* home */}
+										<Route index element={<Dashboard />} />
+										{/* products */}
+										<Route path="products" element={<ProductsPage />}>
+											<Route path="new" element={<AddProduct />} />
+											<Route path="edit/:productId" element={<EditProduct />} />
+											{/* if user goes to products/[id] redirect back to products */}
+											<Route
+												path=":id"
+												element={<Navigate to={'/products'} />}
+											/>
+										</Route>
+										{/* news */}
+										<Route path="news" element={<NewsPage />}>
+											<Route path="new" element={<AddNews />} />
+											<Route path="edit/:newsId" element={<EditNews />} />
+											{/* if user goes to news/[id] redirect back to news */}
+											<Route path=":id" element={<Navigate to={'/news'} />} />
+										</Route>
+										{/* blog */}
+										<Route path="blog" element={<BlogPage />}>
+											<Route path="new" element={<AddBlog />} />
+											<Route path="edit/:blogId" element={<EditBlog />} />
+											{/* if user goes to blog/[id] redirect back to blog */}
+											<Route path=":id" element={<Navigate to={'/blog'} />} />
+										</Route>
+										{/* gallery */}
+										<Route path="gallery" element={<GalleryPage />}>
+											<Route path="new" element={<AddGallery />} />
+											<Route path="edit/:imageId" element={<EditGallery />} />
+										</Route>
+										{/* notifications */}
+										<Route path="notification" element={<NotificationPage />}>
+											<Route path="africa" element={<AfricaNotifications />} />
+											<Route path="export" element={<ExportNotifications />} />
+										</Route>
+										{/* affiliate */}
+										<Route path="affiliate" element={<AffiliatePage />}>
+											<Route path=":id" element={<AffiliateMembership />} />
+										</Route>
+										{/* Enquiries */}
+										<Route path="enquiries" element={<EnquiriesPage />}>
+											<Route path=":enquiryId" element={<ViewEnquiry />} />
+											<Route
+												path="reply/:enquiryId"
+												element={<ReplyEnquiry />}
+											/>
+										</Route>
+										{/* membership */}
+										<Route path="membership" element={<MembershipPage />}>
+											<Route path=":id" element={<MembershipForm />} />
+										</Route>
+										{/* farm fund form */}
+										<Route path="farm-fund-form" element={<FarmFundPage />}>
+											<Route
+												path=":enquiryId"
+												element={<ViewFarmFundEnquiry />}
+											/>
+											<Route
+												path="reply/:enquiryId"
+												element={<ReplyFarmFundEnquiry />}
+											/>
+										</Route>
+										{/* account */}
+										<Route path="account" element={<AccountPage />}>
+											<Route path="theme" element={<Theme />} />
+											<Route path="iforgot" element={<ForgotPassword />} />
+											<Route
+												path="reset-password"
+												element={<ResetPassword />}
+											/>
+											<Route
+												path="reset-success"
+												element={<PasswordSuccess />}
+											/>
+										</Route>
+									</Route>
+									{/* login */}
+									<Route element={<LoginRoute />}>
+										<Route path="login" element={<Login />} />
+									</Route>
+									{/* 404 */}
+									<Route path="*" element={<NotFound />} />
+								</Routes>
+							</main>
+						</section>
+						{/* hide from users on mobile */}
+						<div
+							className="sm:hidden w-full h-screen flex items-center justify-center p-10 text-center"
+							role="alert"
+						>
+							This site requires a larger screen to function properly.
+						</div>
+						<Toaster />
+					</Suspense>
+				</Router>
+			)}
+		</>
 	)
 }

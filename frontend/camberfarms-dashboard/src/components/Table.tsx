@@ -2,18 +2,19 @@ export interface Column<T> {
 	header: string
 	key: keyof T | string
 	// custom renderer for complex cells
-	render?: (item: T) => React.ReactNode
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	render?: (item: any) => React.ReactNode
 }
 
 interface TableProps<T> {
 	columns: Column<T>[]
-	data: T[]
+	data: T[] | undefined
 	wrapContent?: boolean
 }
 
-export function Table<T extends { id: string | number }>({
+export function Table<T extends { _id: string | number }>({
 	columns,
-	data,
+	data = [],
 	wrapContent = false,
 }: TableProps<T>) {
 	return (
@@ -34,7 +35,7 @@ export function Table<T extends { id: string | number }>({
 			<tbody>
 				{data.map((item) => (
 					<tr
-						key={item.id}
+						key={item._id}
 						className="border-t border-grey/20 text-dark-grey dark:text-light-grey dark:border-light-grey/20 font-inter"
 					>
 						{columns.map((col) => (

@@ -7,12 +7,13 @@ import {
 	type Dispatch,
 	type ReactNode,
 } from 'react'
-import { setAuthToken } from '../api/axios'
+// import { setAuthToken } from '../api/axios'
 
 interface User {
 	id: number
-	email: string
-	username?: string
+	profilePhoto: string
+	username: string
+	role: string
 }
 
 interface AuthState {
@@ -63,13 +64,13 @@ export function AuthContextProvider({ children }: { children: ReactNode }) {
 			const token = Cookies.get('token')
 
 			if (!token) {
-				setAuthToken(null)
+				// setAuthToken(null)
 				dispatch({ type: 'LOGOUT' })
 				setAuthIsReady(true)
 				return
 			}
 
-			setAuthToken(token)
+			// setAuthToken(token)
 			dispatch({
 				type: 'LOGIN',
 				user: null,

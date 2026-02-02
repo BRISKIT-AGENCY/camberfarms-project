@@ -1,6 +1,8 @@
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { format } from 'date-fns'
 import { FaArrowRight } from 'react-icons/fa6'
 import { useNavigate } from 'react-router-dom'
+import axiosInstance from '../../api/axios'
 import CardItem from '../../components/CardItem'
 
 export type Blog = {
@@ -13,12 +15,33 @@ export type Blog = {
 	id: string | number
 }
 
+const id = '697a6cc59acb3d959f3a2bc8'
+
 export default function BlogContainer() {
 	const navigate = useNavigate()
+	const { data, isPending } = useQuery({
+		queryKey: ['blogs'],
+		queryFn: async () => {
+			const [africaPost, exportPost] = await Promise.all([
+				axiosInstance.get('africa-blogs'),
+				axiosInstance.get('export-blogs'),
+			])
+
+			return { africa: africaPost, export: exportPost }
+		},
+	})
+
+	const { mutate, data: res } = useMutation({
+		mutationFn: async () => await axiosInstance.delete(`africa-blogs/${id}`),
+	})
 
 	const editBlog = (blog: Blog) => {
 		navigate(`edit/${blog.id}`, { state: { blog } })
 	}
+
+	console.log('blogs: ', data)
+	console.log('isPending: ', isPending)
+	console.log('delete action: ', res)
 
 	return (
 		<section className="w-full bg-light-grey dark:bg-dark-grey mb-20">
@@ -40,7 +63,7 @@ export default function BlogContainer() {
 						flagColor={item.website === 'africa' ? '#16A34A' : '#FF741F'}
 						primaryBtnClick={() => editBlog(item)}
 						secondaryBtnText="delete"
-						secondaryBtnClick={() => {}}
+						secondaryBtnClick={mutate}
 					>
 						<div className="w-full px-3 text-grey">
 							<p className="text-sm font-inter">{item.excerpt}</p>
