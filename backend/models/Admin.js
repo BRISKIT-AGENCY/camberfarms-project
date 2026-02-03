@@ -18,6 +18,10 @@ const adminSchema = new mongoose.Schema({
     type: String, // store URL or path to the profile image
     default: ''    // optional default empty string
   },
+  twoFactor: {
+    code: String,       // OTP code
+    expiresAt: Date     // Expiration timestamp
+  },
   createdAt: {
     type: Date,
     default: Date.now

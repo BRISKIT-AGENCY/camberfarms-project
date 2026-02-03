@@ -15,6 +15,7 @@ import messageRouter from './routes/messageRoutes.js';
 import productRouter from './routes/productRoutes.js';
 import { trackVisitor } from "./middleware/trackVisitor.js";
 
+
 dotenv.config();
 
 const app = express();
