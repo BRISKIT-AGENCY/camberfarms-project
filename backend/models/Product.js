@@ -15,13 +15,6 @@ const productSchema = new mongoose.Schema(
       // e.g. "Grains", "Legumes", "Oil Seeds"
     },
 
-    type: {
-      type: String,
-      required: true,
-      trim: true
-      // e.g. "White Maize", "Yellow Maize"
-    },
-
     images: [
       {
         type: String,
@@ -43,25 +36,14 @@ const productSchema = new mongoose.Schema(
 
     status: {
       type: String,
-      enum: ['active', 'sold_out'],
+      enum: ['active', 'inactive'],
       default: 'active'
     },
 
-    moistureContent: {
-      type: Number,
-      min: 0,
-      max: 100
-    },
-
-    proteinContent: {
-      type: Number,
-      min: 0,
-      max: 100
-    },
-
-    cropYear: {
-      type: Number,
-      required: true
+    variants: {
+      type: Map,
+      of: mongoose.Schema.Types.Mixed,
+      required: false
     }
   },
   {
@@ -72,7 +54,7 @@ const productSchema = new mongoose.Schema(
 // 🔁 Auto update status when stock is zero
 productSchema.pre('save', function (next) {
   if (this.stockQuantity === 0) {
-    this.status = 'sold_out'
+    this.status = 'inactive'
   }
   next()
 })

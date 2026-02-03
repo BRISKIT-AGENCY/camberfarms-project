@@ -22,6 +22,11 @@ import Admin from '../models/Admin.js'
 import { galleryUpload } from '../middleware/galleryUpload.js'
 import Gallery from '../models/Gallery.js'
 import { adminUpload } from '../middleware/adminUpload.js'
+import { getEnquiries } from '../services/enquiries.js'
+import { exportToPDF } from '../utils/exportPdf.js'
+import crypto from 'crypto'
+import fs from 'fs'
+import sharp from 'sharp'
 
 dotenv.config();
 
@@ -63,55 +68,56 @@ router.post('/login', async (req, res) => {
 })
 
 
-
-router.post('/reset-password/request', async (req, res) => {
-  const { username } = req.body
-
-  if (username !== process.env.ADMIN_USERNAME) {
-    return res.status(404).json({ message: 'Admin not found' })
-  }
-
-  const resetToken = jwt.sign(
-    { role: 'admin', type: 'password_reset' },
-    process.env.JWT_SECRET,
-    { expiresIn: '15m' }
-  )
-
-  // In real apps, email this token
-  res.json({
-    message: 'Password reset token generated',
-    resetToken
-  })
-})
-
-router.post('/reset-password/confirm', async (req, res) => {
-  const { token, newPassword } = req.body
-
-  if (!token || !newPassword) {
-    return res.status(400).json({ message: 'Token and new password required' })
-  }
-
+router.post('/reset-password/request-otp', adminAuth, async (req, res) => {
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET)
+    const admin = await Admin.findById(req.admin.adminId)
+    if (!admin) return res.status(404).json({ message: 'Admin not found' })
 
-    if (decoded.role !== 'admin' || decoded.type !== 'password_reset') {
-      return res.status(403).json({ message: 'Invalid reset token' })
-    }
+    // Generate 6-digit OTP
+    const otp = crypto.randomInt(100000, 999999).toString()
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000) // 10 min
 
-    const newHash = await bcrypt.hash(newPassword, 10)
+    admin.twoFactor = { code: otp, expiresAt }
+    await admin.save()
 
-    // Save securely — update ENV, DB, or secrets manager
-    // Example (NOT for production):
-    // process.env.ADMIN_PASSWORD_HASH = newHash
+    // Send OTP via email
+    await sendEmail(
+      admin.email,
+      'Your password change code',
+      `Your verification code is: ${otp}. It expires in 10 minutes.`
+    )
 
-    res.json({
-      message: 'Password reset successful',
-      newPasswordHash: newHash
-    })
+    res.json({ message: 'OTP sent to your email' })
   } catch (err) {
-    return res.status(401).json({ message: 'Token expired or invalid' })
+    console.error(err)
+    res.status(500).json({ message: 'Failed to send OTP' })
   }
 })
+
+router.post('/reset-password', adminAuth, async (req, res) => {
+  const { otp, newPassword } = req.body
+
+  const admin = await Admin.findById(req.admin.adminId)
+  if (!admin) return res.status(404).json({ message: 'Admin not found' })
+
+  // Check OTP
+  if (!admin.twoFactor || admin.twoFactor.code !== otp) {
+    return res.status(401).json({ message: 'Invalid OTP' })
+  }
+  if (new Date() > admin.twoFactor.expiresAt) {
+    return res.status(401).json({ message: 'OTP expired' })
+  }
+
+  // Hash new password
+  admin.passwordHash = await bcrypt.hash(newPassword, 10)
+
+  // Clear OTP
+  admin.twoFactor = undefined
+  await admin.save()
+
+  res.json({ message: 'Password updated successfully' })
+})
+
 
 // Upload or update the single admin's profile photo
 router.post('/admin/profile-photo', adminAuth, adminUpload, async (req, res) => {
@@ -141,42 +147,111 @@ router.post('/admin/profile-photo', adminAuth, adminUpload, async (req, res) => 
   }
 })
 
-router.post('/reset-password', adminAuth, async (req, res) => {
-  const { oldPassword, newPassword } = req.body
 
-  const admin = await Admin.findById(req.admin.adminId)
-
-  if (!admin) {
-    return res.status(404).json({ message: 'Admin not found' })
+router.get('/gallery',adminAuth, async (req, res) => {
+  try {
+    const galleries = await Gallery.find().sort({ createdAt: -1 })
+    res.status(200).json({ success: true, total: galleries.length, galleries })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ success: false, message: 'Failed to fetch galleries' })
   }
+})
 
-  const isMatch = await bcrypt.compare(oldPassword, admin.passwordHash)
-  if (!isMatch) {
-    return res.status(401).json({ message: 'Old password incorrect' })
+router.get('/gallery/:id',adminAuth, async (req, res) => {
+  try {
+    const gallery = await Gallery.findById(req.params.id)
+    if (!gallery) return res.status(404).json({ success: false, message: 'Gallery not found' })
+    res.status(200).json({ success: true, gallery })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ success: false, message: 'Failed to fetch gallery' })
   }
-
-  admin.passwordHash = await bcrypt.hash(newPassword, 10)
-  await admin.save()
-
-  res.json({ message: 'Password updated successfully' })
 })
 
 router.post('/gallery', adminAuth, galleryUpload.array('images', 20), async (req, res) => {
   try {
-    if (!req.files || req.files.length === 0)
-      return res.status(400).json({ message: 'At least one image is required' })
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({ message: 'No images uploaded' })
+    }
 
-    const images = req.files.map(file => `/uploads/gallery/${file.filename}`)
+    const imagesWithMeta = await Promise.all(
+      req.files.map(async (file) => {
+        const metadata = await sharp(file.path).metadata()
 
-    const gallery = new Gallery({ images })
+        return {
+          url: `/uploads/gallery/${file.filename}`,
+          size: file.size, // bytes
+          width: metadata.width,
+          height: metadata.height,
+          aspectRatio: metadata.width && metadata.height
+            ? (metadata.width / metadata.height).toFixed(2)
+            : null,
+          uploadedAt: new Date()
+        }
+      })
+    )
+
+    const gallery = new Gallery({
+      images: imagesWithMeta
+    })
+
     await gallery.save()
 
-    res.status(201).json({ message: 'Gallery created successfully', gallery })
+    res.status(201).json({
+      success: true,
+      gallery
+    })
   } catch (error) {
     console.error(error)
-    res.status(500).json({ message: 'Failed to create gallery', error: error.message })
+    res.status(500).json({
+      success: false,
+      message: 'Failed to upload gallery'
+    })
   }
 })
+
+router.patch(
+  '/gallery/:id',
+  adminAuth,
+  galleryUpload.array('images', 20),
+  async (req, res) => {
+    try {
+      if (!req.files || req.files.length === 0) {
+        return res.status(400).json({ message: 'At least one image is required' })
+      }
+
+      const gallery = await Gallery.findById(req.params.id)
+      if (!gallery) {
+        return res.status(404).json({ success: false, message: 'Gallery not found' })
+      }
+
+      // Optional: delete old images from disk
+      gallery.images.forEach(img => {
+        const filePath = img.replace('/', '')
+        if (fs.existsSync(filePath)) fs.unlinkSync(filePath)
+      })
+
+      // Save new images
+      const images = req.files.map(
+        file => `/uploads/gallery/${file.filename}`
+      )
+
+      gallery.images = images
+      await gallery.save()
+
+      res.status(200).json({
+        success: true,
+        message: 'Gallery images updated successfully',
+        gallery
+      })
+    } catch (error) {
+      console.error(error)
+      res.status(500).json({ message: 'Failed to update gallery images' })
+    }
+  }
+)
+
 
 router.delete('/gallery/:id', adminAuth, async (req, res) => {
   try {
@@ -209,6 +284,40 @@ router.get('/africa-blogs', async (req, res) => {
     })
   }
 })
+
+router.get('/africa-blogs/:id', async (req, res) => {
+  try {
+    const { id } = req.params
+
+    const blog = await Blog.findById(id)
+
+    if (!blog) {
+      return res.status(404).json({
+        success: false,
+        message: 'Blog not found'
+      })
+    }
+
+    // Use slug from blog
+    const views = await Visitor.countDocuments({
+      path: `/blogs/${blog.slug}`
+    })
+
+    res.status(200).json({
+      success: true,
+      blog,
+      views
+    })
+  } catch (error) {
+    console.error('Failed to fetch blog:', error)
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch blog',
+      error: error.message
+    })
+  }
+})
+
 
 // camberfarm africa blog creation route
 router.post('/africa-blogs', adminAuth, blogUpload.single('image'), async (req, res) => {
@@ -381,6 +490,41 @@ router.get('/export-blogs', async (req, res) => {
     })
   }
 })
+
+router.get('/export-blogs/:id', async (req, res) => {
+  try {
+    const { id } = req.params
+
+    const blog = await exportBlog.findById(id)
+
+    if (!blog) {
+      return res.status(404).json({
+        success: false,
+        message: 'Export blog not found'
+      })
+    }
+
+    // Count views using blog slug
+    const views = await Visitor.countDocuments({
+      path: `/blog/${blog.slug}`
+    })
+
+    res.status(200).json({
+      success: true,
+      blog,
+      views
+    })
+  } catch (error) {
+    console.error('Failed to fetch export blog:', error)
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch export blog',
+      error: error.message
+    })
+  }
+})
+
+
 
 // camberfarm export blog creation route
 router.post(
@@ -709,6 +853,132 @@ router.get('/farm-fund/:id', adminAuth, async (req, res) => {
   }
 })
 
+router.get('/farm-fund/stats/approved-by-month', adminAuth, async (req, res) => {
+  try {
+    const [monthlyStats, totalApproved] = await Promise.all([
+      FarmFund.aggregate([
+        {
+          $match: { status: "read" }
+        },
+        {
+          $group: {
+            _id: {
+              year: { $year: "$createdAt" },
+              month: { $month: "$createdAt" }
+            },
+            total: { $sum: 1 }
+          }
+        },
+        {
+          $sort: { "_id.year": 1, "_id.month": 1 }
+        }
+      ]),
+      FarmFund.countDocuments({ status: "read" })
+    ])
+
+    res.status(200).json({
+      success: true,
+      totalApprovedInvestors: totalApproved,
+      monthlyBreakdown: monthlyStats
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: "Server error" })
+  }
+})
+
+
+router.get('/farm-fund/stats/pending-by-week', adminAuth, async (req, res) => {
+  try {
+    const [weeklyStats, totalPending] = await Promise.all([
+      FarmFund.aggregate([
+        {
+          $match: { status: "pending" }
+        },
+        {
+          $group: {
+            _id: {
+              year: { $year: "$createdAt" },
+              week: { $week: "$createdAt" }
+            },
+            total: { $sum: 1 }
+          }
+        },
+        {
+          $sort: { "_id.year": 1, "_id.week": 1 }
+        }
+      ]),
+      FarmFund.countDocuments({ status: "pending" })
+    ])
+
+    res.status(200).json({
+      success: true,
+      totalPendingReplies: totalPending,
+      weeklyBreakdown: weeklyStats
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: "Server error" })
+  }
+})
+
+
+router.get('/farm-fund/stats/reply-percentage', adminAuth, async (req, res) => {
+  try {
+    const total = await FarmFund.countDocuments()
+    const replied = await FarmFund.countDocuments({ status: "read" })
+
+    const percentage =
+      total === 0 ? 0 : ((replied / total) * 100).toFixed(2)
+
+    res.status(200).json({
+      success: true,
+      totalForms: total,
+      repliedForms: replied,
+      percentage: Number(percentage)
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: "Server error" })
+  }
+})
+
+router.get('/farm-fund/stats/new-messages', adminAuth, async (req, res) => {
+  try {
+    const [totalNewMessages, monthlyStats] = await Promise.all([
+      FarmFund.countDocuments({ status: "pending" }),
+      FarmFund.aggregate([
+        {
+          $match: { status: "pending" }
+        },
+        {
+          $group: {
+            _id: {
+              year: { $year: "$createdAt" },
+              month: { $month: "$createdAt" }
+            },
+            total: { $sum: 1 }
+          }
+        },
+        {
+          $sort: { "_id.year": 1, "_id.month": 1 }
+        }
+      ])
+    ])
+
+    res.status(200).json({
+      success: true,
+      totalNewMessages,
+      monthlyBreakdown: monthlyStats
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: "Server error" })
+  }
+})
+
+
+
 
 // GET all members (admin only)
 router.get('/membership', adminAuth, async (req, res) => {
@@ -772,6 +1042,152 @@ router.patch('/membership/:id/status', adminAuth, async (req, res) => {
     })
   } catch (error) {
     console.error('Update membership status error:', error)
+    res.status(500).json({ message: "Server error" })
+  }
+})
+
+//Total forms + forms submitted by month
+router.get('/membership/stats/forms-by-month', adminAuth, async (req, res) => {
+  try {
+    const [totalForms, monthlyStats] = await Promise.all([
+      Membership.countDocuments(),
+      Membership.aggregate([
+        {
+          $group: {
+            _id: {
+              year: { $year: "$createdAt" },
+              month: { $month: "$createdAt" }
+            },
+            total: { $sum: 1 }
+          }
+        },
+        {
+          $sort: { "_id.year": 1, "_id.month": 1 }
+        }
+      ])
+    ])
+
+    res.status(200).json({
+      success: true,
+      totalForms,
+      monthlyBreakdown: monthlyStats
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: "Server error" })
+  }
+})
+
+//Pending replies + pending replies by week
+router.get('/membership/stats/pending-by-week', adminAuth, async (req, res) => {
+  try {
+    const [totalPending, weeklyStats] = await Promise.all([
+      Membership.countDocuments({ status: "pending" }),
+      Membership.aggregate([
+        {
+          $match: { status: "pending" }
+        },
+        {
+          $group: {
+            _id: {
+              year: { $year: "$createdAt" },
+              week: { $week: "$createdAt" }
+            },
+            total: { $sum: 1 }
+          }
+        },
+        {
+          $sort: { "_id.year": 1, "_id.week": 1 }
+        }
+      ])
+    ])
+
+    res.status(200).json({
+      success: true,
+      totalPendingReplies: totalPending,
+      weeklyBreakdown: weeklyStats
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: "Server error" })
+  }
+})
+
+//Approved percentage + total approved
+router.get('/membership/stats/approved-percentage', adminAuth, async (req, res) => {
+  try {
+    const [totalForms, approvedCount] = await Promise.all([
+      Membership.countDocuments(),
+      Membership.countDocuments({ status: "approved" })
+    ])
+
+    const percentage =
+      totalForms === 0 ? 0 : ((approvedCount / totalForms) * 100).toFixed(2)
+
+    res.status(200).json({
+      success: true,
+      totalForms,
+      totalApproved: approvedCount,
+      approvedPercentage: Number(percentage)
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: "Server error" })
+  }
+})
+
+//New messages + percentage by month
+router.get('/membership/stats/new-messages', adminAuth, async (req, res) => {
+  try {
+    const totalNewMessages = await Membership.countDocuments({ status: "pending" })
+
+    const monthlyStats = await Membership.aggregate([
+      {
+        $group: {
+          _id: {
+            year: { $year: "$createdAt" },
+            month: { $month: "$createdAt" }
+          },
+          total: { $sum: 1 },
+          pending: {
+            $sum: {
+              $cond: [{ $eq: ["$status", "pending"] }, 1, 0]
+            }
+          }
+        }
+      },
+      {
+        $project: {
+          year: "$_id.year",
+          month: "$_id.month",
+          total: 1,
+          pending: 1,
+          percentage: {
+            $cond: [
+              { $eq: ["$total", 0] },
+              0,
+              {
+                $multiply: [
+                  { $divide: ["$pending", "$total"] },
+                  100
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        $sort: { year: 1, month: 1 }
+      }
+    ])
+
+    res.status(200).json({
+      success: true,
+      totalNewMessages,
+      monthlyBreakdown: monthlyStats
+    })
+  } catch (error) {
+    console.error(error)
     res.status(500).json({ message: "Server error" })
   }
 })
@@ -938,79 +1354,146 @@ router.get('/news/stats', adminAuth, async (req, res) => {
   }
 })
 
+// GET ALL PRODUCTS
+router.get('/products', adminAuth, async (req, res) => {
+  try {
+    const [products, totalProducts, monthlyRaw] = await Promise.all([
+      Product.find().sort({ createdAt: -1 }),
+      Product.countDocuments(),
+      Product.aggregate([
+        {
+          $group: {
+            _id: {
+              year: { $year: "$createdAt" },
+              month: { $month: "$createdAt" }
+            },
+            total: { $sum: 1 }
+          }
+        },
+        {
+          $sort: { "_id.year": 1, "_id.month": 1 }
+        }
+      ])
+    ])
+
+    const monthlyStats = monthlyRaw.map((current, index) => {
+      const prev = monthlyRaw[index - 1]
+
+      let change = null
+      let changePercentage = null
+
+      if (prev) {
+        change = current.total - prev.total
+        changePercentage =
+          prev.total === 0
+            ? 0
+            : ((change / prev.total) * 100).toFixed(2)
+      }
+
+      return {
+        year: current._id.year,
+        month: current._id.month,
+        totalAdded: current.total,
+        changeFromPreviousMonth: change,
+        changePercentage:
+          changePercentage !== null ? Number(changePercentage) : null
+      }
+    })
+
+    res.status(200).json({
+      success: true,
+      total: totalProducts,
+      products,
+      stats: {
+        monthly: monthlyStats
+      }
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch products'
+    })
+  }
+})
+
+
+// GET INDIVIDUAL PRODUCT
+router.get('/products/:id',adminAuth, async (req, res) => {
+  try {
+    const { id } = req.params
+
+    const product = await Product.findById(id)
+
+    if (!product) {
+      return res.status(404).json({
+        success: false,
+        message: 'Product not found'
+      })
+    }
+
+    res.status(200).json({
+      success: true,
+      product
+    })
+  } catch (error) {
+    console.error(error)
+
+    // Handle invalid ObjectId
+    if (error.name === 'CastError') {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid product ID'
+      })
+    }
+
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch product',
+      error: error.message
+    })
+  }
+})
+
 // CREATE PRODUCT
 // POST /api/products
 router.post('/products', adminAuth, productUpload, async (req, res) => {
   try {
     const {
-      title,
-      descriptions,
-      packaging,
-      containerSize,
-      seasons,
-      incoterms,
+      name,
+      category,
+      description,
+      stockQuantity,
       variants
     } = req.body
 
-    // 1️⃣ Check main product image
-    if (!req.files?.image || !req.files.image[0]) {
-      return res.status(400).json({ message: 'Main product image is required' })
-    }
-
-    // 2️⃣ Check required fields
-    if (
-      !title ||
-      !descriptions ||
-      !packaging ||
-      !containerSize ||
-      !seasons ||
-      !incoterms ||
-      !variants
-    ) {
+    // 1️⃣ Validate required fields
+    if (!name || !category || !description || stockQuantity === undefined) {
       return res.status(400).json({ message: 'Missing required fields' })
     }
 
-    // 3️⃣ Parse JSON fields if sent as strings
-    const parsedTitle = typeof title === 'string' ? JSON.parse(title) : title
-    const parsedDescriptions = typeof descriptions === 'string' ? JSON.parse(descriptions) : descriptions
-    const parsedPackaging = typeof packaging === 'string' ? JSON.parse(packaging) : packaging
-    const parsedContainerSize = typeof containerSize === 'string' ? JSON.parse(containerSize) : containerSize
-    const parsedSeasons = typeof seasons === 'string' ? JSON.parse(seasons) : seasons
-    const parsedIncoterms = typeof incoterms === 'string' ? JSON.parse(incoterms) : incoterms
-    const parsedVariants = typeof variants === 'string' ? JSON.parse(variants) : variants
-
-    // 4️⃣ Validate variants
-    if (!Array.isArray(parsedVariants) || parsedVariants.length === 0) {
-      return res.status(400).json({ message: 'Variants are required and must be an array' })
+    // 2️⃣ Validate images
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({ message: 'At least one product image is required' })
     }
 
-    const variantImages = req.files.variantImages || []
+    // 3️⃣ Parse variants (optional & dynamic)
+    const parsedVariants =
+      variants && typeof variants === 'string'
+        ? JSON.parse(variants)
+        : variants
 
-    // Optional: enforce that each variant has an image
-    // if (variantImages.length !== parsedVariants.length) {
-    //   return res.status(400).json({ message: 'Each variant must have an image' })
-    // }
+    // 4️⃣ Map images
+    const images = req.files.map(file => `/uploads/products/${file.filename}`)
 
-    const variantsWithImages = parsedVariants.map((variant, index) => ({
-      ...variant,
-      image: variantImages[index]
-        ? `/uploads/products/${variantImages[index].filename}`
-        : variant.image || '' // fallback empty string if no image provided
-    }))
-
-    // 5️⃣ Main product image
-    const mainImage = `/uploads/products/${req.files.image[0].filename}`
-
-    // 6️⃣ Create product
+    // 5️⃣ Create product
     const product = new Product({
-      title: parsedTitle,
-      image: mainImage,
-      descriptions: parsedDescriptions,
-      packaging: parsedPackaging,
-      containerSize: parsedContainerSize,
-      seasons: parsedSeasons,
-      incoterms: parsedIncoterms,
-      variants: variantsWithImages
+      name,
+      category,
+      description,
+      stockQuantity,
+      images,
+      variants: parsedVariants || undefined
     })
 
     await product.save()
@@ -1028,36 +1511,28 @@ router.post('/products', adminAuth, productUpload, async (req, res) => {
   }
 })
 
-// UPDATE INDIVIDUAL PRODUCTS
+
+
+// UPDATE PRODUCT
+// PUT /api/admin/products/:id
 router.put('/products/:id', adminAuth, productUpload, async (req, res) => {
   try {
     const { id } = req.params
     const updateData = { ...req.body }
 
-    // 1️⃣ Parse JSON fields if sent as strings
-    if (updateData.title && typeof updateData.title === 'string') updateData.title = JSON.parse(updateData.title)
-    if (updateData.descriptions && typeof updateData.descriptions === 'string') updateData.descriptions = JSON.parse(updateData.descriptions)
-    if (updateData.packaging && typeof updateData.packaging === 'string') updateData.packaging = JSON.parse(updateData.packaging)
-    if (updateData.containerSize && typeof updateData.containerSize === 'string') updateData.containerSize = JSON.parse(updateData.containerSize)
-    if (updateData.seasons && typeof updateData.seasons === 'string') updateData.seasons = JSON.parse(updateData.seasons)
-    if (updateData.incoterms && typeof updateData.incoterms === 'string') updateData.incoterms = JSON.parse(updateData.incoterms)
-    if (updateData.variants && typeof updateData.variants === 'string') updateData.variants = JSON.parse(updateData.variants)
-
-    // 2️⃣ Handle main product image
-    if (req.files?.image && req.files.image[0]) {
-      updateData.image = `/uploads/products/${req.files.image[0].filename}`
+    // 1️⃣ Parse variants if sent as string
+    if (updateData.variants && typeof updateData.variants === 'string') {
+      updateData.variants = JSON.parse(updateData.variants)
     }
 
-    // 3️⃣ Handle variant images if provided
-    if (updateData.variants && req.files?.variantImages) {
-      const variantImages = req.files.variantImages
-      updateData.variants = updateData.variants.map((variant, index) => ({
-        ...variant,
-        image: variantImages[index] ? `/uploads/products/${variantImages[index].filename}` : variant.image || ''
-      }))
+    // 2️⃣ Replace images if new ones are uploaded
+    if (req.files && req.files.length > 0) {
+      updateData.images = req.files.map(
+        file => `/uploads/products/${file.filename}`
+      )
     }
 
-    // 4️⃣ Update the product
+    // 3️⃣ Update product
     const updatedProduct = await Product.findByIdAndUpdate(
       id,
       updateData,
@@ -1074,12 +1549,16 @@ router.put('/products/:id', adminAuth, productUpload, async (req, res) => {
     })
   } catch (error) {
     console.error(error)
-    res.status(500).json({ message: 'Failed to update product', error: error.message })
+    res.status(500).json({
+      message: 'Failed to update product',
+      error: error.message
+    })
   }
 })
 
 
-// DELETE INDIVIDUAL PRODUCTS
+
+// DELETE PRODUCT
 router.delete('/products/:id', adminAuth, async (req, res) => {
   try {
     const { id } = req.params
@@ -1087,12 +1566,18 @@ router.delete('/products/:id', adminAuth, async (req, res) => {
     const deletedProduct = await Product.findByIdAndDelete(id)
 
     if (!deletedProduct) {
-      return res.status(404).json({
-        message: 'Product not found'
-      })
+      return res.status(404).json({ message: 'Product not found' })
     }
 
-    if (deletedProduct.image) fs.unlinkSync(`.${deletedProduct.image}`)
+    // Delete all product images
+    if (deletedProduct.images?.length) {
+      deletedProduct.images.forEach(img => {
+        const filePath = `.${img}`
+        if (fs.existsSync(filePath)) {
+          fs.unlinkSync(filePath)
+        }
+      })
+    }
 
     res.status(200).json({
       message: 'Product deleted successfully'
@@ -1107,7 +1592,7 @@ router.delete('/products/:id', adminAuth, async (req, res) => {
 })
 
 
-router.get('/products', adminAuth, async (req, res) => {
+router.get('/products/stats', adminAuth, async (req, res) => {
   try {
     const stats = await Product.aggregate([
       {
@@ -1372,7 +1857,7 @@ router.get('/africa/notifications', adminAuth, async (req, res) => {
     // Fetch all latest entries (without limit yet)
     const [blogs, contacts, farmFunds, memberships, news] = await Promise.all([
       Blog.find().lean(),
-      Contact.find().lean(),
+      contact.find().lean(),
       FarmFund.find().lean(),
       Membership.find().lean(),
       News.find().lean()
@@ -1452,39 +1937,95 @@ router.get('/export/notifications', adminAuth, async (req, res) => {
 // GET /api/admin/enquiries?limit=10
 router.get('/enquiries', adminAuth, async (req, res) => {
   try {
-    const limit = req.query.limit ? parseInt(req.query.limit) : null;
+    const limit = req.query.limit ? parseInt(req.query.limit) : null
 
     const [feedbacks, contacts, messages] = await Promise.all([
       Feedback.find().lean(),
-      Contact.find().lean(),
+      contact.find().lean(),
       Message.find().lean()
-    ]);
+    ])
 
-    // Combine all entries into a single array
-    const combined = [
-      ...feedbacks.map(item => ({ ...item, type: 'feedback' })),
-      ...contacts.map(item => ({ ...item, type: 'contact' })),
-      ...messages.map(item => ({ ...item, type: 'message' }))
-    ];
+    // -----------------------------
+    // Combine enquiries
+    // -----------------------------
+    const enquiries = [
+      ...feedbacks.map(i => ({ ...i, type: 'feedback' })),
+      ...contacts.map(i => ({ ...i, type: 'contact' })),
+      ...messages.map(i => ({ ...i, type: 'message' }))
+    ].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
 
-    // Sort by newest first
-    const sorted = combined.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    const limitedEnquiries = limit ? enquiries.slice(0, limit) : enquiries
 
-    // Apply limit if provided
-    const limited = limit ? sorted.slice(0, limit) : sorted;
+    // -----------------------------
+    // Monthly stats
+    // -----------------------------
+    const monthlyMap = {}
+
+    enquiries.forEach(item => {
+      const date = new Date(item.createdAt)
+      const year = date.getFullYear()
+      const month = date.getMonth() + 1
+      const key = `${year}-${month}`
+
+      monthlyMap[key] = (monthlyMap[key] || 0) + 1
+    })
+
+    const monthlyStats = Object.entries(monthlyMap)
+      .map(([key, total]) => {
+        const [year, month] = key.split('-')
+        return { year: Number(year), month: Number(month), total }
+      })
+      .sort((a, b) => a.year - b.year || a.month - b.month)
+      .map((current, index, arr) => {
+        const prev = arr[index - 1]
+
+        let diff = null
+        let percentage = null
+
+        if (prev) {
+          diff = current.total - prev.total
+          percentage =
+            prev.total === 0
+              ? 0
+              : Number(((diff / prev.total) * 100).toFixed(2))
+        }
+
+        return {
+          ...current,
+          changeFromPreviousMonth: diff,
+          changePercentage: percentage
+        }
+      })
 
     res.status(200).json({
-      total: limited.length,
-      enquiries: limited
-    });
+      success: true,
+      totalEnquiries: enquiries.length,
+      enquiries: limitedEnquiries,
+      monthlyStats
+    })
   } catch (error) {
-    console.error('Fetch enquiries error:', error);
-    res.status(500).json({
-      message: 'Failed to fetch enquiries',
-      error: error.message
-    });
+    console.error('Fetch enquiries error:', error)
+    res.status(500).json({ message: 'Failed to fetch enquiries' })
   }
-});
+})
+
+
+// GET /api/admin/enquiries/export to export enquiries
+router.get('/enquiries/export', adminAuth, async (req, res) => {
+  try {
+    const format = req.query.format || 'pdf'
+    const limit = req.query.limit ? parseInt(req.query.limit) : null
+
+    const enquiries = await getEnquiries(limit)
+
+    if (format === 'pdf') return exportToPDF(enquiries, res)
+
+    res.status(400).json({ message: 'Unsupported export format' })
+  } catch (err) {
+    console.error('Export error:', err)
+    res.status(500).json({ message: 'Export failed' })
+  }
+})
 
 // GET /api/admin/enquiries/:type/:id
 router.get('/enquiries/:type/:id', adminAuth, async (req, res) => {
@@ -1497,7 +2038,7 @@ router.get('/enquiries/:type/:id', adminAuth, async (req, res) => {
         enquiry = await Feedback.findById(id);
         break;
       case 'contact':
-        enquiry = await Contact.findById(id);
+        enquiry = await contact.findById(id);
         break;
       case 'message':
         enquiry = await Message.findById(id);
@@ -1536,7 +2077,7 @@ router.post('/enquiries/:type/:id/reply', adminAuth, async (req, res) => {
         );
         break;
       case 'contact':
-        updated = await Contact.findByIdAndUpdate(
+        updated = await contact.findByIdAndUpdate(
           id,
           { status, adminReply },
           { new: true }
@@ -1565,6 +2106,187 @@ router.post('/enquiries/:type/:id/reply', adminAuth, async (req, res) => {
   }
 });
 
+//Total enquiries + enquiries submitted by month
+router.get('/enquiries/stats/by-month', adminAuth, async (req, res) => {
+  try {
+    const collections = [Feedback, contact, Message]
+
+    let totalEnquiries = 0
+    const monthlyMap = {}
+
+    for (const Model of collections) {
+      const total = await Model.countDocuments()
+      totalEnquiries += total
+
+      const monthly = await Model.aggregate([
+        {
+          $group: {
+            _id: {
+              year: { $year: "$createdAt" },
+              month: { $month: "$createdAt" }
+            },
+            total: { $sum: 1 }
+          }
+        }
+      ])
+
+      monthly.forEach(item => {
+        const key = `${item._id.year}-${item._id.month}`
+        monthlyMap[key] = (monthlyMap[key] || 0) + item.total
+      })
+    }
+
+    const monthlyBreakdown = Object.entries(monthlyMap)
+      .map(([key, total]) => {
+        const [year, month] = key.split('-')
+        return { year: Number(year), month: Number(month), total }
+      })
+      .sort((a, b) => a.year - b.year || a.month - b.month)
+
+    res.status(200).json({
+      success: true,
+      totalEnquiries,
+      monthlyBreakdown
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: "Server error" })
+  }
+})
+
+//Pending replies + pending replies by week
+router.get('/enquiries/stats/pending-by-week', adminAuth, async (req, res) => {
+  try {
+    const collections = [Feedback, contact, Message]
+
+    let totalPending = 0
+    const weeklyMap = {}
+
+    for (const Model of collections) {
+      const pending = await Model.countDocuments({ status: "pending" })
+      totalPending += pending
+
+      const weekly = await Model.aggregate([
+        { $match: { status: "pending" } },
+        {
+          $group: {
+            _id: {
+              year: { $year: "$createdAt" },
+              week: { $week: "$createdAt" }
+            },
+            total: { $sum: 1 }
+          }
+        }
+      ])
+
+      weekly.forEach(item => {
+        const key = `${item._id.year}-${item._id.week}`
+        weeklyMap[key] = (weeklyMap[key] || 0) + item.total
+      })
+    }
+
+    const weeklyBreakdown = Object.entries(weeklyMap)
+      .map(([key, total]) => {
+        const [year, week] = key.split('-')
+        return { year: Number(year), week: Number(week), total }
+      })
+      .sort((a, b) => a.year - b.year || a.week - b.week)
+
+    res.status(200).json({
+      success: true,
+      totalPendingReplies: totalPending,
+      weeklyBreakdown
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: "Server error" })
+  }
+})
+
+//Percentage resolved + total resolved
+router.get('/enquiries/stats/resolution-rate', adminAuth, async (req, res) => {
+  try {
+    const collections = [Feedback, contact, Message]
+
+    let total = 0
+    let resolved = 0
+
+    for (const Model of collections) {
+      total += await Model.countDocuments()
+      resolved += await Model.countDocuments({ status: "read" })
+    }
+
+    const percentage =
+      total === 0 ? 0 : ((resolved / total) * 100).toFixed(2)
+
+    res.status(200).json({
+      success: true,
+      totalEnquiries: total,
+      totalResolved: resolved,
+      resolutionPercentage: Number(percentage)
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: "Server error" })
+  }
+})
+
+//Average response time + weekly trend
+router.get('/enquiries/stats/response-time', adminAuth, async (req, res) => {
+  try {
+    const collections = [Feedback, contact, Message]
+    const weeklyMap = {}
+
+    for (const Model of collections) {
+      const replied = await Model.aggregate([
+        { $match: { status: "read" } },
+        {
+          $project: {
+            responseTime: {
+              $divide: [
+                { $subtract: ["$updatedAt", "$createdAt"] },
+                1000 * 60 * 60 // hours
+              ]
+            },
+            year: { $year: "$updatedAt" },
+            week: { $week: "$updatedAt" }
+          }
+        }
+      ])
+
+      replied.forEach(item => {
+        const key = `${item.year}-${item.week}`
+        if (!weeklyMap[key]) weeklyMap[key] = { total: 0, count: 0 }
+
+        weeklyMap[key].total += item.responseTime
+        weeklyMap[key].count += 1
+      })
+    }
+
+    const weeklyResponseTime = Object.entries(weeklyMap)
+      .map(([key, data]) => {
+        const [year, week] = key.split('-')
+        return {
+          year: Number(year),
+          week: Number(week),
+          averageResponseTimeHours: Number(
+            (data.total / data.count).toFixed(2)
+          )
+        }
+      })
+      .sort((a, b) => a.year - b.year || a.week - b.week)
+
+    res.status(200).json({
+      success: true,
+      weeklyResponseTime
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: "Server error" })
+  }
+})
+
+
 
 // GET overall stats
 router.get('/track-visit', async (req, res) => {
@@ -1584,20 +2306,102 @@ router.get('/track-visit', async (req, res) => {
   }
 })
 
-// GET single blog views
-router.get('/track-visit/blog/:slug', async (req, res) => {
+//Total views by day (combined)
+router.get('/track-visit/blogs/by-day', async (req, res) => {
   try {
-    const { slug } = req.params
-    if (!slug) return res.status(400).json({ message: 'Blog slug is required' })
+    const dailyViews = await Visitor.aggregate([
+      {
+        $match: {
+          path: { $in: ['/blogs', '/blog'] }
+        }
+      },
+      {
+        $group: {
+          _id: {
+            year: { $year: "$createdAt" },
+            month: { $month: "$createdAt" },
+            day: { $dayOfMonth: "$createdAt" }
+          },
+          totalViews: { $sum: 1 }
+        }
+      },
+      {
+        $sort: {
+          "_id.year": 1,
+          "_id.month": 1,
+          "_id.day": 1
+        }
+      }
+    ])
 
-    const views = await Visitor.countDocuments({ path: `/blogs/${slug}` })
-
-    res.status(200).json({ slug, views })
+    res.status(200).json({
+      success: true,
+      dailyViews
+    })
   } catch (error) {
     console.error(error)
-    res.status(500).json({ message: 'Failed to fetch blog views' })
+    res.status(500).json({ message: 'Failed to fetch daily views' })
   }
 })
+
+//Weekly totals with comparison to previous weeks
+router.get('/track-visit/blogs/by-week', async (req, res) => {
+  try {
+    const weeklyRaw = await Visitor.aggregate([
+      {
+        $match: {
+          path: { $in: ['/blogs', '/blog'] }
+        }
+      },
+      {
+        $group: {
+          _id: {
+            year: { $isoWeekYear: "$createdAt" },
+            week: { $isoWeek: "$createdAt" }
+          },
+          totalViews: { $sum: 1 }
+        }
+      },
+      {
+        $sort: {
+          "_id.year": 1,
+          "_id.week": 1
+        }
+      }
+    ])
+
+    // Calculate week-over-week comparison
+    const weeklyComparison = weeklyRaw.map((current, index) => {
+      const prev = weeklyRaw[index - 1]
+
+      let changePercentage = null
+
+      if (prev && prev.totalViews > 0) {
+        changePercentage =
+          ((current.totalViews - prev.totalViews) / prev.totalViews) * 100
+      }
+
+      return {
+        year: current._id.year,
+        week: current._id.week,
+        totalViews: current.totalViews,
+        changeFromPreviousWeek: changePercentage !== null
+          ? Number(changePercentage.toFixed(2))
+          : null
+      }
+    })
+
+    res.status(200).json({
+      success: true,
+      weeklyStats: weeklyComparison
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Failed to fetch weekly views' })
+  }
+})
+
+
 
 // GET single news views
 router.get('/track-visit/news/:slug', async (req, res) => {
