@@ -1,5 +1,6 @@
 import express from "express";
 import FarmFund from "../models/FarmFund.js";
+import Notification from "../models/Notification.js";
 
 const router = express.Router();
 
@@ -15,7 +16,6 @@ router.post("/farm-fund", async (req, res) => {
       residence,
       message
     } = req.body;
-    
 
     // Basic validation
     if (
@@ -40,6 +40,16 @@ router.post("/farm-fund", async (req, res) => {
       country,
       residence,
       message
+    });
+
+    // 🔔 Create notification
+    await Notification.create({
+      title: "New FarmFund message received",
+      description: message,
+      type: "farmfund",
+      sourceWebsite: "africa",
+      link: "/farm-fund",
+      date: new Date()
     });
 
     res.status(201).json({

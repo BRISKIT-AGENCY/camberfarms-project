@@ -4,11 +4,7 @@ import { upload } from '../middleware/Upload.js';
 
 const router = express.Router();
 
-/**
- * @route   POST /api/membership
- * @desc    Create membership with ID upload
- * @access  Public
- */
+
 router.post(
   '/membership',
   upload.array('idFiles', 5),
@@ -25,7 +21,6 @@ router.post(
         state,
         region
       } = req.body;
-      
 
       if (
         !name ||
@@ -66,6 +61,16 @@ router.post(
         idFiles: filePaths
       });
 
+      // 🔔 Create notification
+      await Notification.create({
+        title: 'New membership application received',
+        description: `${name} applied for membership from ${country}`,
+        type: 'membership',
+        sourceWebsite: 'africa',
+        link: `/membership/${membership._id}`,
+        date: new Date()
+      });
+
       res.status(201).json({
         success: true,
         message: 'Membership created successfully',
@@ -80,5 +85,6 @@ router.post(
     }
   }
 );
+
 
 export default router;

@@ -1,5 +1,6 @@
 import express from 'express';
 import Enquiry from '../models/Enquiry.js';
+import Notification from '../models/Notification.js';
 
 const router = express.Router();
 
@@ -48,7 +49,24 @@ router.post('/enquiries', async (req, res) => {
 
     await enquiry.save();
 
-    res.status(201).json({ message: 'Enquiry submitted successfully', enquiry });
+    // -----------------------------
+    // Create notification
+    // -----------------------------
+    const notification = new Notification({
+      title: `New ${sourceModel} enquiry received`,
+      description: message,
+      sourceWebsite: enquiry.source, // africa or export
+      type: 'enquiry',
+      link: `/admin/enquiries/${sourceModel}/${enquiry._id}`
+    });
+
+    await notification.save();
+
+    res.status(201).json({ 
+      message: 'Enquiry submitted successfully', 
+      enquiry,
+      notification
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Failed to submit enquiry', error: err.message });
