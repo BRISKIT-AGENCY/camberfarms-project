@@ -1,34 +1,29 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 const sectionSchema = new mongoose.Schema({
-  heading: {
-    type: Map,
-    of: String
-  },
-  paragraphs: {
-    type: Map,
-    of: [String]
-  }
-})
+  heading: String,
+  paragraphs: [String]
+});
+
+const translationSchema = new mongoose.Schema({
+  title: String,
+  excerpt: String,
+  sections: [sectionSchema]
+}, { _id: false });
 
 const newsSchema = new mongoose.Schema(
   {
-    title: {
-      type: Map,
-      of: String
-    },
-    excerpt: {
-      type: Map,
-      of: String
-    },
     slug: { type: String, unique: true },
+
+    translations: {
+      type: Map,
+      of: translationSchema
+    },
+
     image: String,
-
-    sections: [sectionSchema],
-
     publishedAt: Date
   },
   { timestamps: true }
-)
+);
 
-export default mongoose.model('News', newsSchema)
+export default mongoose.model('News', newsSchema);

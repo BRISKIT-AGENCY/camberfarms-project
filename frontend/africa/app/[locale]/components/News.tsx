@@ -47,7 +47,7 @@ const STATIC_IMAGES = [
 const News = ({ header }: NewsProps) => {
   const t = useTranslations('News')
   const locale = useLocale()
-  const m= useTranslations('BlogSidebar')
+  const m = useTranslations('BlogSidebar')
 
   const [newsData, setNewsData] = useState<NewsItem[]>([])
   const [loading, setLoading] = useState(true)
@@ -148,51 +148,61 @@ const News = ({ header }: NewsProps) => {
               {newsData.map((_, index) => (
                 <span
                   key={index}
-                  className={`h-2 rounded-full transition-all duration-300 ${
-                    activeIndex === index ? 'w-6 bg-[#FF741F]' : 'w-2.5 bg-gray-400'
-                  }`}
+                  className={`h-2 rounded-full transition-all duration-300 ${activeIndex === index ? 'w-6 bg-[#FF741F]' : 'w-2.5 bg-gray-400'
+                    }`}
                 />
               ))}
             </div>
 
             {/* Desktop grid */}
-            <div className="hidden lg:flex w-full flex-row gap-12.5 lg:mt-25 mt-8">
+            {/* Desktop grid */}
+            <div className="hidden lg:flex w-full gap-12.5 lg:mt-25 mt-8">
               {newsData.map((news, index) => (
-                <div key={news.id} className="w-1/3 rounded-lg">
-                  <Image
-                    src={STATIC_IMAGES[index] || STATIC_IMAGES[0]}
-                    alt={news.title || 'News image'}
-                    width={380}
-                    height={320}
-                    className="w-full rounded-t-lg"
-                  />
-                  <div className="py-4 px-4 bg-white rounded-b-3xl">
+                <div
+                  key={news.id}
+                  className="w-1/3 flex flex-col bg-white rounded-3xl overflow-hidden shadow-md"
+                >
+                  {/* Image container with fixed aspect ratio */}
+                  <div className="relative w-full aspect-380/320">
+                    <Image
+                      src={STATIC_IMAGES[index] || STATIC_IMAGES[0]}
+                      alt={news.title || 'News image'}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex flex-col p-6 flex-1">
                     <h2 className="text-[18px] md:text-[28px] font-medium">{news.title}</h2>
-                    <p className="text-[14px] md:text-[18px] mt-2">{news.excerpt}</p>
+                    <p className="text-[14px] md:text-[18px] mt-2 flex-1">{news.excerpt}</p>
                     <p className="text-[14px] md:text-[18px] mt-1">
                       {new Intl.DateTimeFormat(locale, {
                         year: 'numeric',
                         month: 'long',
-                        day: 'numeric'
+                        day: 'numeric',
                       }).format(new Date(news.publishedAt))}
                     </p>
-                    <Link
-                      href={`/news/${news.slug}`}
-                      className="flex mt-6 text-[#1AD329] items-center"
-                    >
-                      <p className="text-[14px]">{t('readMore')}</p>
-                      <Image
-                        src="/images/greenarrow.png"
-                        alt={t('arrowAlt')}
-                        width={24}
-                        height={24}
-                        className="ml-2"
-                      />
-                    </Link>
+                    <div className="mt-auto flex items-center">
+                      <Link
+                        href={`/news/${news.slug}`}
+                        className="flex text-[#1AD329] items-center mt-4"
+                      >
+                        <p className="text-[14px]">{t('readMore')}</p>
+                        <Image
+                          src="/images/greenarrow.png"
+                          alt={t('arrowAlt')}
+                          width={24}
+                          height={24}
+                          className="ml-2"
+                        />
+                      </Link>
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
+
           </>
         )}
       </div>

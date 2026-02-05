@@ -27,6 +27,11 @@ import { exportToPDF } from '../utils/exportPdf.js'
 import crypto from 'crypto'
 import fs from 'fs'
 import sharp from 'sharp'
+import { exportRegistrationsToPDF } from '../utils/exportFarmFundPdf.js'
+import { translateText } from '../utils/translate.js'
+import { translateSections } from '../utils/translateSections.js'
+import { SUPPORTED_LANGUAGES } from '../utils/languages.js'
+import { translateVariants, translateTexts } from '../utils/translateProduct.js'
 
 dotenv.config();
 
@@ -320,87 +325,145 @@ router.get('/africa-blogs/:id', async (req, res) => {
 
 
 // camberfarm africa blog creation route
-router.post('/africa-blogs', adminAuth, blogUpload.single('image'), async (req, res) => {
-  try {
-    let { title, excerpt, slug, sections, publishedAt } = req.body
+router.post(
+  '/africa-blogs',
+  adminAuth,
+  blogUpload.single('image'),
+  async (req, res) => {
+    try {
+      let { title, excerpt, slug, sections, publishedAt } = req.body;
 
-    // 1️⃣ Check required fields
-    if (!title) return res.status(400).json({ message: 'Title is required' })
-    if (!excerpt) return res.status(400).json({ message: 'Excerpt is required' })
-    if (!slug) return res.status(400).json({ message: 'Slug is required' })
-    if (!req.file) return res.status(400).json({ message: 'Blog image is required' })
+      // 1️⃣ Validate required fields
+      if (!title) return res.status(400).json({ message: 'Title is required' });
+      if (!excerpt) return res.status(400).json({ message: 'Excerpt is required' });
+      if (!slug) return res.status(400).json({ message: 'Slug is required' });
+      if (!req.file) return res.status(400).json({ message: 'Blog image is required' });
 
-    // 2️⃣ Parse JSON fields if sent as strings
-    title = typeof title === 'string' ? JSON.parse(title) : title
-    excerpt = typeof excerpt === 'string' ? JSON.parse(excerpt) : excerpt
-    sections = typeof sections === 'string' ? JSON.parse(sections) : sections
+      // 2️⃣ Parse sections if it's a string
+      if (sections && typeof sections === 'string') sections = JSON.parse(sections);
 
-    const imagePath = `/uploads/blogs/${req.file.filename}`
+      const imagePath = `/uploads/blogs/${req.file.filename}`;
 
-    // 3️⃣ Create new blog
-    const blog = new Blog({
-      title,
-      excerpt,
-      slug,
-      image: imagePath,
-      sections,
-      publishedAt: publishedAt ? new Date(publishedAt) : new Date()
-    })
+      // 3️⃣ Prepare translations object
+      const translations = {};
 
-    await blog.save()
+      translations.en = {
+        title,
+        excerpt,
+        sections: sections || []
+      };
 
-    res.status(201).json({ message: 'Blog created successfully', blogId: blog._id, blog })
-  } catch (error) {
-    console.error(error)
-    res.status(500).json({ message: 'Failed to create blog', error: error.message })
+      for (const lang of SUPPORTED_LANGUAGES) {
+        translations[lang] = {
+          title: await translateText(title, lang),
+          excerpt: await translateText(excerpt, lang),
+          sections: await translateSections(sections || [], lang)
+        };
+      }
+
+      // 4️⃣ Create Blog document
+      const blogDoc = new Blog({
+        slug,
+        image: imagePath,
+        publishedAt: publishedAt ? new Date(publishedAt) : new Date(),
+        translations
+      });
+
+      await blogDoc.save();
+
+      res.status(201).json({
+        message: 'Blog created successfully',
+        blog: blogDoc
+      });
+
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Failed to create Blog', error: error.message });
+    }
   }
-})
-
+);
 
 
 // update a africa blog
 router.patch('/africa-blogs/:id', adminAuth, blogUpload.single('image'), async (req, res) => {
   try {
-    const { id } = req.params
-    const updateData = { ...req.body }
+    const { id } = req.params;
+    let updateData = { ...req.body };
 
-    if (updateData.publishedAt) {
-      updateData.publishedAt = new Date(updateData.publishedAt)
+    // Parse sections if sent as JSON string
+    if (updateData.sections && typeof updateData.sections === 'string') {
+      updateData.sections = JSON.parse(updateData.sections);
     }
 
-    // If a new image is uploaded, update image path
-    if (req.file) {
-      updateData.image = `/uploads/blogs/${req.file.filename}`
+    // Find existing blog
+    const existingBlog = await Blog.findById(id);
+    if (!existingBlog) return res.status(404).json({ message: 'Blog not found' });
 
-      // Optional: delete old image
-      const existingBlog = await Blog.findById(id)
-      if (existingBlog?.image) {
-        fs.unlinkSync(`.${existingBlog.image}`)
+    // IMAGE HANDLING
+    if (req.file) {
+      updateData.image = `/uploads/blogs/${req.file.filename}`;
+
+      // Delete old image
+      if (existingBlog.image) {
+        try {
+          fs.unlinkSync(`.${existingBlog.image}`);
+        } catch (err) {
+          console.warn('Old image not found:', err.message);
+        }
       }
     }
 
-    // Parse JSON fields
-    if (updateData.title && typeof updateData.title === 'string') updateData.title = JSON.parse(updateData.title)
-    if (updateData.excerpt && typeof updateData.excerpt === 'string') updateData.excerpt = JSON.parse(updateData.excerpt)
-    if (updateData.sections && typeof updateData.sections === 'string') updateData.sections = JSON.parse(updateData.sections)
+    // TRANSLATION HANDLING
+    const titleChanged = updateData.title !== undefined;
+    const excerptChanged = updateData.excerpt !== undefined;
+    const sectionsChanged = updateData.sections !== undefined;
 
-    const updatedBlog = await Blog.findByIdAndUpdate(
-      id,
-      updateData,
-      { new: true, runValidators: true }
-    )
+    if (titleChanged || excerptChanged || sectionsChanged) {
+      const existingEn = existingBlog.translations.get('en');
 
-    if (!updatedBlog) return res.status(404).json({ message: 'Blog not found' })
+      const newTitle = updateData.title || existingEn.title;
+      const newExcerpt = updateData.excerpt || existingEn.excerpt;
+      const newSections = updateData.sections || existingEn.sections;
+
+      const translations = {
+        en: {
+          title: newTitle,
+          excerpt: newExcerpt,
+          sections: newSections
+        }
+      };
+
+      for (const lang of SUPPORTED_LANGUAGES) {
+        translations[lang] = {
+          title: await translateText(newTitle, lang),
+          excerpt: await translateText(newExcerpt, lang),
+          sections: await translateSections(newSections, lang)
+        };
+      }
+
+      updateData.translations = translations;
+
+      // Remove raw fields to avoid schema conflicts
+      delete updateData.title;
+      delete updateData.excerpt;
+      delete updateData.sections;
+    }
+
+    // Update publishedAt if provided
+    if (updateData.publishedAt) updateData.publishedAt = new Date(updateData.publishedAt);
+
+    const updatedBlog = await Blog.findByIdAndUpdate(id, updateData, { new: true, runValidators: true });
 
     res.status(200).json({
       message: 'Blog updated successfully',
       blog: updatedBlog
-    })
+    });
+
   } catch (error) {
-    console.error(error)
-    res.status(500).json({ message: 'Failed to update blog', error: error.message })
+    console.error(error);
+    res.status(500).json({ message: 'Failed to update blog', error: error.message });
   }
-})
+});
 
 
 // delete a africa blog
@@ -524,8 +587,6 @@ router.get('/export-blogs/:id', async (req, res) => {
   }
 })
 
-
-
 // camberfarm export blog creation route
 router.post(
   '/export-blogs',
@@ -533,89 +594,138 @@ router.post(
   exportBlogUpload.single('image'),
   async (req, res) => {
     try {
-      let { title, excerpt, slug, sections, publishedAt } = req.body
+      let { title, excerpt, slug, sections, publishedAt } = req.body;
 
       // 1️⃣ Validate required fields
-      if (!title) return res.status(400).json({ message: 'Title is required' })
-      if (!excerpt) return res.status(400).json({ message: 'Excerpt is required' })
-      if (!slug) return res.status(400).json({ message: 'Slug is required' })
-      if (!req.file) return res.status(400).json({ message: 'ExportBlog image is required' })
+      if (!title) return res.status(400).json({ message: 'Title is required' });
+      if (!excerpt) return res.status(400).json({ message: 'Excerpt is required' });
+      if (!slug) return res.status(400).json({ message: 'Slug is required' });
+      if (!req.file) return res.status(400).json({ message: 'ExportBlog image is required' });
 
-      // 2️⃣ Parse JSON fields if sent as strings
-      title = typeof title === 'string' ? JSON.parse(title) : title
-      excerpt = typeof excerpt === 'string' ? JSON.parse(excerpt) : excerpt
-      sections = typeof sections === 'string' ? JSON.parse(sections) : sections
+      // 2️⃣ Parse sections if it's a string
+      if (sections && typeof sections === 'string') sections = JSON.parse(sections);
 
-      const imagePath = `/uploads/export-blogs/${req.file.filename}`
+      const imagePath = `/uploads/export-blogs/${req.file.filename}`;
 
-      // 3️⃣ Create new ExportBlog document
-      const exportBlogs = new exportBlog({
+      // 3️⃣ Prepare translations object
+      const translations = {};
+
+      translations.en = {
         title,
         excerpt,
+        sections: sections || []
+      };
+
+      for (const lang of SUPPORTED_LANGUAGES) {
+        translations[lang] = {
+          title: await translateText(title, lang),
+          excerpt: await translateText(excerpt, lang),
+          sections: await translateSections(sections || [], lang)
+        };
+      }
+
+      // 4️⃣ Create ExportBlog document
+      const exportBlogDoc = new exportBlog({
         slug,
         image: imagePath,
-        sections,
-        publishedAt: publishedAt ? new Date(publishedAt) : new Date()
-      })
+        publishedAt: publishedAt ? new Date(publishedAt) : new Date(),
+        translations
+      });
 
-      await exportBlogs.save()
+      await exportBlogDoc.save();
 
-      res.status(201).json({ message: 'ExportBlog created successfully', exportBlogId: exportBlogs._id, exportBlogs })
+      res.status(201).json({
+        message: 'ExportBlog created successfully',
+        exportBlog: exportBlogDoc
+      });
+
     } catch (error) {
-      console.error(error)
-      res.status(500).json({ message: 'Failed to create ExportBlog', error: error.message })
+      console.error(error);
+      res.status(500).json({ message: 'Failed to create ExportBlog', error: error.message });
     }
   }
-)
-
-
+);
 
 // update a export blog
-router.patch(
-  '/export-blogs/:id',
-  adminAuth,
-  exportBlogUpload.single('image'),
-  async (req, res) => {
-    try {
-      const { id } = req.params
-      const updateData = { ...req.body }
+router.patch('/export-blogs/:id', adminAuth, exportBlogUpload.single('image'), async (req, res) => {
+  try {
+    const { id } = req.params;
+    let updateData = { ...req.body };
 
-      if (updateData.publishedAt) {
-        updateData.publishedAt = new Date(updateData.publishedAt)
-      }
-
-      // If a new image is uploaded, update image path
-      if (req.file) {
-        updateData.image = `/uploads/export-blogs/${req.file.filename}`
-
-        // Optional: delete old image
-        const existingBlog = await exportBlog.findById(id)
-        if (existingBlog?.image) fs.unlinkSync(`.${existingBlog.image}`)
-      }
-
-      // Parse JSON fields if sent as strings
-      if (updateData.title && typeof updateData.title === 'string') updateData.title = JSON.parse(updateData.title)
-      if (updateData.excerpt && typeof updateData.excerpt === 'string') updateData.excerpt = JSON.parse(updateData.excerpt)
-      if (updateData.sections && typeof updateData.sections === 'string') updateData.sections = JSON.parse(updateData.sections)
-
-      const updatedBlog = await exportBlog.findByIdAndUpdate(
-        id,
-        updateData,
-        { new: true, runValidators: true }
-      )
-
-      if (!updatedBlog) return res.status(404).json({ message: 'ExportBlog not found' })
-
-      res.status(200).json({
-        message: 'ExportBlog updated successfully',
-        exportBlog: updatedBlog
-      })
-    } catch (error) {
-      console.error(error)
-      res.status(500).json({ message: 'Failed to update ExportBlog', error: error.message })
+    // Parse sections if sent as JSON string
+    if (updateData.sections && typeof updateData.sections === 'string') {
+      updateData.sections = JSON.parse(updateData.sections);
     }
+
+    // Find existing exportBlog
+    const existingBlog = await exportBlog.findById(id);
+    if (!existingBlog) return res.status(404).json({ message: 'ExportBlog not found' });
+
+    // IMAGE HANDLING
+    if (req.file) {
+      updateData.image = `/uploads/export-blogs/${req.file.filename}`;
+
+      // Delete old image
+      if (existingBlog.image) {
+        try {
+          fs.unlinkSync(`.${existingBlog.image}`);
+        } catch (err) {
+          console.warn('Old image not found:', err.message);
+        }
+      }
+    }
+
+    // TRANSLATION HANDLING
+    const titleChanged = updateData.title !== undefined;
+    const excerptChanged = updateData.excerpt !== undefined;
+    const sectionsChanged = updateData.sections !== undefined;
+
+    if (titleChanged || excerptChanged || sectionsChanged) {
+      const existingEn = existingBlog.translations.get('en');
+
+      const newTitle = updateData.title || existingEn.title;
+      const newExcerpt = updateData.excerpt || existingEn.excerpt;
+      const newSections = updateData.sections || existingEn.sections;
+
+      const translations = {
+        en: {
+          title: newTitle,
+          excerpt: newExcerpt,
+          sections: newSections
+        }
+      };
+
+      for (const lang of SUPPORTED_LANGUAGES) {
+        translations[lang] = {
+          title: await translateText(newTitle, lang),
+          excerpt: await translateText(newExcerpt, lang),
+          sections: await translateSections(newSections, lang)
+        };
+      }
+
+      updateData.translations = translations;
+
+      // Remove raw fields
+      delete updateData.title;
+      delete updateData.excerpt;
+      delete updateData.sections;
+    }
+
+    // Update publishedAt if provided
+    if (updateData.publishedAt) updateData.publishedAt = new Date(updateData.publishedAt);
+
+    const updatedBlog = await exportBlog.findByIdAndUpdate(id, updateData, { new: true, runValidators: true });
+
+    res.status(200).json({
+      message: 'ExportBlog updated successfully',
+      exportBlog: updatedBlog
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to update ExportBlog', error: error.message });
   }
-)
+});
 
 
 // delete a export blog
@@ -853,6 +963,28 @@ router.get('/farm-fund/:id', adminAuth, async (req, res) => {
   }
 })
 
+// export farmfund in pdf
+router.post('/farm-fund/export', adminAuth, async (req, res) => {
+  try {
+    const limit = req.query.limit ? parseInt(req.query.limit) : null
+
+    let query = FarmFund.find().sort({ createdAt: -1 })
+
+    if (limit) {
+      query = query.limit(limit)
+    }
+
+    const registrations = await query.lean()
+
+    // Default export = PDF
+    exportRegistrationsToPDF(registrations, res, 'Farm Fund Registrations')
+  } catch (error) {
+    console.error('FarmFund export error:', error)
+    res.status(500).json({ message: 'FarmFund export failed' })
+  }
+})
+
+
 router.get('/farm-fund/stats/approved-by-month', adminAuth, async (req, res) => {
   try {
     const [monthlyStats, totalApproved] = await Promise.all([
@@ -1046,6 +1178,27 @@ router.patch('/membership/:id/status', adminAuth, async (req, res) => {
   }
 })
 
+// export membership in pdf
+router.post('/membership/export', adminAuth, async (req, res) => {
+  try {
+    const limit = req.query.limit ? parseInt(req.query.limit) : null
+
+    let query = Membership.find().sort({ createdAt: -1 })
+
+    if (limit) {
+      query = query.limit(limit)
+    }
+
+    const registrations = await query.lean()
+
+    // Default export = PDF
+    exportRegistrationsToPDF(registrations, res, 'Membership Registrations')
+  } catch (error) {
+    console.error('Membership export error:', error)
+    res.status(500).json({ message: 'Membership export failed' })
+  }
+})
+
 //Total forms + forms submitted by month
 router.get('/membership/stats/forms-by-month', adminAuth, async (req, res) => {
   try {
@@ -1194,7 +1347,7 @@ router.get('/membership/stats/new-messages', adminAuth, async (req, res) => {
 
 
 // GET all news articles (admin or public)
-router.get('/news', async (req, res) => {
+router.get('/news',adminAuth, async (req, res) => {
   try {
     // Fetch all news, sorted by newest first
     const newsItems = await News.find().sort({ createdAt: -1 })
@@ -1214,77 +1367,171 @@ router.get('/news', async (req, res) => {
   }
 })
 
+// GET /news/:id - get a single news item by ID
+router.get('/news/:id', adminAuth, async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const newsItem = await News.findById(id);
+    if (!newsItem) {
+      return res.status(404).json({ success: false, message: 'News item not found' });
+    }
+
+    res.status(200).json({ success: true, news: newsItem });
+  } catch (error) {
+    console.error('Failed to fetch news:', error);
+    res.status(500).json({ success: false, message: 'Failed to fetch news', error: error.message });
+  }
+});
+
+
 // create a news article (admin only)
 router.post('/news', adminAuth, newsUpload.single('image'), async (req, res) => {
   try {
-    let { title, excerpt, slug, sections, publishedAt } = req.body
+    let { title, excerpt, slug, sections, publishedAt } = req.body;
 
-    // Validate required fields
-    if (!title) return res.status(400).json({ message: 'Title is required' })
-    if (!excerpt) return res.status(400).json({ message: 'Excerpt is required' })
-    if (!slug) return res.status(400).json({ message: 'Slug is required' })
-    if (!req.file) return res.status(400).json({ message: 'News image is required' })
+    if (!title) return res.status(400).json({ message: 'Title is required' });
+    if (!excerpt) return res.status(400).json({ message: 'Excerpt is required' });
+    if (!slug) return res.status(400).json({ message: 'Slug is required' });
+    if (!req.file) return res.status(400).json({ message: 'News image is required' });
 
-    // Parse JSON fields
-    title = typeof title === 'string' ? JSON.parse(title) : title
-    excerpt = typeof excerpt === 'string' ? JSON.parse(excerpt) : excerpt
-    sections = typeof sections === 'string' ? JSON.parse(sections) : sections
+    if (sections && typeof sections === 'string') {
+      sections = JSON.parse(sections);
+    }
 
-    const imagePath = `/uploads/news/${req.file.filename}`
+    const imagePath = `/uploads/news/${req.file.filename}`;
 
-    const newsItem = new News({
+    const translations = {};
+
+    // English base content
+    translations.en = {
       title,
       excerpt,
+      sections: sections || []
+    };
+
+    // Translate to all supported languages
+    for (const lang of SUPPORTED_LANGUAGES) {
+      translations[lang] = {
+        title: await translateText(title, lang),
+        excerpt: await translateText(excerpt, lang),
+        sections: await translateSections(sections || [], lang)
+      };
+    }
+
+    const newsItem = new News({
       slug,
       image: imagePath,
-      sections,
-      publishedAt: publishedAt ? new Date(publishedAt) : new Date()
-    })
+      publishedAt: publishedAt ? new Date(publishedAt) : new Date(),
+      translations
+    });
 
-    await newsItem.save()
-    res.status(201).json({ message: 'News created successfully', newsItem, id:newsItem._id })
+    await newsItem.save();
+
+    res.status(201).json({
+      message: 'News created successfully',
+      newsItem
+    });
+
   } catch (error) {
-    console.error(error)
-    res.status(500).json({ message: 'Failed to create news', error: error.message })
+    console.error(error);
+    res.status(500).json({
+      message: 'Failed to create news',
+      error: error.message
+    });
   }
-})
-
-
+});
 
 // update a news article 
 router.patch('/news/:id', adminAuth, newsUpload.single('image'), async (req, res) => {
   try {
-    const { id } = req.params
-    const updateData = { ...req.body }
+    const { id } = req.params;
+    let updateData = { ...req.body };
 
-    // Convert publishedAt to Date if provided
-    if (updateData.publishedAt) {
-      updateData.publishedAt = new Date(updateData.publishedAt)
+    // Parse sections if sent as JSON string
+    if (updateData.sections && typeof updateData.sections === 'string') {
+      updateData.sections = JSON.parse(updateData.sections);
     }
 
-    // Parse JSON fields if sent as strings
-    if (updateData.title && typeof updateData.title === 'string') updateData.title = JSON.parse(updateData.title)
-    if (updateData.excerpt && typeof updateData.excerpt === 'string') updateData.excerpt = JSON.parse(updateData.excerpt)
-    if (updateData.sections && typeof updateData.sections === 'string') updateData.sections = JSON.parse(updateData.sections)
+    // Find existing news
+    const existingNews = await News.findById(id);
+    if (!existingNews) {
+      return res.status(404).json({ message: 'News item not found' });
+    }
 
-    // If a new image was uploaded, update path and delete old image
+    // IMAGE HANDLING
     if (req.file) {
-      updateData.image = `/uploads/news/${req.file.filename}`
+      // Set new image path
+      updateData.image = `/uploads/news/${req.file.filename}`;
 
-      const existingNews = await News.findById(id)
-      if (existingNews?.image) fs.unlinkSync(`.${existingNews.image}`)
+      // Delete old image
+      if (existingNews.image) {
+        try {
+          fs.unlinkSync(`.${existingNews.image}`);
+        } catch (err) {
+          console.warn('Old image not found:', err.message);
+        }
+      }
     }
 
-    const updatedNews = await News.findByIdAndUpdate(id, updateData, { new: true, runValidators: true })
+    // TRANSLATION HANDLING
+    const titleChanged = updateData.title !== undefined;
+    const excerptChanged = updateData.excerpt !== undefined;
+    const sectionsChanged = updateData.sections !== undefined;
 
-    if (!updatedNews) return res.status(404).json({ message: 'News item not found' })
+    if (titleChanged || excerptChanged || sectionsChanged) {
+      const existingEn = existingNews.translations.get('en');
 
-    res.status(200).json({ message: 'News updated successfully', newsItem: updatedNews })
+      const newTitle = updateData.title || existingEn.title;
+      const newExcerpt = updateData.excerpt || existingEn.excerpt;
+      const newSections = updateData.sections || existingEn.sections;
+
+      const translations = {
+        en: {
+          title: newTitle,
+          excerpt: newExcerpt,
+          sections: newSections
+        }
+      };
+
+      // Translate all languages
+      for (const lang of SUPPORTED_LANGUAGES) {
+        translations[lang] = {
+          title: await translateText(newTitle, lang),
+          excerpt: await translateText(newExcerpt, lang),
+          sections: await translateSections(newSections, lang)
+        };
+      }
+
+      updateData.translations = translations;
+
+      // Remove raw fields to avoid schema conflicts
+      delete updateData.title;
+      delete updateData.excerpt;
+      delete updateData.sections;
+    }
+
+    const updatedNews = await News.findByIdAndUpdate(
+      id,
+      updateData,
+      { new: true, runValidators: true }
+    );
+
+    res.status(200).json({
+      message: 'News updated successfully',
+      newsItem: updatedNews
+    });
+
   } catch (error) {
-    console.error(error)
-    res.status(500).json({ message: 'Failed to update news item', error: error.message })
+    console.error(error);
+    res.status(500).json({
+      message: 'Failed to update news item',
+      error: error.message
+    });
   }
-})
+});
+
+
 
 
 // delete a news article
@@ -1293,10 +1540,17 @@ router.delete('/news/:id', adminAuth, async (req, res) => {
     const { id } = req.params
     const deletedNews = await News.findByIdAndDelete(id)
 
-    if (!deletedNews) return res.status(404).json({ message: 'News item not found' })
+    if (!deletedNews) {
+      return res.status(404).json({ message: 'News item not found' })
+    }
 
-    // Delete the image from disk
-    if (deletedNews.image) fs.unlinkSync(`.${deletedNews.image}`)
+    if (deletedNews.image) {
+      try {
+        fs.unlinkSync(`.${deletedNews.image}`)
+      } catch (err) {
+        console.warn('Image already deleted')
+      }
+    }
 
     res.status(200).json({ message: 'News item deleted successfully' })
   } catch (error) {
@@ -1311,13 +1565,15 @@ router.get('/news/stats', adminAuth, async (req, res) => {
   try {
     const stats = await News.aggregate([
       {
+        $match: {
+          publishedAt: { $ne: null }
+        }
+      },
+      {
         $facet: {
-          // total news count
           totalCount: [
             { $count: 'total' }
           ],
-
-          // news count by month (using publishedAt)
           monthlyCounts: [
             {
               $group: {
@@ -1339,7 +1595,7 @@ router.get('/news/stats', adminAuth, async (req, res) => {
       }
     ])
 
-    const totalNews = stats[0].totalCount[0]?.total || 0
+    const totalNews = stats[0]?.totalCount[0]?.total || 0
 
     res.status(200).json({
       totalNews,
@@ -1353,6 +1609,7 @@ router.get('/news/stats', adminAuth, async (req, res) => {
     })
   }
 })
+
 
 // GET ALL PRODUCTS
 router.get('/products', adminAuth, async (req, res) => {
@@ -1459,137 +1716,148 @@ router.get('/products/:id',adminAuth, async (req, res) => {
 // POST /api/products
 router.post('/products', adminAuth, productUpload, async (req, res) => {
   try {
-    const {
-      name,
-      category,
-      description,
-      stockQuantity,
-      variants
-    } = req.body
+    let { name, category, description, stockQuantity, variants } = req.body;
 
-    // 1️⃣ Validate required fields
-    if (!name || !category || !description || stockQuantity === undefined) {
-      return res.status(400).json({ message: 'Missing required fields' })
+    if (!name) return res.status(400).json({ message: 'Product name is required' });
+    if (!category) return res.status(400).json({ message: 'Category is required' });
+    if (!description) return res.status(400).json({ message: 'Description is required' });
+    if (!req.files || req.files.length === 0) return res.status(400).json({ message: 'At least one product image is required' });
+
+    const images = req.files.map(file => `/uploads/products/${file.filename}`);
+
+    const translations = {
+      en: { name, category, description, variants: variants || {} },
+    };
+
+    for (const lang of SUPPORTED_LANGUAGES) {
+      if (lang === 'en') continue;
+      translations[lang] = {
+        name: await translateTexts(name, lang),
+        category: await translateTexts(category, lang),
+        description: await translateTexts(description, lang),
+        variants: await translateVariants(variants, lang),
+      };
     }
 
-    // 2️⃣ Validate images
-    if (!req.files || req.files.length === 0) {
-      return res.status(400).json({ message: 'At least one product image is required' })
-    }
-
-    // 3️⃣ Parse variants (optional & dynamic)
-    const parsedVariants =
-      variants && typeof variants === 'string'
-        ? JSON.parse(variants)
-        : variants
-
-    // 4️⃣ Map images
-    const images = req.files.map(file => `/uploads/products/${file.filename}`)
-
-    // 5️⃣ Create product
     const product = new Product({
       name,
       category,
       description,
-      stockQuantity,
+      stockQuantity: stockQuantity || 0,
+      variants,
       images,
-      variants: parsedVariants || undefined
-    })
+      translations,
+    });
 
-    await product.save()
-
-    res.status(201).json({
-      message: 'Product created successfully',
-      product
-    })
-  } catch (error) {
-    console.error(error)
-    res.status(500).json({
-      message: 'Failed to create product',
-      error: error.message
-    })
+    await product.save();
+    res.status(201).json({ message: 'Product created successfully', product });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Failed to create product', error: err.message });
   }
-})
+});
 
 
 
 // UPDATE PRODUCT
 // PUT /api/admin/products/:id
-router.put('/products/:id', adminAuth, productUpload, async (req, res) => {
+router.patch('/products/:id', adminAuth, productUpload, async (req, res) => {
   try {
-    const { id } = req.params
-    const updateData = { ...req.body }
+    const { id } = req.params;
+    let updateData = { ...req.body };
 
-    // 1️⃣ Parse variants if sent as string
-    if (updateData.variants && typeof updateData.variants === 'string') {
-      updateData.variants = JSON.parse(updateData.variants)
-    }
+    const existingProduct = await Product.findById(id);
+    if (!existingProduct) return res.status(404).json({ message: 'Product not found' });
 
-    // 2️⃣ Replace images if new ones are uploaded
+    // IMAGE HANDLING
     if (req.files && req.files.length > 0) {
-      updateData.images = req.files.map(
-        file => `/uploads/products/${file.filename}`
-      )
+      const newImages = req.files.map(file => `/uploads/products/${file.filename}`);
+
+      // Optionally delete old images
+      if (existingProduct.images) {
+        existingProduct.images.forEach(img => {
+          try { fs.unlinkSync(`.${img}`); } catch (err) { console.warn('Old image not found:', err.message); }
+        });
+      }
+
+      updateData.images = newImages;
     }
 
-    // 3️⃣ Update product
-    const updatedProduct = await Product.findByIdAndUpdate(
-      id,
-      updateData,
-      { new: true, runValidators: true }
-    )
+    const nameChanged = updateData.name !== undefined;
+    const categoryChanged = updateData.category !== undefined;
+    const descriptionChanged = updateData.description !== undefined;
+    const variantsChanged = updateData.variants !== undefined;
 
-    if (!updatedProduct) {
-      return res.status(404).json({ message: 'Product not found' })
+    if (nameChanged || categoryChanged || descriptionChanged || variantsChanged) {
+      const existingEn = existingProduct.translations.en;
+
+      const newName = updateData.name || existingEn.name;
+      const newCategory = updateData.category || existingEn.category;
+      const newDescription = updateData.description || existingEn.description;
+      const newVariants = updateData.variants || existingEn.variants;
+
+      const translations = {
+        en: {
+          name: newName,
+          category: newCategory,
+          description: newDescription,
+          variants: newVariants,
+        },
+      };
+
+      for (const lang of SUPPORTED_LANGUAGES) {
+        if (lang === 'en') continue;
+        translations[lang] = {
+          name: await translateTexts(newName, lang),
+          category: await translateTexts(newCategory, lang),
+          description: await translateTexts(newDescription, lang),
+          variants: await translateVariants(newVariants, lang),
+        };
+      }
+
+      updateData.translations = translations;
+      delete updateData.name;
+      delete updateData.category;
+      delete updateData.description;
+      delete updateData.variants;
     }
 
-    res.status(200).json({
-      message: 'Product updated successfully',
-      product: updatedProduct
-    })
-  } catch (error) {
-    console.error(error)
-    res.status(500).json({
-      message: 'Failed to update product',
-      error: error.message
-    })
+    const updatedProduct = await Product.findByIdAndUpdate(id, updateData, { new: true, runValidators: true });
+
+    res.status(200).json({ message: 'Product updated successfully', product: updatedProduct });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Failed to update product', error: err.message });
   }
-})
+});
+
 
 
 
 // DELETE PRODUCT
 router.delete('/products/:id', adminAuth, async (req, res) => {
   try {
-    const { id } = req.params
+    const { id } = req.params;
 
-    const deletedProduct = await Product.findByIdAndDelete(id)
+    const deletedProduct = await Product.findByIdAndDelete(id);
+    if (!deletedProduct) return res.status(404).json({ message: 'Product not found' });
 
-    if (!deletedProduct) {
-      return res.status(404).json({ message: 'Product not found' })
-    }
+    // Delete all product images safely
+    await Promise.all(deletedProduct.images?.map(async img => {
+      try {
+        const filePath = `.${img}`;
+        if (fs.existsSync(filePath)) await fs.promises.unlink(filePath);
+      } catch (err) {
+        console.warn('Failed to delete image:', img, err.message);
+      }
+    }) || []);
 
-    // Delete all product images
-    if (deletedProduct.images?.length) {
-      deletedProduct.images.forEach(img => {
-        const filePath = `.${img}`
-        if (fs.existsSync(filePath)) {
-          fs.unlinkSync(filePath)
-        }
-      })
-    }
-
-    res.status(200).json({
-      message: 'Product deleted successfully'
-    })
+    res.status(200).json({ message: 'Product deleted successfully' });
   } catch (error) {
-    console.error(error)
-    res.status(500).json({
-      message: 'Failed to delete product',
-      error: error.message
-    })
+    console.error(error);
+    res.status(500).json({ message: 'Failed to delete product', error: error.message });
   }
-})
+});
 
 
 router.get('/products/stats', adminAuth, async (req, res) => {
@@ -1847,6 +2115,174 @@ router.patch('/affiliate/:id/status', adminAuth, async (req, res) => {
   }
 });
 
+// export affiliate in pdf
+router.post('/affiliate/export', adminAuth, async (req, res) => {
+  try {
+    const limit = req.query.limit ? parseInt(req.query.limit) : null
+
+    let query = Affiliate.find().sort({ createdAt: -1 })
+
+    if (limit) {
+      query = query.limit(limit)
+    }
+
+    const registrations = await query.lean()
+
+    // Default export = PDF
+    exportRegistrationsToPDF(registrations, res, 'Affiliate Registrations')
+  } catch (error) {
+    console.error('Affiliate export error:', error)
+    res.status(500).json({ message: 'Affiliate export failed' })
+  }
+})
+
+//Total forms + forms submitted by month
+router.get('/affiliate/stats/forms-by-month', adminAuth, async (req, res) => {
+  try {
+    const [totalForms, monthlyStats] = await Promise.all([
+      Affiliate.countDocuments(),
+      Affiliate.aggregate([
+        {
+          $group: {
+            _id: {
+              year: { $year: "$createdAt" },
+              month: { $month: "$createdAt" }
+            },
+            total: { $sum: 1 }
+          }
+        },
+        {
+          $sort: { "_id.year": 1, "_id.month": 1 }
+        }
+      ])
+    ])
+
+    res.status(200).json({
+      success: true,
+      totalForms,
+      monthlyBreakdown: monthlyStats
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: "Server error" })
+  }
+})
+
+//Pending replies + pending replies by week
+router.get('/affiliate/stats/pending-by-week', adminAuth, async (req, res) => {
+  try {
+    const [totalPending, weeklyStats] = await Promise.all([
+      Affiliate.countDocuments({ status: "pending" }),
+      Affiliate.aggregate([
+        {
+          $match: { status: "pending" }
+        },
+        {
+          $group: {
+            _id: {
+              year: { $year: "$createdAt" },
+              week: { $week: "$createdAt" }
+            },
+            total: { $sum: 1 }
+          }
+        },
+        {
+          $sort: { "_id.year": 1, "_id.week": 1 }
+        }
+      ])
+    ])
+
+    res.status(200).json({
+      success: true,
+      totalPendingReplies: totalPending,
+      weeklyBreakdown: weeklyStats
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: "Server error" })
+  }
+})
+
+//Approved percentage + total approved
+router.get('/affiliate/stats/approved-percentage', adminAuth, async (req, res) => {
+  try {
+    const [totalForms, approvedCount] = await Promise.all([
+      Affiliate.countDocuments(),
+      Affiliate.countDocuments({ status: "approved" })
+    ])
+
+    const percentage =
+      totalForms === 0 ? 0 : ((approvedCount / totalForms) * 100).toFixed(2)
+
+    res.status(200).json({
+      success: true,
+      totalForms,
+      totalApproved: approvedCount,
+      approvedPercentage: Number(percentage)
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: "Server error" })
+  }
+})
+
+//New messages + percentage by month
+router.get('/affiliate/stats/new-messages', adminAuth, async (req, res) => {
+  try {
+    const totalNewMessages = await Affiliate.countDocuments({ status: "pending" })
+
+    const monthlyStats = await Affiliate.aggregate([
+      {
+        $group: {
+          _id: {
+            year: { $year: "$createdAt" },
+            month: { $month: "$createdAt" }
+          },
+          total: { $sum: 1 },
+          pending: {
+            $sum: {
+              $cond: [{ $eq: ["$status", "pending"] }, 1, 0]
+            }
+          }
+        }
+      },
+      {
+        $project: {
+          year: "$_id.year",
+          month: "$_id.month",
+          total: 1,
+          pending: 1,
+          percentage: {
+            $cond: [
+              { $eq: ["$total", 0] },
+              0,
+              {
+                $multiply: [
+                  { $divide: ["$pending", "$total"] },
+                  100
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        $sort: { year: 1, month: 1 }
+      }
+    ])
+
+    res.status(200).json({
+      success: true,
+      totalNewMessages,
+      monthlyBreakdown: monthlyStats
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: "Server error" })
+  }
+})
+
+
 // GET unified africa notifications
 // GET /api/admin/africa/notifications?limit=10
 router.get('/africa/notifications', adminAuth, async (req, res) => {
@@ -1937,171 +2373,159 @@ router.get('/export/notifications', adminAuth, async (req, res) => {
 // GET /api/admin/enquiries?limit=10
 router.get('/enquiries', adminAuth, async (req, res) => {
   try {
-    const limit = req.query.limit ? parseInt(req.query.limit) : null
+    const limit = req.query.limit ? parseInt(req.query.limit) : null;
 
-    const [feedbacks, contacts, messages] = await Promise.all([
-      Feedback.find().lean(),
-      contact.find().lean(),
-      Message.find().lean()
-    ])
+    // Fetch all enquiries, sorted by newest first
+    let enquiries = await Enquiry.find().sort({ createdAt: -1 }).lean();
 
-    // -----------------------------
-    // Combine enquiries
-    // -----------------------------
-    const enquiries = [
-      ...feedbacks.map(i => ({ ...i, type: 'feedback' })),
-      ...contacts.map(i => ({ ...i, type: 'contact' })),
-      ...messages.map(i => ({ ...i, type: 'message' }))
-    ].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-
-    const limitedEnquiries = limit ? enquiries.slice(0, limit) : enquiries
+    // Apply limit if provided
+    if (limit) {
+      enquiries = enquiries.slice(0, limit);
+    }
 
     // -----------------------------
     // Monthly stats
     // -----------------------------
-    const monthlyMap = {}
+    const monthlyMap = {};
 
     enquiries.forEach(item => {
-      const date = new Date(item.createdAt)
-      const year = date.getFullYear()
-      const month = date.getMonth() + 1
-      const key = `${year}-${month}`
-
-      monthlyMap[key] = (monthlyMap[key] || 0) + 1
-    })
+      const date = new Date(item.createdAt);
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const key = `${year}-${month}`;
+      monthlyMap[key] = (monthlyMap[key] || 0) + 1;
+    });
 
     const monthlyStats = Object.entries(monthlyMap)
       .map(([key, total]) => {
-        const [year, month] = key.split('-')
-        return { year: Number(year), month: Number(month), total }
+        const [year, month] = key.split('-');
+        return { year: Number(year), month: Number(month), total };
       })
       .sort((a, b) => a.year - b.year || a.month - b.month)
       .map((current, index, arr) => {
-        const prev = arr[index - 1]
-
-        let diff = null
-        let percentage = null
+        const prev = arr[index - 1];
+        let diff = null;
+        let percentage = null;
 
         if (prev) {
-          diff = current.total - prev.total
-          percentage =
-            prev.total === 0
-              ? 0
-              : Number(((diff / prev.total) * 100).toFixed(2))
+          diff = current.total - prev.total;
+          percentage = prev.total === 0 ? 0 : Number(((diff / prev.total) * 100).toFixed(2));
         }
 
         return {
           ...current,
           changeFromPreviousMonth: diff,
           changePercentage: percentage
-        }
-      })
+        };
+      });
 
     res.status(200).json({
       success: true,
       totalEnquiries: enquiries.length,
-      enquiries: limitedEnquiries,
+      enquiries,
       monthlyStats
-    })
+    });
   } catch (error) {
-    console.error('Fetch enquiries error:', error)
-    res.status(500).json({ message: 'Failed to fetch enquiries' })
+    console.error('Fetch enquiries error:', error);
+    res.status(500).json({ message: 'Failed to fetch enquiries', error: error.message });
   }
-})
+});
 
 
 // GET /api/admin/enquiries/export to export enquiries
-router.get('/enquiries/export', adminAuth, async (req, res) => {
+router.post('/enquiries/export', adminAuth, async (req, res) => {
   try {
-    const format = req.query.format || 'pdf'
-    const limit = req.query.limit ? parseInt(req.query.limit) : null
+    // Default format = pdf
+    const { format = 'pdf', limit = null } = req.body
 
-    const enquiries = await getEnquiries(limit)
+    const enquiries = await getEnquiries(
+      limit ? parseInt(limit) : null
+    )
 
-    if (format === 'pdf') return exportToPDF(enquiries, res)
+    // Default behaviour → PDF
+    if (format === 'pdf') {
+      return exportToPDF(enquiries, res)
+    }
 
-    res.status(400).json({ message: 'Unsupported export format' })
+    res.status(400).json({
+      message: 'Unsupported export format'
+    })
   } catch (err) {
     console.error('Export error:', err)
-    res.status(500).json({ message: 'Export failed' })
+    res.status(500).json({
+      message: 'Export failed'
+    })
   }
 })
+
 
 // GET /api/admin/enquiries/:type/:id
 router.get('/enquiries/:type/:id', adminAuth, async (req, res) => {
   try {
     const { type, id } = req.params;
-    let enquiry;
 
-    switch (type) {
-      case 'feedback':
-        enquiry = await Feedback.findById(id);
-        break;
-      case 'contact':
-        enquiry = await contact.findById(id);
-        break;
-      case 'message':
-        enquiry = await Message.findById(id);
-        break;
-      default:
-        return res.status(400).json({ message: 'Invalid enquiry type' });
+    // Validate type
+    const validTypes = ['contact', 'feedback', 'message'];
+    if (!validTypes.includes(type)) {
+      return res.status(400).json({ message: 'Invalid enquiry type' });
     }
 
-    if (!enquiry) return res.status(404).json({ message: 'Enquiry not found' });
+    // Find enquiry by ID and type
+    const enquiry = await Enquiry.findOne({ _id: id, sourceModel: type }).lean();
+
+    if (!enquiry) {
+      return res.status(404).json({ message: 'Enquiry not found' });
+    }
 
     res.status(200).json({ enquiry });
   } catch (error) {
     console.error('Fetch single enquiry error:', error);
+    // Handle invalid ObjectId
+    if (error.name === 'CastError') {
+      return res.status(400).json({ message: 'Invalid enquiry ID' });
+    }
     res.status(500).json({ message: 'Failed to fetch enquiry', error: error.message });
   }
 });
 
-// POST /api/admin/enquiries/:type/:id/reply
+// POST reply to an enquiry
 router.post('/enquiries/:type/:id/reply', adminAuth, async (req, res) => {
   try {
     const { type, id } = req.params;
     const { status, adminReply } = req.body;
 
-    if (!status || !["pending", "read"].includes(status)) {
+    // Validate status
+    if (!status || !['pending', 'read'].includes(status)) {
       return res.status(400).json({ message: 'Invalid status' });
     }
 
-    let updated;
-
-    switch (type) {
-      case 'feedback':
-        updated = await Feedback.findByIdAndUpdate(
-          id,
-          { status, adminReply },
-          { new: true }
-        );
-        break;
-      case 'contact':
-        updated = await contact.findByIdAndUpdate(
-          id,
-          { status, adminReply },
-          { new: true }
-        );
-        break;
-      case 'message':
-        updated = await Message.findByIdAndUpdate(
-          id,
-          { status, adminReply },
-          { new: true }
-        );
-        break;
-      default:
-        return res.status(400).json({ message: 'Invalid enquiry type' });
+    // Validate type
+    const validTypes = ['contact', 'feedback', 'message'];
+    if (!validTypes.includes(type)) {
+      return res.status(400).json({ message: 'Invalid enquiry type' });
     }
 
-    if (!updated) return res.status(404).json({ message: 'Enquiry not found' });
+    // Update enquiry
+    const updated = await Enquiry.findOneAndUpdate(
+      { _id: id, sourceModel: type },
+      { status, adminReply },
+      { new: true }
+    );
+
+    if (!updated) {
+      return res.status(404).json({ message: 'Enquiry not found' });
+    }
 
     res.status(200).json({
       message: 'Enquiry updated successfully',
-      enquiry: updated
+      enquiry: updated,
     });
   } catch (error) {
     console.error('Update enquiry error:', error);
+    // Handle invalid ObjectId
+    if (error.name === 'CastError') {
+      return res.status(400).json({ message: 'Invalid enquiry ID' });
+    }
     res.status(500).json({ message: 'Failed to update enquiry', error: error.message });
   }
 });
@@ -2109,182 +2533,140 @@ router.post('/enquiries/:type/:id/reply', adminAuth, async (req, res) => {
 //Total enquiries + enquiries submitted by month
 router.get('/enquiries/stats/by-month', adminAuth, async (req, res) => {
   try {
-    const collections = [Feedback, contact, Message]
+    const totalEnquiries = await Enquiry.countDocuments();
 
-    let totalEnquiries = 0
-    const monthlyMap = {}
+    const monthly = await Enquiry.aggregate([
+      {
+        $group: {
+          _id: {
+            year: { $year: "$createdAt" },
+            month: { $month: "$createdAt" },
+          },
+          total: { $sum: 1 },
+        },
+      },
+    ]);
 
-    for (const Model of collections) {
-      const total = await Model.countDocuments()
-      totalEnquiries += total
-
-      const monthly = await Model.aggregate([
-        {
-          $group: {
-            _id: {
-              year: { $year: "$createdAt" },
-              month: { $month: "$createdAt" }
-            },
-            total: { $sum: 1 }
-          }
-        }
-      ])
-
-      monthly.forEach(item => {
-        const key = `${item._id.year}-${item._id.month}`
-        monthlyMap[key] = (monthlyMap[key] || 0) + item.total
-      })
-    }
-
-    const monthlyBreakdown = Object.entries(monthlyMap)
-      .map(([key, total]) => {
-        const [year, month] = key.split('-')
-        return { year: Number(year), month: Number(month), total }
-      })
-      .sort((a, b) => a.year - b.year || a.month - b.month)
+    const monthlyBreakdown = monthly
+      .map(item => ({
+        year: item._id.year,
+        month: item._id.month,
+        total: item.total,
+      }))
+      .sort((a, b) => a.year - b.year || a.month - b.month);
 
     res.status(200).json({
       success: true,
       totalEnquiries,
-      monthlyBreakdown
-    })
+      monthlyBreakdown,
+    });
   } catch (error) {
-    console.error(error)
-    res.status(500).json({ message: "Server error" })
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
   }
-})
+});
 
-//Pending replies + pending replies by week
+// Pending replies stats by week
 router.get('/enquiries/stats/pending-by-week', adminAuth, async (req, res) => {
   try {
-    const collections = [Feedback, contact, Message]
+    const totalPending = await Enquiry.countDocuments({ status: "pending" });
 
-    let totalPending = 0
-    const weeklyMap = {}
+    const weekly = await Enquiry.aggregate([
+      { $match: { status: "pending" } },
+      {
+        $group: {
+          _id: {
+            year: { $year: "$createdAt" },
+            week: { $week: "$createdAt" },
+          },
+          total: { $sum: 1 },
+        },
+      },
+    ]);
 
-    for (const Model of collections) {
-      const pending = await Model.countDocuments({ status: "pending" })
-      totalPending += pending
-
-      const weekly = await Model.aggregate([
-        { $match: { status: "pending" } },
-        {
-          $group: {
-            _id: {
-              year: { $year: "$createdAt" },
-              week: { $week: "$createdAt" }
-            },
-            total: { $sum: 1 }
-          }
-        }
-      ])
-
-      weekly.forEach(item => {
-        const key = `${item._id.year}-${item._id.week}`
-        weeklyMap[key] = (weeklyMap[key] || 0) + item.total
-      })
-    }
-
-    const weeklyBreakdown = Object.entries(weeklyMap)
-      .map(([key, total]) => {
-        const [year, week] = key.split('-')
-        return { year: Number(year), week: Number(week), total }
-      })
-      .sort((a, b) => a.year - b.year || a.week - b.week)
+    const weeklyBreakdown = weekly
+      .map(item => ({
+        year: item._id.year,
+        week: item._id.week,
+        total: item.total,
+      }))
+      .sort((a, b) => a.year - b.year || a.week - b.week);
 
     res.status(200).json({
       success: true,
       totalPendingReplies: totalPending,
-      weeklyBreakdown
-    })
+      weeklyBreakdown,
+    });
   } catch (error) {
-    console.error(error)
-    res.status(500).json({ message: "Server error" })
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
   }
-})
+});
 
-//Percentage resolved + total resolved
+// Resolution rate
 router.get('/enquiries/stats/resolution-rate', adminAuth, async (req, res) => {
   try {
-    const collections = [Feedback, contact, Message]
+    const total = await Enquiry.countDocuments();
+    const resolved = await Enquiry.countDocuments({ status: "read" });
 
-    let total = 0
-    let resolved = 0
-
-    for (const Model of collections) {
-      total += await Model.countDocuments()
-      resolved += await Model.countDocuments({ status: "read" })
-    }
-
-    const percentage =
-      total === 0 ? 0 : ((resolved / total) * 100).toFixed(2)
+    const percentage = total === 0 ? 0 : ((resolved / total) * 100).toFixed(2);
 
     res.status(200).json({
       success: true,
       totalEnquiries: total,
       totalResolved: resolved,
-      resolutionPercentage: Number(percentage)
-    })
+      resolutionPercentage: Number(percentage),
+    });
   } catch (error) {
-    console.error(error)
-    res.status(500).json({ message: "Server error" })
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
   }
-})
+});
 
-//Average response time + weekly trend
+// Average response time per week
 router.get('/enquiries/stats/response-time', adminAuth, async (req, res) => {
   try {
-    const collections = [Feedback, contact, Message]
-    const weeklyMap = {}
+    const replied = await Enquiry.aggregate([
+      { $match: { status: "read" } },
+      {
+        $project: {
+          responseTimeHours: {
+            $divide: [{ $subtract: ["$updatedAt", "$createdAt"] }, 1000 * 60 * 60],
+          },
+          year: { $year: "$updatedAt" },
+          week: { $week: "$updatedAt" },
+        },
+      },
+    ]);
 
-    for (const Model of collections) {
-      const replied = await Model.aggregate([
-        { $match: { status: "read" } },
-        {
-          $project: {
-            responseTime: {
-              $divide: [
-                { $subtract: ["$updatedAt", "$createdAt"] },
-                1000 * 60 * 60 // hours
-              ]
-            },
-            year: { $year: "$updatedAt" },
-            week: { $week: "$updatedAt" }
-          }
-        }
-      ])
-
-      replied.forEach(item => {
-        const key = `${item.year}-${item.week}`
-        if (!weeklyMap[key]) weeklyMap[key] = { total: 0, count: 0 }
-
-        weeklyMap[key].total += item.responseTime
-        weeklyMap[key].count += 1
-      })
-    }
+    const weeklyMap = {};
+    replied.forEach(item => {
+      const key = `${item.year}-${item.week}`;
+      if (!weeklyMap[key]) weeklyMap[key] = { total: 0, count: 0 };
+      weeklyMap[key].total += item.responseTimeHours;
+      weeklyMap[key].count += 1;
+    });
 
     const weeklyResponseTime = Object.entries(weeklyMap)
       .map(([key, data]) => {
-        const [year, week] = key.split('-')
+        const [year, week] = key.split("-");
         return {
           year: Number(year),
           week: Number(week),
-          averageResponseTimeHours: Number(
-            (data.total / data.count).toFixed(2)
-          )
-        }
+          averageResponseTimeHours: Number((data.total / data.count).toFixed(2)),
+        };
       })
-      .sort((a, b) => a.year - b.year || a.week - b.week)
+      .sort((a, b) => a.year - b.year || a.week - b.week);
 
     res.status(200).json({
       success: true,
-      weeklyResponseTime
-    })
+      weeklyResponseTime,
+    });
   } catch (error) {
-    console.error(error)
-    res.status(500).json({ message: "Server error" })
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
   }
-})
+});
 
 
 
