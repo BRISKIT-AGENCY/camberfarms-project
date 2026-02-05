@@ -2,61 +2,30 @@ import mongoose from 'mongoose'
 
 const productSchema = new mongoose.Schema(
   {
-    name: {
-      type: String,
-      required: true,
-      trim: true
-    },
-
-    category: {
-      type: String,
-      required: true,
-      trim: true
-      // e.g. "Grains", "Legumes", "Oil Seeds"
-    },
-
-    images: [
-      {
-        type: String,
-        required: true
-      }
-    ],
-
-    description: {
-      type: String,
-      required: true,
-      trim: true
-    },
-
-    stockQuantity: {
-      type: Number,
-      required: true,
-      min: 0
-    },
-
-    status: {
-      type: String,
-      enum: ['active', 'inactive'],
-      default: 'active'
-    },
-
-    variants: {
+    translations: {
       type: Map,
-      of: mongoose.Schema.Types.Mixed,
-      required: false
-    }
+      of: new mongoose.Schema({
+        name: { type: String, required: true, trim: true },
+        category: { type: String, required: true, trim: true },
+        description: { type: String, required: true, trim: true },
+        variants: { type: Map, of: mongoose.Schema.Types.Mixed, required: false },
+      }, { _id: false })
+    },
+    images: [
+      { type: String, required: true }
+    ],
+    stockQuantity: { type: Number, required: true, min: 0 },
+    status: { type: String, enum: ['active', 'inactive'], default: 'active' }
   },
-  {
-    timestamps: true
-  }
-)
+  { timestamps: true }
+);
+
 
 // 🔁 Auto update status when stock is zero
-productSchema.pre('save', function (next) {
+productSchema.pre('save', function () {
   if (this.stockQuantity === 0) {
-    this.status = 'inactive'
+    this.status = 'inactive';
   }
-  next()
-})
+});
 
 export default mongoose.model('Product', productSchema)

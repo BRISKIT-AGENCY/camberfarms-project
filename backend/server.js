@@ -13,6 +13,7 @@ import affiliateRouter from './routes/affiliateRoutes.js'
 import feedbackRouter from './routes/feedbackRoutes.js';
 import messageRouter from './routes/messageRoutes.js';
 import productRouter from './routes/productRoutes.js';
+import enquiryRouter from './routes/enquiryRoutes.js'
 import { trackVisitor } from "./middleware/trackVisitor.js";
 
 
@@ -73,6 +74,7 @@ app.use('/api', affiliateRouter)
 app.use('/api/export', feedbackRouter)
 app.use('/api/export', messageRouter)
 app.use('/api/', productRouter)
+app.use('/api/', enquiryRouter)
 
 
 

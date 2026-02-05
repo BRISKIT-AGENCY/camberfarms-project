@@ -1,32 +1,56 @@
-import express from 'express'
-import News from '../models/News.js'
-import adminAuth from '../middleware/adminAuth.js'
-const router = express.Router()
+import express from 'express';
+import News from '../models/News.js';
 
-// GET all news (with pagination & locale)
+const router = express.Router();
+
+// Supported languages
+const SUPPORTED_LANGUAGES = [
+  'en', 'fr', 'es', 'it', 'ar', 'ru', 'zh', 'nl', 'de', 'pt'
+];
+
+// Helper to safely get translation
+function getTranslation(item, lang) {
+  if (item.translations?.[lang]) return item.translations[lang];
+  if (item.translations?.en) return item.translations.en;
+
+  // fallback to first available translation
+  const firstLang = Object.keys(item.translations || {})[0];
+  return item.translations?.[firstLang] || {};
+}
+
+// -----------------------------
+// GET all news (pagination + locale)
+// -----------------------------
 router.get('/news', async (req, res) => {
   try {
-    const lang = req.query.lang || 'en'
-    const page = parseInt(req.query.page) || 1
-    const limit = parseInt(req.query.limit) || 3
-    const skip = (page - 1) * limit
+    let lang = req.query.lang || 'en';
+    if (!SUPPORTED_LANGUAGES.includes(lang)) lang = 'en';
+
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 3;
+    const skip = (page - 1) * limit;
 
     const [newsItems, total] = await Promise.all([
       News.find()
         .sort({ publishedAt: -1 })
         .skip(skip)
-        .limit(limit),
+        .limit(limit)
+        .lean(),
       News.countDocuments()
-    ])
+    ]);
 
-    // Format for locale
-    const formatted = newsItems.map(item => ({
-      title: item.title.get(lang) || item.title.get('en'),
-      excerpt: item.excerpt.get(lang) || item.excerpt.get('en'),
-      slug: item.slug,
-      image: item.image,
-      publishedAt: item.publishedAt
-    }))
+    const formatted = newsItems.map(item => {
+      const t = getTranslation(item, lang);
+
+      return {
+        title: t.title,
+        excerpt: t.excerpt,
+        slug: item.slug,
+        image: item.image,
+        publishedAt: item.publishedAt,
+        lang
+      };
+    });
 
     res.json({
       data: formatted,
@@ -35,67 +59,88 @@ router.get('/news', async (req, res) => {
         totalPages: Math.ceil(total / limit),
         totalItems: total
       }
-    })
+    });
   } catch (error) {
-    res.status(500).json({ message: 'Failed to fetch news' })
+    console.error(error);
+    res.status(500).json({ message: 'Failed to fetch news' });
   }
-})
+});
 
-// SEARCH news
+// -----------------------------
+// SEARCH news (multi-language safe)
+// -----------------------------
 router.get('/news/search', async (req, res) => {
   try {
-    const lang = req.query.lang || 'en'
-    const query = req.query.q
+    const query = req.query.q;
+    let lang = req.query.lang || 'en';
 
     if (!query) {
-      return res.status(400).json({ message: 'Search query required' })
+      return res.status(400).json({ message: 'Search query required' });
     }
 
+    if (!SUPPORTED_LANGUAGES.includes(lang)) lang = 'en';
+
+    // Search in requested language + English fallback
     const newsItems = await News.find({
       $or: [
-        { [`title.${lang}`]: { $regex: query, $options: 'i' } },
-        { [`excerpt.${lang}`]: { $regex: query, $options: 'i' } }
+        { [`translations.${lang}.title`]: { $regex: query, $options: 'i' } },
+        { [`translations.${lang}.excerpt`]: { $regex: query, $options: 'i' } },
+        { 'translations.en.title': { $regex: query, $options: 'i' } },
+        { 'translations.en.excerpt': { $regex: query, $options: 'i' } }
       ]
-    })
+    }).lean();
 
-    const formatted = newsItems.map(item => ({
-      title: item.title.get(lang) || item.title.get('en'),
-      slug: item.slug,
-      image: item.image,
-      publishedAt: item.publishedAt
-    }))
+    const formatted = newsItems.map(item => {
+      const t = getTranslation(item, lang);
 
-    res.json(formatted)
+      return {
+        title: t.title,
+        slug: item.slug,
+        image: item.image,
+        publishedAt: item.publishedAt,
+        lang
+      };
+    });
+
+    res.json(formatted);
   } catch (error) {
-    res.status(500).json({ message: 'Search failed' })
+    console.error(error);
+    res.status(500).json({ message: 'Search failed' });
   }
-})
+});
 
+// -----------------------------
 // GET single news item by slug
+// -----------------------------
 router.get('/news/:slug', async (req, res) => {
   try {
-    const lang = req.query.lang || 'en'
-    const slug = req.params.slug
-    
-    
+    const { slug } = req.params;
+    let lang = req.query.lang || 'en';
 
-    const newsItem = await News.findOne({ slug })
-    if (!newsItem) return res.status(404).json({ message: 'News not found' })
+    if (!SUPPORTED_LANGUAGES.includes(lang)) lang = 'en';
+
+    const newsItem = await News.findOne({ slug }).lean();
+    if (!newsItem) {
+      return res.status(404).json({ message: 'News not found' });
+    }
+
+    const t = getTranslation(newsItem, lang);
 
     res.json({
-      title: newsItem.title.get(lang) || newsItem.title.get('en'),
-      excerpt: newsItem.excerpt.get(lang) || newsItem.excerpt.get('en'),
+      title: t.title,
+      excerpt: t.excerpt,
       image: newsItem.image,
       publishedAt: newsItem.publishedAt,
-      sections: newsItem.sections.map(section => ({
-        heading: section.heading.get(lang) || section.heading.get('en'),
-         paragraphs: section.paragraphs.get(lang) || section.paragraphs.get('en')
-       }))
-    })
+      lang,
+      sections: (t.sections || []).map(section => ({
+        heading: section.heading,
+        paragraphs: section.paragraphs
+      }))
+    });
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching news' })
+    console.error(error);
+    res.status(500).json({ message: 'Error fetching news' });
   }
-})
+});
 
-
-export default router
+export default router;
