@@ -76,17 +76,26 @@ router.post('/affiliate', async (req, res) => {
 
     await affiliate.save()
 
+    // 🔔 Create a notification for new affiliate application
+    await Notification.create({
+      title: 'New Affiliate Application',
+      description: `${fullName} submitted an affiliate application.`,
+      sourceWebsite: 'camberfarm',
+      type: 'affiliate',
+      link: `/affiliate/${affiliate._id}`
+    })
+
     res.status(201).json({
       message: 'Affiliate application submitted successfully'
     })
   } catch (error) {
+    console.error('Affiliate creation error:', error)
     res.status(500).json({
       message: 'Server error',
       error: error.message
     })
   }
 })
-
 
 
 

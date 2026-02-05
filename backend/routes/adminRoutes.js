@@ -32,6 +32,8 @@ import { translateText } from '../utils/translate.js'
 import { translateSections } from '../utils/translateSections.js'
 import { SUPPORTED_LANGUAGES } from '../utils/languages.js'
 import { translateVariants, translateTexts } from '../utils/translateProduct.js'
+import Enquiry from '../models/Enquiry.js'
+import Notification from '../models/Notification.js'
 
 dotenv.config();
 
@@ -153,7 +155,7 @@ router.post('/admin/profile-photo', adminAuth, adminUpload, async (req, res) => 
 })
 
 
-router.get('/gallery',adminAuth, async (req, res) => {
+router.get('/gallery', adminAuth, async (req, res) => {
   try {
     const galleries = await Gallery.find().sort({ createdAt: -1 })
     res.status(200).json({ success: true, total: galleries.length, galleries })
@@ -163,7 +165,7 @@ router.get('/gallery',adminAuth, async (req, res) => {
   }
 })
 
-router.get('/gallery/:id',adminAuth, async (req, res) => {
+router.get('/gallery/:id', adminAuth, async (req, res) => {
   try {
     const gallery = await Gallery.findById(req.params.id)
     if (!gallery) return res.status(404).json({ success: false, message: 'Gallery not found' })
@@ -371,6 +373,15 @@ router.post(
 
       await blogDoc.save();
 
+      await Notification.create({
+        title: 'New Blog Published',
+        description: title,
+        type: 'blog',
+        sourceWebsite: 'africa',
+        link: `/blogs/${slug}`,
+        date: new Date()
+      });
+
       res.status(201).json({
         message: 'Blog created successfully',
         blog: blogDoc
@@ -454,6 +465,15 @@ router.patch('/africa-blogs/:id', adminAuth, blogUpload.single('image'), async (
 
     const updatedBlog = await Blog.findByIdAndUpdate(id, updateData, { new: true, runValidators: true });
 
+    await Notification.create({
+      title: 'Blog Updated',
+      description: updatedBlog.translations?.en?.title || 'Blog updated',
+      type: 'blog',
+      sourceWebsite: 'africa',
+      link: `/blogs/${updatedBlog.slug}`,
+      date: new Date()
+    });
+
     res.status(200).json({
       message: 'Blog updated successfully',
       blog: updatedBlog
@@ -475,7 +495,23 @@ router.delete('/africa-blogs/:id', adminAuth, async (req, res) => {
     if (!deletedBlog) return res.status(404).json({ message: 'Blog not found' })
 
     // Delete the blog image
-    if (deletedBlog.image) fs.unlinkSync(`.${deletedBlog.image}`)
+    if (deletedBlog.image) {
+      try {
+        fs.unlinkSync(`.${deletedBlog.image}`);
+      } catch (err) {
+        console.warn('Image not found:', err.message);
+      }
+    }
+
+    // Create notification
+    await Notification.create({
+      title: 'Blog Deleted',
+      description: deletedBlog.translations?.en?.title || 'Blog deleted',
+      type: 'blog',
+      sourceWebsite: 'africa',
+      link: '/blogs',
+      date: new Date()
+    });
 
     res.status(200).json({ message: 'Blog deleted successfully' })
   } catch (error) {
@@ -596,18 +632,20 @@ router.post(
     try {
       let { title, excerpt, slug, sections, publishedAt } = req.body;
 
-      // 1️⃣ Validate required fields
+      // Validate required fields
       if (!title) return res.status(400).json({ message: 'Title is required' });
       if (!excerpt) return res.status(400).json({ message: 'Excerpt is required' });
       if (!slug) return res.status(400).json({ message: 'Slug is required' });
       if (!req.file) return res.status(400).json({ message: 'ExportBlog image is required' });
 
-      // 2️⃣ Parse sections if it's a string
-      if (sections && typeof sections === 'string') sections = JSON.parse(sections);
+      // Parse sections
+      if (sections && typeof sections === 'string') {
+        sections = JSON.parse(sections);
+      }
 
       const imagePath = `/uploads/export-blogs/${req.file.filename}`;
 
-      // 3️⃣ Prepare translations object
+      // Prepare translations
       const translations = {};
 
       translations.en = {
@@ -624,7 +662,7 @@ router.post(
         };
       }
 
-      // 4️⃣ Create ExportBlog document
+      // Create ExportBlog
       const exportBlogDoc = new exportBlog({
         slug,
         image: imagePath,
@@ -633,6 +671,16 @@ router.post(
       });
 
       await exportBlogDoc.save();
+
+      // 🔔 Create notification
+      await Notification.create({
+        title: 'New Export Blog Published',
+        description: title,
+        type: 'blog',
+        sourceWebsite: 'export',
+        link: `/blogs/${slug}`,
+        date: new Date()
+      });
 
       res.status(201).json({
         message: 'ExportBlog created successfully',
@@ -646,105 +694,150 @@ router.post(
   }
 );
 
-// update a export blog
-router.patch('/export-blogs/:id', adminAuth, exportBlogUpload.single('image'), async (req, res) => {
+
+// UPDATE export blog
+router.patch(
+  '/export-blogs/:id',
+  adminAuth,
+  exportBlogUpload.single('image'),
+  async (req, res) => {
+    try {
+      const { id } = req.params;
+      let updateData = { ...req.body };
+
+      // Parse sections
+      if (updateData.sections && typeof updateData.sections === 'string') {
+        updateData.sections = JSON.parse(updateData.sections);
+      }
+
+      // Find existing blog
+      const existingBlog = await exportBlog.findById(id);
+      if (!existingBlog) {
+        return res.status(404).json({ message: 'ExportBlog not found' });
+      }
+
+      // IMAGE HANDLING
+      if (req.file) {
+        updateData.image = `/uploads/export-blogs/${req.file.filename}`;
+
+        if (existingBlog.image) {
+          try {
+            fs.unlinkSync(`.${existingBlog.image}`);
+          } catch (err) {
+            console.warn('Old image not found:', err.message);
+          }
+        }
+      }
+
+      // TRANSLATION HANDLING
+      const titleChanged = updateData.title !== undefined;
+      const excerptChanged = updateData.excerpt !== undefined;
+      const sectionsChanged = updateData.sections !== undefined;
+
+      if (titleChanged || excerptChanged || sectionsChanged) {
+        const existingEn = existingBlog.translations.get('en');
+
+        const newTitle = updateData.title || existingEn.title;
+        const newExcerpt = updateData.excerpt || existingEn.excerpt;
+        const newSections = updateData.sections || existingEn.sections;
+
+        const translations = {
+          en: {
+            title: newTitle,
+            excerpt: newExcerpt,
+            sections: newSections
+          }
+        };
+
+        for (const lang of SUPPORTED_LANGUAGES) {
+          translations[lang] = {
+            title: await translateText(newTitle, lang),
+            excerpt: await translateText(newExcerpt, lang),
+            sections: await translateSections(newSections, lang)
+          };
+        }
+
+        updateData.translations = translations;
+
+        delete updateData.title;
+        delete updateData.excerpt;
+        delete updateData.sections;
+      }
+
+      if (updateData.publishedAt) {
+        updateData.publishedAt = new Date(updateData.publishedAt);
+      }
+
+      const updatedBlog = await exportBlog.findByIdAndUpdate(
+        id,
+        updateData,
+        { new: true, runValidators: true }
+      );
+
+      // 🔔 Create notification
+      await Notification.create({
+        title: 'Export Blog Updated',
+        description: updatedBlog.translations?.en?.title || 'Export blog updated',
+        type: 'blog',
+        sourceWebsite: 'export',
+        link: `/blogs/${updatedBlog.slug}`,
+        date: new Date()
+      });
+
+      res.status(200).json({
+        message: 'ExportBlog updated successfully',
+        exportBlog: updatedBlog
+      });
+
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Failed to update ExportBlog', error: error.message });
+    }
+  }
+);
+
+
+// DELETE export blog
+router.delete('/export-blogs/:id', adminAuth, async (req, res) => {
   try {
     const { id } = req.params;
-    let updateData = { ...req.body };
 
-    // Parse sections if sent as JSON string
-    if (updateData.sections && typeof updateData.sections === 'string') {
-      updateData.sections = JSON.parse(updateData.sections);
+    const deletedBlog = await exportBlog.findByIdAndDelete(id);
+    if (!deletedBlog) {
+      return res.status(404).json({ message: 'ExportBlog not found' });
     }
 
-    // Find existing exportBlog
-    const existingBlog = await exportBlog.findById(id);
-    if (!existingBlog) return res.status(404).json({ message: 'ExportBlog not found' });
-
-    // IMAGE HANDLING
-    if (req.file) {
-      updateData.image = `/uploads/export-blogs/${req.file.filename}`;
-
-      // Delete old image
-      if (existingBlog.image) {
-        try {
-          fs.unlinkSync(`.${existingBlog.image}`);
-        } catch (err) {
-          console.warn('Old image not found:', err.message);
-        }
+    // Delete image
+    if (deletedBlog.image) {
+      try {
+        fs.unlinkSync(`.${deletedBlog.image}`);
+      } catch (err) {
+        console.warn('Image not found:', err.message);
       }
     }
 
-    // TRANSLATION HANDLING
-    const titleChanged = updateData.title !== undefined;
-    const excerptChanged = updateData.excerpt !== undefined;
-    const sectionsChanged = updateData.sections !== undefined;
-
-    if (titleChanged || excerptChanged || sectionsChanged) {
-      const existingEn = existingBlog.translations.get('en');
-
-      const newTitle = updateData.title || existingEn.title;
-      const newExcerpt = updateData.excerpt || existingEn.excerpt;
-      const newSections = updateData.sections || existingEn.sections;
-
-      const translations = {
-        en: {
-          title: newTitle,
-          excerpt: newExcerpt,
-          sections: newSections
-        }
-      };
-
-      for (const lang of SUPPORTED_LANGUAGES) {
-        translations[lang] = {
-          title: await translateText(newTitle, lang),
-          excerpt: await translateText(newExcerpt, lang),
-          sections: await translateSections(newSections, lang)
-        };
-      }
-
-      updateData.translations = translations;
-
-      // Remove raw fields
-      delete updateData.title;
-      delete updateData.excerpt;
-      delete updateData.sections;
-    }
-
-    // Update publishedAt if provided
-    if (updateData.publishedAt) updateData.publishedAt = new Date(updateData.publishedAt);
-
-    const updatedBlog = await exportBlog.findByIdAndUpdate(id, updateData, { new: true, runValidators: true });
+    // 🔔 Create notification
+    await Notification.create({
+      title: 'Export Blog Deleted',
+      description: deletedBlog.translations?.en?.title || 'Export blog deleted',
+      type: 'blog',
+      sourceWebsite: 'export',
+      link: '/blogs',
+      date: new Date()
+    });
 
     res.status(200).json({
-      message: 'ExportBlog updated successfully',
-      exportBlog: updatedBlog
+      message: 'ExportBlog deleted successfully'
     });
 
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Failed to update ExportBlog', error: error.message });
+    res.status(500).json({
+      message: 'Failed to delete ExportBlog',
+      error: error.message
+    });
   }
 });
-
-
-// delete a export blog
-router.delete('/export-blogs/:id', adminAuth, async (req, res) => {
-  try {
-    const { id } = req.params
-    const deletedBlog = await exportBlog.findByIdAndDelete(id)
-
-    if (!deletedBlog) return res.status(404).json({ message: 'ExportBlog not found' })
-
-    // Delete the blog image
-    if (deletedBlog.image) fs.unlinkSync(`.${deletedBlog.image}`)
-
-    res.status(200).json({ message: 'ExportBlog deleted successfully' })
-  } catch (error) {
-    console.error(error)
-    res.status(500).json({ message: 'Failed to delete ExportBlog', error: error.message })
-  }
-})
 
 
 // GET export blog stats
@@ -795,104 +888,6 @@ router.get('/export-blogs/stats', adminAuth, async (req, res) => {
   }
 })
 
-// GET all contact messages (admin)
-router.get('/contacts', adminAuth, async (req, res) => {
-  try {
-    const contacts = await contact.find()
-      .select('_id name email phone message adminReply status source createdAt')
-      .sort({ createdAt: -1 }) // latest first
-
-    res.status(200).json({
-      success: true,
-      total: contacts.length,
-      data: contacts
-    })
-  } catch (error) {
-    console.error('Fetch contacts error:', error)
-    res.status(500).json({
-      success: false,
-      message: 'Failed to fetch contacts'
-    })
-  }
-})
-
-// GET single contact message by ID (admin)
-router.get('/contacts/:id', adminAuth, async (req, res) => {
-  try {
-    const contact = await contact.findById(req.params.id)
-
-    if (!contact) {
-      return res.status(404).json({
-        success: false,
-        message: 'Contact message not found'
-      })
-    }
-
-    res.status(200).json({
-      success: true,
-      data: contact
-    })
-  } catch (error) {
-    console.error('Fetch contact error:', error)
-    res.status(500).json({
-      success: false,
-      message: 'Failed to fetch contact'
-    })
-  }
-})
-
-// POST admin reply to contact + update status
-router.post('/contacts/:id', adminAuth, async (req, res) => {
-  try {
-    const { adminReply, status } = req.body
-
-    if (!adminReply && !status) {
-      return res.status(400).json({
-        success: false,
-        message: 'Nothing to update'
-      })
-    }
-
-    // validate status if provided
-    if (status && !['pending', 'read'].includes(status)) {
-      return res.status(400).json({
-        success: false,
-        message: 'Invalid status value'
-      })
-    }
-
-    const updatedContact = await contact.findByIdAndUpdate(
-      req.params.id,
-      {
-        ...(adminReply && { adminReply }),
-        ...(status && { status })
-      },
-      { new: true }
-    )
-
-    if (!updatedContact) {
-      return res.status(404).json({
-        success: false,
-        message: 'Contact message not found'
-      })
-    }
-
-    res.status(200).json({
-      success: true,
-      message: 'Contact updated successfully',
-      data: updatedContact
-    })
-  } catch (error) {
-    console.error('Reply contact error:', error)
-    res.status(500).json({
-      success: false,
-      message: 'Failed to update contact'
-    })
-  }
-})
-
-
-
 // GET all FarmFund registrations
 router.get('/farm-fund', adminAuth, async (req, res) => {
   try {
@@ -933,6 +928,16 @@ router.patch('/farm-fund/:id', adminAuth, async (req, res) => {
       return res.status(404).json({ message: "FarmFund registration not found" })
     }
 
+    // 🔔 Create notification
+    await Notification.create({
+      title: "FarmFund Registration Updated",
+      description: `Registration from ${updatedRegistration.name || "a user"} was updated`,
+      type: "farmfund",
+      sourceWebsite: "africa",
+      link: "/farm-fund",
+      date: new Date()
+    })
+
     res.status(200).json({
       message: "FarmFund updated successfully",
       data: updatedRegistration
@@ -942,6 +947,7 @@ router.patch('/farm-fund/:id', adminAuth, async (req, res) => {
     res.status(500).json({ message: "Server error" })
   }
 })
+
 
 // GET /api/admin/farm-fund/:id
 // Fetch a single registration
@@ -1168,6 +1174,16 @@ router.patch('/membership/:id/status', adminAuth, async (req, res) => {
       return res.status(404).json({ message: "Membership form not found" })
     }
 
+    // 🔔 Create notification
+    await Notification.create({
+      title: "Membership Status Updated",
+      description: `Membership for ${updatedMembership.name || "a user"} was marked as ${status}`,
+      type: "membership",
+      sourceWebsite: "africa",
+      link: "/membership",
+      date: new Date()
+    })
+
     res.status(200).json({
       message: "Membership status updated successfully",
       data: updatedMembership
@@ -1177,6 +1193,7 @@ router.patch('/membership/:id/status', adminAuth, async (req, res) => {
     res.status(500).json({ message: "Server error" })
   }
 })
+
 
 // export membership in pdf
 router.post('/membership/export', adminAuth, async (req, res) => {
@@ -1347,7 +1364,7 @@ router.get('/membership/stats/new-messages', adminAuth, async (req, res) => {
 
 
 // GET all news articles (admin or public)
-router.get('/news',adminAuth, async (req, res) => {
+router.get('/news', adminAuth, async (req, res) => {
   try {
     // Fetch all news, sorted by newest first
     const newsItems = await News.find().sort({ createdAt: -1 })
@@ -1428,6 +1445,16 @@ router.post('/news', adminAuth, newsUpload.single('image'), async (req, res) => 
 
     await newsItem.save();
 
+    // 🔔 Create notification
+    await Notification.create({
+      title: 'New news article published',
+      description: title,
+      type: 'news',
+      sourceWebsite: 'africa',
+      link: `/news/${newsItem.slug}`,
+      date: new Date()
+    });
+
     res.status(201).json({
       message: 'News created successfully',
       newsItem
@@ -1442,18 +1469,15 @@ router.post('/news', adminAuth, newsUpload.single('image'), async (req, res) => 
   }
 });
 
-// update a news article 
 router.patch('/news/:id', adminAuth, newsUpload.single('image'), async (req, res) => {
   try {
     const { id } = req.params;
     let updateData = { ...req.body };
 
-    // Parse sections if sent as JSON string
     if (updateData.sections && typeof updateData.sections === 'string') {
       updateData.sections = JSON.parse(updateData.sections);
     }
 
-    // Find existing news
     const existingNews = await News.findById(id);
     if (!existingNews) {
       return res.status(404).json({ message: 'News item not found' });
@@ -1461,10 +1485,8 @@ router.patch('/news/:id', adminAuth, newsUpload.single('image'), async (req, res
 
     // IMAGE HANDLING
     if (req.file) {
-      // Set new image path
       updateData.image = `/uploads/news/${req.file.filename}`;
 
-      // Delete old image
       if (existingNews.image) {
         try {
           fs.unlinkSync(`.${existingNews.image}`);
@@ -1494,7 +1516,6 @@ router.patch('/news/:id', adminAuth, newsUpload.single('image'), async (req, res
         }
       };
 
-      // Translate all languages
       for (const lang of SUPPORTED_LANGUAGES) {
         translations[lang] = {
           title: await translateText(newTitle, lang),
@@ -1505,7 +1526,6 @@ router.patch('/news/:id', adminAuth, newsUpload.single('image'), async (req, res
 
       updateData.translations = translations;
 
-      // Remove raw fields to avoid schema conflicts
       delete updateData.title;
       delete updateData.excerpt;
       delete updateData.sections;
@@ -1516,6 +1536,16 @@ router.patch('/news/:id', adminAuth, newsUpload.single('image'), async (req, res
       updateData,
       { new: true, runValidators: true }
     );
+
+    // 🔔 Notification for update
+    await Notification.create({
+      title: 'News article updated',
+      description: updatedNews.translations.get('en').title,
+      type: 'news',
+      sourceWebsite: 'africa',
+      link: `/news/${updatedNews.slug}`,
+      date: new Date()
+    });
 
     res.status(200).json({
       message: 'News updated successfully',
@@ -1531,33 +1561,39 @@ router.patch('/news/:id', adminAuth, newsUpload.single('image'), async (req, res
   }
 });
 
-
-
-
-// delete a news article
 router.delete('/news/:id', adminAuth, async (req, res) => {
   try {
-    const { id } = req.params
-    const deletedNews = await News.findByIdAndDelete(id)
+    const { id } = req.params;
+    const deletedNews = await News.findByIdAndDelete(id);
 
     if (!deletedNews) {
-      return res.status(404).json({ message: 'News item not found' })
+      return res.status(404).json({ message: 'News item not found' });
     }
 
     if (deletedNews.image) {
       try {
-        fs.unlinkSync(`.${deletedNews.image}`)
+        fs.unlinkSync(`.${deletedNews.image}`);
       } catch (err) {
-        console.warn('Image already deleted')
+        console.warn('Image already deleted');
       }
     }
 
-    res.status(200).json({ message: 'News item deleted successfully' })
+    // 🔔 Notification for deletion
+    await Notification.create({
+      title: 'News article deleted',
+      description: deletedNews.translations.get('en').title,
+      type: 'news',
+      sourceWebsite: 'africa',
+      link: '',
+      date: new Date()
+    });
+
+    res.status(200).json({ message: 'News item deleted successfully' });
   } catch (error) {
-    console.error(error)
-    res.status(500).json({ message: 'Failed to delete news item', error: error.message })
+    console.error(error);
+    res.status(500).json({ message: 'Failed to delete news item', error: error.message });
   }
-})
+});
 
 
 // GET news stats
@@ -1676,7 +1712,7 @@ router.get('/products', adminAuth, async (req, res) => {
 
 
 // GET INDIVIDUAL PRODUCT
-router.get('/products/:id',adminAuth, async (req, res) => {
+router.get('/products/:id', adminAuth, async (req, res) => {
   try {
     const { id } = req.params
 
@@ -1714,29 +1750,31 @@ router.get('/products/:id',adminAuth, async (req, res) => {
 
 // CREATE PRODUCT
 // POST /api/products
+// CREATE PRODUCT
 router.post('/products', adminAuth, productUpload, async (req, res) => {
   try {
-    let { name, category, description, stockQuantity, variants } = req.body;
+    let { name, category, description, stockQuantity, variants } = req.body
 
-    if (!name) return res.status(400).json({ message: 'Product name is required' });
-    if (!category) return res.status(400).json({ message: 'Category is required' });
-    if (!description) return res.status(400).json({ message: 'Description is required' });
-    if (!req.files || req.files.length === 0) return res.status(400).json({ message: 'At least one product image is required' });
+    if (!name) return res.status(400).json({ message: 'Product name is required' })
+    if (!category) return res.status(400).json({ message: 'Category is required' })
+    if (!description) return res.status(400).json({ message: 'Description is required' })
+    if (!req.files || req.files.length === 0)
+      return res.status(400).json({ message: 'At least one product image is required' })
 
-    const images = req.files.map(file => `/uploads/products/${file.filename}`);
+    const images = req.files.map(file => `/uploads/products/${file.filename}`)
 
     const translations = {
-      en: { name, category, description, variants: variants || {} },
-    };
+      en: { name, category, description, variants: variants || {} }
+    }
 
     for (const lang of SUPPORTED_LANGUAGES) {
-      if (lang === 'en') continue;
+      if (lang === 'en') continue
       translations[lang] = {
         name: await translateTexts(name, lang),
         category: await translateTexts(category, lang),
         description: await translateTexts(description, lang),
-        variants: await translateVariants(variants, lang),
-      };
+        variants: await translateVariants(variants, lang)
+      }
     }
 
     const product = new Product({
@@ -1746,118 +1784,134 @@ router.post('/products', adminAuth, productUpload, async (req, res) => {
       stockQuantity: stockQuantity || 0,
       variants,
       images,
-      translations,
-    });
+      translations
+    })
 
-    await product.save();
-    res.status(201).json({ message: 'Product created successfully', product });
+    await product.save()
+
+    // CREATE NOTIFICATION
+    await Notification.create({
+      title: 'New product added',
+      description: `${name} has been added to your store`,
+      sourceWebsite: 'export', // adjust as needed
+      type: 'product',
+      link: `/products/${product._id}`
+    })
+
+    res.status(201).json({ message: 'Product created successfully', product })
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Failed to create product', error: err.message });
+    console.error(err)
+    res.status(500).json({ message: 'Failed to create product', error: err.message })
   }
-});
-
-
+})
 
 // UPDATE PRODUCT
-// PUT /api/admin/products/:id
 router.patch('/products/:id', adminAuth, productUpload, async (req, res) => {
   try {
-    const { id } = req.params;
-    let updateData = { ...req.body };
+    const { id } = req.params
+    let updateData = { ...req.body }
 
-    const existingProduct = await Product.findById(id);
-    if (!existingProduct) return res.status(404).json({ message: 'Product not found' });
+    const existingProduct = await Product.findById(id)
+    if (!existingProduct) return res.status(404).json({ message: 'Product not found' })
 
     // IMAGE HANDLING
     if (req.files && req.files.length > 0) {
-      const newImages = req.files.map(file => `/uploads/products/${file.filename}`);
-
-      // Optionally delete old images
+      const newImages = req.files.map(file => `/uploads/products/${file.filename}`)
       if (existingProduct.images) {
         existingProduct.images.forEach(img => {
-          try { fs.unlinkSync(`.${img}`); } catch (err) { console.warn('Old image not found:', err.message); }
-        });
+          try { fs.unlinkSync(`.${img}`) } catch (err) { console.warn('Old image not found:', err.message) }
+        })
       }
-
-      updateData.images = newImages;
+      updateData.images = newImages
     }
 
-    const nameChanged = updateData.name !== undefined;
-    const categoryChanged = updateData.category !== undefined;
-    const descriptionChanged = updateData.description !== undefined;
-    const variantsChanged = updateData.variants !== undefined;
+    const nameChanged = updateData.name !== undefined
+    const categoryChanged = updateData.category !== undefined
+    const descriptionChanged = updateData.description !== undefined
+    const variantsChanged = updateData.variants !== undefined
 
     if (nameChanged || categoryChanged || descriptionChanged || variantsChanged) {
-      const existingEn = existingProduct.translations.en;
+      const existingEn = existingProduct.translations.en
 
-      const newName = updateData.name || existingEn.name;
-      const newCategory = updateData.category || existingEn.category;
-      const newDescription = updateData.description || existingEn.description;
-      const newVariants = updateData.variants || existingEn.variants;
+      const newName = updateData.name || existingEn.name
+      const newCategory = updateData.category || existingEn.category
+      const newDescription = updateData.description || existingEn.description
+      const newVariants = updateData.variants || existingEn.variants
 
       const translations = {
-        en: {
-          name: newName,
-          category: newCategory,
-          description: newDescription,
-          variants: newVariants,
-        },
-      };
+        en: { name: newName, category: newCategory, description: newDescription, variants: newVariants }
+      }
 
       for (const lang of SUPPORTED_LANGUAGES) {
-        if (lang === 'en') continue;
+        if (lang === 'en') continue
         translations[lang] = {
           name: await translateTexts(newName, lang),
           category: await translateTexts(newCategory, lang),
           description: await translateTexts(newDescription, lang),
-          variants: await translateVariants(newVariants, lang),
-        };
+          variants: await translateVariants(newVariants, lang)
+        }
       }
 
-      updateData.translations = translations;
-      delete updateData.name;
-      delete updateData.category;
-      delete updateData.description;
-      delete updateData.variants;
+      updateData.translations = translations
+      delete updateData.name
+      delete updateData.category
+      delete updateData.description
+      delete updateData.variants
     }
 
-    const updatedProduct = await Product.findByIdAndUpdate(id, updateData, { new: true, runValidators: true });
+    const updatedProduct = await Product.findByIdAndUpdate(id, updateData, { new: true, runValidators: true })
 
-    res.status(200).json({ message: 'Product updated successfully', product: updatedProduct });
+    // CREATE NOTIFICATION
+    await Notification.create({
+      title: 'Product updated',
+      description: `Product "${updatedProduct.translations.en.name}" was updated`,
+      sourceWebsite: 'export',
+      type: 'product',
+      link: `/products/${updatedProduct._id}`
+    })
+
+    res.status(200).json({ message: 'Product updated successfully', product: updatedProduct })
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Failed to update product', error: err.message });
+    console.error(err)
+    res.status(500).json({ message: 'Failed to update product', error: err.message })
   }
-});
-
-
-
+})
 
 // DELETE PRODUCT
 router.delete('/products/:id', adminAuth, async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id } = req.params
 
-    const deletedProduct = await Product.findByIdAndDelete(id);
-    if (!deletedProduct) return res.status(404).json({ message: 'Product not found' });
+    const deletedProduct = await Product.findByIdAndDelete(id)
+    if (!deletedProduct) return res.status(404).json({ message: 'Product not found' })
 
     // Delete all product images safely
-    await Promise.all(deletedProduct.images?.map(async img => {
-      try {
-        const filePath = `.${img}`;
-        if (fs.existsSync(filePath)) await fs.promises.unlink(filePath);
-      } catch (err) {
-        console.warn('Failed to delete image:', img, err.message);
-      }
-    }) || []);
+    await Promise.all(
+      deletedProduct.images?.map(async img => {
+        try {
+          const filePath = `.${img}`
+          if (fs.existsSync(filePath)) await fs.promises.unlink(filePath)
+        } catch (err) {
+          console.warn('Failed to delete image:', img, err.message)
+        }
+      }) || []
+    )
 
-    res.status(200).json({ message: 'Product deleted successfully' });
+    // CREATE NOTIFICATION
+    await Notification.create({
+      title: 'Product deleted',
+      description: `Product "${deletedProduct.translations.en.name}" was removed`,
+      sourceWebsite: 'export',
+      type: 'product',
+      link: '/products'
+    })
+
+    res.status(200).json({ message: 'Product deleted successfully' })
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Failed to delete product', error: error.message });
+    console.error(error)
+    res.status(500).json({ message: 'Failed to delete product', error: error.message })
   }
-});
+})
 
 
 router.get('/products/stats', adminAuth, async (req, res) => {
@@ -1941,103 +1995,6 @@ router.get('/products/images/count', adminAuth, async (req, res) => {
   }
 })
 
-
-// ✅ ADMIN – GET ALL FEEDBACK
-// GET /api/admin/feedback
-router.get('/feedback', adminAuth, async (_req, res) => {
-  try {
-    const feedbacks = await Feedback.find()
-      .select('_id name email phone country message status adminReply source createdAt')
-      .sort({ createdAt: -1 })
-
-    res.status(200).json({
-      total: feedbacks.length,
-      data: feedbacks
-    })
-  } catch (error) {
-    console.error('Fetch feedback error:', error)
-    res.status(500).json({
-      message: 'Failed to fetch feedback',
-      error: error.message
-    })
-  }
-})
-
-// GET /api/admin/feedback/:id
-router.get('/feedback/:id', adminAuth, async (req, res) => {
-  try {
-    const feedback = await Feedback.findById(req.params.id)
-
-    if (!feedback) {
-      return res.status(404).json({ message: 'Feedback form not found' })
-    }
-
-    res.status(200).json({ success: true, data: feedback })
-  } catch (error) {
-    console.error('Fetch single feedback error:', error)
-    res.status(500).json({ message: 'Server error' })
-  }
-})
-
-// PATCH /api/admin/feedback/:id
-// Admin can reply and change status (pending -> read)
-router.patch('/feedback/:id', adminAuth, async (req, res) => {
-  try {
-    const { status, adminReply } = req.body
-
-    // Validate status if provided
-    if (status && !['pending', 'read'].includes(status)) {
-      return res.status(400).json({ message: 'Invalid status value' })
-    }
-
-    const updateData = {}
-    if (status) updateData.status = status
-    if (adminReply) updateData.adminReply = adminReply
-
-    const updatedFeedback = await Feedback.findByIdAndUpdate(
-      req.params.id,
-      updateData,
-      { new: true }
-    )
-
-    if (!updatedFeedback) {
-      return res.status(404).json({ message: 'Feedback form not found' })
-    }
-
-    res.status(200).json({
-      message: 'Feedback updated successfully',
-      data: updatedFeedback
-    })
-  } catch (error) {
-    console.error('Update feedback error:', error)
-    res.status(500).json({ message: 'Server error' })
-  }
-})
-
-
-// ✅ ADMIN – GET ALL MESSAGES
-// GET /api/messages
-router.get('/messages', adminAuth, async (req, res) => {
-  try {
-    const limit = Number(req.query.limit) || 10
-
-    const messages = await Message.find()
-      .sort({ createdAt: -1 }) // newest first
-      .limit(limit)
-
-    res.status(200).json({
-      total: messages.length,
-      data: messages
-    })
-  } catch (error) {
-    res.status(500).json({
-      message: 'Failed to fetch messages',
-      error: error.message
-    })
-  }
-})
-
-
 // GET /api/admin/affiliate
 router.get('/affiliate', adminAuth, async (_req, res) => {
   try {
@@ -2085,35 +2042,49 @@ router.get('/affiliate/:id', adminAuth, async (req, res) => {
 // PATCH /api/admin/affiliate/:id/status
 router.patch('/affiliate/:id/status', adminAuth, async (req, res) => {
   try {
-    const { status } = req.body;
+    const { status } = req.body
 
     // Validate status
     if (!['pending', 'approved', 'rejected'].includes(status)) {
-      return res.status(400).json({ message: 'Invalid status value' });
+      return res.status(400).json({ message: 'Invalid status value' })
     }
 
     const updatedAffiliate = await Affiliate.findByIdAndUpdate(
       req.params.id,
       { status },
       { new: true }
-    );
+    )
 
     if (!updatedAffiliate) {
-      return res.status(404).json({ message: 'Affiliate not found' });
+      return res.status(404).json({ message: 'Affiliate not found' })
     }
+
+    // CREATE NOTIFICATION
+    let descriptionText = ''
+    if (status === 'approved') descriptionText = 'Your affiliate request has been approved.'
+    else if (status === 'rejected') descriptionText = 'Your affiliate request has been rejected.'
+    else descriptionText = 'Your affiliate request status has been updated.'
+
+    await Notification.create({
+      title: 'Affiliate Status Update',
+      description: descriptionText,
+      sourceWebsite: 'export',
+      type: 'affiliate',
+      link: `/affiliate/${updatedAffiliate._id}`
+    })
 
     res.status(200).json({
       message: 'Status updated successfully',
       data: updatedAffiliate
-    });
+    })
   } catch (error) {
-    console.error('Update affiliate status error:', error);
+    console.error('Update affiliate status error:', error)
     res.status(500).json({
       message: 'Failed to update status',
       error: error.message
-    });
+    })
   }
-});
+})
 
 // export affiliate in pdf
 router.post('/affiliate/export', adminAuth, async (req, res) => {
@@ -2282,89 +2253,52 @@ router.get('/affiliate/stats/new-messages', adminAuth, async (req, res) => {
   }
 })
 
-
-// GET unified africa notifications
-// GET /api/admin/africa/notifications?limit=10
+// GET /africa/notifications
 router.get('/africa/notifications', adminAuth, async (req, res) => {
   try {
     // Optional limit query param (default 10)
     const limit = parseInt(req.query.limit) || 10;
 
-    // Fetch all latest entries (without limit yet)
-    const [blogs, contacts, farmFunds, memberships, news] = await Promise.all([
-      Blog.find().lean(),
-      contact.find().lean(),
-      FarmFund.find().lean(),
-      Membership.find().lean(),
-      News.find().lean()
-    ]);
-
-    // Tag each entry with a "type" so you know its source
-    const tagged = [
-      ...blogs.map(b => ({ ...b, type: 'blog' })),
-      ...contacts.map(c => ({ ...c, type: 'contact' })),
-      ...farmFunds.map(f => ({ ...f, type: 'farmFund' })),
-      ...memberships.map(m => ({ ...m, type: 'membership' })),
-      ...news.map(n => ({ ...n, type: 'news' }))
-    ];
-
-    // Sort all by createdAt descending
-    const sorted = tagged.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-
-    // Apply the limit
-    const limited = sorted.slice(0, limit);
+    // Fetch notifications where sourceWebsite is 'africa', newest first
+    const notifications = await Notification.find({ sourceWebsite: 'africa' })
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .lean();
 
     res.status(200).json({
-      total: limited.length,
-      notifications: limited
+      total: notifications.length,
+      notifications
     });
   } catch (error) {
-    console.error('Fetch unified notifications error:', error);
+    console.error('Fetch Africa notifications error:', error);
     res.status(500).json({
-      message: 'Failed to fetch unified notifications',
+      message: 'Failed to fetch Africa notifications',
       error: error.message
     });
   }
 });
 
 // GET export notifications (combined)
+// GET /export/notifications
 router.get('/export/notifications', adminAuth, async (req, res) => {
   try {
-    // Optional limit query param
-    const limit = req.query.limit ? parseInt(req.query.limit) : null;
+    // Optional limit query param (default 10)
+    const limit = req.query.limit ? parseInt(req.query.limit) : 10;
 
-    // Fetch latest entries from each collection
-    const [exportBlogs, affiliates, feedbacks, messages, products] = await Promise.all([
-      exportBlog.find().lean(),
-      Affiliate.find().lean(),
-      Feedback.find().lean(),
-      Message.find().lean(),
-      Product.find().lean()
-    ]);
-
-    // Combine all entries into a single array
-    const combined = [
-      ...exportBlogs.map(item => ({ ...item, type: 'exportBlog' })),
-      ...affiliates.map(item => ({ ...item, type: 'affiliate' })),
-      ...feedbacks.map(item => ({ ...item, type: 'feedback' })),
-      ...messages.map(item => ({ ...item, type: 'message' })),
-      ...products.map(item => ({ ...item, type: 'product' }))
-    ];
-
-    // Sort by createdAt descending
-    const sorted = combined.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-
-    // Apply limit if set
-    const limited = limit ? sorted.slice(0, limit) : sorted;
+    // Fetch notifications where sourceWebsite is 'export', newest first
+    const notifications = await Notification.find({ sourceWebsite: 'export' })
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .lean();
 
     res.status(200).json({
-      total: limited.length,
-      notifications: limited
+      total: notifications.length,
+      notifications
     });
   } catch (error) {
-    console.error(error);
+    console.error('Fetch Export notifications error:', error);
     res.status(500).json({
-      message: 'Failed to fetch dashboard notifications',
+      message: 'Failed to fetch Export notifications',
       error: error.message
     });
   }
@@ -2383,9 +2317,7 @@ router.get('/enquiries', adminAuth, async (req, res) => {
       enquiries = enquiries.slice(0, limit);
     }
 
-    // -----------------------------
     // Monthly stats
-    // -----------------------------
     const monthlyMap = {};
 
     enquiries.forEach(item => {
@@ -2491,18 +2423,18 @@ router.get('/enquiries/:type/:id', adminAuth, async (req, res) => {
 // POST reply to an enquiry
 router.post('/enquiries/:type/:id/reply', adminAuth, async (req, res) => {
   try {
-    const { type, id } = req.params;
-    const { status, adminReply } = req.body;
+    const { type, id } = req.params
+    const { status, adminReply } = req.body
 
     // Validate status
     if (!status || !['pending', 'read'].includes(status)) {
-      return res.status(400).json({ message: 'Invalid status' });
+      return res.status(400).json({ message: 'Invalid status' })
     }
 
     // Validate type
-    const validTypes = ['contact', 'feedback', 'message'];
+    const validTypes = ['contact', 'feedback', 'message']
     if (!validTypes.includes(type)) {
-      return res.status(400).json({ message: 'Invalid enquiry type' });
+      return res.status(400).json({ message: 'Invalid enquiry type' })
     }
 
     // Update enquiry
@@ -2510,25 +2442,36 @@ router.post('/enquiries/:type/:id/reply', adminAuth, async (req, res) => {
       { _id: id, sourceModel: type },
       { status, adminReply },
       { new: true }
-    );
+    )
 
     if (!updated) {
-      return res.status(404).json({ message: 'Enquiry not found' });
+      return res.status(404).json({ message: 'Enquiry not found' })
     }
 
+    // 🔔 Create notification
+    const notification = new Notification({
+      title: `Enquiry replied: ${type}`,
+      description: adminReply || 'No reply message provided',
+      sourceWebsite: updated.source, // africa or export
+      type: 'enquiry',
+      link: `/admin/enquiries/${type}/${id}` // adjust link as needed
+    })
+
+    await notification.save()
+
     res.status(200).json({
-      message: 'Enquiry updated successfully',
+      message: 'Enquiry updated and notification created successfully',
       enquiry: updated,
-    });
+      notification
+    })
   } catch (error) {
-    console.error('Update enquiry error:', error);
-    // Handle invalid ObjectId
+    console.error('Update enquiry error:', error)
     if (error.name === 'CastError') {
-      return res.status(400).json({ message: 'Invalid enquiry ID' });
+      return res.status(400).json({ message: 'Invalid enquiry ID' })
     }
-    res.status(500).json({ message: 'Failed to update enquiry', error: error.message });
+    res.status(500).json({ message: 'Failed to update enquiry', error: error.message })
   }
-});
+})
 
 //Total enquiries + enquiries submitted by month
 router.get('/enquiries/stats/by-month', adminAuth, async (req, res) => {
