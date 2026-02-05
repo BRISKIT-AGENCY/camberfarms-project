@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import News from '../models/News.js';
 import Blog from '../models/Blog.js';
 import exportBlog from '../models/exportBlog.js';
+import Notification from '../models/Notification.js'; // <-- added
 import { translateText } from '../utils/translate.js';
 import { translateSections } from '../utils/translateSections.js';
 import { generateSlug } from '../utils/generateSlug.js';
@@ -90,7 +91,7 @@ async function seedData() {
         translations[lang] = { title, excerpt, sections };
       }
 
-      // Create documents for News, Blog, and exportBlog
+      // Create documents
       const newsDoc = new News({
         slug,
         image: '/images/news1.png',
@@ -112,10 +113,38 @@ async function seedData() {
 
       // Save all three
       await Promise.all([newsDoc.save(), blogDoc.save(), exportBlogDoc.save()]);
-      console.log(`"${item.title}" seeded in News, Blog, and exportBlog`);
+
+      // Create notifications
+      const notifications = [
+        new Notification({
+          title: `New News published: ${item.title}`,
+          description: item.excerpt,
+          sourceWebsite: 'africa',
+          type: 'news',
+          link: `/africa/news/${newsDoc._id}`
+        }),
+        new Notification({
+          title: `New Blog published: ${item.title}`,
+          description: item.excerpt,
+          sourceWebsite: 'africa',
+          type: 'blog',
+          link: `/africa/blogs/${blogDoc._id}`
+        }),
+        new Notification({
+          title: `New Export Blog published: ${item.title}`,
+          description: item.excerpt,
+          sourceWebsite: 'export',
+          type: 'exportBlog',
+          link: `/export/blogs/${exportBlogDoc._id}`
+        })
+      ];
+
+      await Notification.insertMany(notifications);
+
+      console.log(`"${item.title}" seeded with News, Blog, ExportBlog, and notifications`);
     }
 
-    console.log('All data seeded successfully!');
+    console.log('All data seeded successfully with notifications!');
     mongoose.disconnect();
   } catch (err) {
     console.error('Error seeding data:', err);

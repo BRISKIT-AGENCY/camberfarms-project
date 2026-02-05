@@ -28,7 +28,8 @@ const allowedOrigins = [
   "https://africa-neon.vercel.app",
   "https://camberfarms-export.vercel.app",
   "https://camberfarms-dashboard.vercel.app",
-  "http://localhost:3000"
+  "http://localhost:3000",
+  "https://camberfarms-project.vercel.app"
 ];
 
 app.use(

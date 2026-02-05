@@ -2,6 +2,7 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import Product from '../models/Product.js';
+import Notification from '../models/Notification.js'; // <-- added
 import { translateTexts, translateVariants } from '../utils/translateProduct.js';
 import { generateSlug } from '../utils/generateSlug.js';
 
@@ -120,10 +121,21 @@ async function seedProducts() {
       });
 
       await productDoc.save();
-      console.log(`Product "${product.name}" seeded successfully`);
+
+      // Create notification for the new product
+      const notification = new Notification({
+        title: `New Product added: ${product.name}`,
+        description: product.description,
+        sourceWebsite: 'export', // or 'africa' depending on context
+        type: 'product',
+        link: `/export/products/${productDoc._id}` // adjust the link if needed
+      });
+      await notification.save();
+
+      console.log(`Product "${product.name}" seeded with notification`);
     }
 
-    console.log('All agricultural products seeded!');
+    console.log('All agricultural products seeded with notifications!');
     mongoose.disconnect();
   } catch (err) {
     console.error('Error seeding products:', err);
