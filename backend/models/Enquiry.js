@@ -8,7 +8,7 @@ const enquirySchema = new mongoose.Schema(
     message: { type: String, trim: true },
     adminReply: { type: String, trim: true, default: '' },
     status: { type: String, enum: ['pending', 'read'], default: 'pending' },
-    source: { type: String, trim: true }, // will be auto-set
+    source: { type: String, trim: true },
     sourceModel: {
       type: String,
       enum: ['contact', 'feedback', 'message'],
@@ -20,7 +20,7 @@ const enquirySchema = new mongoose.Schema(
 );
 
 // 🔁 Set source automatically based on sourceModel
-enquirySchema.pre('validate', function(next) {
+enquirySchema.pre('validate', async function() {
   if (this.sourceModel === 'contact') {
     this.source = 'africa';
   } else if (this.sourceModel === 'feedback' || this.sourceModel === 'message') {
@@ -28,7 +28,6 @@ enquirySchema.pre('validate', function(next) {
   } else {
     this.source = 'unknown';
   }
-  next();
 });
 
 export default mongoose.model('Enquiry', enquirySchema);
