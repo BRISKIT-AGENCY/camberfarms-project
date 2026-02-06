@@ -52,6 +52,8 @@ router.post('/enquiries', async (req, res) => {
     // -----------------------------
     // Create notification
     // -----------------------------
+    const sourceWebsite = sourceModel === 'contact' ? 'africa' : 'export';
+
     const notification = new Notification({
       title: `New ${sourceModel} enquiry received`,
       description: message,
@@ -63,6 +65,7 @@ router.post('/enquiries', async (req, res) => {
     await notification.save();
 
     res.status(201).json({ 
+      success: true,
       message: 'Enquiry submitted successfully', 
       enquiry,
       notification

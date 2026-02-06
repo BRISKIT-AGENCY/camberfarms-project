@@ -17,6 +17,7 @@ type ContactFormValues = {
   email: string
   phone: string
   message: string
+  sourceModel: string
 }
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
@@ -39,13 +40,14 @@ const Contact = ({ heading, description, button, placeholder }: ContactProps) =>
       name: '',
       email: '',
       phone: '',
-      message: ''
+      message: '',
+      sourceModel:'contact'
     },
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
       try {
         const { data } = await axios.post(
-          `${API_URL}/api/contact`,
+          `${API_URL}/api/enquiries`,
           values,
           {
             headers: { 'Content-Type': 'application/json' }
@@ -142,7 +144,7 @@ const Contact = ({ heading, description, button, placeholder }: ContactProps) =>
             <button
               type="submit"
               disabled={formik.isSubmitting}
-              className="h-11 mt-8 px-6 bg-[#1AD329] text-white rounded-[100px] disabled:opacity-60"
+              className="h-11 mt-8 px-6 bg-[#1AD329] text-white rounded-[100px] disabled:opacity-60 cursor-pointer"
             >
               {button}
             </button>
