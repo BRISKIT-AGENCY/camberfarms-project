@@ -2396,6 +2396,8 @@ router.get('/enquiries/:type/:id', adminAuth, async (req, res) => {
   try {
     const { type, id } = req.params;
 
+    type = type.toLowerCase();
+
     // Validate type
     const validTypes = ['contact', 'feedback', 'message'];
     if (!validTypes.includes(type)) {
@@ -2425,6 +2427,8 @@ router.post('/enquiries/:type/:id/reply', adminAuth, async (req, res) => {
   try {
     const { type, id } = req.params
     const { status, adminReply } = req.body
+
+    type = type.toLowerCase();
 
     // Validate status
     if (!status || !['pending', 'read'].includes(status)) {
