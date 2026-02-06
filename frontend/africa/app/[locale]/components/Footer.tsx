@@ -1,6 +1,8 @@
 'use client'
 
-import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHome } from '@fortawesome/free-solid-svg-icons'
+import { faInstagram, faTiktok, faFacebookF, faLinkedinIn } from '@fortawesome/free-brands-svg-icons'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
@@ -32,9 +34,22 @@ const Footer = () => {
 
           <div className='flex flex-col md:gap-6 text-[14px] md:text-[16px] mt-6 md:mt-0'>
             <p className='font-bold text-[16px] md:text-[18px]'>{t('Footer.contactUs')}</p>
-            <div className="flex items-center gap-2 mt-4 md:mt-0">
+
+            {/* Address with home icon */}
+            <div className="flex items-start gap-2">
+              <FontAwesomeIcon icon={faHome} className="text-[20px] mt-1" />
+              <p>
+                Graceland Plaza, by Mobil Junction <br />
+                along Nkpolu-Rumuigbo east west road, <br />
+                Port Harcourt Rivers State, Nigeria.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2 mt-3 md:mt-0">
               <Image src="/images/email.png" alt={t('Footer.emailAlt')} width={24} height={24} />
-              <a href="mailto:camberfarmafrica@gmail.com" className="hover:underline">camberfarmafrica@gmail.com</a>
+              <a href="mailto:camberfarmafrica@gmail.com" className="hover:underline">
+                camberfarmafrica@gmail.com
+              </a>
             </div>
 
             <div className="flex items-center gap-2 mt-3 md:mt-0">
@@ -45,20 +60,38 @@ const Footer = () => {
             </div>
 
             <div className='flex gap-3 mt-4 md:mt-0'>
-              <a href="https://www.instagram.com/camberfarms?igsh=Y21ucmtyZWc3YTJx&utm_source=qr" target="_blank" rel="noopener noreferrer">
-                <Image src="/images/instagram.png" alt="instagram icon" width={26.5} height={26.5} />
+              <a
+                href="https://www.instagram.com/camberfarms?igsh=Y21ucmtyZWc3YTJx&utm_source=qr"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-[26.5px] h-[26.5px] flex items-center justify-center rounded-full bg-green-600"
+              >
+                <FontAwesomeIcon icon={faInstagram} className="text-white text-[14px]" />
               </a>
-              <a href="">
-                <Image src="/images/twitter.png" alt="twitter icon" width={26.5} height={26.5} />
+
+              <a
+                href="https://www.tiktok.com/@camber.exports?_r=1&_t=ZS-931qhot2Dez"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-[26.5px] h-[26.5px] flex items-center justify-center rounded-full bg-green-600"
+              >
+                <FontAwesomeIcon icon={faTiktok} className="text-white text-[14px]" />
               </a>
-              <a href="https://www.facebook.com/share/17uHp1Yiyx/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">
-                <Image src="/images/facebook.png" alt="facebook icon" width={26.5} height={26.5} />
+
+              <a
+                href="https://www.facebook.com/share/17uHp1Yiyx/?mibextid=wwXIfr"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-[26.5px] h-[26.5px] flex items-center justify-center rounded-full bg-green-600"
+              >
+                <FontAwesomeIcon icon={faFacebookF} className="text-white text-[14px]" />
               </a>
-              <a href="">
-                <Image src="/images/linkedin.png" alt="linkedin icon" width={26.5} height={26.5} />
-              </a>
+
+             
             </div>
+
           </div>
+
         </div>
         <p className='text-[14px]'>{t('Footer.copyright')}</p>
       </div>
