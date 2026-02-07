@@ -1384,6 +1384,56 @@ router.get('/news', adminAuth, async (req, res) => {
   }
 })
 
+// GET news stats
+router.get('/news/stats', adminAuth, async (req, res) => {
+  try {
+    const stats = await News.aggregate([
+      {
+        $match: {
+          publishedAt: { $ne: null }
+        }
+      },
+      {
+        $facet: {
+          totalCount: [
+            { $count: 'total' }
+          ],
+          monthlyCounts: [
+            {
+              $group: {
+                _id: {
+                  year: { $year: '$publishedAt' },
+                  month: { $month: '$publishedAt' }
+                },
+                total: { $sum: 1 }
+              }
+            },
+            {
+              $sort: {
+                '_id.year': 1,
+                '_id.month': 1
+              }
+            }
+          ]
+        }
+      }
+    ])
+
+    const totalNews = stats[0]?.totalCount[0]?.total || 0
+
+    res.status(200).json({
+      totalNews,
+      monthlyCounts: stats[0].monthlyCounts
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({
+      message: 'Failed to fetch news stats',
+      error: error.message
+    })
+  }
+})
+
 // GET /news/:id - get a single news item by ID
 router.get('/news/:id', adminAuth, async (req, res) => {
   try {
@@ -1594,58 +1644,6 @@ router.delete('/news/:id', adminAuth, async (req, res) => {
     res.status(500).json({ message: 'Failed to delete news item', error: error.message });
   }
 });
-
-
-// GET news stats
-router.get('/news/stats', adminAuth, async (req, res) => {
-  try {
-    const stats = await News.aggregate([
-      {
-        $match: {
-          publishedAt: { $ne: null }
-        }
-      },
-      {
-        $facet: {
-          totalCount: [
-            { $count: 'total' }
-          ],
-          monthlyCounts: [
-            {
-              $group: {
-                _id: {
-                  year: { $year: '$publishedAt' },
-                  month: { $month: '$publishedAt' }
-                },
-                total: { $sum: 1 }
-              }
-            },
-            {
-              $sort: {
-                '_id.year': 1,
-                '_id.month': 1
-              }
-            }
-          ]
-        }
-      }
-    ])
-
-    const totalNews = stats[0]?.totalCount[0]?.total || 0
-
-    res.status(200).json({
-      totalNews,
-      monthlyCounts: stats[0].monthlyCounts
-    })
-  } catch (error) {
-    console.error(error)
-    res.status(500).json({
-      message: 'Failed to fetch news stats',
-      error: error.message
-    })
-  }
-})
-
 
 // GET ALL PRODUCTS
 router.get('/products', adminAuth, async (req, res) => {
@@ -2494,7 +2492,7 @@ router.get('/enquiries/stats/by-month', adminAuth, async (req, res) => {
       },
     ]);
 
-    const monthlyBreakdown = monthly
+    const monthlyBreakdowns = monthly
       .map(item => ({
         year: item._id.year,
         month: item._id.month,
@@ -2505,7 +2503,7 @@ router.get('/enquiries/stats/by-month', adminAuth, async (req, res) => {
     res.status(200).json({
       success: true,
       totalEnquiries,
-      monthlyBreakdown,
+      monthlyBreakdowns,
     });
   } catch (error) {
     console.error(error);
