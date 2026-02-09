@@ -3,6 +3,7 @@ import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { notFound } from 'next/navigation'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import TrackVisit from './components/TrackVisit'
 
 export async function generateStaticParams() {
   return [
@@ -34,6 +35,7 @@ export default async function RootLayout({
     <html lang={locale}>
       <body>
         <NextIntlClientProvider>
+          <TrackVisit/>
           <div className="xl:hidden block">
             <Navbar logoSrc="/images/logo.png" />
           </div>

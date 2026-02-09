@@ -101,29 +101,140 @@ router.post('/reset-password/request-otp', adminAuth, async (req, res) => {
   }
 })
 
-router.post('/reset-password', adminAuth, async (req, res) => {
-  const { otp, newPassword } = req.body
+router.post('/reset-password/verify-otp', adminAuth, async (req, res) => {
+  const { otp } = req.body
 
   const admin = await Admin.findById(req.admin.adminId)
   if (!admin) return res.status(404).json({ message: 'Admin not found' })
 
-  // Check OTP
   if (!admin.twoFactor || admin.twoFactor.code !== otp) {
     return res.status(401).json({ message: 'Invalid OTP' })
   }
+
   if (new Date() > admin.twoFactor.expiresAt) {
     return res.status(401).json({ message: 'OTP expired' })
   }
 
-  // Hash new password
+  admin.twoFactor.verified = true
+  await admin.save()
+
+  res.json({ message: 'OTP verified successfully' })
+})
+
+router.post('/reset-password', adminAuth, async (req, res) => {
+  const { newPassword } = req.body
+
+  const admin = await Admin.findById(req.admin.adminId)
+  if (!admin) return res.status(404).json({ message: 'Admin not found' })
+
+  if (!admin.twoFactor || !admin.twoFactor.verified) {
+    return res.status(401).json({ message: 'OTP not verified' })
+  }
+
+  if (new Date() > admin.twoFactor.expiresAt) {
+    return res.status(401).json({ message: 'OTP expired' })
+  }
+
   admin.passwordHash = await bcrypt.hash(newPassword, 10)
 
-  // Clear OTP
+  // clear OTP
   admin.twoFactor = undefined
   await admin.save()
 
   res.json({ message: 'Password updated successfully' })
 })
+
+router.post('/forgot-password/request-otp', async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    const admin = await Admin.findOne({ email });
+    if (!admin) {
+      return res.status(404).json({ message: 'Admin not found' });
+    }
+
+    const otp = crypto.randomInt(100000, 999999).toString();
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
+
+    admin.twoFactor = {
+      code: otp,
+      expiresAt,
+      verified: false
+    };
+
+    await admin.save();
+
+    await sendEmail(
+      admin.email,
+      'Password reset code',
+      `Your OTP is ${otp}. It expires in 10 minutes.`
+    );
+
+    res.json({ message: 'OTP sent to email' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Failed to send OTP' });
+  }
+});
+
+router.post('/forgot-password/verify-otp', async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+
+    const admin = await Admin.findOne({ email });
+    if (!admin) {
+      return res.status(404).json({ message: 'Admin not found' });
+    }
+
+    if (!admin.twoFactor || admin.twoFactor.code !== otp) {
+      return res.status(401).json({ message: 'Invalid OTP' });
+    }
+
+    if (new Date() > admin.twoFactor.expiresAt) {
+      return res.status(401).json({ message: 'OTP expired' });
+    }
+
+    admin.twoFactor.verified = true;
+    await admin.save();
+
+    res.json({ message: 'OTP verified successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'OTP verification failed' });
+  }
+});
+
+router.post('/forgot-password/reset', async (req, res) => {
+  try {
+    const { email, newPassword } = req.body;
+
+    const admin = await Admin.findOne({ email });
+    if (!admin) {
+      return res.status(404).json({ message: 'Admin not found' });
+    }
+
+    if (!admin.twoFactor || !admin.twoFactor.verified) {
+      return res.status(401).json({ message: 'OTP not verified' });
+    }
+
+    if (new Date() > admin.twoFactor.expiresAt) {
+      return res.status(401).json({ message: 'OTP expired' });
+    }
+
+    admin.passwordHash = await bcrypt.hash(newPassword, 10);
+
+    // clear OTP
+    admin.twoFactor = undefined;
+
+    await admin.save();
+
+    res.json({ message: 'Password reset successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Password reset failed' });
+  }
+});
+
 
 
 // Upload or update the single admin's profile photo
@@ -1708,6 +1819,60 @@ router.get('/products', adminAuth, async (req, res) => {
   }
 })
 
+router.get('/products/stats', adminAuth, async (req, res) => {
+  try {
+    const stats = await Product.aggregate([
+      {
+        $facet: {
+          // total products
+          totalCount: [
+            { $count: 'total' }
+          ],
+
+          // products grouped by year + month
+          monthlyCounts: [
+            {
+              $group: {
+                _id: {
+                  year: { $year: '$createdAt' },
+                  month: { $month: '$createdAt' }
+                },
+                total: { $sum: 1 }
+              }
+            },
+            {
+              $sort: {
+                '_id.year': 1,
+                '_id.month': 1
+              }
+            }
+          ],
+
+          // most recent product
+          latestProduct: [
+            { $sort: { createdAt: -1 } },
+            { $limit: 1 }
+          ]
+        }
+      }
+    ])
+
+    const totalProducts = stats[0].totalCount[0]?.total || 0
+    const latestProduct = stats[0].latestProduct[0] || null
+
+    res.status(200).json({
+      totalProducts,
+      monthlyCounts: stats[0].monthlyCounts,
+      latestProduct
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({
+      message: 'Failed to fetch product stats',
+      error: error.message
+    })
+  }
+})
 
 // GET INDIVIDUAL PRODUCT
 router.get('/products/:id', adminAuth, async (req, res) => {
@@ -1911,61 +2076,6 @@ router.delete('/products/:id', adminAuth, async (req, res) => {
   }
 })
 
-
-router.get('/products/stats', adminAuth, async (req, res) => {
-  try {
-    const stats = await Product.aggregate([
-      {
-        $facet: {
-          // total products
-          totalCount: [
-            { $count: 'total' }
-          ],
-
-          // products grouped by year + month
-          monthlyCounts: [
-            {
-              $group: {
-                _id: {
-                  year: { $year: '$createdAt' },
-                  month: { $month: '$createdAt' }
-                },
-                total: { $sum: 1 }
-              }
-            },
-            {
-              $sort: {
-                '_id.year': 1,
-                '_id.month': 1
-              }
-            }
-          ],
-
-          // most recent product
-          latestProduct: [
-            { $sort: { createdAt: -1 } },
-            { $limit: 1 }
-          ]
-        }
-      }
-    ])
-
-    const totalProducts = stats[0].totalCount[0]?.total || 0
-    const latestProduct = stats[0].latestProduct[0] || null
-
-    res.status(200).json({
-      totalProducts,
-      monthlyCounts: stats[0].monthlyCounts,
-      latestProduct
-    })
-  } catch (error) {
-    console.error(error)
-    res.status(500).json({
-      message: 'Failed to fetch product stats',
-      error: error.message
-    })
-  }
-})
 
 // GET product images count
 router.get('/products/images/count', adminAuth, async (req, res) => {
@@ -2614,18 +2724,24 @@ router.get('/enquiries/stats/response-time', adminAuth, async (req, res) => {
 });
 
 
-
-// GET overall stats
-router.get('/track-visit', async (req, res) => {
+// GET total views for home, blogs, and news
+router.get('/track-visit/stats',adminAuth, async (req, res) => {
   try {
     const homeVisits = await Visitor.countDocuments({ path: '/' })
-    const blogVisits = await Visitor.countDocuments({ path: '/blogs' })
+    
+    const blogVisits = await Visitor.countDocuments({
+      path: { $in: ['/blog', '/blogs'] }
+    })
+    
     const newsVisits = await Visitor.countDocuments({ path: '/news' })
 
     res.status(200).json({
-      home: homeVisits,
-      blogs: blogVisits,
-      news: newsVisits
+      success: true,
+      views: {
+        home: homeVisits,
+        blogs: blogVisits,
+        news: newsVisits
+      }
     })
   } catch (error) {
     console.error(error)
@@ -2633,8 +2749,33 @@ router.get('/track-visit', async (req, res) => {
   }
 })
 
+// GET overall stats
+router.post('/track-visit', async (req, res) => {
+  try {
+    const { path } = req.body
+
+    if (!path) {
+      return res.status(400).json({ message: 'Path is required' })
+    }
+
+    await Visitor.create({
+      ip:
+        req.headers['x-forwarded-for']?.split(',')[0] ||
+        req.socket.remoteAddress,
+      userAgent: req.headers['user-agent'],
+      path
+    })
+
+    res.status(200).json({ success: true })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Tracking failed' })
+  }
+})
+
+
 //Total views by day (combined)
-router.get('/track-visit/blogs/by-day', async (req, res) => {
+router.get('/track-visit/blogs/by-day',adminAuth, async (req, res) => {
   try {
     const dailyViews = await Visitor.aggregate([
       {
@@ -2672,7 +2813,7 @@ router.get('/track-visit/blogs/by-day', async (req, res) => {
 })
 
 //Weekly totals with comparison to previous weeks
-router.get('/track-visit/blogs/by-week', async (req, res) => {
+router.get('/track-visit/blogs/by-week',adminAuth, async (req, res) => {
   try {
     const weeklyRaw = await Visitor.aggregate([
       {
@@ -2731,7 +2872,7 @@ router.get('/track-visit/blogs/by-week', async (req, res) => {
 
 
 // GET single news views
-router.get('/track-visit/news/:slug', async (req, res) => {
+router.get('/track-visit/news/:slug',adminAuth, async (req, res) => {
   try {
     const { slug } = req.params
     if (!slug) return res.status(400).json({ message: 'News slug is required' })
