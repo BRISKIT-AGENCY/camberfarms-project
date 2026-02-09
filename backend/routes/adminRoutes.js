@@ -41,9 +41,9 @@ const router = express.Router()
 
 // Admin login route
 router.post('/login', async (req, res) => {
-  const { username, password } = req.body
+  const { email,password } = req.body
 
-  const admin = await Admin.findOne({ username })
+  const admin = await Admin.findOne({ email })
   if (!admin) {
     return res.status(401).json({ message: 'Invalid credentials' })
   }
@@ -67,7 +67,7 @@ router.post('/login', async (req, res) => {
     token,
     admin: {
       id: admin._id,
-      username: admin.username,
+      email: admin.email,
       role: admin.role,
       profilePhoto: admin.profilePhoto
     }
@@ -1926,8 +1926,14 @@ router.post('/products', adminAuth, productUpload, async (req, res) => {
 
     const images = req.files.map(file => `/uploads/products/${file.filename}`)
 
+    let parsedVariants = {}
+
+    if (variants) {
+      parsedVariants = JSON.parse(JSON.stringify(variants))
+    }
+
     const translations = {
-      en: { name, category, description, variants: variants || {} }
+      en: { name, category, description, variants: parsedVariants || {} }
     }
 
     for (const lang of SUPPORTED_LANGUAGES) {
@@ -2725,14 +2731,14 @@ router.get('/enquiries/stats/response-time', adminAuth, async (req, res) => {
 
 
 // GET total views for home, blogs, and news
-router.get('/track-visit/stats',adminAuth, async (req, res) => {
+router.get('/track-visit/stats', adminAuth, async (req, res) => {
   try {
     const homeVisits = await Visitor.countDocuments({ path: '/' })
-    
+
     const blogVisits = await Visitor.countDocuments({
       path: { $in: ['/blog', '/blogs'] }
     })
-    
+
     const newsVisits = await Visitor.countDocuments({ path: '/news' })
 
     res.status(200).json({
@@ -2775,7 +2781,7 @@ router.post('/track-visit', async (req, res) => {
 
 
 //Total views by day (combined)
-router.get('/track-visit/blogs/by-day',adminAuth, async (req, res) => {
+router.get('/track-visit/blogs/by-day', adminAuth, async (req, res) => {
   try {
     const dailyViews = await Visitor.aggregate([
       {
@@ -2813,7 +2819,7 @@ router.get('/track-visit/blogs/by-day',adminAuth, async (req, res) => {
 })
 
 //Weekly totals with comparison to previous weeks
-router.get('/track-visit/blogs/by-week',adminAuth, async (req, res) => {
+router.get('/track-visit/blogs/by-week', adminAuth, async (req, res) => {
   try {
     const weeklyRaw = await Visitor.aggregate([
       {
@@ -2872,7 +2878,7 @@ router.get('/track-visit/blogs/by-week',adminAuth, async (req, res) => {
 
 
 // GET single news views
-router.get('/track-visit/news/:slug',adminAuth, async (req, res) => {
+router.get('/track-visit/news/:slug', adminAuth, async (req, res) => {
   try {
     const { slug } = req.params
     if (!slug) return res.status(400).json({ message: 'News slug is required' })

@@ -18,7 +18,6 @@ export const adminAuth = (req, res, next) => {
       return res.status(403).json({ message: 'Access denied' })
     }
 
-    // 👇 THIS is the key addition
     req.admin = {
       adminId: decoded.adminId,
       role: decoded.role

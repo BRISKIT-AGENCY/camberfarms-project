@@ -9,10 +9,10 @@ const seedAdmin = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI)
 
-    const username = 'admin'
+    const email = 'ominyi.webdev@gmail.com'
     const password = 'admin123' // change after first login
 
-    const existingAdmin = await Admin.findOne({ username })
+    const existingAdmin = await Admin.findOne({ email })
     if (existingAdmin) {
       console.log('Admin already exists')
       process.exit(0)
@@ -21,13 +21,13 @@ const seedAdmin = async () => {
     const passwordHash = await bcrypt.hash(password, 10)
 
     await Admin.create({
-      username,
+      email,
       passwordHash,
       role: 'admin',
     })
 
     console.log('✅ Admin user created')
-    console.log('Username:', username)
+    console.log('Username:', email)
     console.log('Password:', password)
 
     process.exit(0)
