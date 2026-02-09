@@ -1,22 +1,30 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import closeIcon from '../../assets/icon/close.svg'
 import OverlayWrapper from '../../components/OverlayWrapper'
 import { maskNumber } from '../../helpers/maskNumber'
 import { useGoBack } from '../../hooks/useGoBack'
 import { useOtpTimer } from '../../hooks/useOtpTimer'
+import { useRequestOTP } from '../../hooks/useRequestOTP'
 import OtpInput from '../../utils/OtpInput'
 
 const numberOfDigits = 5
 
 export default function ForgotPassword() {
+	const navigate = useNavigate()
+	const { mutateAsync, isPending, error } = useRequestOTP()
 	const goBack = useGoBack('account')
 	const [otp, setOtp] = useState<string[]>(new Array(numberOfDigits).fill(''))
-	// const disableSubmit = otp.some((input) => input === '')
+	const disableSubmit = otp.some((input) => input === '') || Boolean(error)
 	const phoneNumber = maskNumber('+2348057978966')
 	const { minutes, seconds, isExpired, resetTimer } = useOtpTimer({
-		duration: 120,
+		duration: 600,
 	})
+
+	async function requestNewOTP() {
+		await mutateAsync()
+		resetTimer()
+	}
 
 	return (
 		<OverlayWrapper fullWidth={false}>
@@ -28,14 +36,14 @@ export default function ForgotPassword() {
 					onClick={goBack}
 				/>
 				<h6 className="text-2xl font-bold font-poppins text-start">
-					Verify phone number
+					Verify email address
 				</h6>
 				<p className="text-sm text-grey dark:text-light-grey mt-6 mb-8">
 					Enter the{' '}
 					<strong className="text-black dark:text-white">
 						{numberOfDigits} digits code
 					</strong>{' '}
-					sent to your phonev number
+					sent to your admin email address
 					<br />
 					<strong className="text-black">{phoneNumber}</strong> below.
 				</p>
@@ -58,20 +66,24 @@ export default function ForgotPassword() {
 						Didn't receive OTP?{' '}
 						<button
 							type="button"
+							disabled={isPending}
 							className="text-primary font-bold cursor-pointer"
-							onClick={resetTimer}
+							onClick={async () => await requestNewOTP()}
 						>
 							Resend code
 						</button>
 					</p>
 				)}
-				<Link
-					to={'/account/reset-password'}
-					// disabled={disableSubmit}
+				<button
+					type="button"
+					onClick={() =>
+						navigate('/account/reset-password', { state: { otp } })
+					}
+					disabled={disableSubmit}
 					className="w-full text-center bg-primary text-white py-2 px-6 font-medium font-poppins text-lg cursor-pointer rounded-lg disabled:opacity-30"
 				>
 					Continue
-				</Link>
+				</button>
 			</div>
 		</OverlayWrapper>
 	)

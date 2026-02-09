@@ -33,7 +33,9 @@ export function IconRenderer({
 
 const ICONS: Record<string, IconType> = {
 	enquiries: HiOutlineMail,
+	enquiry: HiOutlineMail,
 	products: RiSeedlingLine,
+	product: RiSeedlingLine,
 	articles: MdArticle,
 	affiliate: TbAffiliate,
 	dashboard: MdDashboard,
@@ -43,5 +45,9 @@ const ICONS: Record<string, IconType> = {
 	gallery: CiImageOn,
 	membership: IoPeople,
 	blog: MdArticle,
+	exportBlog: MdArticle,
+	africaBlog: MdArticle,
 	['farm fund form']: FaWpforms,
+	['farm-fund-form']: FaWpforms,
+	farmFundForm: FaWpforms,
 }

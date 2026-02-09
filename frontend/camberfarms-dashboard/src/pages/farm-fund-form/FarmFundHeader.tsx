@@ -1,10 +1,34 @@
 import { FiUpload } from 'react-icons/fi'
 import { IoMdRefresh } from 'react-icons/io'
 // import { Link } from 'react-router-dom'
+import { useMutation } from '@tanstack/react-query'
+import axiosInstance from '../../api/axios'
 import Searchbar from '../../components/Searchbar'
+import { exportToPDF } from '../../helpers/ExportToPDF'
+import { useRefetchQueries } from '../../hooks/useRefetchQueries'
 import FarmFundStats from './FarmFundStats'
 
 export default function FarmFundHeader() {
+	// TODO Optional, throttle this query
+	const refresh = useRefetchQueries('farm-fund')
+	const { isPending, mutate } = useMutation({
+		mutationKey: ['farm-fund'],
+		mutationFn: async () => {
+			const res = await axiosInstance.post('farm-fund/export', {
+				responseType: 'blob',
+			})
+			// create file blob
+			const blob = await res.data
+			const url = window.URL.createObjectURL(new Blob([blob]))
+
+			return url
+		},
+		onSuccess: (url) => {
+			// onSuccess, download PDF
+			exportToPDF(url, 'farm-fund')
+		},
+	})
+
 	return (
 		<section className="w-full flex flex-col">
 			<div className="w-full flex items-center justify-between gap-6">
@@ -19,14 +43,19 @@ export default function FarmFundHeader() {
 				{/* action buttons */}
 				<div className="w-fit flex gap-6 items-center justify-end">
 					<button
-						onClick={window.location.reload}
+						onClick={refresh}
 						type="button"
 						className="bg-transparent text-secondary border-2 border-secondary font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer flex items-center gap-2"
 					>
 						<IoMdRefresh />
 						<span>Refresh</span>
 					</button>
-					<button className="bg-primary text-white font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer flex items-center gap-2">
+					<button
+						type="button"
+						onClick={() => mutate()}
+						disabled={isPending}
+						className="bg-primary text-white font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer flex items-center gap-2"
+					>
 						<FiUpload />
 						<span>Export Data</span>
 					</button>

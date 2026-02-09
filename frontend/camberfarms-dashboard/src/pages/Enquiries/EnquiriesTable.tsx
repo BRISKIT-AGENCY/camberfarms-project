@@ -1,6 +1,8 @@
+import { useQuery } from '@tanstack/react-query'
 import { MdOutlineRemoveRedEye } from 'react-icons/md'
 import { RiReplyLine } from 'react-icons/ri'
 import { useNavigate } from 'react-router-dom'
+import axiosInstance from '../../api/axios'
 import { Table } from '../../components/Table'
 
 export type Enquiry = {
@@ -10,20 +12,31 @@ export type Enquiry = {
 	status: 'new' | 'pending' | 'approved'
 	website: 'africa' | 'export'
 	date: string
-	id: string | number
+	_id: string | number
 	subject: string
 	message: string
 	phone: string
 }
 
 export default function EnquiriesTable() {
+	const { data, isPending } = useQuery({
+		queryKey: ['enquiries'],
+		queryFn: async () => {
+			const res = await axiosInstance.get('enquiries')
+			return res.data
+		},
+	})
+
+	console.log('enquiries: ', data)
+	console.log('enquiries pending: ', isPending)
+
 	const navigate = useNavigate()
 
 	const viewInfo = (enquiry: Enquiry) => {
-		navigate(`${enquiry.id}`, { state: { enquiry } })
+		navigate(`${enquiry._id}`, { state: { enquiry } })
 	}
 	const ReplyInfo = (enquiry: Enquiry) => {
-		navigate(`reply/${enquiry.id}`, { state: { enquiry } })
+		navigate(`reply/${enquiry._id}`, { state: { enquiry } })
 	}
 
 	// temporarily putting this within the component to pass state across
@@ -103,7 +116,7 @@ const EnquiryData: Enquiry[] = [
 		country: 'nigeria',
 		status: 'new',
 		date: '12/11/2025 | 3:59pm',
-		id: 1,
+		_id: 1,
 		phone: '080878975656',
 		website: 'export',
 		subject: 'Enquiry about products exporting',
@@ -116,7 +129,7 @@ const EnquiryData: Enquiry[] = [
 		country: 'ghana',
 		status: 'pending',
 		date: '12/11/2025 | 3:59pm',
-		id: 2,
+		_id: 2,
 		phone: '080878975656',
 		website: 'africa',
 		subject: 'partnership opportunity for smart irigation',
@@ -129,7 +142,7 @@ const EnquiryData: Enquiry[] = [
 		country: 'nigeria',
 		status: 'new',
 		date: '12/11/2025 | 3:59pm',
-		id: 3,
+		_id: 3,
 		phone: '080878975656',
 		website: 'export',
 		subject: 'Enquiry about products exporting',
@@ -142,7 +155,7 @@ const EnquiryData: Enquiry[] = [
 		country: 'ghana',
 		status: 'pending',
 		date: '12/11/2025 | 3:59pm',
-		id: 4,
+		_id: 4,
 		phone: '080878975656',
 		website: 'africa',
 		subject: 'partnership opportunity for smart irigation',

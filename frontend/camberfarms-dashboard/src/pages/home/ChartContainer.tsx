@@ -1,7 +1,20 @@
+import { useQuery } from '@tanstack/react-query'
 import { IoMdArrowDropup } from 'react-icons/io'
+import axiosInstance from '../../api/axios'
 import Chart from './Chart'
 
 export default function ChartContainer() {
+	const { data, isPending } = useQuery({
+		queryKey: ['membership'],
+		queryFn: async () => {
+			const res = await axiosInstance.get('track-visit/blogs/by-day')
+			return res.data
+		},
+	})
+
+	console.log('visits: ', data)
+	console.log('visits: ', isPending)
+
 	return (
 		<div className="w-full min-h-72 mb-4 p-4 shadow bg-white text-black rounded-2xl dark:text-white dark:bg-black">
 			<h5 className="text-grey text-base mb-2">Daily Traffic</h5>

@@ -1,9 +1,30 @@
+import { useMutation } from '@tanstack/react-query'
 import { FiUpload } from 'react-icons/fi'
 import { IoMdRefresh } from 'react-icons/io'
+import axiosInstance from '../../api/axios'
 import Searchbar from '../../components/Searchbar'
+import { exportToPDF } from '../../helpers/ExportToPDF'
 import EnquiriesStats from './EnquiriesStats'
 
 export default function EnquiriesHeader() {
+	const { isPending, mutate } = useMutation({
+		mutationKey: ['enquiries'],
+		mutationFn: async () => {
+			const res = await axiosInstance.post('enquiries/export', {
+				responseType: 'blob',
+			})
+			// create file blob
+			const blob = await res.data
+			const url = window.URL.createObjectURL(new Blob([blob]))
+
+			return url
+		},
+		onSuccess: (url) => {
+			// onSuccess, download PDF
+			exportToPDF(url, 'enquiries')
+		},
+	})
+
 	return (
 		<section className="w-full flex flex-col">
 			<div className="w-full flex items-center justify-between gap-6">
@@ -25,7 +46,12 @@ export default function EnquiriesHeader() {
 						<IoMdRefresh />
 						<span>Refresh</span>
 					</button>
-					<button className="bg-primary text-white font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer flex items-center gap-2">
+					<button
+						type="button"
+						onClick={() => mutate()}
+						disabled={isPending}
+						className="bg-primary text-white font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer flex items-center gap-2 disabled:opacity-40"
+					>
 						<FiUpload />
 						<span>Export Data</span>
 					</button>

@@ -1,14 +1,31 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { IoClose } from 'react-icons/io5'
+import axiosInstance from '../../api/axios'
 import { Dropzone } from '../../components/Dropzone'
 import OverlayWrapper from '../../components/OverlayWrapper'
 import { useGoBack } from '../../hooks/useGoBack'
 
+type ImageUpload = File[] | File | null
+// TODO make this work
 export default function AddGallery() {
+	const queryClient = useQueryClient()
 	const goBack = useGoBack('/gallery')
-	const [image, setImage] = useState<File | null>(null)
+	const [images, setImages] = useState<ImageUpload>(null)
+	const { mutate } = useMutation({
+		mutationKey: ['galleries'],
+		mutationFn: async (data: ImageUpload) =>
+			axiosInstance.post('gallery', data),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: ['galleries'] }),
+	})
 
-	console.log(image)
+	async function handleSubmit(images: ImageUpload) {
+		const formData = new FormData()
+		formData.append('images', JSON.stringify(images))
+		// console.log('mutate images: ', images)
+		mutate(images)
+	}
+
 	return (
 		<OverlayWrapper>
 			<section className="w-full">
@@ -23,13 +40,15 @@ export default function AddGallery() {
 				</div>
 				<div className="w-full">
 					<Dropzone
+						isMultiple
 						styleVariant="h-105 has-[img]:rounded-lg"
-						setState={setImage}
+						setState={setImages}
 					/>
 				</div>
 				<div className="w-full flex gap-6 items-center justify-end py-6 mt-8 border-t border-grey/50">
 					<button
 						type="button"
+						onClick={() => handleSubmit(images)}
 						className="bg-transparent text-secondary border-2 border-secondary font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer"
 					>
 						Upload to Export

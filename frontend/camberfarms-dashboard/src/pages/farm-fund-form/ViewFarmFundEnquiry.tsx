@@ -1,14 +1,15 @@
 import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { IoClose } from 'react-icons/io5'
-import { Link, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import axiosInstance from '../../api/axios'
 import OverlayWrapper from '../../components/OverlayWrapper'
 import { useGoBack } from '../../hooks/useGoBack'
-import type { FarmFundEnquiry } from './FarmFundTable'
+import type { FarmFundEnquiry } from '../../types/farm-fund'
 
 export default function ViewFarmFundEnquiry() {
 	const params = useParams()
+	const navigate = useNavigate()
 	const goBack = useGoBack('/farm-fund-form')
 	const {
 		data: enquiry,
@@ -17,7 +18,7 @@ export default function ViewFarmFundEnquiry() {
 	} = useQuery({
 		queryKey: ['farm-fund', params.enquiryId],
 		queryFn: async () => {
-			const res = await axiosInstance.get(`farm-fund/${params.id}`)
+			const res = await axiosInstance.get(`farm-fund/${params.enquiryId}`)
 			return res.data.data as FarmFundEnquiry
 		},
 	})
@@ -101,7 +102,7 @@ export default function ViewFarmFundEnquiry() {
 								<span className="text-sm text-grey">Date submitted</span>
 								<input
 									type="text"
-									value={enquiry?.createdAt}
+									value={new Date(enquiry?.createdAt).toDateString()}
 									readOnly
 									className="text-black dark:text-white text-base w-fit select-all capitalize outline-0 border-0"
 								/>
@@ -138,27 +139,41 @@ export default function ViewFarmFundEnquiry() {
 					{/* message */}
 					<h6 className="my-1 text-base">Message</h6>
 					<textarea
-						name=""
+						name="message"
 						id=""
 						value={enquiry?.message}
 						readOnly
 						className="w-full resize-none bg-grey/10 px-4 py-2 rounded-lg text-grey border-0 outline-0 focus-within:border focus-within:border-primary dark:text-light-grey dark:bg-dark-grey"
 					></textarea>
 
+					{enquiry.adminReply && (
+						<>
+							<h6 className="my-1 text-base">Your reply</h6>
+							<textarea
+								name="adminReply"
+								value={enquiry?.adminReply}
+								readOnly
+								className="w-full resize-none bg-grey/10 px-4 py-2 rounded-lg text-grey border-0 outline-0 focus-within:border focus-within:border-primary dark:text-light-grey dark:bg-dark-grey"
+							></textarea>
+						</>
+					)}
+
 					<div className="w-full flex gap-6 items-center justify-end py-4 mt-4 border-t border-grey/40">
 						<button
 							type="button"
-							onClick={goBack}
+							onClick={() => navigate('/farm-fund-form')}
 							className="bg-light-grey text-black dark:text-white dark:bg-dark-grey font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer capitalize"
 						>
 							cancel
 						</button>
-						<Link
-							to={`/enquiries/reply/${enquiry?._id}`}
-							className="bg-primary text-white font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer capitalize"
+						<button
+							type="button"
+							onClick={() => navigate(`/farm-fund-form/reply/${enquiry?._id}`)}
+							disabled={Boolean(enquiry.adminReply)}
+							className="bg-primary text-white font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer capitalize disabled:opacity-40"
 						>
 							reply message
-						</Link>
+						</button>
 					</div>
 				</section>
 			)}

@@ -1,5 +1,6 @@
 // import { FiToggleRight } from 'react-icons/fi'
 import { useState } from 'react'
+import toast from 'react-hot-toast'
 import { GoKey } from 'react-icons/go'
 import { IoMoonOutline } from 'react-icons/io5'
 import {
@@ -9,9 +10,16 @@ import {
 } from 'react-icons/md'
 import { TbLock } from 'react-icons/tb'
 import { Link } from 'react-router-dom'
+import { useRequestOTP } from '../../hooks/useRequestOTP'
 
 export default function AccountSettings() {
 	const [enable2FA, setEnable2FA] = useState(true)
+	const { mutate, isPending, error } = useRequestOTP()
+
+	if (error) {
+		toast.error(`unable to send verification code: ${error.message}`)
+	}
+
 	return (
 		<div role="navigation" className="w-full py-4">
 			<Link
@@ -25,9 +33,11 @@ export default function AccountSettings() {
 					className="inline-flex ml-auto text-grey/30"
 				/>
 			</Link>
-			<Link
-				to={'iforgot'}
-				className="flex w-full items-center gap-4 px-2 py-4 border-b text-black dark:text-white border-grey/30"
+			<button
+				type="button"
+				onClick={() => mutate()}
+				disabled={isPending}
+				className="flex w-full items-center gap-4 px-2 py-4 border-b text-black dark:text-white border-grey/30 disabled:opacity-50"
 			>
 				<GoKey size={20} className="text-primary" />
 				<span>Forgot Password</span>
@@ -35,7 +45,7 @@ export default function AccountSettings() {
 					size={20}
 					className="inline-flex ml-auto text-grey/30"
 				/>
-			</Link>
+			</button>
 			<button
 				onClick={() => setEnable2FA((prev) => !prev)}
 				// to={'2factor'}

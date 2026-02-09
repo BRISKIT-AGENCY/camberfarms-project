@@ -1,70 +1,61 @@
+import { useQuery } from '@tanstack/react-query'
 import { formatDistanceToNow } from 'date-fns'
-import NotificationCard, {
-	type NotiesProps,
-} from '../../components/NotificationCard'
-
+import axiosInstance from '../../api/axios'
+import NotificationCard from '../../components/NotificationCard'
+import { categoryColor } from '../../helpers/getCategoryColor'
+import { useRefetchQueries } from '../../hooks/useRefetchQueries'
+import type { Notification } from '../../types/notification'
+//
 export default function ExportNotifications() {
+	const refresh = useRefetchQueries('notifications/export')
+	const { data, isPending, error } = useQuery({
+		queryKey: ['notifications', 'notifications/export'],
+		queryFn: async () => {
+			const res = await axiosInstance.get('export/notifications')
+			return res.data as {
+				total: number
+				notifications: Notification[]
+			}
+		},
+		retry: false,
+		// refetchOnWindowFocus: false,
+	})
+
+	if (isPending)
+		return <div className="w-full text-center mt-10">Loading...</div>
+
+	if (error)
+		return (
+			<div className="w-full mt-10 text-center">
+				<p>Unable to get notifications: {error.message}</p>
+				<button
+					type="button"
+					onClick={async () => await refresh()}
+					className="w-fit mx-auto mt-4 py-2 px-6 rounded-full border"
+				>
+					refresh
+				</button>
+			</div>
+		)
+
 	return (
 		<div className="w-full grid grid-cols-1 gap-4 my-6 pb-20">
-			{notification.map((item) => (
-				<div
-					className="w-full bg-white dark:bg-black p-4 rounded-lg"
-					key={item.id}
-				>
-					<NotificationCard {...item} time={formatDistanceToNow(item.time!)} />
-				</div>
-			))}
+			{data &&
+				data.notifications.map((item) => (
+					<div
+						className="w-full bg-white dark:bg-black p-4 rounded-lg"
+						key={item._id}
+					>
+						<NotificationCard
+							desc={item.description}
+							id={item._id}
+							title={item.title}
+							iconName={item.type}
+							Icolor={categoryColor[item.type]}
+							time={formatDistanceToNow(item.createdAt!)}
+						/>
+					</div>
+				))}
 		</div>
 	)
 }
-
-const notification: NotiesProps[] = [
-	{
-		title: 'New enquiry from John Smith about Camberfarm',
-		desc: 'I want to partner with Camberfarm, i love what they are building...',
-		Icolor: '#D00000',
-		iconName: 'enquiries',
-		time: '2026-01-17T13:18:36Z',
-		id: 1,
-	},
-	{
-		title: 'New News articles have just been uploaded successfully',
-		desc: 'Moew new articles have been uploaded.',
-		Icolor: '#CB30E0',
-		iconName: 'news',
-		time: '2026-01-17T13:18:36Z',
-		id: 2,
-	},
-	{
-		title: 'New enquiry from John Smith about Camberfarm',
-		desc: 'I want to partner with Camberfarm, i love what they are building...',
-		Icolor: '#D00000',
-		iconName: 'enquiries',
-		time: '2026-01-17T13:18:36Z',
-		id: 3,
-	},
-	{
-		title: 'New News articles have just been uploaded successfully',
-		desc: 'Moew new articles have been uploaded.',
-		Icolor: '#CB30E0',
-		iconName: 'news',
-		time: '2026-01-17T13:18:36Z',
-		id: 4,
-	},
-	{
-		title: 'New enquiry from John Smith about Camberfarm',
-		desc: 'I want to partner with Camberfarm, i love what they are building...',
-		Icolor: '#D00000',
-		iconName: 'enquiries',
-		time: '2026-01-17T13:18:36Z',
-		id: 5,
-	},
-	{
-		title: 'New News articles have just been uploaded successfully',
-		desc: 'Moew new articles have been uploaded.',
-		Icolor: '#CB30E0',
-		iconName: 'news',
-		time: '2026-01-17T13:18:36Z',
-		id: 6,
-	},
-]

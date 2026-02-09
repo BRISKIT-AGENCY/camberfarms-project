@@ -1,47 +1,72 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { format } from 'date-fns'
 import { FaArrowRight } from 'react-icons/fa6'
 import { useNavigate } from 'react-router-dom'
 import axiosInstance from '../../api/axios'
 import CardItem from '../../components/CardItem'
+import useGetBlogs from '../../hooks/useGetBlogs'
+import type { Blog } from '../../types/blog'
 
-export type Blog = {
-	title: string
-	image?: string
-	excerpt: string
-	views: number
-	date: string
-	website: 'africa' | 'export'
-	id: string | number
+const shuffleBlogs = (blogs: Blog[]): Blog[] => {
+	const shuffled = [...blogs] // Copy to keep it immutable
+	for (let i = shuffled.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1))
+		;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+	}
+	return shuffled
 }
-
-const id = '697a6cc59acb3d959f3a2bc8'
 
 export default function BlogContainer() {
 	const navigate = useNavigate()
-	const { data, isPending } = useQuery({
-		queryKey: ['blogs'],
-		queryFn: async () => {
-			const [africaPost, exportPost] = await Promise.all([
-				axiosInstance.get('africa-blogs'),
-				axiosInstance.get('export-blogs'),
-			])
-
-			return { africa: africaPost, export: exportPost }
-		},
-	})
-
-	const { mutate, data: res } = useMutation({
-		mutationFn: async () => await axiosInstance.delete(`africa-blogs/${id}`),
-	})
-
-	const editBlog = (blog: Blog) => {
-		navigate(`edit/${blog.id}`, { state: { blog } })
+	const queryClient = useQueryClient()
+	// invalidate/refetch blog queries
+	async function refetchBlogs() {
+		await queryClient.invalidateQueries({ queryKey: ['blogs'] })
 	}
 
-	console.log('blogs: ', data)
-	console.log('isPending: ', isPending)
-	console.log('delete action: ', res)
+	const { data, isPending, error } = useGetBlogs()
+	// delete blog
+	const { mutate: deleteBlog } = useMutation({
+		mutationKey: ['blogs'],
+		mutationFn: async (data: { id: string; website: string }) =>
+			await axiosInstance.delete(`${data.website}-blogs/${data.id}`),
+		onSuccess: () => {
+			refetchBlogs()
+		},
+	})
+	// add 'website' field to export blogs
+	const modifiedExportBlogs: Blog[] = data?.export.exportBlogs
+		? data.export.exportBlogs.map((blog: Blog) => ({
+				...blog,
+				website: 'export',
+			}))
+		: []
+	// add 'website' field to africa blogs
+	const modifiedAfricaBlogs: Blog[] = data?.africa.blogs
+		? data.africa.blogs.map((blog: Blog) => ({ ...blog, website: 'africa' }))
+		: []
+	// shuffle blogs
+	const blogs = shuffleBlogs([...modifiedAfricaBlogs, ...modifiedExportBlogs])
+
+	const editBlog = (id: string) => {
+		navigate(`edit/${id}`)
+	}
+
+	if (isPending) return <div className="w-full text-center">Loading...</div>
+
+	if (error)
+		return (
+			<div className="w-full mt-10 text-center">
+				<p>Unable to fetch blogs: {error.message}</p>
+				<button
+					type="button"
+					onClick={async () => await refetchBlogs()}
+					className="w-fit mx-auto mt-4 py-2 px-6 rounded-full border cursor-pointer capitalize"
+				>
+					refresh
+				</button>
+			</div>
+		)
 
 	return (
 		<section className="w-full bg-light-grey dark:bg-dark-grey mb-20">
@@ -49,30 +74,34 @@ export default function BlogContainer() {
 				blog post
 			</h4>
 			<p className="text-sm text-grey mb-6 mt-2">
-				({blog.length}) articles found
+				({blogs.length}) articles found
 			</p>
 			<div className="w-full grid grid-cols-1 xl:grid-cols-2 items-stretch gap-x-10 gap-y-6 mt-6">
-				{blog.map((item) => (
+				{blogs.map((item) => (
 					<CardItem
 						cardVariant="border border-primary p-4 has-[button]:w-full"
-						key={item.id}
-						title={item.title}
+						key={item._id}
+						title={item.translations.en.title}
 						// image={item.image}
 						primaryBtnText="edit"
 						flag={item.website}
 						flagColor={item.website === 'africa' ? '#16A34A' : '#FF741F'}
-						primaryBtnClick={() => editBlog(item)}
+						primaryBtnClick={() => editBlog(item._id)}
 						secondaryBtnText="delete"
-						secondaryBtnClick={mutate}
+						secondaryBtnClick={() =>
+							deleteBlog({ id: item._id, website: item.website })
+						}
 					>
 						<div className="w-full px-3 text-grey">
-							<p className="text-sm font-inter">{item.excerpt}</p>
+							<p className="text-sm font-inter">
+								{item.translations.en.excerpt}
+							</p>
 							<p className="w-fit ml-auto my-1 text-sm text-grey">
-								{format(new Date(item.date), 'dd/MM/yyyy')}
+								{format(new Date(item.publishedAt), 'dd/MM/yyyy')}
 							</p>
 							<p className="text-grey flex gap-1 items-center">
 								<FaArrowRight />
-								<span className="">{item.views} views</span>
+								<span className="">{item.views || 0} views</span>
 							</p>
 						</div>
 					</CardItem>
@@ -81,33 +110,3 @@ export default function BlogContainer() {
 		</section>
 	)
 }
-
-const blog: Blog[] = [
-	{
-		title: 'Revolutionary Smart Irrigation System Increases Crop Yield by 40%',
-		excerpt:
-			'Increased investment in agricultural infrastructure is helping African producers tap into new markets across Europe and Asia, with maize and sesame leading the surge.',
-		views: 100,
-		date: '2025-11-12',
-		id: 1,
-		website: 'africa',
-	},
-	{
-		title: 'Organic Farming Practices Show 25% Increase in Soil Health',
-		excerpt:
-			'Recent studies demonstrate the long-term benefits of organic farming methods on soil...',
-		views: 100,
-		date: '2025-11-12',
-		id: 2,
-		website: 'export',
-	},
-	{
-		title: 'Precision Agriculture: GPS-Guided Tractors Improve Efficiency',
-		excerpt:
-			'Advanced GPS technology in agricultural machinery is revolutionizing field and more...',
-		views: 100,
-		date: '2025-11-12',
-		id: 3,
-		website: 'africa',
-	},
-]

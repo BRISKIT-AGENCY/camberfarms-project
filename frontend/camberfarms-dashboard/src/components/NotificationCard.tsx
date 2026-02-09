@@ -1,15 +1,7 @@
 import { Link } from 'react-router-dom'
+import type { NotificationProps } from '../types/notification'
 import { IconRenderer } from '../utils/IconRenderer'
 
-export type NotiesProps = {
-	iconName: string
-	title: string
-	desc: string
-	Icolor: string
-	id: string | number
-	time?: string
-	round?: string
-}
 export default function NotificationCard({
 	iconName,
 	title,
@@ -18,7 +10,7 @@ export default function NotificationCard({
 	time,
 	id,
 	round = 'full',
-}: NotiesProps) {
+}: NotificationProps) {
 	return (
 		<Link
 			to={`/${iconName}/${id}`}

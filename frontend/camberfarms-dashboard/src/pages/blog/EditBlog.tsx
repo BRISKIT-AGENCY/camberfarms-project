@@ -3,7 +3,7 @@ import { IoClose } from 'react-icons/io5'
 import { useLocation, useParams } from 'react-router-dom'
 import OverlayWrapper from '../../components/OverlayWrapper'
 import { useGoBack } from '../../hooks/useGoBack'
-import type { Blog } from './BlogContainer'
+import type { Blog } from '../../types/blog'
 
 export default function EditBlog() {
 	const goBack = useGoBack('/news')
@@ -40,7 +40,7 @@ export default function EditBlog() {
 							<input
 								type="text"
 								required
-								defaultValue={blog.title}
+								defaultValue={blog.translations.en.title}
 								className="w-full p-2 border-2 border-grey/40 rounded-md focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
 								placeholder="Enter title"
 								name="title"
@@ -53,7 +53,7 @@ export default function EditBlog() {
 								<span className="text-grey text-sm">Date</span>
 								<input
 									type="date"
-									defaultValue={blog.date}
+									defaultValue={blog.updatedAt}
 									required
 									className="w-full p-2 border-2 border-grey/40 rounded-md focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
 									placeholder="Select date"
@@ -80,7 +80,7 @@ export default function EditBlog() {
 								name="description"
 								required
 								id="description"
-								defaultValue={blog.excerpt}
+								defaultValue={blog.translations.en.excerpt}
 								placeholder="Write your blog contents here..."
 								className="w-full h-28 p-2 resize-y border-2 border-grey/40 rounded-md field-sizing-content focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
 							></textarea>

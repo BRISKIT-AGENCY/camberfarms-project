@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom'
 import axiosInstance from '../../api/axios'
 import OverlayWrapper from '../../components/OverlayWrapper'
 import { useGoBack } from '../../hooks/useGoBack'
-import type { Affiliate } from './AffilateTable'
+import type { Affiliate } from '../../types/affiliate'
 
 export default function AffiliateMembership() {
 	const goBack = useGoBack('/affiliate')
@@ -16,6 +16,7 @@ export default function AffiliateMembership() {
 		data: farmer,
 		isPending,
 		error,
+		isRefetching,
 	} = useQuery({
 		queryKey: [`affiliate/${params.id}`],
 		queryFn: async () => {
@@ -40,7 +41,8 @@ export default function AffiliateMembership() {
 		}
 	}, [params, goBack])
 
-	if (isPending) return <div className="w-full text-center">Loading...</div>
+	if (isPending || isRefetching)
+		return <div className="w-full text-center">Loading...</div>
 
 	return (
 		<OverlayWrapper>

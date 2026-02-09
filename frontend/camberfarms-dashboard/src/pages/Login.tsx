@@ -43,6 +43,8 @@ export default function Login() {
 			Cookies.set('token', userInfo.token, { expires: 1 })
 			// console.log('user: ', userInfo)
 			navigate('/')
+			// naive fix for preflight authentication
+			window.location.reload()
 
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		} catch (err: any) {

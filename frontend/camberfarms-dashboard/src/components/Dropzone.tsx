@@ -4,7 +4,8 @@ import { IoIosCloseCircle } from 'react-icons/io'
 import { IoImageOutline } from 'react-icons/io5'
 
 type DropZoneProps = {
-	setState: (file: File | null) => void
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	setState: (file: any) => void
 	image?: string
 	isMultiple?: boolean
 	styleVariant?: string
@@ -17,19 +18,34 @@ export function Dropzone({
 	styleVariant,
 }: DropZoneProps) {
 	const [preview, setPreview] = useState<string | undefined>(image)
+	const [previews, setPreviews] = useState<(string | undefined)[]>([])
+	const [imgExists, setImgExists] = useState(false)
+
 	const onDrop = useCallback(
 		(acceptedFiles: FileWithPath[]) => {
-			const file = acceptedFiles[0]
-			if (!file) return
+			if (!acceptedFiles.length) return
 
-			const imgUrl = handleFileChange(file)
+			let file, imgUrl
+
+			if (isMultiple) {
+				file = acceptedFiles
+				const urls = file.map((img) => handleFileChange(img))
+
+				if (!urls) return
+
+				setPreviews(urls)
+			} else {
+				file = acceptedFiles[0]
+				imgUrl = handleFileChange(file)
+
+				if (!imgUrl) return
+				setPreview(imgUrl)
+			}
+
+			setImgExists(true)
 			setState(file)
-
-			if (!imgUrl) return
-
-			setPreview(imgUrl)
 		},
-		[setState],
+		[setState, isMultiple],
 	)
 
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -37,13 +53,15 @@ export function Dropzone({
 		accept: { 'image/*': [] },
 		multiple: isMultiple,
 		// if there's a preview image, disable click
-		noClick: preview !== undefined,
-		disabled: preview !== undefined,
+		noClick: imgExists,
+		disabled: imgExists,
 	})
 
 	//
 	const handleRemoveImg = () => {
 		setPreview(undefined)
+		setPreviews([])
+		setImgExists(false)
 		setState(null)
 	}
 
@@ -61,7 +79,7 @@ export function Dropzone({
 			<input {...getInputProps()} />
 			{isDragActive ? (
 				<p>Drop the file here ...</p>
-			) : !preview ? (
+			) : !imgExists ? (
 				<div className="flex flex-col w-full h-full py-6 bg-white dark:bg-black items-center justify-center gap-3 text-center">
 					<IoImageOutline
 						size={40}
@@ -87,14 +105,31 @@ export function Dropzone({
 					<IoIosCloseCircle
 						onClick={handleRemoveImg}
 						size={40}
+						title="clear images"
+						role="button"
 						className="w-fit rounded-full block absolute top-4 -right-6 text-red-500 bg-white"
 					/>
-					<img
-						src={preview}
-						className="w-auto h-full object-contain inline-block"
-						alt="image preview"
-						onLoad={() => URL.revokeObjectURL(preview)}
-					/>
+					{preview && (
+						<img
+							src={preview}
+							className="w-auto h-full object-contain inline-block"
+							alt="image preview"
+							onLoad={() => URL.revokeObjectURL(preview)}
+						/>
+					)}
+					{previews && (
+						<div className="w-full flex flex-wrap gap-6">
+							{previews.map((img) => (
+								<img
+									src={img}
+									key={img}
+									className="w-32 object-contain inline-block"
+									alt="image preview"
+									onLoad={() => URL.revokeObjectURL(img || '')}
+								/>
+							))}
+						</div>
+					)}
 				</div>
 			)}
 		</div>

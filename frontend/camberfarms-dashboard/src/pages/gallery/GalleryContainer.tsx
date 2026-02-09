@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router-dom'
 // import grainImg from '../../assets/img/grains-product.png'
+import { useQuery } from '@tanstack/react-query'
 import { format } from 'date-fns'
-import productImg from '../../assets/img/wheat-product.png'
+import axiosInstance from '../../api/axios'
+// import productImg from '../../assets/img/wheat-product.png'
 import CardItem from '../../components/CardItem'
 
 export type GalleryImage = {
@@ -10,25 +12,39 @@ export type GalleryImage = {
 	dimensions: string
 	views: number
 	date: string
-	id: string | number
+	_id: string
 }
 
 export default function GalleryContainer() {
 	const navigate = useNavigate()
+	const { data, isPending, error } = useQuery({
+		queryKey: ['galleries'],
+		queryFn: async () => {
+			const res = await axiosInstance.get('gallery')
+			return res.data as {
+				success: boolean
+				total: number
+				galleries: GalleryImage[]
+			}
+		},
+	})
+	const images = data?.galleries || []
 
-	const changeImage = (image: GalleryImage) => {
-		navigate(`edit/${image.id}`, { state: { image } })
+	const changeImage = (id: string) => {
+		navigate(`edit/${id}`)
 	}
+
+	if (isPending) return <div className="w-full text-center">Loading...</div>
 
 	return (
 		<section className="w-full bg-light-grey dark:bg-dark-grey mb-20">
 			<div className="w-full grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 items-stretch gap-x-10 gap-y-6 mt-6">
 				{images.map((item) => (
 					<CardItem
-						key={item.id}
+						key={item._id}
 						image={item.image}
 						primaryBtnText="change image"
-						primaryBtnClick={() => changeImage(item)}
+						primaryBtnClick={() => changeImage(item._id)}
 						secondaryBtnText="delete"
 						secondaryBtnClick={() => {}}
 					>
@@ -45,35 +61,38 @@ export default function GalleryContainer() {
 					</CardItem>
 				))}
 			</div>
+			{(error || !images.length) && (
+				<div className="w-full text-center">No gallery images found.</div>
+			)}
 		</section>
 	)
 }
 
-const images: GalleryImage[] = [
-	{
-		image: productImg,
-		dimensions: '1920 x 1080',
-		size: '2.5mb',
-		views: 100,
-		date: '2025-11-12',
-		id: 1,
-	},
+// const images: GalleryImage[] = [
+// 	{
+// 		image: productImg,
+// 		dimensions: '1920 x 1080',
+// 		size: '2.5mb',
+// 		views: 100,
+// 		date: '2025-11-12',
+// 		id: 1,
+// 	},
 
-	{
-		image: productImg,
-		dimensions: '1920 x 1080',
-		size: '2.5mb',
-		views: 100,
-		date: '2025-11-12',
-		id: 2,
-	},
+// 	{
+// 		image: productImg,
+// 		dimensions: '1920 x 1080',
+// 		size: '2.5mb',
+// 		views: 100,
+// 		date: '2025-11-12',
+// 		id: 2,
+// 	},
 
-	{
-		image: productImg,
-		dimensions: '1920 x 1080',
-		size: '2.5mb',
-		views: 100,
-		date: '2025-11-12',
-		id: 3,
-	},
-]
+// 	{
+// 		image: productImg,
+// 		dimensions: '1920 x 1080',
+// 		size: '2.5mb',
+// 		views: 100,
+// 		date: '2025-11-12',
+// 		id: 3,
+// 	},
+// ]

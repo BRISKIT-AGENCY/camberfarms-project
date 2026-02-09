@@ -33,24 +33,30 @@ export function Table<T extends { _id: string | number }>({
 				</tr>
 			</thead>
 			<tbody>
-				{data.map((item) => (
-					<tr
-						key={item._id}
-						className="border-t border-grey/20 text-dark-grey dark:text-light-grey dark:border-light-grey/20 font-inter"
-					>
-						{columns.map((col) => (
-							<td
-								key={String(col.key)}
-								className={`p-4 capitalize text-center text-[12px] lg:text-base ${wrapContent ? 'min-w-fit text-wrap' : 'min-w-max text-nowrap'}`}
-							>
-								{/* Use custom render if provided, otherwise default to the key value */}
-								{col.render
-									? col.render(item)
-									: (item[col.key as keyof T] as React.ReactNode)}
-							</td>
-						))}
+				{data.length !== 0 &&
+					data.map((item) => (
+						<tr
+							key={item._id}
+							className="border-t border-grey/20 text-dark-grey dark:text-light-grey dark:border-light-grey/20 font-inter"
+						>
+							{columns.map((col) => (
+								<td
+									key={String(col.key)}
+									className={`p-4 capitalize text-center text-[12px] lg:text-base ${wrapContent ? 'min-w-fit text-wrap' : 'min-w-max text-nowrap'}`}
+								>
+									{/* Use custom render if provided, otherwise default to the key value */}
+									{col.render
+										? col.render(item)
+										: (item[col.key as keyof T] as React.ReactNode)}
+								</td>
+							))}
+						</tr>
+					))}
+				{data.length === 0 && (
+					<tr className="w-full text-center p-6">
+						<td>Nothing to show here</td>
 					</tr>
-				))}
+				)}
 			</tbody>
 		</table>
 	)

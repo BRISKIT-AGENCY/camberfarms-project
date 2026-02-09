@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom'
 import axiosInstance from '../../api/axios'
 import OverlayWrapper from '../../components/OverlayWrapper'
 import { useGoBack } from '../../hooks/useGoBack'
-import type { FarmFundEnquiry } from './FarmFundTable'
+import type { FarmFundEnquiry } from '../../types/farm-fund'
 
 type ReplyType = {
 	adminReply: string
@@ -14,7 +14,7 @@ type ReplyType = {
 
 export default function ReplyFarmFundEnquiry() {
 	const goBack = useGoBack('/farm-fund-form')
-	const [adminReply, setAdminReply] = useState('')
+
 	const params = useParams()
 	const queryClient = useQueryClient()
 	// fetch farm-fund/id
@@ -23,9 +23,10 @@ export default function ReplyFarmFundEnquiry() {
 		isPending,
 		error,
 	} = useQuery({
-		queryKey: [params.id],
+		queryKey: ['farm-fund', params.enquiryId],
 		queryFn: async () => {
-			const res = await axiosInstance.get(`farm-fund/${params.id}`)
+			const res = await axiosInstance.get(`farm-fund/${params.enquiryId}`)
+			// console.log('farm fund: ', res.data.data)
 			return res.data.data as FarmFundEnquiry
 		},
 	})
@@ -33,15 +34,18 @@ export default function ReplyFarmFundEnquiry() {
 	const { mutate, isPending: addingReply } = useMutation({
 		mutationKey: ['affiliates', params.id],
 		mutationFn: async (data: ReplyType) =>
-			axiosInstance.patch(`farm-fund/${params.id}`, data),
+			axiosInstance.patch(`farm-fund/${params.enquiryId}`, data),
 		onSuccess: () => queryClient.invalidateQueries({ queryKey: [params.id] }),
 	})
 
+	const [adminReply, setAdminReply] = useState(enquiry?.adminReply)
+
 	function replyFarmFund() {
-		mutate({
-			adminReply,
-			status: 'read',
-		})
+		if (adminReply)
+			mutate({
+				adminReply,
+				status: 'read',
+			})
 	}
 
 	useEffect(() => {
@@ -115,6 +119,7 @@ export default function ReplyFarmFundEnquiry() {
 								/>
 							</label>
 							{/* message */}
+							{/* if already replied, make input readOnly */}
 							<label className="flex flex-col gap-1">
 								<span className="text-sm text-grey select-all">Message</span>
 								<textarea
@@ -122,8 +127,9 @@ export default function ReplyFarmFundEnquiry() {
 									id="message"
 									value={adminReply}
 									onChange={(e) => setAdminReply(e.target.value)}
+									readOnly={Boolean(enquiry.adminReply)}
 									placeholder="Type your reply message here"
-									className="w-full h-40 resize-none border border-grey px-4 p-2 rounded-lg"
+									className="w-full h-40 resize-none border border-grey px-4 p-2 rounded-lg read-only:bg-light-grey read-only:border-primary read-only:text-grey dark:read-only:bg-dark-grey dark:read-only:text-light-grey"
 								></textarea>
 							</label>
 						</fieldset>
@@ -158,7 +164,7 @@ export default function ReplyFarmFundEnquiry() {
 						<button
 							type="button"
 							onClick={replyFarmFund}
-							disabled={addingReply}
+							disabled={addingReply || Boolean(enquiry.adminReply)}
 							className="bg-primary text-white font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer capitalize disabled:opacity-60"
 						>
 							Send Message

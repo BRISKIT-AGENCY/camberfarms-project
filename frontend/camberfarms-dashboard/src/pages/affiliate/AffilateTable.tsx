@@ -4,52 +4,10 @@ import { MdOutlineRemoveRedEye } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 import axiosInstance from '../../api/axios'
 import { Table } from '../../components/Table'
-
-export type Farmer = {
-	name: string
-	email: string
-	country: string
-	status: 'rejected' | 'pending' | 'approved'
-	date: string
-	id: string | number
-	gender: 'male' | 'female'
-	state: string
-	region: string
-	phone: string
-	dob: string
-	validID?: string
-	action?: () => void
-	buyerName?: string
-	buyerCountry?: string
-	buyerProduct?: string
-	productVolume?: string
-	aboutInterest: string
-	aboutCommission: string
-	referralPlatform: string
-}
-
-export type Affiliate = {
-	aboutCommission: string
-	aboutInterest: string
-	buyerCountry: string
-	buyerProduct: string
-	city: string
-	country: string
-	createdAt: string
-	email: string
-	fullName: string
-	haveABuyer: 'yes' | 'no'
-	phone: string
-	productVolume: string
-	referralPlatform: string
-	referralPlatformOthers: string
-	status: 'rejected' | 'pending' | 'approved'
-	understandTerms: 'yes' | 'no'
-	_id: string
-}
+import type { Affiliate } from '../../types/affiliate'
 
 export default function AffilateTable() {
-	const { data, isPending } = useQuery({
+	const { data, isPending, isRefetching } = useQuery({
 		queryKey: ['affiliates'],
 		queryFn: async () => {
 			const res = await axiosInstance.get('affiliate')
@@ -60,7 +18,8 @@ export default function AffilateTable() {
 		},
 	})
 
-	if (isPending) return <div className="w-full text-center">Loading...</div>
+	if (isPending || isRefetching)
+		return <div className="w-full text-center">Loading...</div>
 
 	return (
 		<div className="w-full mb-10">
@@ -116,10 +75,7 @@ const affiliateColumns = [
 				to={`${affiliate._id}`}
 				className="text-[#0088FF] w-fit inline-flex mx-auto cursor-pointer"
 			>
-				<MdOutlineRemoveRedEye
-					size={20}
-					// onClick={() => viewInfo(affiliate)}
-				/>
+				<MdOutlineRemoveRedEye size={20} />
 			</Link>
 		),
 	},

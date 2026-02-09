@@ -5,23 +5,10 @@ import { RiReplyLine } from 'react-icons/ri'
 import { Link } from 'react-router-dom'
 import axiosInstance from '../../api/axios'
 import { Table } from '../../components/Table'
-
-export type FarmFundEnquiry = {
-	name: string
-	email: string
-	country: string
-	status: 'new' | 'pending' | 'replied'
-	createdAt: string
-	_id: string | number
-	residence: string
-	message?: string
-	phone: string
-	category: string
-	adminReply: string
-}
+import type { FarmFundEnquiry } from '../../types/farm-fund'
 
 export default function FarmFundTable() {
-	const { data, error, isPending } = useQuery({
+	const { data, error, isPending, isRefetching } = useQuery({
 		queryKey: ['farm-fund'],
 		queryFn: async () => {
 			const res = await axiosInstance.get('farm-fund')
@@ -32,11 +19,9 @@ export default function FarmFundTable() {
 		},
 	})
 
-	console.log('error: ', error)
-	console.log('isPending: ', isPending)
-
-	if (isPending) return <div>Loading...</div>
-	if (error) return <div className="px-8">Something went wrong...</div>
+	if (isPending || isRefetching) return <div>Loading...</div>
+	if (error)
+		return <div className="px-8">Something went wrong: {error.message}</div>
 
 	return (
 		<div className="w-full mb-10">

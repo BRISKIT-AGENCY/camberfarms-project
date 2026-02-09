@@ -1,62 +1,74 @@
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { formatDistanceToNow } from 'date-fns'
+import axiosInstance from '../../api/axios'
 import NotificationCard from '../../components/NotificationCard'
+import { categoryColor } from '../../helpers/getCategoryColor'
+import type { Notification } from '../../types/notification'
 
 export default function RecentActivities() {
+	const queryClient = useQueryClient()
+	const { data, isPending, error } = useQuery({
+		queryKey: ['recent-activity'],
+		queryFn: async () => {
+			const [a, e] = await Promise.all([
+				axiosInstance.get('africa/notifications', { params: { limit: 3 } }),
+				axiosInstance.get('export/notifications', { params: { limit: 3 } }),
+			])
+			return { africa: a.data, export: e.data } as {
+				africa: {
+					total: number
+					notifications: Notification[]
+				}
+				export: {
+					total: number
+					notifications: Notification[]
+				}
+			}
+		},
+		refetchOnWindowFocus: false,
+	})
+	// refetch activity notifications
+	async function refresh() {
+		await queryClient.invalidateQueries({ queryKey: ['recent-activity'] })
+	}
+
+	const notifications = data?.africa.notifications
+		? [...data.africa.notifications, ...data.export.notifications]
+		: []
+
 	return (
 		<div className="w-full py-4 px-6 lg:py-6 mb-6 shadow-2xs bg-white text-black rounded-xl space-y-6 dark:text-white dark:bg-black">
 			<h4 className="text-2xl font-semibold font-poppins capitalize py-2">
 				recent activities
 			</h4>
-			{notifications.map((item, index) => (
-				<NotificationCard
-					id={item.id}
-					key={index}
-					title={item.title}
-					desc={`by ${item.from} • ${formatDistanceToNow(item.time, { addSuffix: true })}`}
-					Icolor={categoryColor[item.category]}
-					iconName={item.category}
-					round="lg"
-				/>
-			))}
+			{isPending && !data && (
+				<div className="w-full text-center mt-10">Loading activitiess...</div>
+			)}
+			{error && (
+				<div className="w-full mt-10 text-center">
+					<p>Unable to get recent activities: {error?.message}</p>
+					<button
+						type="button"
+						onClick={async () => await refresh()}
+						className="w-fit mx-auto mt-4 py-2 px-6 rounded-full border capitalize cursor-pointer"
+					>
+						refresh
+					</button>
+				</div>
+			)}
+			{!error &&
+				notifications &&
+				notifications.map((item, index) => (
+					<NotificationCard
+						id={item._id}
+						key={index}
+						title={item.title}
+						desc={`by ${item.type === 'enquiry' ? 'Customer' : 'Admin User'} • ${formatDistanceToNow(item.createdAt, { addSuffix: true })}`}
+						Icolor={categoryColor[item.type]}
+						iconName={item.type}
+						round="lg"
+					/>
+				))}
 		</div>
 	)
 }
-
-const categoryColor: Record<string, string> = {
-	products: '#16A34A',
-	enquiries: '#D00000',
-	articles: '#CB30E0',
-	news: '#CB30E0',
-	blog: '#CB30E0',
-}
-
-const notifications = [
-	{
-		title: 'New product "Organic Tomato Seeds" added',
-		from: 'Admin User',
-		time: '2026-01-17T13:18:36Z',
-		category: 'products',
-		id: 1,
-	},
-	{
-		title: 'New enquiry from John Smith about fertilizers',
-		from: 'Customer',
-		time: '2026-01-17T13:18:36Z',
-		category: 'enquiries',
-		id: 2,
-	},
-	{
-		title: 'Published article "Sustainable Farming Practices"',
-		from: 'Admin User',
-		time: '2026-01-17T13:18:36Z',
-		category: 'blog',
-		id: 3,
-	},
-	{
-		title: 'New enquiry from John Smith about fertilizers',
-		from: 'Customer',
-		time: '2026-01-17T13:18:36Z',
-		category: 'enquiries',
-		id: 4,
-	},
-]
