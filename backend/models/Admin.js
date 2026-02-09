@@ -19,8 +19,12 @@ const adminSchema = new mongoose.Schema({
     default: ''    // optional default empty string
   },
   twoFactor: {
-    code: String,       // OTP code
-    expiresAt: Date     // Expiration timestamp
+    code: String,        // OTP code
+    expiresAt: Date,     // Expiration timestamp
+    verified: {
+      type: Boolean,
+      default: false
+    }
   },
   createdAt: {
     type: Date,
