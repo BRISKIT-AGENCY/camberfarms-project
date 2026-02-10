@@ -1,6 +1,7 @@
 import express from 'express'
 import Affiliate from '../models/Affiliate.js'
 import adminAuth from '../middleware/adminAuth.js'
+import Notification from '../models/Notification.js'
 
 const router = express.Router()
 

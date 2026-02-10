@@ -2786,7 +2786,7 @@ router.get('/track-visit/blogs/by-day', adminAuth, async (req, res) => {
     const dailyViews = await Visitor.aggregate([
       {
         $match: {
-          path: { $in: ['/blogs', '/blog'] }
+          path: { $regex: '^/blog' }
         }
       },
       {
@@ -2818,13 +2818,14 @@ router.get('/track-visit/blogs/by-day', adminAuth, async (req, res) => {
   }
 })
 
+
 //Weekly totals with comparison to previous weeks
 router.get('/track-visit/blogs/by-week', adminAuth, async (req, res) => {
   try {
     const weeklyRaw = await Visitor.aggregate([
       {
         $match: {
-          path: { $in: ['/blogs', '/blog'] }
+          path: { $regex: '^/blog' } // matches /blog, /blogs, /blog/slug
         }
       },
       {
@@ -2859,9 +2860,10 @@ router.get('/track-visit/blogs/by-week', adminAuth, async (req, res) => {
         year: current._id.year,
         week: current._id.week,
         totalViews: current.totalViews,
-        changeFromPreviousWeek: changePercentage !== null
-          ? Number(changePercentage.toFixed(2))
-          : null
+        changeFromPreviousWeek:
+          changePercentage !== null
+            ? Number(changePercentage.toFixed(2))
+            : null
       }
     })
 
@@ -2874,6 +2876,7 @@ router.get('/track-visit/blogs/by-week', adminAuth, async (req, res) => {
     res.status(500).json({ message: 'Failed to fetch weekly views' })
   }
 })
+
 
 
 

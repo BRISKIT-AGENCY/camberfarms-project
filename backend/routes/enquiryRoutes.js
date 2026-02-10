@@ -57,7 +57,7 @@ router.post('/enquiries', async (req, res) => {
     const notification = new Notification({
       title: `New ${sourceModel} enquiry received`,
       description: message,
-      sourceWebsite: enquiry.source, // africa or export
+      sourceWebsite,
       type: 'enquiry',
       link: `/admin/enquiries/${sourceModel}/${enquiry._id}`
     });
