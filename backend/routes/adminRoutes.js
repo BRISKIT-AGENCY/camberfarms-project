@@ -41,7 +41,7 @@ const router = express.Router()
 
 // Admin login route
 router.post('/login', async (req, res) => {
-  const { email,password } = req.body
+  const { email, password } = req.body
 
   const admin = await Admin.findOne({ email })
   if (!admin) {
@@ -2030,10 +2030,11 @@ router.patch('/products/:id', adminAuth, productUpload, async (req, res) => {
 
     const updatedProduct = await Product.findByIdAndUpdate(id, updateData, { new: true, runValidators: true })
 
-    // CREATE NOTIFICATION
+    const enTranslation = updatedProduct.translations.get('en')
+
     await Notification.create({
       title: 'Product updated',
-      description: `Product "${updatedProduct.translations.en.name}" was updated`,
+      description: `Product "${enTranslation?.name || 'Unnamed'}" was updated`,
       sourceWebsite: 'export',
       type: 'product',
       link: `/products/${updatedProduct._id}`
@@ -2506,20 +2507,21 @@ router.post('/enquiries/export', adminAuth, async (req, res) => {
 
 
 // GET /api/admin/enquiries/:type/:id
-router.get('/enquiries/:type/:id', adminAuth, async (req, res) => {
+router.get('/enquiries/:id', adminAuth, async (req, res) => {
   try {
     const { type, id } = req.params;
 
     type = type.toLowerCase();
+    const normalizedType = type.toLowerCase();
 
     // Validate type
     const validTypes = ['contact', 'feedback', 'message'];
-    if (!validTypes.includes(type)) {
+    if (!validTypes.includes(normalizedType)) {
       return res.status(400).json({ message: 'Invalid enquiry type' });
     }
 
     // Find enquiry by ID and type
-    const enquiry = await Enquiry.findOne({ _id: id, sourceModel: type }).lean();
+    const enquiry = await Enquiry.findOne({ _id: id, sourceModel: normalizedType }).lean();
 
     if (!enquiry) {
       return res.status(404).json({ message: 'Enquiry not found' });
@@ -2537,7 +2539,7 @@ router.get('/enquiries/:type/:id', adminAuth, async (req, res) => {
 });
 
 // POST reply to an enquiry
-router.post('/enquiries/:type/:id/reply', adminAuth, async (req, res) => {
+router.post('/enquiries/:id/reply', adminAuth, async (req, res) => {
   try {
     const { type, id } = req.params
     const { status, adminReply } = req.body
@@ -2733,85 +2735,95 @@ router.get('/enquiries/stats/response-time', adminAuth, async (req, res) => {
 // GET total views for home, blogs, and news
 router.get('/track-visit/stats', adminAuth, async (req, res) => {
   try {
-    const today = new Date()
-    const startOfToday = new Date(today.setHours(0, 0, 0, 0))
-    const startOfYesterday = new Date(startOfToday)
-    startOfYesterday.setDate(startOfYesterday.getDate() - 1)
+    const now = new Date()
 
-    async function getStats(matchCondition) {
-      // total traffic
-      const totalTraffic = await Visitor.countDocuments(matchCondition)
+    // Start of this week (Monday)
+    const startOfThisWeek = new Date(now)
+    const day = startOfThisWeek.getDay() || 7
+    startOfThisWeek.setDate(startOfThisWeek.getDate() - day + 1)
+    startOfThisWeek.setHours(0, 0, 0, 0)
 
-      // daily traffic
-      const dailyRaw = await Visitor.aggregate([
-        { $match: matchCondition },
-        {
-          $group: {
-            _id: {
-              year: { $year: "$createdAt" },
-              month: { $month: "$createdAt" },
-              day: { $dayOfMonth: "$createdAt" }
-            },
-            traffic: { $sum: 1 }
-          }
-        },
-        {
-          $sort: {
-            "_id.year": 1,
-            "_id.month": 1,
-            "_id.day": 1
-          }
-        }
-      ])
+    // Start of last week
+    const startOfLastWeek = new Date(startOfThisWeek)
+    startOfLastWeek.setDate(startOfLastWeek.getDate() - 7)
 
-      const dailyTraffic = dailyRaw.map(d => ({
-        day: new Date(d._id.year, d._id.month - 1, d._id.day),
-        traffic: d.traffic
-      }))
+    // End of last week
+    const endOfLastWeek = new Date(startOfThisWeek)
 
-      // today traffic
-      const todayTraffic = await Visitor.countDocuments({
-        ...matchCondition,
-        createdAt: { $gte: startOfToday }
-      })
+    // ----------------------------
+    // CURRENT WEEK TOTAL
+    // ----------------------------
+    const currentWeekTotal = await Visitor.countDocuments({
+      createdAt: { $gte: startOfThisWeek }
+    })
 
-      // yesterday traffic
-      const yesterdayTraffic = await Visitor.countDocuments({
-        ...matchCondition,
-        createdAt: {
-          $gte: startOfYesterday,
-          $lt: startOfToday
-        }
-      })
-
-      let percentageIncrease = 0
-      if (yesterdayTraffic > 0) {
-        percentageIncrease =
-          ((todayTraffic - yesterdayTraffic) / yesterdayTraffic) * 100
+    // ----------------------------
+    // LAST WEEK TOTAL
+    // ----------------------------
+    const lastWeekTotal = await Visitor.countDocuments({
+      createdAt: {
+        $gte: startOfLastWeek,
+        $lt: endOfLastWeek
       }
+    })
 
-      return {
-        totalTraffic,
-        percentageIncrease: Number(percentageIncrease.toFixed(2)),
-        dailyTraffic
-      }
+    // ----------------------------
+    // PERCENTAGE CHANGE
+    // ----------------------------
+    let percentageIncrease = 0
+
+    if (lastWeekTotal > 0) {
+      percentageIncrease =
+        ((currentWeekTotal - lastWeekTotal) / lastWeekTotal) * 100
     }
 
-    const [home, blogs, news] = await Promise.all([
-      getStats({ path: '/' }),
-      getStats({ path: { $in: ['/blog', '/blogs'] } }),
-      getStats({ path: '/news' })
+    percentageIncrease = Number(percentageIncrease.toFixed(2))
+
+    // ----------------------------
+    // DAILY TRAFFIC (CURRENT WEEK)
+    // ----------------------------
+    const dailyRaw = await Visitor.aggregate([
+      {
+        $match: {
+          createdAt: { $gte: startOfThisWeek }
+        }
+      },
+      {
+        $group: {
+          _id: {
+            year: { $year: "$createdAt" },
+            month: { $month: "$createdAt" },
+            day: { $dayOfMonth: "$createdAt" }
+          },
+          traffic: { $sum: 1 }
+        }
+      },
+      {
+        $sort: {
+          "_id.year": 1,
+          "_id.month": 1,
+          "_id.day": 1
+        }
+      }
     ])
+
+    const dailyTraffic = dailyRaw.map(item => ({
+      day: `${item._id.year}-${item._id.month}-${item._id.day}`,
+      traffic: item.traffic
+    }))
 
     res.status(200).json({
       success: true,
-      views: { home, blogs, news }
+      totalTraffic: currentWeekTotal,
+      percentageIncrease,
+      dailyTraffic
     })
   } catch (error) {
     console.error(error)
     res.status(500).json({ message: 'Failed to fetch stats' })
   }
 })
+
 
 
 // GET overall stats
