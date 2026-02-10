@@ -2507,7 +2507,7 @@ router.post('/enquiries/export', adminAuth, async (req, res) => {
 
 
 // GET /api/admin/enquiries/:type/:id
-router.get('/enquiries/:id', adminAuth, async (req, res) => {
+router.get('/enquiries/:type/:id', adminAuth, async (req, res) => {
   try {
     const { type, id } = req.params;
 
@@ -2539,7 +2539,7 @@ router.get('/enquiries/:id', adminAuth, async (req, res) => {
 });
 
 // POST reply to an enquiry
-router.post('/enquiries/:id/reply', adminAuth, async (req, res) => {
+router.post('/enquiries/:type/:id/reply', adminAuth, async (req, res) => {
   try {
     const { type, id } = req.params
     const { status, adminReply } = req.body
