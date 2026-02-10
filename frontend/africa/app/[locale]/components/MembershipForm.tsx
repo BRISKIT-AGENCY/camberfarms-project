@@ -1,11 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import Image from 'next/image'
 import axios from 'axios'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useTranslations } from 'next-intl'
+
 type MembershipFormData = {
   name: string
   email: string
@@ -29,12 +30,17 @@ const initialValues: MembershipFormData = {
   state: '',
   region: '',
 }
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL
+
 const MembershipForm = () => {
   const t = useTranslations('Membership')
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
 
   const [files, setFiles] = useState<File[]>([])
   const [submitMessage, setSubmitMessage] = useState<string | null>(null)
+  const [submitSuccess, setSubmitSuccess] = useState(false)
+
 
   const validationSchema = Yup.object({
     name: Yup.string().required(t('errors.name')),
@@ -52,6 +58,9 @@ const MembershipForm = () => {
     initialValues,
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
+      setSubmitMessage(null)
+      setSubmitSuccess(false)
+
       if (files.length === 0) {
         setSubmitMessage(t('errors.fileRequired'))
         return
@@ -72,6 +81,7 @@ const MembershipForm = () => {
 
         if (response.data.success) {
           setSubmitMessage(t('success'))
+          setSubmitSuccess(true)
           resetForm()
           setFiles([])
         } else {
@@ -80,15 +90,20 @@ const MembershipForm = () => {
       } catch {
         setSubmitMessage(t('errors.generic'))
       }
-    },
+    }
+    ,
   })
 
   const handleFilesSelect = (selectedFiles: FileList) => {
     setFiles(prev => [...prev, ...Array.from(selectedFiles)])
   }
 
+  const removeFile = (index: number) => {
+    setFiles(prev => prev.filter((_, i) => i !== index))
+  }
+
   return (
-    <div className="h-fit py-24.5 px-3  lg:py-38 lg:px-25 bg-[#F9FAFB]">
+    <div className="h-fit py-24.5 px-3 lg:py-38 lg:px-25 bg-[#F9FAFB]">
       <h1 className="md:text-[46px] text-[24px] font-bold">
         {t('title')}
       </h1>
@@ -118,16 +133,7 @@ const MembershipForm = () => {
               type={field === 'dateOfBirth' ? 'date' : 'text'}
               placeholder={field !== 'dateOfBirth' ? t(`fields.${field}`) : ''}
               {...formik.getFieldProps(field)}
-              className="
-        w-full 
-        max-w-full 
-        box-border
-        px-3 py-2 
-        border border-[#808080] 
-        rounded-[100px]
-        appearance-none
-        [-webkit-appearance:none]
-      "
+              className="w-full max-w-full box-border px-3 py-2 border border-[#808080] rounded-[100px]"
             />
 
             {formik.touched[field] && formik.errors[field] && (
@@ -138,22 +144,24 @@ const MembershipForm = () => {
           </div>
         ))}
 
-
         {/* FILE UPLOAD */}
         <div className="mt-8 p-4 bg-white rounded-xl">
           <p className="text-[#808080]">{t('upload.label')}</p>
 
-          <label
+          <div
+            onClick={() => fileInputRef.current?.click()}
             onDragOver={e => e.preventDefault()}
             onDrop={e => {
               e.preventDefault()
               handleFilesSelect(e.dataTransfer.files)
             }}
-            className="mt-3 h-40 flex flex-col items-center justify-center bg-[#FAFAFA] rounded-xl cursor-pointer"
+            className="mt-3 h-40 flex flex-col items-center justify-center bg-[#FAFAFA] rounded-xl cursor-pointer border-2 border-dashed border-gray-300"
           >
             <input
+              ref={fileInputRef}
               type="file"
               multiple
+              accept="image/*"
               hidden
               onChange={e =>
                 e.target.files && handleFilesSelect(e.target.files)
@@ -167,16 +175,43 @@ const MembershipForm = () => {
             <p className="text-[#ADADAD] text-sm">
               {t('upload.types')}
             </p>
-          </label>
+          </div>
+
+          {/* FILE LIST */}
+          {files.length > 0 && (
+            <div className="mt-4 space-y-2">
+              {files.map((file, i) => (
+                <div
+                  key={i}
+                  className="flex items-center justify-between bg-gray-100 px-3 py-2 rounded-lg"
+                >
+                  <span className="text-sm text-gray-700">{file.name}</span>
+
+                  <button
+                    type="button"
+                    onClick={() => removeFile(i)}
+                    className="text-red-500 text-sm font-medium cursor-pointer"
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
 
           {submitMessage && (
-            <p className="mt-3 text-sm text-red-600">
+            <p
+              className={`mt-3 text-sm ${submitSuccess ? 'text-green-600' : 'text-red-600'
+                }`}
+            >
               {submitMessage}
             </p>
           )}
+
         </div>
 
-        <div className='flex justify-end'>
+        <div className="flex justify-end">
           <button
             type="submit"
             className="mt-10 px-6 py-3 bg-[#1AD329] text-white rounded-[100px] cursor-pointer"
