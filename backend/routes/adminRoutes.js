@@ -2733,27 +2733,86 @@ router.get('/enquiries/stats/response-time', adminAuth, async (req, res) => {
 // GET total views for home, blogs, and news
 router.get('/track-visit/stats', adminAuth, async (req, res) => {
   try {
-    const homeVisits = await Visitor.countDocuments({ path: '/' })
+    const today = new Date()
+    const startOfToday = new Date(today.setHours(0, 0, 0, 0))
+    const startOfYesterday = new Date(startOfToday)
+    startOfYesterday.setDate(startOfYesterday.getDate() - 1)
 
-    const blogVisits = await Visitor.countDocuments({
-      path: { $in: ['/blog', '/blogs'] }
-    })
+    async function getStats(matchCondition) {
+      // total traffic
+      const totalTraffic = await Visitor.countDocuments(matchCondition)
 
-    const newsVisits = await Visitor.countDocuments({ path: '/news' })
+      // daily traffic
+      const dailyRaw = await Visitor.aggregate([
+        { $match: matchCondition },
+        {
+          $group: {
+            _id: {
+              year: { $year: "$createdAt" },
+              month: { $month: "$createdAt" },
+              day: { $dayOfMonth: "$createdAt" }
+            },
+            traffic: { $sum: 1 }
+          }
+        },
+        {
+          $sort: {
+            "_id.year": 1,
+            "_id.month": 1,
+            "_id.day": 1
+          }
+        }
+      ])
+
+      const dailyTraffic = dailyRaw.map(d => ({
+        day: new Date(d._id.year, d._id.month - 1, d._id.day),
+        traffic: d.traffic
+      }))
+
+      // today traffic
+      const todayTraffic = await Visitor.countDocuments({
+        ...matchCondition,
+        createdAt: { $gte: startOfToday }
+      })
+
+      // yesterday traffic
+      const yesterdayTraffic = await Visitor.countDocuments({
+        ...matchCondition,
+        createdAt: {
+          $gte: startOfYesterday,
+          $lt: startOfToday
+        }
+      })
+
+      let percentageIncrease = 0
+      if (yesterdayTraffic > 0) {
+        percentageIncrease =
+          ((todayTraffic - yesterdayTraffic) / yesterdayTraffic) * 100
+      }
+
+      return {
+        totalTraffic,
+        percentageIncrease: Number(percentageIncrease.toFixed(2)),
+        dailyTraffic
+      }
+    }
+
+    const [home, blogs, news] = await Promise.all([
+      getStats({ path: '/' }),
+      getStats({ path: { $in: ['/blog', '/blogs'] } }),
+      getStats({ path: '/news' })
+    ])
 
     res.status(200).json({
       success: true,
-      views: {
-        home: homeVisits,
-        blogs: blogVisits,
-        news: newsVisits
-      }
+      views: { home, blogs, news }
     })
   } catch (error) {
     console.error(error)
     res.status(500).json({ message: 'Failed to fetch stats' })
   }
 })
+
 
 // GET overall stats
 router.post('/track-visit', async (req, res) => {
