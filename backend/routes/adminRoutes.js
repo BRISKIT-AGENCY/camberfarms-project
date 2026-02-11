@@ -96,9 +96,14 @@ router.post('/reset-password/request-otp', adminAuth, async (req, res) => {
 
     res.json({ message: 'OTP sent to your email' })
   } catch (err) {
-    console.error(err)
-    res.status(500).json({ message: 'Failed to send OTP' })
+    console.error('OTP ERROR:', err);
+
+    res.status(500).json({
+      message: 'Failed to send OTP',
+      error: err.message
+    });
   }
+
 })
 
 router.post('/reset-password/verify-otp', adminAuth, async (req, res) => {
@@ -172,9 +177,14 @@ router.post('/forgot-password/request-otp', async (req, res) => {
 
     res.json({ message: 'OTP sent to email' });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Failed to send OTP' });
+    console.error('OTP ERROR:', err);
+
+    res.status(500).json({
+      message: 'Failed to send OTP',
+      error: err.message
+    });
   }
+
 });
 
 router.post('/forgot-password/verify-otp', async (req, res) => {
@@ -2544,7 +2554,7 @@ router.post('/enquiries/:type/:id/reply', adminAuth, async (req, res) => {
     const { type, id } = req.params
     const { status, adminReply } = req.body
 
-    type = type.toLowerCase();
+    const normalizedType = type.toLowerCase();
 
     // Validate status
     if (!status || !['pending', 'read'].includes(status)) {
@@ -2553,7 +2563,7 @@ router.post('/enquiries/:type/:id/reply', adminAuth, async (req, res) => {
 
     // Validate type
     const validTypes = ['contact', 'feedback', 'message']
-    if (!validTypes.includes(type)) {
+    if (!validTypes.includes(normalizedType)) {
       return res.status(400).json({ message: 'Invalid enquiry type' })
     }
 
