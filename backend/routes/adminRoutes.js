@@ -34,6 +34,7 @@ import { SUPPORTED_LANGUAGES } from '../utils/languages.js'
 import { translateVariants, translateTexts } from '../utils/translateProduct.js'
 import Enquiry from '../models/Enquiry.js'
 import Notification from '../models/Notification.js'
+import { sendEmail } from '../utils/email.js'
 
 dotenv.config();
 
@@ -2488,121 +2489,6 @@ router.get('/enquiries', adminAuth, async (req, res) => {
   }
 });
 
-
-// GET /api/admin/enquiries/export to export enquiries
-router.post('/enquiries/export', adminAuth, async (req, res) => {
-  try {
-    // Default format = pdf
-    const { format = 'pdf', limit = null } = req.body
-
-    const enquiries = await getEnquiries(
-      limit ? parseInt(limit) : null
-    )
-
-    // Default behaviour → PDF
-    if (format === 'pdf') {
-      return exportToPDF(enquiries, res)
-    }
-
-    res.status(400).json({
-      message: 'Unsupported export format'
-    })
-  } catch (err) {
-    console.error('Export error:', err)
-    res.status(500).json({
-      message: 'Export failed'
-    })
-  }
-})
-
-
-// GET /api/admin/enquiries/:type/:id
-router.get('/enquiries/:type/:id', adminAuth, async (req, res) => {
-  try {
-    const { type, id } = req.params;
-
-    type = type.toLowerCase();
-    const normalizedType = type.toLowerCase();
-
-    // Validate type
-    const validTypes = ['contact', 'feedback', 'message'];
-    if (!validTypes.includes(normalizedType)) {
-      return res.status(400).json({ message: 'Invalid enquiry type' });
-    }
-
-    // Find enquiry by ID and type
-    const enquiry = await Enquiry.findOne({ _id: id, sourceModel: normalizedType }).lean();
-
-    if (!enquiry) {
-      return res.status(404).json({ message: 'Enquiry not found' });
-    }
-
-    res.status(200).json({ enquiry });
-  } catch (error) {
-    console.error('Fetch single enquiry error:', error);
-    // Handle invalid ObjectId
-    if (error.name === 'CastError') {
-      return res.status(400).json({ message: 'Invalid enquiry ID' });
-    }
-    res.status(500).json({ message: 'Failed to fetch enquiry', error: error.message });
-  }
-});
-
-// POST reply to an enquiry
-router.post('/enquiries/:type/:id/reply', adminAuth, async (req, res) => {
-  try {
-    const { type, id } = req.params
-    const { status, adminReply } = req.body
-
-    const normalizedType = type.toLowerCase();
-
-    // Validate status
-    if (!status || !['pending', 'read'].includes(status)) {
-      return res.status(400).json({ message: 'Invalid status' })
-    }
-
-    // Validate type
-    const validTypes = ['contact', 'feedback', 'message']
-    if (!validTypes.includes(normalizedType)) {
-      return res.status(400).json({ message: 'Invalid enquiry type' })
-    }
-
-    // Update enquiry
-    const updated = await Enquiry.findOneAndUpdate(
-      { _id: id, sourceModel: type },
-      { status, adminReply },
-      { new: true }
-    )
-
-    if (!updated) {
-      return res.status(404).json({ message: 'Enquiry not found' })
-    }
-
-    // 🔔 Create notification
-    const notification = new Notification({
-      title: `Enquiry replied: ${type}`,
-      description: adminReply || 'No reply message provided',
-      sourceWebsite: updated.source, // africa or export
-      type: 'enquiry',
-      link: `/admin/enquiries/${type}/${id}` // adjust link as needed
-    })
-
-    await notification.save()
-
-    res.status(200).json({
-      message: 'Enquiry updated and notification created successfully',
-      enquiry: updated,
-      notification
-    })
-  } catch (error) {
-    console.error('Update enquiry error:', error)
-    if (error.name === 'CastError') {
-      return res.status(400).json({ message: 'Invalid enquiry ID' })
-    }
-    res.status(500).json({ message: 'Failed to update enquiry', error: error.message })
-  }
-})
-
 //Total enquiries + enquiries submitted by month
 router.get('/enquiries/stats/by-month', adminAuth, async (req, res) => {
   try {
@@ -2740,6 +2626,122 @@ router.get('/enquiries/stats/response-time', adminAuth, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
+// GET /api/admin/enquiries/export to export enquiries
+router.post('/enquiries/export', adminAuth, async (req, res) => {
+  try {
+    // Default format = pdf
+    const { format = 'pdf', limit = null } = req.body
+
+    const enquiries = await getEnquiries(
+      limit ? parseInt(limit) : null
+    )
+
+    // Default behaviour → PDF
+    if (format === 'pdf') {
+      return exportToPDF(enquiries, res)
+    }
+
+    res.status(400).json({
+      message: 'Unsupported export format'
+    })
+  } catch (err) {
+    console.error('Export error:', err)
+    res.status(500).json({
+      message: 'Export failed'
+    })
+  }
+})
+
+
+// GET /api/admin/enquiries/:type/:id
+router.get('/enquiries/:type/:id', adminAuth, async (req, res) => {
+  try {
+    const { type, id } = req.params;
+
+    type = type.toLowerCase();
+    const normalizedType = type.toLowerCase();
+
+    // Validate type
+    const validTypes = ['contact', 'feedback', 'message'];
+    if (!validTypes.includes(normalizedType)) {
+      return res.status(400).json({ message: 'Invalid enquiry type' });
+    }
+
+    // Find enquiry by ID and type
+    const enquiry = await Enquiry.findOne({ _id: id, sourceModel: normalizedType }).lean();
+
+    if (!enquiry) {
+      return res.status(404).json({ message: 'Enquiry not found' });
+    }
+
+    res.status(200).json({ enquiry });
+  } catch (error) {
+    console.error('Fetch single enquiry error:', error);
+    // Handle invalid ObjectId
+    if (error.name === 'CastError') {
+      return res.status(400).json({ message: 'Invalid enquiry ID' });
+    }
+    res.status(500).json({ message: 'Failed to fetch enquiry', error: error.message });
+  }
+});
+
+// POST reply to an enquiry
+router.post('/enquiries/:type/:id/reply', adminAuth, async (req, res) => {
+  try {
+    const { type, id } = req.params
+    const { status, adminReply } = req.body
+
+    const normalizedType = type.toLowerCase();
+
+    // Validate status
+    if (!status || !['pending', 'read'].includes(status)) {
+      return res.status(400).json({ message: 'Invalid status' })
+    }
+
+    // Validate type
+    const validTypes = ['contact', 'feedback', 'message']
+    if (!validTypes.includes(normalizedType)) {
+      return res.status(400).json({ message: 'Invalid enquiry type' })
+    }
+
+    // Update enquiry
+    const updated = await Enquiry.findOneAndUpdate(
+      { _id: id, sourceModel: normalizedType },
+      { status, adminReply },
+      { new: true }
+    )
+
+    if (!updated) {
+      return res.status(404).json({ message: 'Enquiry not found' })
+    }
+
+    // 🔔 Create notification
+    const notification = new Notification({
+      title: `Enquiry replied: ${normalizedType}`,
+      description: adminReply || 'No reply message provided',
+      sourceWebsite: updated.source, // africa or export
+      type: 'enquiry',
+      link: `/admin/enquiries/${normalizedType}/${id}` // adjust link as needed
+    })
+
+    await notification.save()
+
+    res.status(200).json({
+      message: 'Enquiry updated and notification created successfully',
+      enquiry: updated,
+      notification
+    })
+  } catch (error) {
+    console.error('Update enquiry error:', error)
+    if (error.name === 'CastError') {
+      return res.status(400).json({ message: 'Invalid enquiry ID' })
+    }
+    res.status(500).json({ message: 'Failed to update enquiry', error: error.message })
+  }
+})
+
+
 
 
 // GET total views for home, blogs, and news
