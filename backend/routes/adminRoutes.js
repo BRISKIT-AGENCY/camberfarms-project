@@ -2658,8 +2658,6 @@ router.post('/enquiries/export', adminAuth, async (req, res) => {
 router.get('/enquiries/:type/:id', adminAuth, async (req, res) => {
   try {
     const { type, id } = req.params;
-
-    type = type.toLowerCase();
     const normalizedType = type.toLowerCase();
 
     // Validate type
