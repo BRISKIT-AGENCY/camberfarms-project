@@ -23,6 +23,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI
 
+
 // Middleware
 const allowedOrigins = [
   "https://africa-neon.vercel.app",
@@ -51,7 +52,9 @@ app.use('/uploads', express.static('uploads'));
 
 const connectDB= async()=>{
     try {
-        mongoose.connection.on('connected', ()=> {console.log('Database connected');}
+        mongoose.connection.on('connected', ()=> {
+          console.log('Database connected');
+        }
         )
         await mongoose.connect(`${MONGO_URI}`)
 
