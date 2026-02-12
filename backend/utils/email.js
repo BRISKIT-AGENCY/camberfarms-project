@@ -1,25 +1,26 @@
 import dotenv from 'dotenv'
-import nodemailer from 'nodemailer'
-
+import { Resend } from 'resend'
 
 dotenv.config()
 
-export const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: Number(process.env.SMTP_PORT),
-  secure: false,
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS
-  }
-})
-
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function sendEmail(to, subject, text) {
-  await transporter.sendMail({
-    from: `"Admin Panel" <${process.env.SMTP_USER}>`,
-    to,
-    subject,
-    text
-  })
+  try {
+    // For testing, force sending to your verified email
+    const testRecipient = 'axleositech@gmail.com'
+
+    const response = await resend.emails.send({
+      from: 'Camber Farms <onboarding@resend.dev>', // fine for testing
+      to: testRecipient, // must be your verified email
+      subject,
+      html: `<p>${text}</p>`,
+    })
+
+    console.log('Email sent via Resend:', response)
+    return response
+  } catch (err) {
+    console.error('Resend email error:', err)
+    throw err
+  }
 }
