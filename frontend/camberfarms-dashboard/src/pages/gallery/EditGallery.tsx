@@ -35,7 +35,7 @@ export default function EditGallery() {
 					<Dropzone
 						styleVariant="h-105 has-[img]:rounded-lg"
 						setState={setImage}
-						image={imageData.image}
+						image={imageData.images[0].url}
 					/>
 				</div>
 				<div className="w-full flex gap-6 items-center justify-end py-6 mt-8 border-t border-grey/50">

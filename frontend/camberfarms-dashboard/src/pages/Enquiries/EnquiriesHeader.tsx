@@ -4,9 +4,11 @@ import { IoMdRefresh } from 'react-icons/io'
 import axiosInstance from '../../api/axios'
 import Searchbar from '../../components/Searchbar'
 import { exportToPDF } from '../../helpers/ExportToPDF'
+import { useRefetchQueries } from '../../hooks/useRefetchQueries'
 import EnquiriesStats from './EnquiriesStats'
 
 export default function EnquiriesHeader() {
+	const refreshEnquiries = useRefetchQueries('enquiries')
 	const { isPending, mutate } = useMutation({
 		mutationKey: ['enquiries'],
 		mutationFn: async () => {
@@ -39,7 +41,7 @@ export default function EnquiriesHeader() {
 				{/* action buttons */}
 				<div className="w-fit flex gap-6 items-center justify-end">
 					<button
-						onClick={() => window.location.reload()}
+						onClick={refreshEnquiries}
 						type="button"
 						className="bg-transparent text-secondary border-2 border-secondary font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer flex items-center gap-2"
 					>

@@ -8,4 +8,5 @@ export const categoryColor: Record<string, string> = {
 	blog: '#CB30E0',
 	exportBlog: '#CB30E0',
 	africaBlog: '#CB30E0',
+	membership: '#16A34A',
 }

@@ -12,9 +12,15 @@ import Topbar from './components/Topbar'
 import { useAuth } from './hooks/useAuth'
 import Login from './pages/Login'
 import NotFound from './pages/NotFound'
-const ForgotPassword = lazy(() => import('./pages/account/ForgotPassword'))
+const ForgotPassword = lazy(
+	() => import('./pages/account/forgotPassword/ForgotPassword'),
+)
+const VerifyOTP = lazy(() => import('./pages/account/forgotPassword/VerifyOTP'))
+
 const PasswordSuccess = lazy(() => import('./pages/account/PasswordSuccess'))
-const ResetPassword = lazy(() => import('./pages/account/ResetPassword'))
+const ResetPassword = lazy(
+	() => import('./pages/account/changePassword/ResetPassword'),
+)
 const Theme = lazy(() => import('./pages/account/Theme'))
 const AffiliateMembership = lazy(
 	() => import('./pages/affiliate/AffiliateMembership'),
@@ -58,6 +64,8 @@ const ProductsPage = lazy(() => import('./pages/products/ProductsPage'))
 const AccountPage = lazy(() => import('./pages/account/AccountPage'))
 
 // route validation
+import VerifyOTPUser from './pages/account/changePassword/VerifyOTPUser'
+import CreateNewPassword from './pages/account/forgotPassword/CreateNewPassword'
 import LoginRoute from './utils/LoginRoute'
 import ProtectedRoute from './utils/ProtectedRoute'
 
@@ -72,7 +80,7 @@ export default function App() {
 						<section className="hidden w-full min-h-screen sm:grid grid-cols-[75px_auto] lg:grid-cols-[250px_auto] bg-light-grey dark:bg-dark-grey text-foreground dark:text-background">
 							<Sidebar />
 							<main className="w-full space-y-6 overflow-y-auto dark:bg-dark-grey">
-								<Topbar name={user?.username} />
+								<Topbar name={user?.email} />
 								<Routes>
 									<Route element={<ProtectedRoute />}>
 										{/* home */}
@@ -97,7 +105,10 @@ export default function App() {
 										{/* blog */}
 										<Route path="blog" element={<BlogPage />}>
 											<Route path="new" element={<AddBlog />} />
-											<Route path="edit/:blogId" element={<EditBlog />} />
+											<Route
+												path="edit/:siteId/:blogId"
+												element={<EditBlog />}
+											/>
 											{/* if user goes to blog/[id] redirect back to blog */}
 											<Route path=":id" element={<Navigate to={'/blog'} />} />
 										</Route>
@@ -117,9 +128,12 @@ export default function App() {
 										</Route>
 										{/* Enquiries */}
 										<Route path="enquiries" element={<EnquiriesPage />}>
-											<Route path=":enquiryId" element={<ViewEnquiry />} />
 											<Route
-												path="reply/:enquiryId"
+												path=":type/:enquiryId"
+												element={<ViewEnquiry />}
+											/>
+											<Route
+												path="reply/:type/:enquiryId"
 												element={<ReplyEnquiry />}
 											/>
 										</Route>
@@ -141,21 +155,31 @@ export default function App() {
 										{/* account */}
 										<Route path="account" element={<AccountPage />}>
 											<Route path="theme" element={<Theme />} />
-											<Route path="iforgot" element={<ForgotPassword />} />
 											<Route
-												path="reset-password"
-												element={<ResetPassword />}
+												path="user/verification"
+												element={<VerifyOTPUser />}
 											/>
+
 											<Route
-												path="reset-success"
-												element={<PasswordSuccess />}
+												path="user/reset-password"
+												element={<ResetPassword />}
 											/>
 										</Route>
 									</Route>
 									{/* login */}
 									<Route element={<LoginRoute />}>
 										<Route path="login" element={<Login />} />
+										<Route path="iforgot" element={<ForgotPassword />} />
 									</Route>
+									<Route path="account/verification" element={<VerifyOTP />} />
+									<Route
+										path="/account/create-password"
+										element={<CreateNewPassword />}
+									/>
+									<Route
+										path="account/reset-success"
+										element={<PasswordSuccess />}
+									/>
 									{/* 404 */}
 									<Route path="*" element={<NotFound />} />
 								</Routes>

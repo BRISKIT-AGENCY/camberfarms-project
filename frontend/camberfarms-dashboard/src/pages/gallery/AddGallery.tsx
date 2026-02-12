@@ -1,29 +1,40 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
+import toast from 'react-hot-toast'
 import { IoClose } from 'react-icons/io5'
+import { useNavigate } from 'react-router-dom'
 import axiosInstance from '../../api/axios'
 import { Dropzone } from '../../components/Dropzone'
 import OverlayWrapper from '../../components/OverlayWrapper'
 import { useGoBack } from '../../hooks/useGoBack'
 
-type ImageUpload = File[] | File | null
+type ImageUpload = File[] | null
 // TODO make this work
 export default function AddGallery() {
 	const queryClient = useQueryClient()
+	const navigate = useNavigate()
 	const goBack = useGoBack('/gallery')
 	const [images, setImages] = useState<ImageUpload>(null)
-	const { mutate } = useMutation({
+	const { mutate, isPending } = useMutation({
 		mutationKey: ['galleries'],
-		mutationFn: async (data: ImageUpload) =>
-			axiosInstance.post('gallery', data),
-		onSuccess: () => queryClient.invalidateQueries({ queryKey: ['galleries'] }),
+		mutationFn: async (data: FormData) => axiosInstance.post('gallery', data),
+		onSuccess: () => {
+			toast.success('gallery upload successful')
+			queryClient.invalidateQueries({ queryKey: ['galleries'] })
+			navigate('/gallery')
+		},
 	})
 
 	async function handleSubmit(images: ImageUpload) {
 		const formData = new FormData()
-		formData.append('images', JSON.stringify(images))
+		// formData.append('images', JSON.stringify(images))
+		if (images && typeof images === 'object') {
+			images.forEach((file) => {
+				formData.append('images', file)
+			})
+		}
 		// console.log('mutate images: ', images)
-		mutate(images)
+		mutate(formData)
 	}
 
 	return (
@@ -48,14 +59,15 @@ export default function AddGallery() {
 				<div className="w-full flex gap-6 items-center justify-end py-6 mt-8 border-t border-grey/50">
 					<button
 						type="button"
+						disabled={isPending}
 						onClick={() => handleSubmit(images)}
-						className="bg-transparent text-secondary border-2 border-secondary font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer"
+						className="bg-transparent text-secondary border-2 border-secondary font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer disabled:opacity-50"
 					>
 						Upload to Export
 					</button>
-					<button className="bg-primary text-white font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer">
+					{/* <button className="bg-primary text-white font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer">
 						Upload to Africa
-					</button>
+					</button> */}
 				</div>
 			</section>
 		</OverlayWrapper>

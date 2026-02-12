@@ -1,21 +1,41 @@
+import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { IoClose } from 'react-icons/io5'
-import { Link, useLocation, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
+import axiosInstance from '../../api/axios'
 import OverlayWrapper from '../../components/OverlayWrapper'
 import { useGoBack } from '../../hooks/useGoBack'
-import type { Enquiry } from './EnquiriesTable'
+import type { Enquiry } from '../../types/enquiry'
 
 export default function ViewEnquiry() {
-	const goBack = useGoBack('/affiliate')
-	const location = useLocation()
-	const enquiry: Enquiry | null = location.state?.enquiry
+	const goBack = useGoBack('/enquiries')
 	const params = useParams()
+	const { data, isPending, isRefetching, error } = useQuery({
+		queryKey: ['enquiries', `${params.enquiryId}`],
+		queryFn: async () => {
+			const res = await axiosInstance.get(
+				`enquiries/${params.type}/${params.enquiryId}`,
+			)
+			return res.data as {
+				enquiry: Enquiry
+			}
+		},
+		refetchOnMount: false,
+		refetchOnWindowFocus: false,
+	})
+
+	const enquiry = data?.enquiry
 
 	useEffect(() => {
-		if (!params?.enquiryId) {
+		if (!params.type && !params.enquiryId) {
 			setTimeout(goBack, 1000)
 		}
 	}, [params, goBack])
+
+	if (isPending || isRefetching) return <div>Loading...</div>
+
+	if (error)
+		return <div className="px-8">Something went wrong: {error.message}</div>
 
 	return (
 		<OverlayWrapper>
@@ -33,7 +53,7 @@ export default function ViewEnquiry() {
 					<h6 className="text-black dark:text-white font-semibold mb-6">
 						Customer Information
 					</h6>
-					<div className="grid grid-cols-2 items-start gap-6 w-full h-full">
+					<div className="grid grid-cols-2 items-start gap-4 w-full h-full">
 						<label className="flex flex-col gap-1">
 							{/* name */}
 							<span className="text-sm text-grey">Name</span>
@@ -53,7 +73,7 @@ export default function ViewEnquiry() {
 								type="text"
 								value={enquiry?.email}
 								readOnly
-								className="text-black dark:text-white text-base w-fit select-all outline-0 border-0"
+								className="text-black dark:text-white text-base pr-4 select-all outline-0 border-0"
 							/>
 						</label>
 						{/* phone number */}
@@ -71,7 +91,7 @@ export default function ViewEnquiry() {
 							<span className="text-sm text-grey">Date submitted</span>
 							<input
 								type="text"
-								value={enquiry?.date}
+								value={new Date(enquiry?.createdAt || '').toDateString()}
 								readOnly
 								className="text-black dark:text-white text-base w-fit select-all capitalize outline-0 border-0"
 							/>
@@ -88,7 +108,7 @@ export default function ViewEnquiry() {
 							<span className="text-sm text-grey">Subject</span>
 							<input
 								type="text"
-								value={enquiry?.subject}
+								value={`Enquiry from ${enquiry?.sourceModel}`}
 								readOnly
 								className="text-black dark:text-white text-base capitalize select-all outline-0 border-0"
 							/>
@@ -100,7 +120,7 @@ export default function ViewEnquiry() {
 								type="text"
 								value={enquiry?.status}
 								readOnly
-								className={`text-base w-fit capitalize select-all outline-0 border-0 ${enquiry?.status === 'new' ? 'text-[#0088FF]' : enquiry?.status === 'pending' ? 'text-[#FF8D28]' : 'text-primary'}`}
+								className={`text-base w-fit capitalize select-all outline-0 border-0 ${enquiry?.status === 'pending' ? 'text-[#FF8D28]' : 'text-primary'}`}
 							/>
 						</label>
 					</div>
@@ -124,7 +144,7 @@ export default function ViewEnquiry() {
 						cancel
 					</button>
 					<Link
-						to={`/enquiries/reply/${enquiry?.id}`}
+						to={`/enquiries/reply/${enquiry?.sourceModel}/${enquiry?._id}`}
 						className="bg-primary text-white font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer capitalize"
 					>
 						reply message

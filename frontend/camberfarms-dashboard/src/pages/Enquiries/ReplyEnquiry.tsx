@@ -1,21 +1,70 @@
-import { useEffect } from 'react'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useEffect, useState } from 'react'
 import { IoClose } from 'react-icons/io5'
-import { useLocation, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import axiosInstance from '../../api/axios'
 import OverlayWrapper from '../../components/OverlayWrapper'
-import { useGoBack } from '../../hooks/useGoBack'
-import type { Enquiry } from './EnquiriesTable'
+// import { useGoBack } from '../../hooks/useGoBack'
+import toast from 'react-hot-toast'
+import type { Enquiry } from '../../types/enquiry'
+
+type EnquiryReply = {
+	status: 'pending' | 'read'
+	adminReply: string
+}
 
 export default function ReplyEnquiry() {
-	const goBack = useGoBack('/affiliate')
-	const location = useLocation()
-	const enquiry: Enquiry | null = location.state?.enquiry
+	const navigate = useNavigate()
+	const goBack = () => navigate('/enquiries')
+	const queryClient = useQueryClient()
+	const [adminReply, setAdminReply] = useState('')
 	const params = useParams()
+	const { data, isPending, isRefetching, error } = useQuery({
+		queryKey: ['enquiries', `${params.enquiryId}`],
+		queryFn: async () => {
+			const res = await axiosInstance.get(
+				`enquiries/${params.type}/${params.enquiryId}`,
+			)
+			return res.data as {
+				enquiry: Enquiry
+			}
+		},
+		refetchOnMount: false,
+		refetchOnWindowFocus: false,
+	})
+
+	const { mutate, isPending: replying } = useMutation({
+		mutationFn: async (data: EnquiryReply) => {
+			const res = await axiosInstance.post(
+				`enquiries/${params.type}/${params.enquiryId}/reply`,
+				data,
+			)
+			return res.data
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['enquiries'] })
+			toast.success('Reply sent!')
+			goBack()
+		},
+	})
+
+	const enquiry = data?.enquiry
+
+	function replyEnquiry() {
+		mutate({ status: 'read', adminReply })
+	}
 
 	useEffect(() => {
-		if (!params?.enquiryId) {
+		if (!params.type && !params?.enquiryId) {
 			setTimeout(goBack, 1000)
 		}
-	}, [params, goBack])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [params])
+
+	if (isPending || isRefetching) return <div>Loading...</div>
+
+	if (error)
+		return <div className="px-8">Something went wrong: {error.message}</div>
 
 	return (
 		<OverlayWrapper>
@@ -29,7 +78,7 @@ export default function ReplyEnquiry() {
 							Reply To Enquiry
 						</h1>
 						<p className="text-grey">
-							Responding to: <span>{enquiry?.subject}</span>
+							Responding to: <span>{enquiry?.sourceModel} enquiry</span>
 						</p>
 					</div>
 					<IoClose size={30} className="cursor-pointer" onClick={goBack} />
@@ -43,7 +92,7 @@ export default function ReplyEnquiry() {
 								type="text"
 								value={enquiry?.name}
 								readOnly
-								className="text-grey dark:text-light-grey text-base capitalize select-all outline-0 border dark:border-grey rounded-lg w-full p-2"
+								className="text-dark-grey dark:text-light-grey text-base capitalize select-all outline-0 border dark:border-grey rounded-lg w-full p-2"
 							/>
 						</label>
 						{/* subject */}
@@ -51,9 +100,9 @@ export default function ReplyEnquiry() {
 							<span className="text-sm text-grey">Subject</span>
 							<input
 								type="text"
-								value={enquiry?.subject}
+								value={`Enquiry from ${enquiry?.sourceModel} form`}
 								readOnly
-								className="text-grey dark:text-light-grey dark:border-grey text-base select-all outline-0 border rounded-lg w-full p-2"
+								className="text-dark-grey dark:text-light-grey dark:border-grey text-base select-all outline-0 border rounded-lg w-full p-2"
 							/>
 						</label>
 						{/* message */}
@@ -61,9 +110,12 @@ export default function ReplyEnquiry() {
 							<span className="text-sm text-grey select-all">Message</span>
 							<textarea
 								name="mesage"
+								readOnly={Boolean(enquiry?.adminReply)}
+								value={enquiry?.adminReply || adminReply}
+								onChange={(e) => setAdminReply(e.target.value)}
 								id="message"
 								placeholder="Type your reply message here"
-								className="w-full h-40 resize-none border border-grey px-4 p-2 rounded-lg"
+								className="w-full h-40 resize-none border border-grey px-4 p-2 rounded-lg read-only:bg-light-grey read-only:outline-0 read-only:border-primary"
 							></textarea>
 						</label>
 					</fieldset>
@@ -75,8 +127,8 @@ export default function ReplyEnquiry() {
 						From: <span className="capitalize">{enquiry?.name}</span>{' '}
 						{`<${enquiry?.email}>`}
 					</p>
-					<p>Date: {enquiry?.date}</p>
-					<p>Subject: {enquiry?.subject}</p>
+					<p>Date: {new Date(enquiry?.createdAt || '').toDateString()}</p>
+					<p>Subject: {enquiry?.sourceModel}</p>
 				</div>
 				{/*  */}
 				<textarea
@@ -96,10 +148,12 @@ export default function ReplyEnquiry() {
 						cancel
 					</button>
 					<button
-						type="submit"
-						className="bg-primary text-white font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer capitalize disabled:opacity-60"
+						type="button"
+						disabled={replying || Boolean(enquiry?.adminReply)}
+						onClick={replyEnquiry}
+						className="bg-primary text-white font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer capitalize disabled:opacity-50"
 					>
-						Send Message
+						{enquiry?.adminReply ? 'Already Replied' : 'Send Message'}
 					</button>
 				</div>
 			</section>

@@ -19,8 +19,8 @@ export default function NotificationCard({
 			<div className="w-full flex flex-nowrap items-center gap-3">
 				<IconRenderer
 					iconName={iconName}
+					className={`text-xl h-12 w-12 object-contain text-primary rounded-${round} p-2`}
 					color={Icolor}
-					className={`text-xl h-12 w-12 object-contain rounded-${round} p-2`}
 					style={{ backgroundColor: `${Icolor}17` }}
 				/>
 				<div className="flex-1 flex flex-col justify-between">

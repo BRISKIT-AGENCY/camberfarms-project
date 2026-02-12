@@ -1,6 +1,7 @@
 import { ToastContainer } from 'react-toastify'
 import Footer from './components/Footer'
 import Navbar from './components/Nav/Navbar'
+import TrackVisit from './components/TrackVisit'
 // import './globals.css'
 
 import { routing } from '@/i18n/routing'
@@ -34,6 +35,7 @@ export default async function RootLayout({
 
 	return (
 		<NextIntlClientProvider>
+			<TrackVisit />
 			<Navbar />
 			{children}
 			<Footer />

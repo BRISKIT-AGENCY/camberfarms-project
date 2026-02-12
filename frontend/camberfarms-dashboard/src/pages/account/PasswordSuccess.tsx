@@ -1,8 +1,10 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import successImg from '../../assets/img/success-tag-transparent.png'
 import OverlayWrapper from '../../components/OverlayWrapper'
 
 export default function PasswordSuccess() {
+	const location = useLocation()
+	const nextPage = location.state.next || '/'
 	return (
 		<OverlayWrapper fullWidth={false}>
 			<div className="w-md pb-4 px-2 flex flex-col gap-2 bg-white text-black dark:bg-black dark:text-white relative">
@@ -17,10 +19,10 @@ export default function PasswordSuccess() {
 				</h6>
 
 				<Link
-					to={'/account'}
+					to={nextPage}
 					className="w-full text-center bg-primary text-white py-2 px-6 font-medium font-poppins text-lg cursor-pointer rounded-lg hover:opacity-80 transition-all duration-200"
 				>
-					Back to profile
+					Done
 				</Link>
 			</div>
 		</OverlayWrapper>

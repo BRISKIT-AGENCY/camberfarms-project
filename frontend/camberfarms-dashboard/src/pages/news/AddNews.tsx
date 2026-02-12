@@ -1,9 +1,30 @@
+import { useForm } from 'react-hook-form'
 import { IoClose } from 'react-icons/io5'
 import OverlayWrapper from '../../components/OverlayWrapper'
+import { useCreateBlog } from '../../hooks/useCreateBlog'
 import { useGoBack } from '../../hooks/useGoBack'
+import type { CreateBlogFormValues } from '../../types/blog'
+
+const initialState = {
+	title: '',
+	image: null,
+	publishedAt: '',
+	slug: '',
+	body: '',
+}
 
 export default function AddNews() {
 	const goBack = useGoBack('/news')
+	const { mutate, isPending } = useCreateBlog('news', 'news')
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm({ defaultValues: initialState })
+
+	function onSubmit(data: CreateBlogFormValues) {
+		mutate(data)
+	}
 
 	return (
 		<OverlayWrapper>
@@ -18,39 +39,48 @@ export default function AddNews() {
 					<IoClose size={30} className="cursor-pointer" onClick={goBack} />
 				</div>
 				<section className="">
-					<form className="w-full py-6 space-y-4">
+					<form
+						className="w-full py-6 space-y-4"
+						onSubmit={handleSubmit(onSubmit)}
+					>
 						{/* title */}
 						<label className="w-full flex flex-col gap-1">
 							<span className="text-grey text-sm">Article Title</span>
 							<input
 								type="text"
-								required
+								{...register('title', { required: true })}
+								// required
 								className="w-full p-2 border-2 border-grey/40 rounded-md focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
 								placeholder="Enter title"
-								name="title"
+								// name="title"
 							/>
+							{errors.title && (
+								<p className="text-red-500">{errors.title.message}</p>
+							)}
 						</label>
 						{/* category */}
-						<label className="w-full flex flex-col gap-1">
+						{/* <label className="w-full flex flex-col gap-1">
 							<span className="text-grey text-sm">Category</span>
 							<input
-								type="text"
-								required
+								type="text" {...register('')}
+								// required
 								className="w-full p-2 border-2 border-grey/40 rounded-md focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
 								placeholder="Enter article category"
-								name="category"
+								// name="category"
 							/>
-						</label>
+						</label> */}
 						<fieldset className="w-full grid grid-cols-2 gap-6">
 							{/* date */}
 							<label className="w-full flex flex-col gap-1">
 								<span className="text-grey text-sm">Date</span>
 								<input
 									type="date"
-									required
+									{...register('publishedAt')}
+									defaultValue={new Date().toDateString()}
+									// required
 									className="w-full p-2 border-2 border-grey/40 rounded-md focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
 									placeholder="Select date"
-									name="date"
+									// name="date"
 								/>
 							</label>
 							{/* image */}
@@ -58,23 +88,31 @@ export default function AddNews() {
 								<span className="text-grey text-sm">Upload image</span>
 								<input
 									type="file"
-									name="image"
+									{...register('image', { required: true })}
+									// name="image"
 									id="image"
 									accept="image/*"
 									multiple={false}
 									className="w-full p-2 border-2 border-grey/40 rounded-md focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
 								/>
+								{errors.image && (
+									<p className="text-red-500">{errors.image.message}</p>
+								)}
 							</label>
 						</fieldset>
 
 						<label className="w-full flex flex-col gap-1 mt-6">
 							<span className="text-grey text-sm">Article Content</span>
 							<textarea
-								name="description"
+								// name="description"
 								id="description"
+								{...register('body', { required: true, minLength: 200 })}
 								placeholder="Write your article contents here..."
-								className="w-full h-28 p-2 resize-y border-2 border-grey/40 rounded-md field-sizing-content focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
+								className="w-full min-h-28 p-2 resize-y border-2 border-grey/40 rounded-md field-sizing-content focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
 							></textarea>
+							{errors.body && (
+								<p className="text-red-500">{errors.body.message}</p>
+							)}
 						</label>
 						<div className="w-full flex gap-6 items-center justify-end py-6 mt-8 border-t border-grey/50">
 							<button
@@ -86,7 +124,8 @@ export default function AddNews() {
 							</button>
 							<button
 								type="submit"
-								className="bg-primary text-white font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer"
+								disabled={isPending}
+								className="bg-primary text-white font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer disabled:opacity-50"
 							>
 								Upload Article
 							</button>

@@ -6,7 +6,7 @@ export function useRefetchQueries(queryKey: string) {
 	return () => {
 		queryClient.invalidateQueries({
 			queryKey: [queryKey],
-			// refetchType: 'all',
+			refetchType: 'all',
 		})
 	}
 }

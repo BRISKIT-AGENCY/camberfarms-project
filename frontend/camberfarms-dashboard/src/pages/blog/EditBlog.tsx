@@ -1,24 +1,40 @@
+import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { IoClose } from 'react-icons/io5'
-import { useLocation, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
+import axiosInstance from '../../api/axios'
 import OverlayWrapper from '../../components/OverlayWrapper'
 import { useGoBack } from '../../hooks/useGoBack'
-import type { Blog } from '../../types/blog'
+// import type { Blog } from '../../types/blog'
 
 export default function EditBlog() {
 	const goBack = useGoBack('/news')
 	const params = useParams()
-	const location = useLocation()
-	const blog: Blog = location.state?.blog
+	const { data, isPending, error } = useQuery({
+		queryKey: ['blog', params.blogId],
+		queryFn: async () => {
+			const res = await axiosInstance.get(
+				`${params.siteId}-blogs/${params.blogId}`,
+			)
+			return res.data
+		},
+	})
+
+	// const location = useLocation()
+	// const blog: Blog = location.state?.blog
 
 	useEffect(() => {
 		// if there's no blogId, return to home (blog page)
-		if (!params.blogId) {
+		if (!params.blogId || !params.siteId) {
 			setTimeout(goBack, 1000)
 		}
-		console.log('blog: ', blog)
+		// console.log('blog: ', blog)
 		// console.log('files: ', file)
-	}, [params, goBack, blog])
+	}, [params, goBack])
+
+	console.log('blog: ', data)
+	console.log('blog: ', isPending)
+	console.log('blog: ', error)
 
 	return (
 		<OverlayWrapper>
@@ -40,7 +56,7 @@ export default function EditBlog() {
 							<input
 								type="text"
 								required
-								defaultValue={blog.translations.en.title}
+								// defaultValue={blog.translations.en.title}
 								className="w-full p-2 border-2 border-grey/40 rounded-md focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
 								placeholder="Enter title"
 								name="title"
@@ -53,7 +69,7 @@ export default function EditBlog() {
 								<span className="text-grey text-sm">Date</span>
 								<input
 									type="date"
-									defaultValue={blog.updatedAt}
+									// defaultValue={blog.updatedAt}
 									required
 									className="w-full p-2 border-2 border-grey/40 rounded-md focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
 									placeholder="Select date"
@@ -80,7 +96,7 @@ export default function EditBlog() {
 								name="description"
 								required
 								id="description"
-								defaultValue={blog.translations.en.excerpt}
+								// defaultValue={blog.translations.en.excerpt}
 								placeholder="Write your blog contents here..."
 								className="w-full h-28 p-2 resize-y border-2 border-grey/40 rounded-md field-sizing-content focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
 							></textarea>

@@ -2,14 +2,14 @@ import Cookies from 'js-cookie'
 import { useState } from 'react'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { PiEyeSlashThin, PiEyeThin } from 'react-icons/pi'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import OverlayWrapper from '../components/OverlayWrapper'
 import { useAuth } from '../hooks/useAuth'
 // import { useLogin } from '../hooks/useLogin'
 import axiosInstance from '../api/axios'
 
 type Inputs = {
-	username: string
+	email: string
 	password: string
 }
 
@@ -26,7 +26,7 @@ export default function Login() {
 		formState: { errors },
 	} = useForm({
 		defaultValues: {
-			username: '',
+			email: '',
 			password: '',
 		},
 	})
@@ -41,6 +41,7 @@ export default function Login() {
 
 			dispatch({ type: 'LOGIN', token: userInfo.token, user: userInfo.admin })
 			Cookies.set('token', userInfo.token, { expires: 1 })
+			localStorage.setItem('user', JSON.stringify(userInfo.admin))
 			// console.log('user: ', userInfo)
 			navigate('/')
 			// naive fix for preflight authentication
@@ -72,18 +73,19 @@ export default function Login() {
 						className="text-lg text-grey/50 dark:text-light-grey mb-2 block"
 						htmlFor="username"
 					>
-						Username
+						Email address
 					</label>
 					<input
 						type="text"
-						id="username"
-						{...register('username', { required: true })}
+						id="email"
+						placeholder="Enter your email address"
+						{...register('email', { required: true })}
 						className={`w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-primary
-              ${errors.username ? 'border-red-500' : 'border-gray-300'}`}
+              ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
 					/>
-					{errors.username && (
+					{errors.email && (
 						<p className="text-red-500 text-sm mt-1">
-							A valid username is required
+							A valid email address is required
 						</p>
 					)}
 				</div>
@@ -99,7 +101,7 @@ export default function Login() {
 						<input
 							type={showPswd ? 'text' : 'password'}
 							{...register('password', { required: true, minLength: 6 })}
-							placeholder="Create password"
+							placeholder="Your password"
 							className="h-10 rounded-md inline-block outline-0 w-full border-0 bg-transparent px-4"
 						/>
 						<div
@@ -124,10 +126,16 @@ export default function Login() {
 				<button
 					type="submit"
 					disabled={isPending}
-					className="w-full bg-primary text-white py-2 mt-6 rounded font-medium hover:bg-green-700 transition disabled:opacity-40 cursor-pointer"
+					className="w-full bg-primary text-white py-2 mt-6 mb-4 rounded font-medium hover:bg-green-700 transition disabled:opacity-40 cursor-pointer"
 				>
 					Login
 				</button>
+				<Link
+					to={'/iforgot'}
+					className="text-primary font-bold w-fit mx-auto block"
+				>
+					Forgot Password
+				</Link>
 			</form>
 		</OverlayWrapper>
 	)

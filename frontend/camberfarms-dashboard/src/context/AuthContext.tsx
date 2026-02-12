@@ -12,7 +12,7 @@ import {
 interface User {
 	id: number
 	profilePhoto: string
-	username: string
+	email: string
 	role: string
 }
 
@@ -22,7 +22,7 @@ interface AuthState {
 }
 
 type AuthAction =
-	| { type: 'LOGIN'; user: User | null; token: string }
+	| { type: 'LOGIN'; user: User; token: string }
 	| { type: 'LOGOUT' }
 
 interface AuthContextType extends AuthState {
@@ -66,14 +66,16 @@ export function AuthContextProvider({ children }: { children: ReactNode }) {
 			if (!token) {
 				// setAuthToken(null)
 				dispatch({ type: 'LOGOUT' })
+				localStorage.removeItem('user')
 				setAuthIsReady(true)
 				return
 			}
+			const user = JSON.parse(localStorage.getItem('user')!)
 
 			// setAuthToken(token)
 			dispatch({
 				type: 'LOGIN',
-				user: null,
+				user,
 				token,
 			})
 			setAuthIsReady(true)

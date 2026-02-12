@@ -26,7 +26,7 @@ export default function Products() {
 		mutationFn: async (id: string) =>
 			await axiosInstance.delete(`products/${id}`),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ['products'] })
+			queryClient.invalidateQueries({ queryKey: ['products'], type: 'all' })
 		},
 	})
 
@@ -65,6 +65,22 @@ export default function Products() {
 							<div className="w-full px-2 text-grey">
 								<p className="text-sm font-inter line-clamp-3">
 									{item.translations.en.description}
+									{Object.entries(item.translations.en.variants).map(
+										([key, value]) => (
+											<span key={`${key}`}>
+												{key}:{value}
+											</span>
+										),
+									)}
+								</p>
+								<p className="text-sm font-inter flex flex-col mt-2 capitalize">
+									{Object.entries(item.translations.en.variants).map(
+										([key, value]) => (
+											<span key={`${key}`}>
+												{key}: <strong>{value}</strong>
+											</span>
+										),
+									)}
 								</p>
 								<p className="mt-auto pt-4">
 									<strong className="decoration-0 not-italic text-grey/60 font-medium">

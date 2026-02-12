@@ -41,11 +41,12 @@ export type CreateProduct = {
 	images: File[]
 }
 
-export type EditProduct = {
-	name?: string
-	category?: string
-	description?: string
-	stockQuantity?: number
+export type EditProductType = {
+	_id: string
+	name: string
+	category: string
+	description: string
+	stockQuantity: number
 	variants?: ProductVariants
-	images: File[] | string
+	images?: File[] | string[]
 }

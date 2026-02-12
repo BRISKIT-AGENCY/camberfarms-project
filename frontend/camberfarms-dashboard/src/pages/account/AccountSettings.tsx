@@ -1,6 +1,4 @@
-// import { FiToggleRight } from 'react-icons/fi'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
 import { GoKey } from 'react-icons/go'
 import { IoMoonOutline } from 'react-icons/io5'
 import {
@@ -9,16 +7,14 @@ import {
 	MdOutlineToggleOn,
 } from 'react-icons/md'
 import { TbLock } from 'react-icons/tb'
-import { Link } from 'react-router-dom'
-import { useRequestOTP } from '../../hooks/useRequestOTP'
+import { Link, useNavigate } from 'react-router-dom'
+import { useRequestOTPUser } from '../../hooks/useRequestOTPUser'
 
 export default function AccountSettings() {
 	const [enable2FA, setEnable2FA] = useState(true)
-	const { mutate, isPending, error } = useRequestOTP()
-
-	if (error) {
-		toast.error(`unable to send verification code: ${error.message}`)
-	}
+	const navigate = useNavigate()
+	const onSuccess = () => navigate('/account/user/verification')
+	const { mutate, isPending } = useRequestOTPUser(onSuccess)
 
 	return (
 		<div role="navigation" className="w-full py-4">
@@ -40,7 +36,7 @@ export default function AccountSettings() {
 				className="flex w-full items-center gap-4 px-2 py-4 border-b text-black dark:text-white border-grey/30 disabled:opacity-50"
 			>
 				<GoKey size={20} className="text-primary" />
-				<span>Forgot Password</span>
+				<span>Reset Password</span>
 				<MdKeyboardArrowRight
 					size={20}
 					className="inline-flex ml-auto text-grey/30"

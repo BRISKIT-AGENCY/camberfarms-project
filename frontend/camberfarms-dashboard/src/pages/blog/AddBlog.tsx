@@ -1,7 +1,5 @@
 import { useForm } from 'react-hook-form'
-import { toast } from 'react-hot-toast'
 import { IoClose } from 'react-icons/io5'
-import { useNavigate } from 'react-router-dom'
 import OverlayWrapper from '../../components/OverlayWrapper'
 import { useCreateBlog } from '../../hooks/useCreateBlog'
 import { useGoBack } from '../../hooks/useGoBack'
@@ -14,52 +12,29 @@ const initialState = {
 	slug: '',
 	body: '',
 }
-
+// TODO mayble add the subheading feature (sigh)
 export default function AddBlog() {
 	const goBack = useGoBack('/blog')
-	const navigate = useNavigate()
-	const blogToast = () => toast.success('Blog created successfully')
-	const {
-		mutate: postToAfrica,
-		isPending: africaPending,
-		isSuccess: africaBlogSuccess,
-	} = useCreateBlog('/africa-blogs')
-	const {
-		mutate: postToExport,
-		isPending: exportPending,
-		isSuccess: exportBlogSuccess,
-	} = useCreateBlog('/export-blogs')
+	const { mutate: postToAfrica, isPending: africaPending } = useCreateBlog(
+		'/africa-blogs',
+		'blog',
+	)
+	const { mutate: postToExport, isPending: exportPending } = useCreateBlog(
+		'/export-blogs',
+		'blog',
+	)
 	const {
 		register,
 		handleSubmit,
-		reset,
 		formState: { errors },
 	} = useForm({ defaultValues: initialState })
 
 	const submitToAfrica = (data: CreateBlogFormValues) => {
 		postToAfrica(data)
-
-		if (!africaBlogSuccess) return
-
-		blogToast()
-		reset()
-
-		setTimeout(() => {
-			navigate('/blog')
-		}, 1000)
 	}
 
 	const submitToExport = (data: CreateBlogFormValues) => {
 		postToExport(data)
-
-		if (!exportBlogSuccess) return
-
-		blogToast()
-		reset()
-
-		setTimeout(() => {
-			navigate('/blog')
-		}, 1000)
 	}
 
 	return (
@@ -130,9 +105,11 @@ export default function AddBlog() {
 									},
 								})}
 								placeholder="Write your blog contents here..."
-								className="w-full h-28 p-2 resize-y border-2 border-grey/40 rounded-md field-sizing-content focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
+								className="w-full min-h-28 p-2 resize-y border-2 border-grey/40 rounded-md field-sizing-content focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
 							></textarea>
-							{errors.body && <p>{errors.body.message}</p>}
+							{errors.body && (
+								<p className="text-red-500">{errors.body.message}</p>
+							)}
 						</label>
 						<div className="w-full flex gap-6 items-center justify-end py-6 mt-8 border-t border-grey/50">
 							<button

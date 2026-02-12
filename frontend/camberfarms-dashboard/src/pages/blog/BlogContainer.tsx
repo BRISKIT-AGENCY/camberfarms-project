@@ -1,10 +1,11 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { format } from 'date-fns'
 import { FaArrowRight } from 'react-icons/fa6'
 import { useNavigate } from 'react-router-dom'
 import axiosInstance from '../../api/axios'
 import CardItem from '../../components/CardItem'
 import useGetBlogs from '../../hooks/useGetBlogs'
+import { useRefetchQueries } from '../../hooks/useRefetchQueries'
 import type { Blog } from '../../types/blog'
 
 const shuffleBlogs = (blogs: Blog[]): Blog[] => {
@@ -18,16 +19,13 @@ const shuffleBlogs = (blogs: Blog[]): Blog[] => {
 
 export default function BlogContainer() {
 	const navigate = useNavigate()
-	const queryClient = useQueryClient()
 	// invalidate/refetch blog queries
-	async function refetchBlogs() {
-		await queryClient.invalidateQueries({ queryKey: ['blogs'] })
-	}
+	const refetchBlogs = useRefetchQueries('blog')
 
 	const { data, isPending, error } = useGetBlogs()
 	// delete blog
 	const { mutate: deleteBlog } = useMutation({
-		mutationKey: ['blogs'],
+		mutationKey: ['blog'],
 		mutationFn: async (data: { id: string; website: string }) =>
 			await axiosInstance.delete(`${data.website}-blogs/${data.id}`),
 		onSuccess: () => {
@@ -48,8 +46,8 @@ export default function BlogContainer() {
 	// shuffle blogs
 	const blogs = shuffleBlogs([...modifiedAfricaBlogs, ...modifiedExportBlogs])
 
-	const editBlog = (id: string) => {
-		navigate(`edit/${id}`)
+	const editBlog = (id: string, siteId: string) => {
+		navigate(`edit/${siteId}/${id}`)
 	}
 
 	if (isPending) return <div className="w-full text-center">Loading...</div>
@@ -60,7 +58,7 @@ export default function BlogContainer() {
 				<p>Unable to fetch blogs: {error.message}</p>
 				<button
 					type="button"
-					onClick={async () => await refetchBlogs()}
+					onClick={refetchBlogs}
 					className="w-fit mx-auto mt-4 py-2 px-6 rounded-full border cursor-pointer capitalize"
 				>
 					refresh
@@ -86,7 +84,7 @@ export default function BlogContainer() {
 						primaryBtnText="edit"
 						flag={item.website}
 						flagColor={item.website === 'africa' ? '#16A34A' : '#FF741F'}
-						primaryBtnClick={() => editBlog(item._id)}
+						primaryBtnClick={() => editBlog(item._id, item.website)}
 						secondaryBtnText="delete"
 						secondaryBtnClick={() =>
 							deleteBlog({ id: item._id, website: item.website })

@@ -6,29 +6,52 @@ import { useParams } from 'react-router-dom'
 import axiosInstance from '../../api/axios'
 import { Dropzone } from '../../components/Dropzone'
 import OverlayWrapper from '../../components/OverlayWrapper'
-import { useCreateProduct } from '../../hooks/useCreateProduct'
+import { useEditProduct } from '../../hooks/useEditProduct'
 import { useGoBack } from '../../hooks/useGoBack'
-import type { EditProduct, Product, ProductVariants } from '../../types/product'
+import type {
+	EditProductType,
+	Product,
+	ProductVariants,
+} from '../../types/product'
 import { AddVariants } from './AddVariants'
 
 // TODO make this work
+
+function flattenProductInfo(product: Product | undefined): EditProductType {
+	return {
+		name: product?.translations.en.name || '',
+		category: product?.translations.en.category || '',
+		description: product?.translations.en.description || '',
+		images: [],
+		stockQuantity: product?.stockQuantity || 0,
+		_id: product?._id || '',
+	}
+}
+
 export default function EditProduct() {
 	const goBack = useGoBack('/products')
 	const params = useParams()
-	const { mutate, isPending: updatingProduct } = useCreateProduct()
+	// edit product
+	const { mutate, isPending: updatingProduct } = useEditProduct()
+	// fetch product details
 	const { data, isPending, error } = useQuery({
 		queryKey: ['products', params.productId],
 		queryFn: async () => {
 			const { data } = await axiosInstance.get(`products/${params.productId}`)
-			return data
+			// console.log('product', data)
+			return data as {
+				success: boolean
+				product: Product
+			}
 		},
 	})
-	// const product: Product = location.state?.product
-	const [file, setFile] = useState<File[] | null | string>(null)
-	// const [variants, setVariants] = useState()
-	const [variants, setVariants] = useState<ProductVariants>({})
 
-	const [product, setFormData] = useState<Product>(data)
+	const [file, setFile] = useState<File[] | null | string[]>(null)
+	const initialProduct: EditProductType = flattenProductInfo(data?.product)
+	const [product, setFormData] = useState(initialProduct)
+	const [variants, setVariants] = useState<ProductVariants>(
+		data?.product.translations.en.variants || {},
+	)
 
 	function handleChange(e: any) {
 		e.preventDefault()
@@ -36,9 +59,14 @@ export default function EditProduct() {
 		setFormData((prev) => ({ ...prev, [name]: value }))
 	}
 
+	//
 	async function handleSubmit(e: any) {
 		e.preventDefault()
-		const formToSubmit: EditProduct = { ...product, images: file!, variants }
+		const formToSubmit: EditProductType = {
+			...product,
+			images: file!,
+			variants,
+		}
 
 		mutate(formToSubmit)
 	}
@@ -48,11 +76,10 @@ export default function EditProduct() {
 		if (!params.productId) {
 			setTimeout(goBack, 1000)
 		}
-		// console.log('product: ', product)
-		// console.log('files: ', file)
 	}, [params, goBack])
 
-	if (isPending) return <div className="w-full text-center">Loading...</div>
+	if (isPending)
+		return <div className="w-full text-center">Loading product...</div>
 
 	return (
 		<OverlayWrapper>
@@ -76,7 +103,11 @@ export default function EditProduct() {
 				)}
 				{product && (
 					<section className="">
-						<Dropzone setState={setFile} image={product.images[0]} isMultiple />
+						<Dropzone
+							setState={setFile}
+							image={(product.images?.[0] as string) || ''}
+							isMultiple
+						/>
 						<form className="w-full py-6" onSubmit={handleSubmit}>
 							<fieldset className="w-full grid grid-cols-2 gap-4 md:gap-6">
 								{/* product name */}
@@ -84,7 +115,7 @@ export default function EditProduct() {
 									<span className="text-grey text-sm">Product name</span>
 									<input
 										type="text"
-										value={product.translations.en.name}
+										value={product.name}
 										onChange={handleChange}
 										required
 										className="w-full p-2 border-2 border-grey/40 rounded-md focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
@@ -95,7 +126,16 @@ export default function EditProduct() {
 								{/* category */}
 								<label className="w-full flex flex-col gap-1">
 									<span className="text-grey text-sm">Product category</span>
-									<select
+									<input
+										type="text"
+										value={product.category}
+										onChange={handleChange}
+										required
+										className="w-full p-2 border-2 border-grey/40 rounded-md focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
+										placeholder="Enter product name"
+										name="category"
+									/>
+									{/* <select
 										name="category"
 										id="category"
 										value={product.translations.en.category}
@@ -103,7 +143,7 @@ export default function EditProduct() {
 										className="w-full p-2 border-2 border-grey/40 rounded-md focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
 									>
 										<option value="">Select category</option>
-									</select>
+									</select> */}
 								</label>
 								{/* quantity */}
 								<label className="w-full flex flex-col gap-1">
@@ -124,10 +164,10 @@ export default function EditProduct() {
 								<textarea
 									name="description"
 									id="description"
-									value={product.translations.en.description}
+									value={product.description}
 									onChange={handleChange}
 									placeholder="Describe the role and it's responsibility"
-									className="w-full h-20 p-2 resize-y border-2 border-grey/40 rounded-md focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
+									className="w-full min-h-20 p-2 resize-y field-sizing-content border-2 border-grey/40 rounded-md focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
 								></textarea>
 							</label>
 							{/* variants */}
@@ -142,7 +182,7 @@ export default function EditProduct() {
 								<div className="flex flex-col gap-4 my-2">
 									{variants &&
 										Object.entries(variants).map(([key, value]) => (
-											<label className="w-full flex flex-col gap-1">
+											<label className="w-full flex flex-col gap-1" key={key}>
 												<span className="text-grey text-sm capitalize">
 													{key}
 												</span>

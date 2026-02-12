@@ -1,165 +1,95 @@
-import { useQuery } from '@tanstack/react-query'
+// import { useQuery } from '@tanstack/react-query'
+import { format, parseISO } from 'date-fns'
 import { MdOutlineRemoveRedEye } from 'react-icons/md'
 import { RiReplyLine } from 'react-icons/ri'
-import { useNavigate } from 'react-router-dom'
-import axiosInstance from '../../api/axios'
+import { Link } from 'react-router-dom'
+// import axiosInstance from '../../api/axios'
 import { Table } from '../../components/Table'
-
-export type Enquiry = {
-	name: string
-	email: string
-	country: string
-	status: 'new' | 'pending' | 'approved'
-	website: 'africa' | 'export'
-	date: string
-	_id: string | number
-	subject: string
-	message: string
-	phone: string
-}
+import useGetEnquiries from '../../hooks/useGetEnquiries'
+import type { Enquiry } from '../../types/enquiry'
 
 export default function EnquiriesTable() {
-	const { data, isPending } = useQuery({
-		queryKey: ['enquiries'],
-		queryFn: async () => {
-			const res = await axiosInstance.get('enquiries')
-			return res.data
-		},
-	})
+	const { data, isPending, isRefetching, error } = useGetEnquiries()
 
-	console.log('enquiries: ', data)
-	console.log('enquiries pending: ', isPending)
+	if (isPending || isRefetching) return <div>Loading...</div>
 
-	const navigate = useNavigate()
-
-	const viewInfo = (enquiry: Enquiry) => {
-		navigate(`${enquiry._id}`, { state: { enquiry } })
-	}
-	const ReplyInfo = (enquiry: Enquiry) => {
-		navigate(`reply/${enquiry._id}`, { state: { enquiry } })
-	}
-
-	// temporarily putting this within the component to pass state across
-	const EnquiryColumns = [
-		{
-			header: 'Customer',
-			key: 'customer',
-			render: (enquiry: Enquiry) => (
-				<div className="flex flex-col gap-0.5 text-start lg:w-46">
-					<strong className="decoration-0 not-italic font-semibold capitalize">
-						{enquiry.name}
-					</strong>
-					<span className="lowercase text-[12px] lg:text-sm xl:text-base">
-						{enquiry.email}
-					</span>
-				</div>
-			),
-		},
-		{
-			header: 'Subject',
-			key: 'subject',
-			render: (enquiry: Enquiry) => (
-				<p className="text-sm ml-0 text-start line-clamp-2">
-					{enquiry.subject}
-				</p>
-			),
-		},
-		{
-			header: 'Website',
-			key: 'website',
-			render: (enquiry: Enquiry) => (
-				<span
-					className={`${enquiry.website === 'export' ? 'text-[#FF8D28] bg-[#FF8D28]/20' : 'text-primary bg-primary/20'} py-2 px-4 capitalize rounded-full mx-auto w-32`}
-				>
-					{enquiry.website}
-				</span>
-			),
-		},
-		{
-			header: 'Date',
-			key: 'date',
-			render: (enquiry: Enquiry) => (
-				<span className="text-sm">{enquiry.date}</span>
-			),
-		},
-		{
-			header: 'Action',
-			key: 'action',
-			render: (enquiry: Enquiry) => (
-				<div className="w-fit items-center gap-2 inline-flex mx-auto">
-					<MdOutlineRemoveRedEye
-						size={20}
-						onClick={() => viewInfo(enquiry)}
-						className="text-[#0088FF] cursor-pointer"
-					/>
-					<RiReplyLine
-						size={20}
-						onClick={() => ReplyInfo(enquiry)}
-						className="text-primary cursor-pointer"
-					/>
-				</div>
-			),
-		},
-	]
+	if (error)
+		return <div className="px-8">Something went wrong: {error.message}</div>
 
 	return (
 		<div className="w-full mb-10">
-			<Table columns={EnquiryColumns} data={EnquiryData} wrapContent={true} />
+			<Table
+				columns={EnquiryColumns}
+				data={data?.enquiries}
+				wrapContent={true}
+			/>
 		</div>
 	)
 }
 
-const EnquiryData: Enquiry[] = [
+const EnquiryColumns = [
 	{
-		name: 'john smith',
-		email: 'johnsmith@gmail.com',
-		country: 'nigeria',
-		status: 'new',
-		date: '12/11/2025 | 3:59pm',
-		_id: 1,
-		phone: '080878975656',
-		website: 'export',
-		subject: 'Enquiry about products exporting',
-		message:
-			'I am interested in learning more about your organic seeds for my 50-acre corn farm. Could you provide pricing and application guidelines?',
+		header: 'Customer',
+		key: 'customer',
+		render: (enquiry: Enquiry) => (
+			<div className="flex flex-col gap-0.5 text-start lg:w-46">
+				<strong className="decoration-0 not-italic font-semibold capitalize">
+					{enquiry.name}
+				</strong>
+				<span className="lowercase text-[12px] lg:text-sm xl:text-base">
+					{enquiry.email}
+				</span>
+			</div>
+		),
 	},
 	{
-		name: 'john smith',
-		email: 'johnsmith@gmail.com',
-		country: 'ghana',
-		status: 'pending',
-		date: '12/11/2025 | 3:59pm',
-		_id: 2,
-		phone: '080878975656',
-		website: 'africa',
-		subject: 'partnership opportunity for smart irigation',
-		message:
-			'I am interested in learning more about your organic seeds for my 50-acre corn farm. Could you provide pricing and application guidelines?',
+		header: 'Subject',
+		key: 'subject',
+		render: (enquiry: Enquiry) => (
+			<p className="text-sm ml-0 text-start line-clamp-2">
+				Enquiry from {enquiry.sourceModel}
+			</p>
+		),
 	},
 	{
-		name: 'john smith',
-		email: 'johnsmith@gmail.com',
-		country: 'nigeria',
-		status: 'new',
-		date: '12/11/2025 | 3:59pm',
-		_id: 3,
-		phone: '080878975656',
-		website: 'export',
-		subject: 'Enquiry about products exporting',
-		message:
-			'I am interested in learning more about your organic seeds for my 50-acre corn farm. Could you provide pricing and application guidelines?',
+		header: 'Website',
+		key: 'website',
+		render: (enquiry: Enquiry) => (
+			<span
+				className={`${enquiry.source === 'export' ? 'text-[#FF8D28] bg-[#FF8D28]/20' : 'text-primary bg-primary/20'} py-2 px-4 capitalize rounded-full mx-auto w-32`}
+			>
+				{enquiry.source}
+			</span>
+		),
 	},
 	{
-		name: 'john smith',
-		email: 'johnsmith@gmail.com',
-		country: 'ghana',
-		status: 'pending',
-		date: '12/11/2025 | 3:59pm',
-		_id: 4,
-		phone: '080878975656',
-		website: 'africa',
-		subject: 'partnership opportunity for smart irigation',
-		message:
-			'I am interested in learning more about your organic seeds for my 50-acre corn farm. Could you provide pricing and application guidelines?',
+		header: 'Date',
+		key: 'date',
+		render: (enquiry: Enquiry) => (
+			<span className="text-sm">
+				{format(parseISO(enquiry.createdAt), 'dd/MM/yyyy | hh:mm a')}
+			</span>
+		),
+	},
+	{
+		header: 'Action',
+		key: 'action',
+		render: (enquiry: Enquiry) => (
+			<div className="w-fit items-center gap-2 inline-flex mx-auto">
+				<Link to={`${enquiry.sourceModel}/${enquiry._id}`}>
+					<MdOutlineRemoveRedEye
+						size={20}
+						className="text-[#0088FF] cursor-pointer"
+					/>
+				</Link>
+				<Link to={`reply/${enquiry.sourceModel}/${enquiry._id}`}>
+					<RiReplyLine
+						size={20}
+						// onClick={() => ReplyInfo(enquiry)}
+						className="text-primary cursor-pointer"
+					/>
+				</Link>
+			</div>
+		),
 	},
 ]

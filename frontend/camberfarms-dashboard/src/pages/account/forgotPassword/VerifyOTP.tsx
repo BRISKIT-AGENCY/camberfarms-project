@@ -1,34 +1,51 @@
+import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import closeIcon from '../../assets/icon/close.svg'
-import OverlayWrapper from '../../components/OverlayWrapper'
-import { maskNumber } from '../../helpers/maskNumber'
-import { useGoBack } from '../../hooks/useGoBack'
-import { useOtpTimer } from '../../hooks/useOtpTimer'
-import { useRequestOTP } from '../../hooks/useRequestOTP'
-import OtpInput from '../../utils/OtpInput'
+import { useLocation, useNavigate } from 'react-router-dom'
+import axiosInstance from '../../../api/axios'
+import closeIcon from '../../../assets/icon/close.svg'
+import OverlayWrapper from '../../../components/OverlayWrapper'
+import { maskEmail } from '../../../helpers/maskEmail'
+// import { useGoBack } from '../../../hooks/useGoBack'
+import { useOtpTimer } from '../../../hooks/useOtpTimer'
+import { useRequestOTP } from '../../../hooks/useRequestOTP'
+import OtpInput from '../../../utils/OtpInput'
 
-const numberOfDigits = 5
+const numberOfDigits = 6
 
-export default function ForgotPassword() {
+export default function VerifyOTP() {
 	const navigate = useNavigate()
+	const location = useLocation()
+	const { email } = location.state
 	const { mutateAsync, isPending, error } = useRequestOTP()
-	const goBack = useGoBack('account')
+	const goBack = () => navigate('/login')
 	const [otp, setOtp] = useState<string[]>(new Array(numberOfDigits).fill(''))
-	const disableSubmit = otp.some((input) => input === '') || Boolean(error)
-	const phoneNumber = maskNumber('+2348057978966')
+	const maskedEmail = maskEmail(email)
 	const { minutes, seconds, isExpired, resetTimer } = useOtpTimer({
 		duration: 600,
 	})
 
+	const { mutate, isPending: verifyingOTP } = useMutation({
+		mutationFn: async (data: { otp: string; email: string }) => {
+			await axiosInstance.post('forgot-password/verify-otp', data)
+		},
+		onSuccess: () => navigate('/account/create-password', { state: { email } }),
+	})
+
+	const disableSubmit =
+		otp.some((input) => input === '') || Boolean(error) || verifyingOTP
+
+	function verifyOTP() {
+		mutate({ email, otp: otp.join('') })
+	}
+
 	async function requestNewOTP() {
-		await mutateAsync()
+		await mutateAsync({ email })
 		resetTimer()
 	}
 
 	return (
-		<OverlayWrapper fullWidth={false}>
-			<div className="w-md pb-4 px-2 flex flex-col gap-2 bg-white text-black relative text-center dark:bg-black dark:text-white">
+		<OverlayWrapper fullWidth>
+			<div className="w-full pb-4 pt-8 px-2 flex flex-col items-center justify-center gap-2 bg-white text-black relative text-center dark:bg-black dark:text-white">
 				<img
 					src={closeIcon}
 					className="w-10 aspect-square absolute top-0 right-0 cursor-pointer"
@@ -45,7 +62,7 @@ export default function ForgotPassword() {
 					</strong>{' '}
 					sent to your admin email address
 					<br />
-					<strong className="text-black">{phoneNumber}</strong> below.
+					<strong className="text-black">{maskedEmail}</strong> below.
 				</p>
 				<OtpInput
 					otp={otp}
@@ -76,9 +93,7 @@ export default function ForgotPassword() {
 				)}
 				<button
 					type="button"
-					onClick={() =>
-						navigate('/account/reset-password', { state: { otp } })
-					}
+					onClick={verifyOTP}
 					disabled={disableSubmit}
 					className="w-full text-center bg-primary text-white py-2 px-6 font-medium font-poppins text-lg cursor-pointer rounded-lg disabled:opacity-30"
 				>

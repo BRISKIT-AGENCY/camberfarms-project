@@ -8,6 +8,7 @@ import HighlightCard, {
 	type HighlightCardProps,
 } from '../../components/HighlightCard'
 import useGetBlogs from '../../hooks/useGetBlogs'
+import useGetEnquiries from '../../hooks/useGetEnquiries'
 import useGetNews from '../../hooks/useGetNews'
 import useGetProducts from '../../hooks/useGetProducts'
 
@@ -19,6 +20,11 @@ export default function Highlight() {
 		error: productsError,
 	} = useGetProducts()
 	const { data: news, isPending: fetchingNews, error: newsError } = useGetNews()
+	const {
+		data: enquiries,
+		isPending: fetchingenquiries,
+		error: enquiriesError,
+	} = useGetEnquiries()
 
 	const totalBlogs = Number(data?.africa.total) + Number(data?.export.total)
 
@@ -35,12 +41,13 @@ export default function Highlight() {
 		},
 		{
 			title: 'pending enquiries',
-			count: '32',
-			percent: '+15%',
+			count: Number(enquiries?.totalEnquiries),
+			percent: `+${Number(enquiries?.monthlyStats.changePercentage) || 0}%`,
 			info: 'from last month',
 			Icon: HiOutlineMail,
 			Icolor: 'text-[#D00000]',
 			url: '/enquiries',
+			disable: fetchingenquiries || Boolean(enquiriesError),
 		},
 		{
 			title: 'total blog stories',

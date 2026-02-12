@@ -1,13 +1,14 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { formatDistanceToNow } from 'date-fns'
 import axiosInstance from '../../api/axios'
 import NotificationCard from '../../components/NotificationCard'
 import { categoryColor } from '../../helpers/getCategoryColor'
+import { useRefetchQueries } from '../../hooks/useRefetchQueries'
 import type { Notification } from '../../types/notification'
 
 export default function RecentActivities() {
-	const queryClient = useQueryClient()
-	const { data, isPending, error } = useQuery({
+	const refresh = useRefetchQueries('recent-activity')
+	const { data, isPending, isRefetching, error } = useQuery({
 		queryKey: ['recent-activity'],
 		queryFn: async () => {
 			const [a, e] = await Promise.all([
@@ -27,29 +28,26 @@ export default function RecentActivities() {
 		},
 		refetchOnWindowFocus: false,
 	})
-	// refetch activity notifications
-	async function refresh() {
-		await queryClient.invalidateQueries({ queryKey: ['recent-activity'] })
-	}
 
 	const notifications = data?.africa.notifications
 		? [...data.africa.notifications, ...data.export.notifications]
 		: []
-
+	// console.log('notifications: ', notifications)
 	return (
 		<div className="w-full py-4 px-6 lg:py-6 mb-6 shadow-2xs bg-white text-black rounded-xl space-y-6 dark:text-white dark:bg-black">
 			<h4 className="text-2xl font-semibold font-poppins capitalize py-2">
 				recent activities
 			</h4>
-			{isPending && !data && (
-				<div className="w-full text-center mt-10">Loading activitiess...</div>
-			)}
+			{isPending ||
+				(isRefetching && !data && (
+					<div className="w-full text-center mt-10">Loading activitiess...</div>
+				))}
 			{error && (
 				<div className="w-full mt-10 text-center">
 					<p>Unable to get recent activities: {error?.message}</p>
 					<button
 						type="button"
-						onClick={async () => await refresh()}
+						onClick={refresh}
 						className="w-fit mx-auto mt-4 py-2 px-6 rounded-full border capitalize cursor-pointer"
 					>
 						refresh
