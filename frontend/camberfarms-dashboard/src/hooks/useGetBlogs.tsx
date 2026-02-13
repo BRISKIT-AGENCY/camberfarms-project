@@ -4,7 +4,7 @@ import type { Blog } from '../types/blog'
 
 export default function useGetBlogs() {
 	return useQuery({
-		queryKey: ['blogs'],
+		queryKey: ['blog'],
 		queryFn: async () => {
 			const [africaPost, exportPost] = await Promise.all([
 				axiosInstance.get('africa-blogs'),

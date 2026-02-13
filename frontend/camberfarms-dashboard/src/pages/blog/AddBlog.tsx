@@ -1,6 +1,10 @@
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { IoClose } from 'react-icons/io5'
+import { MdDeleteOutline } from 'react-icons/md'
+import { PiCaretDownFill } from 'react-icons/pi'
 import OverlayWrapper from '../../components/OverlayWrapper'
+import { useBlogSections } from '../../hooks/useBlogSections'
 import { useCreateBlog } from '../../hooks/useCreateBlog'
 import { useGoBack } from '../../hooks/useGoBack'
 import type { CreateBlogFormValues } from '../../types/blog'
@@ -11,9 +15,22 @@ const initialState = {
 	publishedAt: '',
 	slug: '',
 	body: '',
+	excerpt: '',
+	sections: [],
 }
-// TODO mayble add the subheading feature (sigh)
+
 export default function AddBlog() {
+	const [showPreview, setShowPreview] = useState(false)
+	const {
+		sections,
+		addSection,
+		removeSection,
+		updateHeading,
+		addParagraph,
+		updateParagraph,
+		// setSections,
+		// removeParagraph,
+	} = useBlogSections()
 	const goBack = useGoBack('/blog')
 	const { mutate: postToAfrica, isPending: africaPending } = useCreateBlog(
 		'/africa-blogs',
@@ -30,11 +47,11 @@ export default function AddBlog() {
 	} = useForm({ defaultValues: initialState })
 
 	const submitToAfrica = (data: CreateBlogFormValues) => {
-		postToAfrica(data)
+		postToAfrica({ ...data, sections })
 	}
 
 	const submitToExport = (data: CreateBlogFormValues) => {
-		postToExport(data)
+		postToExport({ ...data, sections })
 	}
 
 	return (
@@ -69,7 +86,7 @@ export default function AddBlog() {
 							<label className="w-full flex flex-col gap-1">
 								<span className="text-grey text-sm">Date</span>
 								<input
-									type="datetime-local"
+									type="date"
 									{...register('publishedAt', { required: true })}
 									className="w-full p-2 border-2 border-grey/40 rounded-md focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
 									placeholder="Select date"
@@ -93,24 +110,99 @@ export default function AddBlog() {
 						</fieldset>
 
 						<label className="w-full flex flex-col gap-1 mt-6">
-							<span className="text-grey text-sm">Write Post</span>
+							<span className="text-grey text-sm">Excerpt</span>
 							<textarea
 								// name="description"
 								id="description"
-								{...register('body', {
+								{...register('excerpt', {
 									required: true,
 									minLength: {
-										value: 200,
-										message: 'Blog content is too short',
+										value: 90,
+										message: 'Blog excerpt is too short',
 									},
 								})}
-								placeholder="Write your blog contents here..."
+								placeholder="Write a descriptive preview of your post here..."
 								className="w-full min-h-28 p-2 resize-y border-2 border-grey/40 rounded-md field-sizing-content focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
 							></textarea>
-							{errors.body && (
-								<p className="text-red-500">{errors.body.message}</p>
+							{errors.excerpt && (
+								<p className="text-red-500">{errors.excerpt.message}</p>
 							)}
 						</label>
+
+						{/* content preview */}
+						<button
+							type="button"
+							onClick={() => setShowPreview((prev) => !prev)}
+							className="flex items-center gap-1 cursor-pointer"
+						>
+							<PiCaretDownFill
+								className={`${showPreview ? '' : '-rotate-90'}`}
+							/>
+							Preview
+						</button>
+						{showPreview && (
+							<div className="border border-dark-grey rounded-sm bg-light-grey p-4 my-2">
+								{sections.map((s) => (
+									<div key={s._id} className="my-3">
+										<h6 className="font-medium">{s.heading}</h6>
+										<p>{s.paragraphs.join(`\n`)}</p>
+									</div>
+								))}
+							</div>
+						)}
+						{/* sections */}
+						<div className="space-y-6">
+							{sections.map((section) => (
+								<div key={section._id} className="space-y-4 bg-light-grey p-4">
+									<input
+										maxLength={200}
+										placeholder="subheading (optional)"
+										value={section.heading || ''}
+										onChange={(e) => updateHeading(section._id, e.target.value)}
+										className="w-full p-2 border-2 border-grey/40 rounded-md focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
+									/>
+
+									{section.paragraphs.map((p, i) => (
+										<textarea
+											placeholder="paragraph"
+											key={i}
+											value={p}
+											onChange={(e) =>
+												updateParagraph(section._id, i, e.target.value)
+											}
+											className="w-full resize-none field-sizing-content p-2 border-2 border-grey/40 rounded-md focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200 "
+										/>
+									))}
+
+									<div className="w-full flex items-center gap-6">
+										<button
+											type="button"
+											onClick={() => addParagraph(section._id)}
+											className="bg-transparent text-secondary border border-secondary font-poppins font-sm text-sm p-2 rounded-lg cursor-pointer"
+										>
+											+ Add Paragraph
+										</button>
+
+										<button
+											type="button"
+											onClick={() => removeSection(section._id)}
+											className="bg-transparent text-red-500 border font-poppins text-sm p-2 flex items-center gap-1 rounded-lg cursor-pointer"
+										>
+											<MdDeleteOutline /> Remove Section
+										</button>
+									</div>
+								</div>
+							))}
+
+							<button
+								type="button"
+								onClick={addSection}
+								className="bg-transparent text-primary border-2 font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer"
+							>
+								+ Add Section
+							</button>
+						</div>
+
 						<div className="w-full flex gap-6 items-center justify-end py-6 mt-8 border-t border-grey/50">
 							<button
 								type="button"

@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import axiosInstance from '../api/axios'
-import { createSections } from '../helpers/createSections'
+// import { createSections } from '../helpers/createSections'
 import { createSlug } from '../helpers/createSlug'
 import type { CreateBlogFormValues } from '../types/blog'
 
@@ -11,17 +11,17 @@ export function useCreateBlog(url: string, queryKey: string) {
 	const navigate = useNavigate()
 	return useMutation({
 		mutationFn: async (values: CreateBlogFormValues) => {
-			const excerpt = values.body.trim().slice(0, 200)
-			const sections = createSections(values.body)
+			// const excerpt = values.body.trim().slice(0, 200)
+			// const sections = createSections(values.body)
 			const slug = createSlug(values.title)
 
 			const formData = new FormData()
 
 			formData.append('title', values.title)
-			formData.append('excerpt', excerpt)
+			formData.append('excerpt', values.excerpt)
 			formData.append('slug', slug)
 
-			formData.append('sections', JSON.stringify([sections]))
+			formData.append('sections', JSON.stringify([values.sections]))
 
 			formData.append(
 				'publishedAt',
@@ -48,9 +48,3 @@ export function useCreateBlog(url: string, queryKey: string) {
 		},
 	})
 }
-
-// [
-// 					{
-// 						paragraphs: [values.body],
-// 					},
-// 				]

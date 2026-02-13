@@ -20,6 +20,7 @@ export type Blog = {
 	_id: string
 }
 export interface BlogSection {
+	_id: string
 	heading?: string
 	paragraphs: string[]
 }
@@ -27,6 +28,15 @@ export interface BlogSection {
 export interface CreateBlogFormValues {
 	title: string
 	publishedAt: string
-	body: string
 	image: FileList | null
+	excerpt: string
+	sections: BlogSection[]
+}
+
+export interface UpdateBlogFormValues {
+	title: string
+	publishedAt: string
+	excerpt: string
+	image: FileList | null
+	sections: BlogSection[]
 }
