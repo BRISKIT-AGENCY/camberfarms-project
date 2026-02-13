@@ -26,7 +26,10 @@ export default function RequestQuotation() {
 		setIsLoading(true)
 		// console.log(data)
 		try {
-			const res = await axiosInstance.post('/api/export/feedback', data)
+			const res = await axiosInstance.post('/api/enquiries', {
+				...data,
+				sourceModel: 'contact',
+			})
 			console.log(res.data)
 			toast.success('Form submitted successfully!')
 			// clear inputs
@@ -56,7 +59,7 @@ export default function RequestQuotation() {
 					{...register('name', {
 						required: true,
 						minLength: 3,
-						maxLength: 20,
+						// maxLength: 20,
 					})}
 					type="text"
 					placeholder="Name"
@@ -107,7 +110,7 @@ export default function RequestQuotation() {
 					{...register('email', {
 						required: true,
 						minLength: 5,
-						maxLength: 20,
+						// maxLength: 20,
 					})}
 					type="email"
 					placeholder="Email address"
@@ -122,7 +125,7 @@ export default function RequestQuotation() {
 					{...register('message', {
 						required: true,
 						minLength: 10,
-						maxLength: 200,
+						maxLength: 2000,
 					})}
 					placeholder="Type your message here..."
 					className="w-full h-28 resize-none rounded-2xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"

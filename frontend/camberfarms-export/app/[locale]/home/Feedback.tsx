@@ -28,8 +28,11 @@ export default function Feedback() {
 		setIsLoading(true)
 		// console.log(data)
 		try {
-			const res = await axiosInstance.post('/api/export/feedback', data)
-			console.log(res.data)
+			await axiosInstance.post('/api/enquiries', {
+				...data,
+				sourceModel: 'feedback',
+			})
+			// console.log(res.data)
 			toast.success('Form submitted successfully!')
 			// clear inputs
 			reset()
@@ -56,7 +59,7 @@ export default function Feedback() {
 			<p className="mt-2 mb-8 text-dark-grey">{t('paragraph')}</p>
 			<fieldset className="flex flex-col gap-6">
 				<input
-					{...register('name', { required: true, maxLength: 20, minLength: 3 })}
+					{...register('name', { required: true, maxLength: 90, minLength: 3 })}
 					type="text"
 					placeholder={t('placeholders.name')}
 					className="w-full rounded-3xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
@@ -83,7 +86,7 @@ export default function Feedback() {
 					{...register('phone', {
 						required: true,
 						maxLength: 13,
-						minLength: 10,
+						minLength: 8,
 					})}
 					type="tel"
 					placeholder={t('placeholders.phone')}
@@ -111,7 +114,7 @@ export default function Feedback() {
 					{...register('message', {
 						required: true,
 						minLength: 10,
-						maxLength: 250,
+						maxLength: 2500,
 					})}
 					placeholder={t('placeholders.message')}
 					className="w-full h-28 resize-none rounded-2xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"

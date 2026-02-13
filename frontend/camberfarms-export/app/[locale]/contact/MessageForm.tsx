@@ -27,8 +27,11 @@ export default function MessageForm() {
 		setIsLoading(true)
 		// console.log(data)
 		try {
-			const res = await axiosInstance.post('/api/export/message', data)
-			console.log(res.data)
+			await axiosInstance.post('/api/enquiries', {
+				...data,
+				sourceModel: 'message',
+			})
+			// console.log(res.data)
 			toast.success('Form submitted successfully!')
 			// clear inputs
 			reset()
@@ -60,7 +63,7 @@ export default function MessageForm() {
 						{...register('name', {
 							required: true,
 							minLength: 3,
-							maxLength: 20,
+							maxLength: 90,
 						})}
 						type="text"
 						placeholder={t('placeholder.name')}
@@ -102,7 +105,7 @@ export default function MessageForm() {
 						{...register('email', {
 							required: true,
 							minLength: 5,
-							maxLength: 20,
+							// maxLength: 20,
 						})}
 						type="email"
 						placeholder={t('placeholder.email')}
@@ -122,7 +125,7 @@ export default function MessageForm() {
 				{...register('message', {
 					required: true,
 					minLength: 10,
-					maxLength: 200,
+					maxLength: 2000,
 				})}
 				placeholder={t('placeholder.message')}
 				className="w-full h-28 resize-none rounded-2xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
