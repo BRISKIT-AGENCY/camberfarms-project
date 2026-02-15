@@ -16,6 +16,8 @@ export default function AffilateTable() {
 				data: Affiliate[]
 			}
 		},
+		refetchOnWindowFocus: false,
+		refetchOnMount: false,
 	})
 
 	if (isPending || isRefetching)

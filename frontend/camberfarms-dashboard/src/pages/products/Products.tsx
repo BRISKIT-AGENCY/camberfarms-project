@@ -3,12 +3,13 @@ import { useNavigate } from 'react-router-dom'
 import axiosInstance from '../../api/axios'
 // import grainImg from '../../assets/img/grains-product.png'
 // import productImg from '../../assets/img/wheat-product.png'
+import toast from 'react-hot-toast'
 import CardItem from '../../components/CardItem'
 import type { Product, ProductStats } from '../../types/product'
 
 export default function Products() {
 	const queryClient = useQueryClient()
-	const { data, isPending } = useQuery({
+	const { data, isPending, isRefetching } = useQuery({
 		queryKey: ['products'],
 		queryFn: async () => {
 			const res = await axiosInstance.get('products')
@@ -19,13 +20,15 @@ export default function Products() {
 				success: boolean
 			}
 		},
+		refetchOnWindowFocus: false,
 	})
 	// delete product
-	const { mutate: deleteProduct } = useMutation({
-		mutationKey: ['products'],
+	const { mutate: deleteProduct, isPending: deleting } = useMutation({
+		// mutationKey: ['products'],
 		mutationFn: async (id: string) =>
 			await axiosInstance.delete(`products/${id}`),
 		onSuccess: () => {
+			toast.success('Product deleted')
 			queryClient.invalidateQueries({ queryKey: ['products'], type: 'all' })
 		},
 	})
@@ -38,7 +41,8 @@ export default function Products() {
 		navigate(`edit/${id}`)
 	}
 
-	if (isPending) return <div className="w-full text-center">Loading...</div>
+	if (isPending || isRefetching || !data?.products)
+		return <div className="w-full text-center">Loading...</div>
 
 	return (
 		<section className="w-full bg-light-grey dark:bg-dark-grey mb-20">
@@ -53,6 +57,7 @@ export default function Products() {
 					data.products.map((item) => (
 						<CardItem
 							key={item._id}
+							disabled={deleting}
 							title={item.translations.en.name}
 							image={item.images?.[0]}
 							flag={item.translations.en.category}

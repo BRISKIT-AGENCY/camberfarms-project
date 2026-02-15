@@ -35,6 +35,8 @@ export default function GalleryContainer() {
 				galleries: GalleryImage[]
 			}
 		},
+		refetchOnWindowFocus: false,
+		refetchOnMount: false,
 	})
 	// delete gallery image
 	const { mutate: deleteGallery } = useMutation({
@@ -87,32 +89,3 @@ export default function GalleryContainer() {
 		</section>
 	)
 }
-
-// const images: GalleryImage[] = [
-// 	{
-// 		image: productImg,
-// 		dimensions: '1920 x 1080',
-// 		size: '2.5mb',
-// 		views: 100,
-// 		date: '2025-11-12',
-// 		id: 1,
-// 	},
-
-// 	{
-// 		image: productImg,
-// 		dimensions: '1920 x 1080',
-// 		size: '2.5mb',
-// 		views: 100,
-// 		date: '2025-11-12',
-// 		id: 2,
-// 	},
-
-// 	{
-// 		image: productImg,
-// 		dimensions: '1920 x 1080',
-// 		size: '2.5mb',
-// 		views: 100,
-// 		date: '2025-11-12',
-// 		id: 3,
-// 	},
-// ]

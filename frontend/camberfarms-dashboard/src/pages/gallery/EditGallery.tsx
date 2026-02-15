@@ -6,6 +6,7 @@ import OverlayWrapper from '../../components/OverlayWrapper'
 import { useGoBack } from '../../hooks/useGoBack'
 import type { GalleryImage } from './GalleryContainer'
 
+// TODO fix updating gallery
 export default function EditGallery() {
 	const goBack = useGoBack('/gallery')
 	const [image, setImage] = useState<File | null>(null)
@@ -15,7 +16,8 @@ export default function EditGallery() {
 
 	useEffect(() => {
 		if (!params?.imageId) {
-			setTimeout(goBack, 1000)
+			const timer = setTimeout(goBack, 1000)
+			return () => clearTimeout(timer)
 		}
 	}, [params, image, goBack])
 

@@ -134,16 +134,20 @@ export default function AddNews() {
 								className="flex items-center gap-1 cursor-pointer"
 							>
 								<PiCaretDownFill
-									className={`${showPreview ? '' : '-rotate-90'}`}
+									className={`ease-in-out transition-discrete transition-all duration-200 ${showPreview ? '' : '-rotate-90'}`}
 								/>
 								Preview
 							</button>
 							{showPreview && (
-								<div className="border border-dark-grey rounded-sm bg-light-grey p-4 my-2">
+								<div className="border border-dark-grey rounded-sm bg-light-grey dark:bg-dark-grey p-4 my-2">
 									{sections.map((s) => (
 										<div key={s._id} className="my-3">
-											<h6 className="font-medium">{s.heading}</h6>
-											<p>{s.paragraphs.join(`\n`)}</p>
+											<h6 className="font-medium mb-4 text-lg">{s.heading}</h6>
+											{s.paragraphs.map((p, index) => (
+												<div key={index} className="my-1">
+													<p>{p}</p>
+												</div>
+											))}
 										</div>
 									))}
 								</div>
@@ -153,7 +157,7 @@ export default function AddNews() {
 								{sections.map((section) => (
 									<div
 										key={section._id}
-										className="space-y-4 bg-light-grey p-4"
+										className="space-y-4 bg-light-grey dark:bg-black p-4"
 									>
 										<input
 											maxLength={200}

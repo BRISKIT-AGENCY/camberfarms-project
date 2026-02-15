@@ -16,6 +16,7 @@ export default function MembershipTable() {
 				members: Membership[]
 			}
 		},
+		refetchOnWindowFocus: false,
 	})
 
 	if (isPending || isRefetching)

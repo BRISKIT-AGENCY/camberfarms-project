@@ -9,6 +9,7 @@ type CardItemProps = {
 	secondaryBtnText: string
 	secondaryBtnClick: () => void
 	cardVariant?: string
+	disabled?: boolean
 }
 
 export default function CardItem({
@@ -22,6 +23,7 @@ export default function CardItem({
 	secondaryBtnText,
 	secondaryBtnClick,
 	cardVariant,
+	disabled = false,
 }: CardItemProps) {
 	return (
 		<div
@@ -52,15 +54,17 @@ export default function CardItem({
 			<div className="w-full px-2 py-4 mt-auto flex flex-nowrap items-center justify-center gap-6 font-poppins font-semibold text-base">
 				<button
 					type="button"
+					disabled={disabled}
 					onClick={primaryBtnClick}
-					className="bg-primary text-white py-2 px-10 cursor-pointer rounded-xl capitalize"
+					className="bg-primary text-white py-2 px-10 cursor-pointer rounded-xl capitalize disabled:opacity-50"
 				>
 					{primaryBtnText}
 				</button>
 				<button
 					type="button"
+					disabled={disabled}
 					onClick={secondaryBtnClick}
-					className="bg-red-500/15 text-red-500 py-2 px-10 cursor-pointer rounded-xl capitalize"
+					className="bg-red-500/15 text-red-500 py-2 px-10 cursor-pointer rounded-xl capitalize disabled:opacity-50"
 				>
 					{secondaryBtnText}
 				</button>

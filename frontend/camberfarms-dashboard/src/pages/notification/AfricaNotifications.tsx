@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { formatDistanceToNow } from 'date-fns'
 import axiosInstance from '../../api/axios'
+import LoadingSpinner from '../../components/LoadingSpinner'
 import NotificationCard from '../../components/NotificationCard'
 import { categoryColor } from '../../helpers/getCategoryColor'
 import { useRefetchQueries } from '../../hooks/useRefetchQueries'
@@ -17,11 +18,10 @@ export default function AfricaNotifications() {
 				notifications: Notification[]
 			}
 		},
-		// refetchOnWindowFocus: false,
+		refetchOnWindowFocus: false,
 	})
 
-	if (isPending)
-		return <div className="w-full text-center mt-10">Loading...</div>
+	if (isPending) return <LoadingSpinner />
 
 	if (error)
 		return (
@@ -29,7 +29,7 @@ export default function AfricaNotifications() {
 				<p>Unable to get notifications: {error.message}</p>
 				<button
 					type="button"
-					onClick={async () => await refresh()}
+					onClick={refresh}
 					className="w-fit mx-auto mt-4 py-2 px-6 rounded-full border"
 				>
 					refresh

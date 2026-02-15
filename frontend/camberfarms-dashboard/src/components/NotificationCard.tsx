@@ -25,7 +25,7 @@ export default function NotificationCard({
 				/>
 				<div className="flex-1 flex flex-col justify-between">
 					<h6 className="text-lg capitalize">{title}</h6>
-					<p className="text-grey dark:text-light-grey">{desc}</p>
+					<p className="text-grey dark:text-light-grey line-clamp-1">{desc}</p>
 				</div>
 			</div>
 			{time && (

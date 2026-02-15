@@ -6,6 +6,7 @@ import axiosInstance from '../../api/axios'
 import OverlayWrapper from '../../components/OverlayWrapper'
 // import { useGoBack } from '../../hooks/useGoBack'
 import toast from 'react-hot-toast'
+import LoadingSpinner from '../../components/LoadingSpinner'
 import type { Enquiry } from '../../types/enquiry'
 
 type EnquiryReply = {
@@ -55,13 +56,14 @@ export default function ReplyEnquiry() {
 	}
 
 	useEffect(() => {
-		if (!params.type && !params?.enquiryId) {
-			setTimeout(goBack, 1000)
+		if (!params.type && !params.enquiryId) {
+			const timer = setTimeout(goBack, 1000)
+			return () => clearTimeout(timer)
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [params])
 
-	if (isPending || isRefetching) return <div>Loading...</div>
+	if (isPending || isRefetching) return <LoadingSpinner />
 
 	if (error)
 		return <div className="px-8">Something went wrong: {error.message}</div>

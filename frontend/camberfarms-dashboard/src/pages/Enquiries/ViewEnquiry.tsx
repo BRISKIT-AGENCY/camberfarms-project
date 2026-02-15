@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { IoClose } from 'react-icons/io5'
 import { Link, useParams } from 'react-router-dom'
 import axiosInstance from '../../api/axios'
+import LoadingSpinner from '../../components/LoadingSpinner'
 import OverlayWrapper from '../../components/OverlayWrapper'
 import { useGoBack } from '../../hooks/useGoBack'
 import type { Enquiry } from '../../types/enquiry'
@@ -11,7 +12,7 @@ export default function ViewEnquiry() {
 	const goBack = useGoBack('/enquiries')
 	const params = useParams()
 	const { data, isPending, isRefetching, error } = useQuery({
-		queryKey: ['enquiries', `${params.enquiryId}`],
+		queryKey: ['enquiries', params.enquiryId],
 		queryFn: async () => {
 			const res = await axiosInstance.get(
 				`enquiries/${params.type}/${params.enquiryId}`,
@@ -28,11 +29,12 @@ export default function ViewEnquiry() {
 
 	useEffect(() => {
 		if (!params.type && !params.enquiryId) {
-			setTimeout(goBack, 1000)
+			const timer = setTimeout(goBack, 1000)
+			return () => clearTimeout(timer)
 		}
 	}, [params, goBack])
 
-	if (isPending || isRefetching) return <div>Loading...</div>
+	if (isPending || isRefetching) return <LoadingSpinner />
 
 	if (error)
 		return <div className="px-8">Something went wrong: {error.message}</div>

@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { IoClose } from 'react-icons/io5'
 import { useNavigate, useParams } from 'react-router-dom'
 import axiosInstance from '../../api/axios'
+import LoadingSpinner from '../../components/LoadingSpinner'
 import OverlayWrapper from '../../components/OverlayWrapper'
 import { useGoBack } from '../../hooks/useGoBack'
 import type { FarmFundEnquiry } from '../../types/farm-fund'
@@ -21,34 +22,38 @@ export default function ViewFarmFundEnquiry() {
 			const res = await axiosInstance.get(`farm-fund/${params.enquiryId}`)
 			return res.data.data as FarmFundEnquiry
 		},
+		refetchOnWindowFocus: false,
 	})
 
 	useEffect(() => {
 		if (!params?.enquiryId) {
-			setTimeout(goBack, 1000)
+			const timer = setTimeout(goBack, 1000)
+			return () => clearTimeout(timer)
 		}
 	}, [params, goBack])
 
-	if (isPending) return <div className="w-full text-center">Loading...</div>
+	if (isPending) return <LoadingSpinner />
 
 	return (
 		<OverlayWrapper>
-			{error && (
-				<div className="w-full place-content-center p-8">
-					<div className="w-full flex items-center justify-between gap-6 pb-4 mb-6 border-b border-grey/50">
-						<h1
-							id="page-title"
-							className="text-2xl lg:text-3xl capitalize font-bold"
-						>
-							Enquiry Details
-						</h1>
-						<IoClose size={30} className="cursor-pointer" onClick={goBack} />
+			{!enquiry ||
+				(error && (
+					<div className="w-full place-content-center p-8">
+						<div className="w-full flex items-center justify-between gap-6 pb-4 mb-6 border-b border-grey/50">
+							<h1
+								id="page-title"
+								className="text-2xl lg:text-3xl capitalize font-bold"
+							>
+								Enquiry Details
+							</h1>
+							<IoClose size={30} className="cursor-pointer" onClick={goBack} />
+						</div>
+						<p className="mt-8 text-secondary">
+							Unable to get Farm Fund details, please refresh or try again
+							later.
+						</p>
 					</div>
-					<p className="mt-8 text-secondary">
-						Unable to get Farm Fund details, please refresh or try again later.
-					</p>
-				</div>
-			)}
+				))}
 			{enquiry && (
 				<section className="w-full">
 					<div className="w-full flex items-center justify-between gap-6 pb-4 mb-6 border-b border-grey/50">
@@ -84,7 +89,7 @@ export default function ViewFarmFundEnquiry() {
 									type="text"
 									value={enquiry?.email}
 									readOnly
-									className="text-black dark:text-white text-base w-fit select-all outline-0 border-0"
+									className="text-black dark:text-white text-base w-full select-all outline-0 border-0"
 								/>
 							</label>
 							{/* phone number */}

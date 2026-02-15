@@ -77,8 +77,13 @@ export default function AddProduct() {
 									className="w-full p-2 border-2 border-grey/40 rounded-md focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
 								>
 									<option value="">Select category</option>
-									<option value="grains">Grains</option>
-									<option value="seeds">Seeds</option>
+									<option value="grain seed">Grain Seed</option>
+									<option value="tumeric">Tumeric</option>
+									<option value="raw pepper">Raw Pepper</option>
+									<option value="shea nut">Shea Nut</option>
+									<option value="soyabeans">Soya Beans</option>
+									<option value="wheat">Wheat</option>
+									<option value="others">Others</option>
 								</select>
 							</label>
 							{/* quantity */}

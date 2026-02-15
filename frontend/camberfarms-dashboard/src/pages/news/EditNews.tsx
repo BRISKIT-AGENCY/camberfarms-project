@@ -7,6 +7,7 @@ import { MdDeleteOutline } from 'react-icons/md'
 import { PiCaretDownFill } from 'react-icons/pi'
 import { useParams } from 'react-router-dom'
 import axiosInstance from '../../api/axios'
+import LoadingSpinner from '../../components/LoadingSpinner'
 import OverlayWrapper from '../../components/OverlayWrapper'
 import { useBlogSections } from '../../hooks/useBlogSections'
 import { useGoBack } from '../../hooks/useGoBack'
@@ -100,8 +101,7 @@ export default function EditNews() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data, reset])
 
-	if (isPending || !data?.news)
-		return <div className="w-full text-center">Loading news content...</div>
+	if (isPending || !data?.news) return <LoadingSpinner />
 
 	if (error)
 		return (
@@ -146,17 +146,7 @@ export default function EditNews() {
 								// name="title"
 							/>
 						</label>
-						{/* category */}
-						{/* <label className="w-full flex flex-col gap-1">
-							<span className="text-grey text-sm">Category</span>
-							<input
-								type="text"
-								// required
-								className="w-full p-2 border-2 border-grey/40 rounded-md focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
-								placeholder="Enter article category"
-								name="category"
-							/>
-						</label> */}
+
 						<fieldset className="w-full grid grid-cols-2 gap-6">
 							{/* date */}
 							<label className="w-full flex flex-col gap-1">
@@ -210,16 +200,20 @@ export default function EditNews() {
 								className="flex items-center gap-1 cursor-pointer"
 							>
 								<PiCaretDownFill
-									className={`${showPreview ? '' : '-rotate-90'}`}
+									className={`ease-in-out transition-discrete transition-all duration-200 ${showPreview ? '' : '-rotate-90'}`}
 								/>
 								Preview
 							</button>
 							{showPreview && (
-								<div className="border border-dark-grey rounded-sm bg-light-grey p-4 my-2">
+								<div className="border border-dark-grey rounded-sm bg-light-grey dark:bg-dark-grey p-4 my-2">
 									{sections.map((s) => (
 										<div key={s._id} className="my-3">
-											<h6 className="font-medium">{s.heading}</h6>
-											<p>{s.paragraphs.join(`\n`)}</p>
+											<h6 className="font-medium mb-4 text-lg">{s.heading}</h6>
+											{s.paragraphs.map((p, index) => (
+												<div key={index} className="my-1">
+													<p>{p}</p>
+												</div>
+											))}
 										</div>
 									))}
 								</div>
@@ -229,7 +223,7 @@ export default function EditNews() {
 								{sections.map((section) => (
 									<div
 										key={section._id}
-										className="space-y-4 bg-light-grey p-4"
+										className="space-y-4 bg-light-grey dark:bg-black p-4"
 									>
 										<input
 											maxLength={200}

@@ -128,80 +128,91 @@ export default function AddBlog() {
 								<p className="text-red-500">{errors.excerpt.message}</p>
 							)}
 						</label>
-
-						{/* content preview */}
-						<button
-							type="button"
-							onClick={() => setShowPreview((prev) => !prev)}
-							className="flex items-center gap-1 cursor-pointer"
-						>
-							<PiCaretDownFill
-								className={`${showPreview ? '' : '-rotate-90'}`}
-							/>
-							Preview
-						</button>
-						{showPreview && (
-							<div className="border border-dark-grey rounded-sm bg-light-grey p-4 my-2">
-								{sections.map((s) => (
-									<div key={s._id} className="my-3">
-										<h6 className="font-medium">{s.heading}</h6>
-										<p>{s.paragraphs.join(`\n`)}</p>
-									</div>
-								))}
-							</div>
-						)}
-						{/* sections */}
-						<div className="space-y-6">
-							{sections.map((section) => (
-								<div key={section._id} className="space-y-4 bg-light-grey p-4">
-									<input
-										maxLength={200}
-										placeholder="subheading (optional)"
-										value={section.heading || ''}
-										onChange={(e) => updateHeading(section._id, e.target.value)}
-										className="w-full p-2 border-2 border-grey/40 rounded-md focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
-									/>
-
-									{section.paragraphs.map((p, i) => (
-										<textarea
-											placeholder="paragraph"
-											key={i}
-											value={p}
-											onChange={(e) =>
-												updateParagraph(section._id, i, e.target.value)
-											}
-											className="w-full resize-none field-sizing-content p-2 border-2 border-grey/40 rounded-md focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200 "
-										/>
-									))}
-
-									<div className="w-full flex items-center gap-6">
-										<button
-											type="button"
-											onClick={() => addParagraph(section._id)}
-											className="bg-transparent text-secondary border border-secondary font-poppins font-sm text-sm p-2 rounded-lg cursor-pointer"
-										>
-											+ Add Paragraph
-										</button>
-
-										<button
-											type="button"
-											onClick={() => removeSection(section._id)}
-											className="bg-transparent text-red-500 border font-poppins text-sm p-2 flex items-center gap-1 rounded-lg cursor-pointer"
-										>
-											<MdDeleteOutline /> Remove Section
-										</button>
-									</div>
-								</div>
-							))}
-
+						{/* blog content */}
+						<fieldset>
+							{/* content preview */}
 							<button
 								type="button"
-								onClick={addSection}
-								className="bg-transparent text-primary border-2 font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer"
+								onClick={() => setShowPreview((prev) => !prev)}
+								className="flex items-center gap-1 cursor-pointer"
 							>
-								+ Add Section
+								<PiCaretDownFill
+									className={`ease-in-out transition-discrete transition-all duration-200 ${showPreview ? '' : '-rotate-90'}`}
+								/>
+								Preview
 							</button>
-						</div>
+							{showPreview && (
+								<div className="border border-dark-grey rounded-sm bg-light-grey dark:bg-dark-grey p-4 my-2">
+									{sections.map((s) => (
+										<div key={s._id} className="my-3">
+											<h6 className="font-medium mb-4 text-lg">{s.heading}</h6>
+											{s.paragraphs.map((p, index) => (
+												<div key={index} className="my-1">
+													<p>{p}</p>
+												</div>
+											))}
+										</div>
+									))}
+								</div>
+							)}
+							{/* sections */}
+							<div className="space-y-6">
+								{sections.map((section) => (
+									<div
+										key={section._id}
+										className="space-y-4 bg-light-grey dark:bg-black p-4"
+									>
+										<input
+											maxLength={200}
+											placeholder="subheading (optional)"
+											value={section.heading || ''}
+											onChange={(e) =>
+												updateHeading(section._id, e.target.value)
+											}
+											className="w-full p-2 border-2 border-grey/40 rounded-md focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
+										/>
+
+										{section.paragraphs.map((p, i) => (
+											<textarea
+												placeholder="paragraph"
+												key={i}
+												value={p}
+												onChange={(e) =>
+													updateParagraph(section._id, i, e.target.value)
+												}
+												className="w-full resize-none field-sizing-content p-2 border-2 border-grey/40 rounded-md focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200 "
+											/>
+										))}
+
+										<div className="w-full flex items-center gap-6">
+											<button
+												type="button"
+												onClick={() => addParagraph(section._id)}
+												className="bg-transparent text-secondary border border-secondary font-poppins font-sm text-sm p-2 rounded-lg cursor-pointer"
+											>
+												+ Add Paragraph
+											</button>
+
+											<button
+												type="button"
+												onClick={() => removeSection(section._id)}
+												className="bg-transparent text-red-500 border font-poppins text-sm p-2 flex items-center gap-1 rounded-lg cursor-pointer"
+											>
+												<MdDeleteOutline /> Remove Section
+											</button>
+										</div>
+									</div>
+								))}
+
+								<button
+									type="button"
+									onClick={addSection}
+									className="bg-transparent text-primary border-2 font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer"
+								>
+									+ Add Section
+								</button>
+							</div>
+						</fieldset>
 
 						<div className="w-full flex gap-6 items-center justify-end py-6 mt-8 border-t border-grey/50">
 							<button

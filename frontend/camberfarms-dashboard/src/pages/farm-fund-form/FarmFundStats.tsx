@@ -34,6 +34,8 @@ export default function FarmFundStats() {
 				newm: FarmFundNewReplies
 			}
 		},
+		refetchOnWindowFocus: false,
+		refetchOnMount: false,
 	})
 
 	const stats: HighlightCardProps[] = [

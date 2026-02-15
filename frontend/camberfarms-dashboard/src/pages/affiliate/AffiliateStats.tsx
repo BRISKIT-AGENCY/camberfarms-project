@@ -34,6 +34,8 @@ export default function AffiliateStats() {
 				newm: NewReplies
 			}
 		},
+		refetchOnWindowFocus: false,
+		refetchOnMount: false,
 	})
 
 	const stats: HighlightCardProps[] = [

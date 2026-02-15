@@ -34,6 +34,8 @@ export default function MembershipStats() {
 				newm: MembershipNewReplies
 			}
 		},
+		refetchOnWindowFocus: false,
+		refetchOnMount: false,
 	})
 
 	const stats: HighlightCardProps[] = [

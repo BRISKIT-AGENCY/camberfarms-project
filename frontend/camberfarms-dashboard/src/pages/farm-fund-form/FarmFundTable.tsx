@@ -17,6 +17,7 @@ export default function FarmFundTable() {
 				registrations: FarmFundEnquiry[]
 			}
 		},
+		refetchOnWindowFocus: false,
 	})
 
 	if (isPending || isRefetching) return <div>Loading...</div>

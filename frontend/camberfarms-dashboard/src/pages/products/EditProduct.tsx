@@ -5,6 +5,7 @@ import { IoClose } from 'react-icons/io5'
 import { useParams } from 'react-router-dom'
 import axiosInstance from '../../api/axios'
 import { Dropzone } from '../../components/Dropzone'
+import LoadingSpinner from '../../components/LoadingSpinner'
 import OverlayWrapper from '../../components/OverlayWrapper'
 import { useEditProduct } from '../../hooks/useEditProduct'
 import { useGoBack } from '../../hooks/useGoBack'
@@ -14,8 +15,6 @@ import type {
 	ProductVariants,
 } from '../../types/product'
 import { AddVariants } from './AddVariants'
-
-// TODO make this work
 
 function flattenProductInfo(product: Product | undefined): EditProductType {
 	return {
@@ -74,12 +73,22 @@ export default function EditProduct() {
 	useEffect(() => {
 		// if there's no productId, return to home (product page)
 		if (!params.productId) {
-			setTimeout(goBack, 1000)
+			const timer = setTimeout(goBack, 1000)
+			return () => clearTimeout(timer)
 		}
-	}, [params, goBack])
+	}, [params.productId, goBack])
 
-	if (isPending)
-		return <div className="w-full text-center">Loading product...</div>
+	// update fields onload
+	useEffect(() => {
+		// let loaded = false
+
+		if (!data?.product) return
+
+		setFormData(flattenProductInfo(data.product))
+		setVariants(data.product?.translations?.en?.variants)
+	}, [data?.product])
+
+	if (isPending || !data?.product) return <LoadingSpinner />
 
 	return (
 		<OverlayWrapper>
@@ -101,7 +110,7 @@ export default function EditProduct() {
 						</p>
 					</div>
 				)}
-				{product && (
+				{!error && product && (
 					<section className="">
 						<Dropzone
 							setState={setFile}
@@ -126,24 +135,22 @@ export default function EditProduct() {
 								{/* category */}
 								<label className="w-full flex flex-col gap-1">
 									<span className="text-grey text-sm">Product category</span>
-									<input
-										type="text"
-										value={product.category}
-										onChange={handleChange}
-										required
-										className="w-full p-2 border-2 border-grey/40 rounded-md focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
-										placeholder="Enter product name"
-										name="category"
-									/>
-									{/* <select
+									<select
 										name="category"
 										id="category"
-										value={product.translations.en.category}
+										value={product.category}
 										onChange={handleChange}
 										className="w-full p-2 border-2 border-grey/40 rounded-md focus-within:outline-0 focus-within:border-primary transition-all ease-in duration-200"
 									>
 										<option value="">Select category</option>
-									</select> */}
+										<option value="grain seed">Grain Seed</option>
+										<option value="tumeric">Tumeric</option>
+										<option value="raw pepper">Raw Pepper</option>
+										<option value="shea nut">Shea Nut</option>
+										<option value="soyabeans">Soya Beans</option>
+										<option value="wheat">Wheat</option>
+										<option value="others">Others</option>
+									</select>
 								</label>
 								{/* quantity */}
 								<label className="w-full flex flex-col gap-1">

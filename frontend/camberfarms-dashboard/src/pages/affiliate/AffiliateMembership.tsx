@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { IoClose } from 'react-icons/io5'
 import { useParams } from 'react-router-dom'
 import axiosInstance from '../../api/axios'
+import LoadingSpinner from '../../components/LoadingSpinner'
 import OverlayWrapper from '../../components/OverlayWrapper'
 import { useGoBack } from '../../hooks/useGoBack'
 import type { Affiliate } from '../../types/affiliate'
@@ -18,31 +19,33 @@ export default function AffiliateMembership() {
 		error,
 		isRefetching,
 	} = useQuery({
-		queryKey: [`affiliate/${params.id}`],
+		queryKey: [params.id],
 		queryFn: async () => {
 			const res = await axiosInstance.get(`affiliate/${params.id}`)
-			return res.data.data as Affiliate
+			return res.data?.data as Affiliate
 		},
+		refetchOnWindowFocus: false,
 	})
 	// update status
 	const { mutate, isPending: settingStatus } = useMutation({
-		mutationKey: [`affiliate/${params.id}`],
+		// mutationKey: [`affiliate/${params.id}`],
 		mutationFn: async (status: 'approved' | 'rejected') =>
 			axiosInstance.patch(`affiliate/${params.id}/status`, { status }),
 		onSuccess: () =>
 			queryClient.invalidateQueries({
-				queryKey: ['affiliates', `affiliate/${params.id}`],
+				queryKey: ['affiliates', params.id],
+				type: 'all',
 			}),
 	})
 
 	useEffect(() => {
 		if (!params?.id) {
-			setTimeout(goBack, 1000)
+			const timer = setTimeout(goBack, 1000)
+			return () => clearTimeout(timer)
 		}
-	}, [params, goBack])
+	}, [params.id, goBack])
 
-	if (isPending || isRefetching)
-		return <div className="w-full text-center">Loading...</div>
+	if (isPending || isRefetching) return <LoadingSpinner />
 
 	return (
 		<OverlayWrapper>
@@ -104,7 +107,7 @@ export default function AffiliateMembership() {
 									type="text"
 									value={farmer?.email}
 									readOnly
-									className="text-black dark:text-white text-base w-fit select-all outline-0 border-0"
+									className="text-black dark:text-white text-base w-full select-all outline-0 border-0"
 								/>
 							</label>
 							<label className="flex flex-col gap-1">

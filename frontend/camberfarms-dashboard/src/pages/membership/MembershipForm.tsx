@@ -1,8 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { IoClose } from 'react-icons/io5'
-import { useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 import axiosInstance from '../../api/axios'
+import LoadingSpinner from '../../components/LoadingSpinner'
 import OverlayWrapper from '../../components/OverlayWrapper'
 import { useGoBack } from '../../hooks/useGoBack'
 import type { Membership } from '../../types/membership'
@@ -38,12 +39,14 @@ export default function MembershipForm() {
 
 	useEffect(() => {
 		if (!params?.id) {
-			setTimeout(goBack, 1000)
+			const timer = setTimeout(goBack, 1000)
+			return () => clearTimeout(timer)
 		}
-	}, [params, goBack])
+	}, [params.id, goBack])
 
-	if (isPending || isRefetching)
-		return <div className="w-full text-center">Loading...</div>
+	if (isPending || isRefetching) return <LoadingSpinner />
+
+	if (!farmer) return <Navigate to={'/membership'} />
 
 	return (
 		<OverlayWrapper>

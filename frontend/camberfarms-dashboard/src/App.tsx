@@ -95,6 +95,11 @@ export default function App() {
 												element={<Navigate to={'/products'} />}
 											/>
 										</Route>
+
+										<Route
+											path="product?/:id"
+											element={<Navigate to={'/products'} />}
+										/>
 										{/* news */}
 										<Route path="news" element={<NewsPage />}>
 											<Route path="new" element={<AddNews />} />
@@ -137,6 +142,11 @@ export default function App() {
 												element={<ReplyEnquiry />}
 											/>
 										</Route>
+										<Route
+											path="enquiry?/:id"
+											element={<Navigate to={'/enquiries'} />}
+										/>
+
 										{/* membership */}
 										<Route path="membership" element={<MembershipPage />}>
 											<Route path=":id" element={<MembershipForm />} />
