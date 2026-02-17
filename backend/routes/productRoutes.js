@@ -8,13 +8,27 @@ const SUPPORTED_LANGUAGES = ['en', 'fr', 'es', 'it', 'ar', 'ru', 'zh', 'nl', 'de
 
 // Helper: get translation safely
 function getTranslation(product, lang) {
-  if (product.translations?.get(lang)) return product.translations.get(lang);
-  if (product.translations?.get('en')) return product.translations.get('en');
+  if (!product.translations) return {};
 
-  // fallback to first available translation
-  const firstLang = product.translations?.keys().next().value;
-  return firstLang ? product.translations.get(firstLang) : {};
+  const t = product.translations;
+
+  // Case 1: Mongoose Map
+  if (typeof t.get === 'function') {
+    if (t.get(lang)) return t.get(lang);
+    if (t.get('en')) return t.get('en');
+
+    const firstLang = t.keys().next().value;
+    return firstLang ? t.get(firstLang) : {};
+  }
+
+  // Case 2: Plain object (after .lean())
+  if (t[lang]) return t[lang];
+  if (t.en) return t.en;
+
+  const firstLang = Object.keys(t)[0];
+  return firstLang ? t[firstLang] : {};
 }
+
 
 // GET ALL PRODUCTS
 router.get('/products', async (req, res) => {
