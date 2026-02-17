@@ -1992,54 +1992,84 @@ router.patch('/products/:id', adminAuth, productUpload, async (req, res) => {
     let updateData = { ...req.body }
 
     const existingProduct = await Product.findById(id)
-    if (!existingProduct) return res.status(404).json({ message: 'Product not found' })
+    if (!existingProduct) {
+      return res.status(404).json({ message: 'Product not found' })
+    }
 
+    // =========================
     // IMAGE HANDLING
+    // =========================
     if (req.files && req.files.length > 0) {
       const newImages = req.files.map(file => `/uploads/products/${file.filename}`)
+
       if (existingProduct.images) {
         existingProduct.images.forEach(img => {
-          try { fs.unlinkSync(`.${img}`) } catch (err) { console.warn('Old image not found:', err.message) }
+          try {
+            fs.unlinkSync(`.${img}`)
+          } catch (err) {
+            console.warn('Old image not found:', err.message)
+          }
         })
       }
+
       updateData.images = newImages
     }
 
+    // =========================
+    // FIELD CHANGE DETECTION
+    // =========================
     const nameChanged = updateData.name !== undefined
     const categoryChanged = updateData.category !== undefined
     const descriptionChanged = updateData.description !== undefined
-    const variantsChanged = updateData.variants !== undefined
+    const variantsChanged = Array.isArray(updateData.variants)
 
     if (nameChanged || categoryChanged || descriptionChanged || variantsChanged) {
       const existingEn = existingProduct.translations.en
 
-      const newName = updateData.name || existingEn.name
-      const newCategory = updateData.category || existingEn.category
-      const newDescription = updateData.description || existingEn.description
-      const newVariants = updateData.variants || existingEn.variants
+      const newName = nameChanged ? updateData.name : existingEn.name
+      const newCategory = categoryChanged ? updateData.category : existingEn.category
+      const newDescription = descriptionChanged ? updateData.description : existingEn.description
+
+      const newVariants = variantsChanged
+        ? updateData.variants
+        : existingEn.variants || []
 
       const translations = {
-        en: { name: newName, category: newCategory, description: newDescription, variants: newVariants }
+        en: {
+          name: newName,
+          category: newCategory,
+          description: newDescription,
+          variants: newVariants
+        }
       }
 
       for (const lang of SUPPORTED_LANGUAGES) {
         if (lang === 'en') continue
+
         translations[lang] = {
           name: await translateTexts(newName, lang),
           category: await translateTexts(newCategory, lang),
           description: await translateTexts(newDescription, lang),
-          variants: await translateVariants(newVariants, lang)
+          variants: newVariants.length
+            ? await translateVariants(newVariants, lang)
+            : []
         }
       }
 
       updateData.translations = translations
+
+      // Remove top-level fields so they don't overwrite schema structure
       delete updateData.name
       delete updateData.category
       delete updateData.description
       delete updateData.variants
     }
 
-    const updatedProduct = await Product.findByIdAndUpdate(id, updateData, { new: true, runValidators: true })
+    const updatedProduct = await Product.findByIdAndUpdate(
+      id,
+      updateData,
+      { new: true, runValidators: true }
+    )
 
     const enTranslation = updatedProduct.translations.get('en')
 
@@ -2051,12 +2081,20 @@ router.patch('/products/:id', adminAuth, productUpload, async (req, res) => {
       link: `/products/${updatedProduct._id}`
     })
 
-    res.status(200).json({ message: 'Product updated successfully', product: updatedProduct })
+    res.status(200).json({
+      message: 'Product updated successfully',
+      product: updatedProduct
+    })
+
   } catch (err) {
     console.error(err)
-    res.status(500).json({ message: 'Failed to update product', error: err.message })
+    res.status(500).json({
+      message: 'Failed to update product',
+      error: err.message
+    })
   }
 })
+
 
 // DELETE PRODUCT
 router.delete('/products/:id', adminAuth, async (req, res) => {
