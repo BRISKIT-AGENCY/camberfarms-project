@@ -1,7 +1,7 @@
 import express from "express";
 import Gallery from '../models/Gallery.js'
 
-const router= express.Router
+const router= express.Router()
 
 router.get('/gallery', async (req, res) => {
   try {
