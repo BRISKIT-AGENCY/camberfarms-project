@@ -1,11 +1,12 @@
 'use client'
 
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRef, useState } from 'react'
 import arrowDown from '../../assets/icon/arrow-down.svg'
 import { useClickOutside } from '../../hooks/useClickOutside'
+import useGetProducts from '../../hooks/useGetProducts'
 import LocaleSwitcher from './LocaleSwitcher'
 import NavLink from './NavLink'
 
@@ -14,11 +15,13 @@ type NavProps = {
 }
 
 export default function DesktopNav({ darkBg }: NavProps) {
+	const locale = useLocale()
 	const [isOpen, setIsOpen] = useState(false)
 	const close = () => setIsOpen(false)
 	const ref = useRef<HTMLDivElement | null>(null)
 	// close menu when user clicks outside
 	useClickOutside(ref, close)
+	const { categories } = useGetProducts(locale)
 
 	const t = useTranslations('common.nav')
 	const tBtn = useTranslations('common.buttons')
@@ -83,14 +86,14 @@ export default function DesktopNav({ darkBg }: NavProps) {
 						/>
 					</h6>
 					{isOpen && (
-						<div className="bg-white rounded-2xl py-4 px-8 min-w-max shadow-2xl flex flex-col space-y-2 absolute top-6 z-20 transition-discrete duration-200 ease-in-out transition-all">
-							{PRODUCTS.map((p) => (
+						<div className="bg-white rounded-2xl py-4 px-8 min-w-max shadow-2xl flex flex-col space-y-2 absolute top-6 z-20 transition-discrete duration-200 ease-in-out transition-all capitalize">
+							{categories.map((cat) => (
 								<NavLink
-									key={p.id}
-									href={`/products/${p.name.replaceAll(' ', '-')}`}
+									key={cat._id}
+									href={`/products/${cat._id}`}
 									onClick={close}
 								>
-									{p.name}
+									{cat.category}
 								</NavLink>
 							))}
 						</div>
@@ -119,29 +122,29 @@ export default function DesktopNav({ darkBg }: NavProps) {
 	)
 }
 
-const PRODUCTS = [
-	{
-		id: 1,
-		name: 'grain seed',
-	},
-	{
-		id: 2,
-		name: 'tumeric',
-	},
-	{
-		id: 3,
-		name: 'raw pepper',
-	},
-	{
-		id: 4,
-		name: 'shea nut',
-	},
-	{
-		id: 5,
-		name: 'soyabeans',
-	},
-	{
-		id: 6,
-		name: 'wheat',
-	},
-]
+// const PRODUCTS = [
+// 	{
+// 		id: 1,
+// 		name: 'grain seed',
+// 	},
+// 	{
+// 		id: 2,
+// 		name: 'tumeric',
+// 	},
+// 	{
+// 		id: 3,
+// 		name: 'raw pepper',
+// 	},
+// 	{
+// 		id: 4,
+// 		name: 'shea nut',
+// 	},
+// 	{
+// 		id: 5,
+// 		name: 'soyabeans',
+// 	},
+// 	{
+// 		id: 6,
+// 		name: 'wheat',
+// 	},
+// ]

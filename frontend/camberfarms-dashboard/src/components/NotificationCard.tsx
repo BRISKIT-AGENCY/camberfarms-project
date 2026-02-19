@@ -8,12 +8,11 @@ export default function NotificationCard({
 	desc,
 	Icolor,
 	time,
-	id,
 	round = 'full',
 }: NotificationProps) {
 	return (
 		<Link
-			to={`/${iconName}/${id}`}
+			to={`/${iconName}`}
 			className="w-full block bg-white dark:bg-black rounded-lg py-1 hover:bg-light-grey dark:hover:bg-dark-grey"
 		>
 			<div className="w-full flex flex-nowrap items-center gap-3">

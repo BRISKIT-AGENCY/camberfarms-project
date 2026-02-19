@@ -1,13 +1,14 @@
+'use client'
+
+import { useLocale, useTranslations } from 'next-intl'
+import useGetProducts from '../hooks/useGetProducts'
 import ProductItem from './ProductItem'
 
-import { getTranslations } from 'next-intl/server'
-import pepperImg from '../assets/img/black-pepper.webp'
-import cashewImg from '../assets/img/cashew.webp'
-import grainsImg from '../assets/img/grain-seed.png'
-import tumericImg from '../assets/img/tumeric-root.webp'
+export default function Products() {
+	const locale = useLocale()
+	const { data: products, isPending } = useGetProducts(locale)
+	const t = useTranslations('products.products')
 
-export default async function Products() {
-	const t = await getTranslations('products.products')
 	return (
 		<section className="w-full pt-8 bg-white" aria-describedby="products">
 			<h4
@@ -18,30 +19,21 @@ export default async function Products() {
 			</h4>
 
 			<div className="w-full flex flex-col gap-28 mt-8 bg-light-green py-20 px-6 md:px-12">
-				<ProductItem
-					name="wheat"
-					img={grainsImg}
-					content="Our Wheat grain is available in two forms; solid grains and powdered grains (grinded/broken).The grains are sourced directly from the farms and transported to our cleaning facility where they are properly processed by hand picking to ensure final product is free of debris and unwanted particles.product is shipped in 25kg to 50kg bags in 40ft containers, containing 12 tons of products.
-current capacity is 10 containers monthly. Total monthly production volume is 120MT or 120,000 kilos."
-				/>
-				<ProductItem
-					name="black pepper"
-					img={pepperImg}
-					content="Our Wheat grain is available in two forms; solid grains and powdered grains (grinded/broken).The grains are sourced directly from the farms and transported to our cleaning facility where they are properly processed by hand picking to ensure final product is free of debris and unwanted particles.product is shipped in 25kg to 50kg bags in 40ft containers, containing 12 tons of products.
-current capacity is 10 containers monthly. Total monthly production volume is 120MT or 120,000 kilos."
-				/>
-				<ProductItem
-					name="raw cashew nuts"
-					img={cashewImg}
-					content="Our Wheat grain is available in two forms; solid grains and powdered grains (grinded/broken).The grains are sourced directly from the farms and transported to our cleaning facility where they are properly processed by hand picking to ensure final product is free of debris and unwanted particles.product is shipped in 25kg to 50kg bags in 40ft containers, containing 12 tons of products.
-current capacity is 10 containers monthly. Total monthly production volume is 120MT or 120,000 kilos."
-				/>
-				<ProductItem
-					name="tumeric"
-					img={tumericImg}
-					content="Our Wheat grain is available in two forms; solid grains and powdered grains (grinded/broken).The grains are sourced directly from the farms and transported to our cleaning facility where they are properly processed by hand picking to ensure final product is free of debris and unwanted particles.product is shipped in 25kg to 50kg bags in 40ft containers, containing 12 tons of products.
-current capacity is 10 containers monthly. Total monthly production volume is 120MT or 120,000 kilos."
-				/>
+				{isPending && (
+					<div className="w-full">
+						<p>Loading products...</p>
+					</div>
+				)}
+				{products &&
+					products.map((p) => (
+						<ProductItem
+							_id={p._id}
+							key={p._id}
+							name={p.name}
+							img={p?.images?.[0]}
+							content={p.description}
+						/>
+					))}
 			</div>
 		</section>
 	)

@@ -1,6 +1,6 @@
 'use client'
 
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRef, useState } from 'react'
@@ -8,6 +8,7 @@ import arrowDown from '../../assets/icon/arrow-down.svg'
 import closeIcon from '../../assets/icon/close-icon.svg'
 import hamburgerIcon from '../../assets/icon/hamburger.svg'
 import { useClickOutside } from '../../hooks/useClickOutside'
+import useGetProducts from '../../hooks/useGetProducts'
 import LocaleSwitcher from './LocaleSwitcher'
 import NavLink from './NavLink'
 
@@ -67,6 +68,8 @@ export default function MobileNav() {
 }
 
 function NavMenu({ closeNav }: NavMenuProps) {
+	const locale = useLocale()
+	const { categories } = useGetProducts(locale)
 	const [isOpen, setIsOpen] = useState(false)
 	const t = useTranslations('common.nav')
 	const tBtn = useTranslations('common.buttons')
@@ -93,7 +96,7 @@ function NavMenu({ closeNav }: NavMenuProps) {
 						isOpen ? 'text-primary font-poppins font-bold border-b-2' : ''
 					}`}
 				>
-					<span>{t('products')}</span>
+					<NavLink href="/products">{t('products')}</NavLink>
 					<Image
 						src={arrowDown}
 						alt=""
@@ -105,14 +108,14 @@ function NavMenu({ closeNav }: NavMenuProps) {
 					/>
 				</h6>
 				{isOpen && (
-					<div className="w-full flex flex-col pt-2 space-y-2 transition-discrete duration-200 ease-in-out transition-all">
-						{PRODUCTS.map((p) => (
+					<div className="w-full flex flex-col pt-2 space-y-2 transition-discrete duration-200 ease-in-out transition-all capitalize">
+						{categories.map((p) => (
 							<NavLink
-								key={p.id}
-								href={`/products/${p.name.replaceAll(' ', '-')}`}
+								key={p._id}
+								href={`/products/${p._id}`}
 								onClick={closeNav}
 							>
-								{p.name}
+								{p.category}
 							</NavLink>
 						))}
 					</div>
@@ -149,30 +152,3 @@ function NavMenu({ closeNav }: NavMenuProps) {
 		</div>
 	)
 }
-
-const PRODUCTS = [
-	{
-		id: 1,
-		name: 'grain seed',
-	},
-	{
-		id: 2,
-		name: 'tumeric',
-	},
-	{
-		id: 3,
-		name: 'raw pepper',
-	},
-	{
-		id: 4,
-		name: 'shea nut',
-	},
-	{
-		id: 5,
-		name: 'soyabeans',
-	},
-	{
-		id: 6,
-		name: 'wheat',
-	},
-]

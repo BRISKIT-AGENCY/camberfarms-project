@@ -12,7 +12,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
 	const [theme, setTheme] = useState<ThemePreference>(() => {
-		return (localStorage.getItem('theme') as ThemePreference) || 'system'
+		return (localStorage.getItem('theme') as ThemePreference) || 'light'
 	})
 
 	// Calculate the actual theme based on selection or system

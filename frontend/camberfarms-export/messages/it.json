@@ -13,7 +13,37 @@
 		},
 		"faq": {
 			"heading": "Domande frequenti",
-			"paragraph": "Abbiamo risposto con attenzione ad alcune domande ben formulate, anche se non a tutte le possibili. Vi invitiamo a inviarci una richiesta e risponderemo prontamente."
+			"paragraph": "Abbiamo risposto con attenzione ad alcune domande ben formulate, anche se non a tutte le possibili. Vi invitiamo a inviarci una richiesta e risponderemo prontamente.",
+			"faqs": [
+				{
+					"question": "AVETE TUTTI I PRODOTTI AGRICOLI E DERIVATI DISPONIBILI IN QUALSIASI MOMENTO?",
+					"answer": "La disponibilità dei prodotti dipende dalla stagione specifica in cui viene effettuata la richiesta. I cicli stagionali influenzano anche i prezzi e i livelli di approvvigionamento."
+				},
+				{
+					"question": "I VOSTRI PREZZI SONO COMPETITIVI?",
+					"answer": "Manteniamo rapporti diretti con i nostri agricoltori, gestendo la catena di approvvigionamento dal campo fino alla trasformazione e alla consegna finale. Questo approccio ottimizzato ci consente di offrire prezzi altamente competitivi senza compromettere la qualità."
+				},
+				{
+					"question": "AVETE LA CAPACITÀ FINANZIARIA PER EVADERE ORDINI DI GRANDI DIMENSIONI?",
+					"answer": "Sì, la abbiamo. Siamo ben posizionati per gestire ordini ad alto volume e supportare le transazioni tramite pagamenti anticipati e strumenti finanziari come lettere di credito, garantendo una gestione efficiente e consegne puntuali."
+				},
+				{
+					"question": "LE VOSTRE CONSEGNE SONO PUNTUALI?",
+					"answer": "La preparazione della spedizione richiede generalmente circa due settimane, seguita da un tempo di transito marittimo stimato tra 30 e 45 giorni, a seconda della destinazione e delle condizioni di spedizione."
+				},
+				{
+					"question": "COME EFFETTUATE L'ISPEZIONE DELLE SPEDIZIONI DEI VOSTRI PRODOTTI?",
+					"answer": "Applichiamo un sistema di controllo qualità rigoroso ed efficiente durante l'intero processo di produzione ed esportazione. Inoltre, accettiamo volentieri servizi di ispezione indipendenti di terze parti come SGS, Bureau Veritas e altre agenzie riconosciute a livello internazionale."
+				},
+				{
+					"question": "QUALI SONO LE VOSTRE CONDIZIONI DI PAGAMENTO?",
+					"answer": "Le nostre condizioni standard richiedono un pagamento anticipato del 30%, con il saldo restante da corrispondere alla ricezione delle copie scansionate dei documenti di spedizione originali. Il rilascio telex o la spedizione tramite corriere viene effettuata una volta confermato il pagamento completo."
+				},
+				{
+					"question": "QUALI DOCUMENTI SONO RICHIESTI PER LO SDOGANAMENTO DELLA SPEDIZIONE?",
+					"answer": "Forniamo tutti i documenti di esportazione standard richiesti per lo sdoganamento, inclusi il polizza di carico originale, il certificato di origine, il certificato fitosanitario, il certificato di fumigazione, la distinta di imballaggio e la fattura commerciale."
+				}
+			]
 		},
 		"footer": {
 			"info": {

@@ -13,7 +13,37 @@
 		},
 		"faq": {
 			"heading": "Preguntas frecuentes",
-			"paragraph": "Hemos respondido cuidadosamente algunas preguntas bien pensadas, aunque no limitadas a todas sus dudas. Por favor envíenos una consulta y responderemos con prontitud."
+			"paragraph": "Hemos respondido cuidadosamente algunas preguntas bien pensadas, aunque no limitadas a todas sus dudas. Por favor envíenos una consulta y responderemos con prontitud.",
+			"faqs": [
+				{
+					"question": "¿TIENEN TODOS LOS PRODUCTOS AGRÍCOLAS Y DERIVADOS DISPONIBLES EN TODO MOMENTO?",
+					"answer": "La disponibilidad de los productos depende de la temporada específica en la que se realice la solicitud. Los ciclos estacionales también influyen en los precios y los niveles de suministro."
+				},
+				{
+					"question": "¿QUÉ TAN COMPETITIVOS SON SUS PRECIOS?",
+					"answer": "Mantenemos relaciones directas con nuestros agricultores, gestionando la cadena de suministro desde la salida de la finca hasta el procesamiento y la entrega final. Este enfoque optimizado nos permite ofrecer precios altamente competitivos sin comprometer la calidad."
+				},
+				{
+					"question": "¿TIENEN LA CAPACIDAD FINANCIERA PARA CUMPLIR CON GRANDES PEDIDOS?",
+					"answer": "Sí, así es. Estamos bien posicionados para manejar pedidos de gran volumen y respaldar las transacciones mediante pagos anticipados e instrumentos financieros como cartas de crédito, garantizando un procesamiento eficiente y una entrega puntual."
+				},
+				{
+					"question": "¿QUÉ TAN PUNTUAL ES SU ENTREGA?",
+					"answer": "La preparación del envío generalmente toma aproximadamente dos semanas, seguida de un tiempo estimado de tránsito marítimo de 30 a 45 días, dependiendo del destino y las condiciones de envío."
+				},
+				{
+					"question": "¿CÓMO REALIZAN LA INSPECCIÓN DE LOS ENVÍOS DE SUS PRODUCTOS?",
+					"answer": "Operamos un sistema de control de calidad riguroso y eficiente a lo largo de nuestros procesos de producción y exportación. Además, aceptamos con gusto servicios de inspección independientes de terceros como SGS, Bureau Veritas y otras agencias reconocidas internacionalmente."
+				},
+				{
+					"question": "¿CUÁLES SON SUS CONDICIONES DE PAGO?",
+					"answer": "Nuestras condiciones estándar requieren un anticipo del 30 %, y el saldo restante se paga al recibir copias escaneadas de los documentos originales de envío. La liberación por télex o el envío por mensajería se realiza una vez confirmado el pago total."
+				},
+				{
+					"question": "¿QUÉ DOCUMENTOS SE REQUIEREN PARA EL DESPACHO DE LA MERCANCÍA?",
+					"answer": "Proporcionamos toda la documentación estándar de exportación requerida para el despacho, incluyendo el conocimiento de embarque original, el certificado de origen, el certificado fitosanitario, el certificado de fumigación, la lista de empaque y la factura comercial."
+				}
+			]
 		},
 		"footer": {
 			"info": {

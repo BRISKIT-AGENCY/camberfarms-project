@@ -26,7 +26,7 @@ export default function Faq() {
 				{faqs.map((faq, index) => (
 					<FaqItem
 						key={index}
-						faq={faq}
+						id={index}
 						isOpen={openIndex === index}
 						onToggle={() => setOpenIndex(openIndex === index ? null : index)}
 					/>

@@ -1,7 +1,5 @@
 'use client'
 
-// import i18n from '@/i18n'
-// import { useTranslation } from "react-i18next"
 import Image from 'next/image'
 import { useRef, useState } from 'react'
 import arrowDown from '../../assets/icon/arrow-down.svg'

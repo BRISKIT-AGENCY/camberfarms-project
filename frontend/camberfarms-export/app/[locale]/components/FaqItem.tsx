@@ -1,20 +1,15 @@
-// 'use client'
-
+import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import arrowDown from '../assets/icon/arrow-down.svg'
 
-type FAQ = {
-	question: string
-	answer: string
-}
-
 type FaqItemProps = {
-	faq: FAQ
+	id: number
 	isOpen: boolean
 	onToggle: () => void
 }
 
-export default function FaqItem({ faq, isOpen, onToggle }: FaqItemProps) {
+export default function FaqItem({ id, isOpen, onToggle }: FaqItemProps) {
+	const t = useTranslations('common.faq')
 	return (
 		<div className="w-full p-2 bg-[#F7F7F7] shadow-xs transition hover:shadow">
 			<button
@@ -24,7 +19,7 @@ export default function FaqItem({ faq, isOpen, onToggle }: FaqItemProps) {
 				aria-expanded={isOpen}
 			>
 				<span className="text-left text-sm md:text-base capitalize">
-					{faq.question}
+					{t(`faqs.${id}.question`)}
 				</span>
 				<Image
 					src={arrowDown}
@@ -43,7 +38,9 @@ export default function FaqItem({ faq, isOpen, onToggle }: FaqItemProps) {
 						: 'grid-rows-[0fr] opacity-0'
 				}`}
 			>
-				<p className="px-0.5 overflow-hidden text-grey">{faq.answer}</p>
+				<p className="px-0.5 overflow-hidden text-grey">
+					{t(`faqs.${id}.answer`)}
+				</p>
 			</div>
 		</div>
 	)

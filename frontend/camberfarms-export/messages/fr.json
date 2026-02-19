@@ -13,7 +13,37 @@
 		},
 		"faq": {
 			"heading": "Questions fréquemment posées",
-			"paragraph": "Nous avons soigneusement répondu à certaines questions frément posées, sans toutefois couvrir l’ensemble de vos préoccupations. Veuillez nous envoyer une demande et nous vous répondrons dans les plus brefs délais."
+			"paragraph": "Nous avons soigneusement répondu à certaines questions frément posées, sans toutefois couvrir l’ensemble de vos préoccupations. Veuillez nous envoyer une demande et nous vous répondrons dans les plus brefs délais.",
+			"faqs": [
+				{
+					"question": "AVEZ-VOUS TOUS LES PRODUITS AGRICOLES ET DÉRIVÉS DISPONIBLES EN PERMANENCE ?",
+					"answer": "La disponibilité des produits dépend de la saison spécifique au moment de la demande. Les cycles saisonniers influencent également les prix et les niveaux d’approvisionnement."
+				},
+				{
+					"question": "VOS PRIX SONT-ILS COMPÉTITIFS ?",
+					"answer": "Nous entretenons des relations directes avec nos agriculteurs, en gérant la chaîne d’approvisionnement depuis la sortie de ferme jusqu’à la transformation et à la livraison finale. Cette approche rationalisée nous permet d’offrir des prix hautement compétitifs sans compromettre la qualité."
+				},
+				{
+					"question": "AVEZ-VOUS LA CAPACITÉ FINANCIÈRE POUR HONORER DE GROSSES COMMANDES ?",
+					"answer": "Oui, tout à fait. Nous sommes bien positionnés pour gérer des commandes en grande quantité et soutenir les transactions par des paiements anticipés et des instruments financiers tels que les lettres de crédit, garantissant un traitement efficace et une livraison dans les délais."
+				},
+				{
+					"question": "VOS LIVRAISONS SONT-ELLES PONCTUELLES ?",
+					"answer": "La préparation de l’expédition prend généralement environ deux semaines, suivie d’un délai de transit maritime estimé entre 30 et 45 jours, selon la destination et les conditions d’expédition."
+				},
+				{
+					"question": "COMMENT EFFECTUEZ-VOUS L’INSPECTION DES EXPÉDITIONS DE VOS PRODUITS ?",
+					"answer": "Nous appliquons un système de contrôle qualité rigoureux et efficace tout au long de nos processus de production et d’exportation. De plus, nous acceptons volontiers les services d’inspection indépendants de tiers tels que SGS, Bureau Veritas et d’autres organismes internationalement reconnus."
+				},
+				{
+					"question": "QUELLES SONT VOS CONDITIONS DE PAIEMENT ?",
+					"answer": "Nos conditions standard exigent un acompte de 30 %, le solde restant étant payable à réception des copies scannées des documents d’expédition originaux. La mainlevée par télex ou l’envoi par courrier est effectué une fois le paiement intégral confirmé."
+				},
+				{
+					"question": "QUELS DOCUMENTS SONT REQUIS POUR LE DÉDOUANEMENT DE LA MARCHANDISE ?",
+					"answer": "Nous fournissons tous les documents d’exportation standards requis pour le dédouanement, notamment le connaissement original, le certificat d’origine, le certificat phytosanitaire, le certificat de fumigation, la liste de colisage et la facture commerciale."
+				}
+			]
 		},
 		"footer": {
 			"info": {

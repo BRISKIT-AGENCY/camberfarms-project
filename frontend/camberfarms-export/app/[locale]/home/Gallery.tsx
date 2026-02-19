@@ -1,19 +1,17 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import cashewsImg from '../assets/img/cashews.png'
-import cropsImg from '../assets/img/crops.png'
-import farmerLadyImg from '../assets/img/farmer-veg.png'
-import farmersImg from '../assets/img/farmers.png'
 import GalleryItem from './GalleryItem'
 
 import { Splide, SplideSlide } from 'react-splide-ts'
 import 'react-splide-ts/css'
+import useGetGalleries from '../hooks/useGetGalleries'
 
 export default function Gallery() {
 	const t = useTranslations('home.gallery')
+	const { data: gallery, isPending } = useGetGalleries()
 
-	const images = [cropsImg, farmerLadyImg, farmersImg, cashewsImg]
+	if (isPending) return null
 
 	return (
 		<section
@@ -39,18 +37,12 @@ export default function Gallery() {
 						arrows: true,
 					}}
 				>
-					<SplideSlide>
-						<GalleryItem images={images} />
-					</SplideSlide>
-					<SplideSlide>
-						<GalleryItem images={images} />
-					</SplideSlide>
-					<SplideSlide>
-						<GalleryItem images={images} />
-					</SplideSlide>
-					<SplideSlide>
-						<GalleryItem images={images} />
-					</SplideSlide>
+					{gallery &&
+						gallery.map((item) => (
+							<SplideSlide key={item._id}>
+								<GalleryItem images={item.images} />
+							</SplideSlide>
+						))}
 				</Splide>
 			</div>
 		</section>

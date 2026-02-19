@@ -13,7 +13,37 @@
 		},
 		"faq": {
 			"heading": "Veelgestelde vragen",
-			"paragraph": "We hebben zorgvuldig een aantal veelgestelde vragen beantwoord, maar dit dekt niet alle mogelijke vragen. Stuur ons gerust een aanvraag en wij zullen snel reageren."
+			"paragraph": "We hebben zorgvuldig een aantal veelgestelde vragen beantwoord, maar dit dekt niet alle mogelijke vragen. Stuur ons gerust een aanvraag en wij zullen snel reageren.",
+			"faqs": [
+				{
+					"question": "HEEFT U ALLE AGRARISCHE EN AANVERWANTE PRODUCTEN TE ALLEN TIJDE BESCHIKBAAR?",
+					"answer": "De beschikbaarheid van producten hangt af van het specifieke seizoen waarin het verzoek wordt gedaan. Seizoenscycli beïnvloeden ook de prijzen en voorraadniveaus."
+				},
+				{
+					"question": "HOE CONCURREREND ZIJN UW PRIJZEN?",
+					"answer": "Wij onderhouden directe relaties met onze boeren en beheren de toeleveringsketen vanaf de boerderij tot de verwerking en uiteindelijke levering. Deze gestroomlijnde aanpak stelt ons in staat om zeer concurrerende prijzen te bieden zonder concessies te doen aan kwaliteit."
+				},
+				{
+					"question": "HEEFT U DE FINANCIËLE CAPACITEIT OM GROTE BESTELLINGEN UIT TE VOEREN?",
+					"answer": "Ja, dat hebben we. Wij zijn goed gepositioneerd om grote bestellingen te verwerken en ondersteunen transacties via vooruitbetalingen en financiële instrumenten zoals letters of credit, wat zorgt voor een efficiënte afhandeling en tijdige levering."
+				},
+				{
+					"question": "HOE TIJDGEBONDEN IS UW LEVERING?",
+					"answer": "De voorbereiding van verzending duurt doorgaans ongeveer twee weken, gevolgd door een geschatte zeevaarttijd van 30 tot 45 dagen, afhankelijk van de bestemming en de verzendomstandigheden."
+				},
+				{
+					"question": "HOE VOERT U DE INSPECTIE VAN UW PRODUCTZENDINGEN UIT?",
+					"answer": "Wij hanteren een streng en efficiënt kwaliteitscontrolesysteem gedurende ons gehele productie- en exportproces. Bovendien werken wij graag samen met onafhankelijke derden zoals SGS, Bureau Veritas en andere internationaal erkende inspectie-instellingen."
+				},
+				{
+					"question": "WAT ZIJN UW BETALINGSVOORWAARDEN?",
+					"answer": "Onze standaardvoorwaarden vereisen een vooruitbetaling van 30%, met het resterende saldo te voldoen bij ontvangst van gescande kopieën van de originele verzenddocumenten. Telexvrijgave of koerierverzending wordt uitgevoerd zodra de volledige betaling is bevestigd."
+				},
+				{
+					"question": "WELKE DOCUMENTEN ZIJN VEREIST VOOR DE INKLAAR VAN DE ZENDING?",
+					"answer": "Wij leveren alle standaard exportdocumenten die nodig zijn voor inklaring, inclusief het originele cognossement, certificaat van oorsprong, fytosanitair certificaat, fumigatiecertificaat, paklijst en commerciële factuur."
+				}
+			]
 		},
 		"footer": {
 			"info": {

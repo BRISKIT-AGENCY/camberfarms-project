@@ -13,7 +13,37 @@
 		},
 		"faq": {
 			"heading": "Perguntas frequentes",
-			"paragraph": "Respondemos cuidadosamente a algumas perguntas bem elaboradas, embora não se limitem a todas as suas dúvidas. Por favor, envie-nos uma consulta e responderemos prontamente."
+			"paragraph": "Respondemos cuidadosamente a algumas perguntas bem elaboradas, embora não se limitem a todas as suas dúvidas. Por favor, envie-nos uma consulta e responderemos prontamente.",
+			"faqs": [
+				{
+					"question": "VOCÊS TÊM TODOS OS PRODUTOS AGRÍCOLAS E ASSOCIADOS DISPONÍVEIS EM TODOS OS MOMENTOS?",
+					"answer": "A disponibilidade dos produtos depende da estação específica em que o pedido é feito. Os ciclos sazonais também influenciam os preços e os níveis de fornecimento."
+				},
+				{
+					"question": "QUÃO COMPETITIVOS SÃO SEUS PREÇOS?",
+					"answer": "Mantemos relações diretas com nossos agricultores, gerenciando a cadeia de suprimentos desde a fazenda até o processamento e entrega final. Essa abordagem otimizada nos permite oferecer preços altamente competitivos sem comprometer a qualidade."
+				},
+				{
+					"question": "VOCÊS TÊM CAPACIDADE FINANCEIRA PARA ATENDER GRANDES PEDIDOS?",
+					"answer": "Sim, temos. Estamos bem posicionados para lidar com pedidos de grande volume e apoiar transações por meio de pagamentos antecipados e instrumentos financeiros, como cartas de crédito, garantindo processamento eficiente e entrega pontual."
+				},
+				{
+					"question": "SUAS ENTREGAS SÃO PONTUAIS?",
+					"answer": "A preparação do envio geralmente leva cerca de duas semanas, seguida por um tempo estimado de trânsito marítimo de 30 a 45 dias, dependendo do destino e das condições de envio."
+				},
+				{
+					"question": "COMO VOCÊS REALIZAM A INSPEÇÃO DOS PRODUTOS ENVIADOS?",
+					"answer": "Operamos um sistema rigoroso e eficiente de controle de qualidade em todos os nossos processos de produção e exportação. Além disso, aceitamos facilmente serviços de inspeção independentes de terceiros, como SGS, Bureau Veritas e outras agências internacionalmente reconhecidas."
+				},
+				{
+					"question": "QUAIS SÃO SEUS TERMOS DE PAGAMENTO?",
+					"answer": "Nossos termos padrão exigem pagamento antecipado de 30%, com o saldo restante a ser pago mediante recebimento de cópias digitalizadas dos documentos de embarque originais. A liberação por telex ou o envio por correio é realizado após a confirmação do pagamento integral."
+				},
+				{
+					"question": "QUAIS DOCUMENTOS SÃO NECESSÁRIOS PARA A LIBERAÇÃO DA CARGA?",
+					"answer": "Fornecemos toda a documentação padrão de exportação necessária para a liberação alfandegária, incluindo conhecimento de embarque original, certificado de origem, certificado fitossanitário, certificado de fumigação, lista de embalagem e fatura comercial."
+				}
+			]
 		},
 		"footer": {
 			"info": {

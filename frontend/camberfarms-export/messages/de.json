@@ -13,7 +13,37 @@
 		},
 		"faq": {
 			"heading": "Häufig gestellte Fragen",
-			"paragraph": "Wir haben einige häufige Fragen sorgfältig beantwortet, jedoch nicht alle. Bitte senden Sie uns eine Anfrage, und wir werden umgehend antworten."
+			"paragraph": "Wir haben einige häufige Fragen sorgfältig beantwortet, jedoch nicht alle. Bitte senden Sie uns eine Anfrage, und wir werden umgehend antworten.",
+			"faqs": [
+				{
+					"question": "HABEN SIE ALLE LANDWIRTSCHAFTLICHEN UND VERWANDTEN PRODUKTE JEDERZEIT VERFÜGBAR?",
+					"answer": "Die Produktverfügbarkeit hängt von der jeweiligen Saison zum Zeitpunkt der Anfrage ab. Saisonale Zyklen beeinflussen auch die Preise und die Liefermengen."
+				},
+				{
+					"question": "WIE WETTBEWERBSFÄHIG SIND IHRE PREISE?",
+					"answer": "Wir pflegen direkte Beziehungen zu unseren Landwirten und steuern die Lieferkette vom Hof über die Verarbeitung bis hin zur endgültigen Lieferung. Dieser optimierte Ansatz ermöglicht es uns, äußerst wettbewerbsfähige Preise anzubieten, ohne Kompromisse bei der Qualität einzugehen."
+				},
+				{
+					"question": "HABEN SIE DIE FINANZIELLE KAPAZITÄT, GROSSE BESTELLUNGEN ZU ERFÜLLEN?",
+					"answer": "Ja, das haben wir. Wir sind gut aufgestellt, um Großaufträge abzuwickeln und Transaktionen durch Vorauszahlungen sowie Finanzinstrumente wie Akkreditive zu unterstützen, wodurch eine effiziente Abwicklung und termingerechte Lieferung gewährleistet wird."
+				},
+				{
+					"question": "WIE TERMINGERECHT IST IHRE LIEFERUNG?",
+					"answer": "Die Versandvorbereitung dauert in der Regel etwa zwei Wochen, gefolgt von einer geschätzten Seetransitzeit von 30 bis 45 Tagen, abhängig vom Zielort und den Versandbedingungen."
+				},
+				{
+					"question": "WIE FÜHREN SIE DIE INSPEKTION IHRER PRODUKTVERSENDUNGEN DURCH?",
+					"answer": "Wir arbeiten mit einem strengen und effizienten Qualitätskontrollsystem während unseres gesamten Produktions- und Exportprozesses. Darüber hinaus akzeptieren wir problemlos unabhängige Drittinspektionsdienste wie SGS, Bureau Veritas und andere international anerkannte Organisationen."
+				},
+				{
+					"question": "WELCHE ZAHLUNGSBEDINGUNGEN BIETEN SIE AN?",
+					"answer": "Unsere Standardbedingungen erfordern eine Anzahlung von 30 %, wobei der Restbetrag nach Erhalt gescannter Kopien der Original-Versanddokumente fällig ist. Die Telex-Freigabe oder der Kurier-Versand erfolgt nach Bestätigung des vollständigen Zahlungseingangs."
+				},
+				{
+					"question": "WELCHE DOKUMENTE SIND FÜR DIE ZOLLABFERTIGUNG DER SENDUNG ERFORDERLICH?",
+					"answer": "Wir stellen alle für die Zollabfertigung erforderlichen Standard-Exportdokumente bereit, einschließlich des Original-Konnossements, Ursprungszeugnisses, Pflanzengesundheitszeugnisses, Begasungszertifikats, der Packliste und der Handelsrechnung."
+				}
+			]
 		},
 		"footer": {
 			"info": {
