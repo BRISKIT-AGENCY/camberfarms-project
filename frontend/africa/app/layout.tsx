@@ -21,7 +21,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
 	title: 'CamberFarms Africa',
-	description: 'An agricultural website.',
+	description: 'African agricultural community.',
 }
 
 export default function RootLayout({
