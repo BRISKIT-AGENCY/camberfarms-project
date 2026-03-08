@@ -47,7 +47,7 @@ export default function MobileNav() {
 				{isOpenNav && (
 					<Image
 						src={closeIcon}
-						alt="camberfarms"
+						alt="close"
 						fill
 						priority
 						className="object-contain"
@@ -56,7 +56,7 @@ export default function MobileNav() {
 				{!isOpenNav && (
 					<Image
 						src={hamburgerIcon}
-						alt="camberfarms"
+						alt="open"
 						fill
 						priority
 						className="object-contain"
@@ -144,7 +144,8 @@ function NavMenu({ closeNav }: NavMenuProps) {
 			</NavLink>
 			<LocaleSwitcher />
 			<Link
-				href={'#'}
+				href={'https://camberfarms.org/'}
+				target="_blank"
 				className="py-2 px-4 flex mt-4 rounded-lg font-poppins font-bold capitalize bg-primary text-white"
 			>
 				{tBtn('explore')}

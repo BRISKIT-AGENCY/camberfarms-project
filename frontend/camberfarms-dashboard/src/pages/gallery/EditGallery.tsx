@@ -19,7 +19,7 @@ export default function EditGallery() {
 			const timer = setTimeout(goBack, 1000)
 			return () => clearTimeout(timer)
 		}
-	}, [params, image, goBack])
+	}, [params.imageId, image, goBack])
 
 	return (
 		<OverlayWrapper>

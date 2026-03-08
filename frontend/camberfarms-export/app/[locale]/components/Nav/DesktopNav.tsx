@@ -111,7 +111,8 @@ export default function DesktopNav({ darkBg }: NavProps) {
 				<LocaleSwitcher />
 			</div>
 			<Link
-				href={'#'}
+				href={'https://camberfarms.org/'}
+				target="_blank"
 				className={`py-2 px-4 rounded-lg font-poppins font-bold capitalize ${
 					darkBg ? 'bg-white text-primary' : 'bg-primary text-white'
 				}`}

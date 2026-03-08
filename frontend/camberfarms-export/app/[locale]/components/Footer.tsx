@@ -4,14 +4,15 @@ import Link from 'next/link'
 import callIcon from '../assets/icon/call-white.svg'
 import facebookIcon from '../assets/icon/facebook-f.svg'
 import instagramIcon from '../assets/icon/instagram.svg'
-import linkedinIcon from '../assets/icon/linkedin-in.svg'
+// import linkedinIcon from '../assets/icon/linkedin-in.svg'
 import locationIcon from '../assets/icon/location-white.svg'
 import mailIcon from '../assets/icon/mail-white.svg'
-import twitterIcon from '../assets/icon/twitter-x.svg'
+// import twitterIcon from '../assets/icon/twitter-x.svg'
 import bgPatternImg from '../assets/img/bg-pattern-white.png'
 
 export default async function Footer() {
 	const t = await getTranslations('common.footer')
+	const tHero = await getTranslations('home.hero')
 
 	return (
 		<footer className="h-164.25 lg:h-94.5 bg-grey w-full flex items-center py-13 px-6 lg:px-25 lg:py-16.5 relative font-inter">
@@ -61,8 +62,7 @@ export default async function Footer() {
 						<div className="flex gap-3 mt-4 lg:mt-0 max-w-lg">
 							<Image src={locationIcon} alt="location" />
 							<address className="not-italic decoration-0">
-								Graceland Plaza, by Mobil Junction along Nkpolu-Rumuigbo east
-								west road, Port Harcourt Rivers State Nigeria.
+								{tHero('address')}
 							</address>
 						</div>
 						<div className="flex gap-3 mt-4 lg:mt-0">
@@ -85,36 +85,23 @@ export default async function Footer() {
 							>
 								<Image
 									src={instagramIcon}
-									alt="instagram icon"
-									width={30.5}
-									height={30.5}
+									alt="instagram"
+									className="w-9"
+									// width={30.5}
+									// height={30.5}
 								/>
 							</a>
-							<a href="www.twitter.com" target="_blank">
-								<Image
-									src={twitterIcon}
-									alt="twitter icon"
-									width={30.5}
-									height={30.5}
-								/>
-							</a>
+
 							<a
 								href="https://www.facebook.com/share/17uHp1Yiyx/?mibextid=wwXIfr"
 								target="_blank"
 							>
 								<Image
 									src={facebookIcon}
-									alt="facebook icon"
-									width={30.5}
-									height={30.5}
-								/>
-							</a>
-							<a href="www.linkedin.com" target="_blank">
-								<Image
-									src={linkedinIcon}
-									alt="linkedin icon"
-									width={30.5}
-									height={30.5}
+									alt="facebook"
+									className="w-9"
+									// width={30.5}
+									// height={30.5}
 								/>
 							</a>
 						</div>

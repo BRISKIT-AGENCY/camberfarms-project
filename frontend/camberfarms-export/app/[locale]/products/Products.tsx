@@ -34,6 +34,11 @@ export default function Products() {
 							content={p.description}
 						/>
 					))}
+				{!products && (
+					<p className="text-center font-semibold text-red-400">
+						We are out of stock at this time.
+					</p>
+				)}
 			</div>
 		</section>
 	)

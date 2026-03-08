@@ -3,9 +3,9 @@ import Link from 'next/link'
 import arrowIcon from '../assets/icon/arrow-r-white.svg'
 import facebookIcon from '../assets/icon/facebook-f.svg'
 import instagramIcon from '../assets/icon/instagram.svg'
-import linkedinIcon from '../assets/icon/linkedin-in.svg'
+// import linkedinIcon from '../assets/icon/linkedin-in.svg'
 import locationIcon from '../assets/icon/location-white.svg'
-import twitterIcon from '../assets/icon/twitter-x.svg'
+// import twitterIcon from '../assets/icon/twitter-x.svg'
 import nutsBgImgSmall from '../assets/img/nuts-bg.webp'
 import tomatoesImg from '../assets/img/tomato-shrubs.png'
 
@@ -56,8 +56,8 @@ export default async function Hero() {
 						className="h-full w-auto object-contain"
 					/>
 				</Link>
-				<div className="w-full h-20 sm:h-24 flex flex-col bg-primary mt-20 gap-2">
-					<div className="w-full h-1/2 flex items-center justify-between py-4 px-8 relative">
+				<div className="w-full min-h-20 sm:min-h-24 flex flex-col bg-primary mt-20 gap-2">
+					<div className="w-full h-1/2 flex items-center justify-around py-4 px-8 relative">
 						<Image
 							src={tomatoesImg}
 							alt=""
@@ -76,19 +76,19 @@ export default async function Hero() {
 								href={s.url}
 								target="_blank"
 								rel="noopener noreferrer"
-								className="w-6 lg:w-8 aspect-square bg-primary rounded-full relative"
+								className="w-8 lg:w-10 aspect-square bg-primary rounded-full relative"
 							>
 								<Image
 									src={s.icon}
 									alt={s.name}
 									fill
-									sizes="50px"
+									sizes="100px"
 									className="object-cover object-center"
 								/>
 							</a>
 						))}
 					</div>
-					<div className="w-full h-1/2 px-8 flex items-center gap-2 text-[8px] sm:text-sm lg:text-lg lg:gap-4 font-semibold font-poppins">
+					<div className="w-full min-h-1/2 px-8 flex items-center gap-2 text-[8px] sm:text-sm lg:text-lg lg:gap-4 font-semibold font-poppins">
 						<Image
 							src={locationIcon}
 							alt="location"
@@ -112,20 +112,8 @@ const SOCIALS = [
 		icon: instagramIcon,
 	},
 	{
-		name: 'x (twitter)',
-		url: 'www.twitter.com',
-		icon: twitterIcon,
-	},
-	{
 		name: 'facebook',
 		url: 'https://www.facebook.com/share/17uHp1Yiyx/?mibextid=wwXIfr',
 		icon: facebookIcon,
 	},
-	{
-		name: 'linkedIn',
-		url: 'www.linkedin.com',
-		icon: linkedinIcon,
-	},
 ]
-
-// TODO fix links
