@@ -40,16 +40,16 @@ export default async function Blog() {
 			</p>
 			<div className="w-full flex flex-col sm:flex-row items-center gap-6 my-6 px-8 sm:px-10">
 				{data &&
-					data.map((b: iBlog) => (
+					data?.map((b: iBlog) => (
 						<div
 							key={b._id}
 							className="w-full sm:w-1/2 border rounded-2xl shadow px-3 py-3 lg:mx-4 flex flex-col gap-3"
 						>
 							<h6 className="text-lg font-semibold font-poppins capitalize">
-								{b.title}
+								{b?.title}
 							</h6>
 							<p className="text-dark-grey font-inter text-base line-clamp-3">
-								{b.excerpt}
+								{b?.excerpt}
 							</p>
 							<Link
 								href={`blog/${b.slug}`}

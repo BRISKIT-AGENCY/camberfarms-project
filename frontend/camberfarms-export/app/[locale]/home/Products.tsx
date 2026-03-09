@@ -26,23 +26,23 @@ export default function Products() {
 			<SecondaryBtnLink link={'/products'}>{t('link')}</SecondaryBtnLink>
 			<div className="w-full grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 mt-14">
 				{categories &&
-					categories.map((p) => (
+					categories?.map((p) => (
 						<Link
 							href={`products/${p._id}`}
 							key={p._id}
-							title={p.category}
+							title={p?.category}
 							className="w-full flex items-center justify-center h-80 xl:h-96 border-3 border-primary rounded-lg relative"
 						>
 							<Image
-								src={`https://camberfarms-project.onrender.com${p.images?.[0]}`}
-								alt={p.name}
+								src={`https://camberfarms-project.onrender.com${p?.images?.[0]}`}
+								alt={p?.name}
 								fill
 								sizes="300px"
 								// placeholder="blur"
 								className="object-cover object-center"
 							/>
 							<h6 className="capitalize font-bold text-primary text-2xl z-3">
-								{p.name}
+								{p?.name}
 							</h6>
 						</Link>
 					))}

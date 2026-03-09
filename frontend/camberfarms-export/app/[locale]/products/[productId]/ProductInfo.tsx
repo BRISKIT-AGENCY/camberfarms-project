@@ -32,7 +32,8 @@ export default function ProductInfo({ product }: ProductInfoProps) {
 				<p>{product?.description}</p>
 				<ol className="w-full flex flex-col gap-2 mt-4">
 					{product?.variants &&
-						Object.entries(product.variants).map(([key, value]) => (
+						typeof product.variants === 'object' &&
+						Object.entries(product?.variants).map(([key, value]) => (
 							<li key={key} className="text-sm marker:hidden">
 								<p className="w-full flex gap-1">
 									<span className="text-grey text-sm capitalize">- {key}:</span>

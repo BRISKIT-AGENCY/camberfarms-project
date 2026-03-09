@@ -11,7 +11,7 @@ export default function Gallery() {
 	const t = useTranslations('home.gallery')
 	const { data: gallery, isPending } = useGetGalleries()
 
-	if (isPending) return null
+	if (isPending || !gallery) return null
 
 	return (
 		<section
@@ -38,7 +38,7 @@ export default function Gallery() {
 					}}
 				>
 					{gallery &&
-						gallery.map((item) => (
+						gallery?.map((item) => (
 							<SplideSlide key={item._id}>
 								<GalleryItem images={item.images} />
 							</SplideSlide>

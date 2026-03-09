@@ -28,9 +28,9 @@ export default function useGetProducts(locale: string) {
 					total: number
 					products: Product[]
 				}
-				// console.log('result: ', result.products)
-				setData(result.products)
-				const cat = getUniqueCategories(result.products)
+				console.log('result: ', result.products)
+				setData(result?.products)
+				const cat = getUniqueCategories(result?.products)
 				setCategories(cat)
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			} catch (err: any) {
