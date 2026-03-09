@@ -10,6 +10,11 @@ const nextConfig: NextConfig = {
 				hostname: 'flagcdn.com',
 				pathname: '/w40/**',
 			},
+			{
+				protocol: 'https',
+				hostname: 'camberfarms-project.onrender.com',
+				pathname: '/uploads/**',
+			},
 		],
 	},
 	// i18n: {
