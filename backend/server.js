@@ -29,7 +29,9 @@ const allowedOrigins = [
   "https://camberfarms-export.vercel.app",
   "https://camberfarms-dashboard.vercel.app",
   "https://camberfarms-project.vercel.app",
-  "https://camberfarms.org"
+  "https://camberfarms.org",
+  "https://dashboard.camberrxports.com",
+  "https://www.camberexports.com"
 ];
 
 app.use(
