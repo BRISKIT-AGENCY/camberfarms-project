@@ -5,7 +5,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { SecondaryBtnLink } from '../components/Buttons'
 import useGetProducts from '../hooks/useGetProducts'
-import { formatImgUrl } from '../utils/formatImgUrl'
 
 export default function Products() {
 	const t = useTranslations('home.products')
@@ -35,7 +34,7 @@ export default function Products() {
 							className="w-full flex items-center justify-center h-80 xl:h-96 border-3 border-primary rounded-lg relative"
 						>
 							<Image
-								src={formatImgUrl(p.images?.[0])}
+								src={`https://camberfarms-project.onrender.com${p.images?.[0]}`}
 								alt={p.name}
 								fill
 								sizes="300px"

@@ -5,7 +5,7 @@ import axiosInstance from '../../api/axios'
 // import productImg from '../../assets/img/wheat-product.png'
 import toast from 'react-hot-toast'
 import CardItem from '../../components/CardItem'
-import { formatImgUrl } from '../../helpers/formatImgUrl'
+// import { formatImgUrl } from '../../helpers/formatImgUrl'
 import type { Product, ProductStats } from '../../types/product'
 
 export default function Products() {
@@ -60,7 +60,7 @@ export default function Products() {
 							key={item._id}
 							disabled={deleting}
 							title={item.translations?.en?.name}
-							image={formatImgUrl(item.images?.[0])}
+							image={`https://camberfarms-project.onrender.com${item.images?.[0]}`}
 							flag={item.translations?.en?.category}
 							flagColor={getFlagColor(item.translations?.en?.category)}
 							primaryBtnText="edit"

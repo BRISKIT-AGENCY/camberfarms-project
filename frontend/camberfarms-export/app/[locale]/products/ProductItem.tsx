@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { formatImgUrl } from '../utils/formatImgUrl'
 
 type ProductProps = {
 	name: string
@@ -26,7 +25,7 @@ export default function ProductItem({ name, img, content, _id }: ProductProps) {
 			</div>
 			<div className="w-full md:w-1/2 h-45 md:h-80 border-2 border-primary relative">
 				<Image
-					src={formatImgUrl(img)}
+					src={`https://camberfarms-project.onrender.com${img}`}
 					alt={name}
 					fill
 					// placeholder="blur"

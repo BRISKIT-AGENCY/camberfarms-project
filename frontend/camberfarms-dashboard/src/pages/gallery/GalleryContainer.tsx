@@ -5,7 +5,7 @@ import { format } from 'date-fns'
 import axiosInstance from '../../api/axios'
 // import productImg from '../../assets/img/wheat-product.png'
 import CardItem from '../../components/CardItem'
-import { formatImgUrl } from '../../helpers/formatImgUrl'
+// import { formatImgUrl } from '../../helpers/formatImgUrl'
 import { useRefetchQueries } from '../../hooks/useRefetchQueries'
 
 export type GalleryImage = {
@@ -61,7 +61,7 @@ export default function GalleryContainer() {
 				{data?.galleries.map((item) => (
 					<CardItem
 						key={item._id}
-						image={formatImgUrl(item.images?.[0]?.url)}
+						image={`https://camberfarms-project.onrender.com${item.images?.[0]?.url}`}
 						primaryBtnText="change image"
 						primaryBtnClick={() => changeImage(item._id)}
 						secondaryBtnText="delete"
