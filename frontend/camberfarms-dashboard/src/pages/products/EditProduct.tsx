@@ -18,9 +18,9 @@ import { AddVariants } from './AddVariants'
 
 function flattenProductInfo(product: Product | undefined): EditProductType {
 	return {
-		name: product?.translations.en.name || '',
-		category: product?.translations.en.category || '',
-		description: product?.translations.en.description || '',
+		name: product?.translations?.en?.name || '',
+		category: product?.translations?.en?.category || '',
+		description: product?.translations?.en?.description || '',
 		images: [],
 		stockQuantity: product?.stockQuantity || 0,
 		_id: product?._id || '',
@@ -49,7 +49,7 @@ export default function EditProduct() {
 	const initialProduct: EditProductType = flattenProductInfo(data?.product)
 	const [product, setFormData] = useState(initialProduct)
 	const [variants, setVariants] = useState<ProductVariants>(
-		data?.product.translations.en.variants || {},
+		data?.product?.translations?.en?.variants || {},
 	)
 
 	function handleChange(e: any) {

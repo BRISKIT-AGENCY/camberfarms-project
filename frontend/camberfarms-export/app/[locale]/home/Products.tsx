@@ -5,13 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { SecondaryBtnLink } from '../components/Buttons'
 import useGetProducts from '../hooks/useGetProducts'
-// import { getTranslations, } from 'next-intl/server'
-// import grainsImg from '../assets/img/grain-seed.png'
-// import pepperImg from '../assets/img/raw-pepper.webp'
-// import sheaNutImg from '../assets/img/shea-nut.webp'
-// import soyabeansImg from '../assets/img/soyabeans.png'
-// import tumericImg from '../assets/img/tumeric.png'
-// import wheatImg from '../assets/img/wheat.png'
+import { formatImgUrl } from '../utils/formatImgUrl'
 
 export default function Products() {
 	const t = useTranslations('home.products')
@@ -41,7 +35,7 @@ export default function Products() {
 							className="w-full flex items-center justify-center h-80 xl:h-96 border-3 border-primary rounded-lg relative"
 						>
 							<Image
-								src={p.images?.[0]}
+								src={formatImgUrl(p.images?.[0])}
 								alt={p.name}
 								fill
 								sizes="300px"
@@ -57,36 +51,3 @@ export default function Products() {
 		</section>
 	)
 }
-
-// const PRODUCTS = [
-// 	{
-// 		id: 1,
-// 		name: 'grain seed',
-// 		img: grainsImg,
-// 	},
-// 	{
-// 		id: 2,
-// 		name: 'tumeric',
-// 		img: tumericImg,
-// 	},
-// 	{
-// 		id: 3,
-// 		name: 'raw pepper',
-// 		img: pepperImg,
-// 	},
-// 	{
-// 		id: 4,
-// 		name: 'shea nut',
-// 		img: sheaNutImg,
-// 	},
-// 	{
-// 		id: 5,
-// 		name: 'soyabeans',
-// 		img: soyabeansImg,
-// 	},
-// 	{
-// 		id: 6,
-// 		name: 'wheat',
-// 		img: wheatImg,
-// 	},
-// ]

@@ -5,6 +5,7 @@ import axiosInstance from '../../api/axios'
 // import productImg from '../../assets/img/wheat-product.png'
 import toast from 'react-hot-toast'
 import CardItem from '../../components/CardItem'
+import { formatImgUrl } from '../../helpers/formatImgUrl'
 import type { Product, ProductStats } from '../../types/product'
 
 export default function Products() {
@@ -58,10 +59,10 @@ export default function Products() {
 						<CardItem
 							key={item._id}
 							disabled={deleting}
-							title={item.translations.en.name}
-							image={item.images?.[0]}
-							flag={item.translations.en.category}
-							flagColor={getFlagColor(item.translations.en.category)}
+							title={item.translations?.en?.name}
+							image={formatImgUrl(item.images?.[0])}
+							flag={item.translations?.en?.category}
+							flagColor={getFlagColor(item.translations?.en?.category)}
 							primaryBtnText="edit"
 							primaryBtnClick={() => editProduct(item._id)}
 							secondaryBtnText="delete"
@@ -69,8 +70,8 @@ export default function Products() {
 						>
 							<div className="w-full px-2 text-grey">
 								<p className="text-sm font-inter line-clamp-3">
-									{item.translations.en.description}
-									{Object.entries(item.translations.en.variants).map(
+									{item.translations?.en?.description}
+									{Object.entries(item.translations?.en?.variants).map(
 										([key, value]) => (
 											<span key={`${key}`}>
 												{key}:{value}
@@ -79,7 +80,7 @@ export default function Products() {
 									)}
 								</p>
 								<p className="text-sm font-inter flex flex-col mt-2 capitalize">
-									{Object.entries(item.translations.en.variants).map(
+									{Object.entries(item.translations?.en?.variants).map(
 										([key, value]) => (
 											<span key={`${key}`}>
 												{key}: <strong>{value}</strong>
@@ -92,7 +93,7 @@ export default function Products() {
 										Stock:{' '}
 									</strong>
 									<span className="text-primary font-medium">
-										{item.stockQuantity}
+										{item?.stockQuantity}
 									</span>
 								</p>
 							</div>

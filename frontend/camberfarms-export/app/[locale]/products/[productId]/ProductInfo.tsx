@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { Product } from '../../types/product'
+import { formatImgUrl } from '../../utils/formatImgUrl'
 
 type ProductInfoProps = {
 	product: Product | null
@@ -17,7 +18,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
 				<div className="w-full flex items-center gap-6 flex-wrap mb-6 border border-primary/50 rounded-sm">
 					{product?.images.map((img, index) => (
 						<Image
-							src={img}
+							src={formatImgUrl(img)}
 							alt={product?.name}
 							width={520}
 							height={500}

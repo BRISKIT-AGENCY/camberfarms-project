@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { formatImgUrl } from '../utils/formatImgUrl'
 import BlogPagination from './BlogPagination'
 import { iBlog } from './page'
 
@@ -27,7 +28,7 @@ export default function BlogMain({
 							{blog.image && (
 								<div className="w-full h-75 relative mb-4">
 									<Image
-										src={blog.image}
+										src={formatImgUrl(blog.image)}
 										alt={blog.title}
 										fill
 										// placeholder="blur"

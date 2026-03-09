@@ -5,6 +5,7 @@ import { format } from 'date-fns'
 import axiosInstance from '../../api/axios'
 // import productImg from '../../assets/img/wheat-product.png'
 import CardItem from '../../components/CardItem'
+import { formatImgUrl } from '../../helpers/formatImgUrl'
 import { useRefetchQueries } from '../../hooks/useRefetchQueries'
 
 export type GalleryImage = {
@@ -60,7 +61,7 @@ export default function GalleryContainer() {
 				{data?.galleries.map((item) => (
 					<CardItem
 						key={item._id}
-						image={item.images[0].url}
+						image={formatImgUrl(item.images?.[0]?.url)}
 						primaryBtnText="change image"
 						primaryBtnClick={() => changeImage(item._id)}
 						secondaryBtnText="delete"
@@ -74,7 +75,8 @@ export default function GalleryContainer() {
 								<span className="">{10} views</span>
 							</div>
 							<p className="my-2">
-								Dimensions: {item.images[0].width} x {item.images[0].height}
+								Dimensions: {item.images?.[0]?.width} x{' '}
+								{item.images?.[0]?.height}
 							</p>
 							<p className="w-fit my-1 text-sm text-grey">
 								Uploaded: {format(new Date(item.updatedAt), 'dd/MM/yyyy')}

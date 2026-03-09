@@ -26,13 +26,13 @@ export default function Highlight() {
 		error: enquiriesError,
 	} = useGetEnquiries()
 
-	const totalBlogs = Number(data?.africa.total) + Number(data?.export.total)
+	const totalBlogs = Number(data?.africa.total) + Number(data?.export?.total)
 
 	const highlights: HighlightCardProps[] = [
 		{
 			title: 'total products',
 			count: Number(products?.total),
-			percent: `+${products?.stats.monthly[0].changePercentage || 0}%`,
+			percent: `+${products?.stats?.monthly?.[0]?.changePercentage || 0}%`,
 			info: 'from last month',
 			Icon: RiSeedlingLine,
 			Icolor: 'text-primary',
@@ -42,7 +42,7 @@ export default function Highlight() {
 		{
 			title: 'pending enquiries',
 			count: Number(enquiries?.totalEnquiries),
-			percent: `+${Number(enquiries?.monthlyStats.changePercentage) || 0}%`,
+			percent: `+${Number(enquiries?.monthlyStats?.changePercentage) || 0}%`,
 			info: 'from last month',
 			Icon: HiOutlineMail,
 			Icolor: 'text-[#D00000]',

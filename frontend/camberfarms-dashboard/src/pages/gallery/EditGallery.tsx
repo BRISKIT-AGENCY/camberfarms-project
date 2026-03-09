@@ -3,6 +3,7 @@ import { IoClose } from 'react-icons/io5'
 import { useLocation, useParams } from 'react-router-dom'
 import { Dropzone } from '../../components/Dropzone'
 import OverlayWrapper from '../../components/OverlayWrapper'
+import { formatImgUrl } from '../../helpers/formatImgUrl'
 import { useGoBack } from '../../hooks/useGoBack'
 import type { GalleryImage } from './GalleryContainer'
 
@@ -37,7 +38,7 @@ export default function EditGallery() {
 					<Dropzone
 						styleVariant="h-105 has-[img]:rounded-lg"
 						setState={setImage}
-						image={imageData.images[0].url}
+						image={formatImgUrl(imageData.images?.[0]?.url)}
 					/>
 				</div>
 				<div className="w-full flex gap-6 items-center justify-end py-6 mt-8 border-t border-grey/50">

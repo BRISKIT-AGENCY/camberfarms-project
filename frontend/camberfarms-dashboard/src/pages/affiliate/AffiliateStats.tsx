@@ -41,7 +41,7 @@ export default function AffiliateStats() {
 	const stats: HighlightCardProps[] = [
 		{
 			title: 'total applications',
-			count: Number(data?.approved.totalForms) || 0,
+			count: Number(data?.approved?.totalForms) || 0,
 			percent: '+12%',
 			info: 'from last month',
 			Icon: HiOutlineMail,
@@ -51,8 +51,8 @@ export default function AffiliateStats() {
 		},
 		{
 			title: 'pending applications',
-			count: Number(data?.pending.totalPendingReplies) || 0,
-			percent: `+${Number(data?.pending.weeklyBreakdown?.[0]?.percentage) || 0}%`,
+			count: Number(data?.pending?.totalPendingReplies) || 0,
+			percent: `+${Number(data?.pending?.weeklyBreakdown?.[0]?.percentage) || 0}%`,
 			info: 'from last week',
 			Icon: MdPendingActions,
 			Icolor: 'text-[#D00000]',
@@ -63,7 +63,7 @@ export default function AffiliateStats() {
 		{
 			title: 'approved affiliate',
 			count: Number(data?.reply.totalApproved) || 0,
-			percent: `+${Number(data?.reply.approvedPercentage) || 0}%`,
+			percent: `+${Number(data?.reply?.approvedPercentage) || 0}%`,
 			info: 'verified rate',
 			Icon: MdOutlineDoneAll,
 			Icolor: 'text-primary',
@@ -74,7 +74,7 @@ export default function AffiliateStats() {
 		{
 			title: 'new applications',
 			count: Number(data?.newm.totalNewMessages) || 0,
-			percent: `+${Number(data?.newm.weeklyBreakdown?.[0]?.percentage) || 0}%`,
+			percent: `+${Number(data?.newm?.weeklyBreakdown?.[0]?.percentage) || 0}%`,
 			info: 'new inputs',
 			Icon: MdAccessTime,
 			Icolor: 'text-[#0088FF]',

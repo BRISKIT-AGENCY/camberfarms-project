@@ -1,9 +1,10 @@
-import Image, { StaticImageData } from 'next/image'
+import Image from 'next/image'
 import Link from 'next/link'
+import { formatImgUrl } from '../utils/formatImgUrl'
 
 type ProductProps = {
 	name: string
-	img: string | StaticImageData
+	img: string
 	content: string
 	_id: string
 }
@@ -25,7 +26,7 @@ export default function ProductItem({ name, img, content, _id }: ProductProps) {
 			</div>
 			<div className="w-full md:w-1/2 h-45 md:h-80 border-2 border-primary relative">
 				<Image
-					src={img}
+					src={formatImgUrl(img)}
 					alt={name}
 					fill
 					// placeholder="blur"
