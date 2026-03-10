@@ -13,6 +13,8 @@ type Blog = {
 }
 
 export default function SingleBlogClient({ blog }: { blog?: Blog }) {
+  console.log(blog);
+  
   const locale = useLocale()
   const t = useTranslations('Blog')
 

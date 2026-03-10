@@ -49,7 +49,7 @@ const BlogHeader = () => {
   if (!blog) return null
 
   return (
-    <div className="w-full bg-[#808080] text-white py-17.5 px-6 md:px-17.5">
+    <div className="w-full bg-[#808080] text-white py-4 px-6 md:px-17.5">
       <div className="flex gap-4 w-full items-center sm:justify-between">
         <h1 className="md:text-[32px] text-[18px] font-bold w-[60%]">
           {blog.title}
@@ -59,7 +59,7 @@ const BlogHeader = () => {
           href={`/blog/${blog.slug}`}
           className="hover:underline w-[40%] sm:w-auto flex items-center justify-center cursor-pointer"
         >
-          <p className='bg-[#1AD329] text-white py-2.75 px-2 rounded-[100px] md:text-[18px] text-[12px] '>{t('button')} →</p>
+          <p className='bg-[#1AD329] text-white py-3 px-6 rounded-[100px] md:text-[18px] text-[12px] '>{t('button')} →</p>
         </Link>
       </div>
     </div>

@@ -23,6 +23,8 @@ type Blog = {
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 export default function BlogPage({ initialPage = 1 }) {
+  console.log(API_URL);
+  
   const locale = useLocale()
   const t = useTranslations('Blog')
 
@@ -123,8 +125,9 @@ export default function BlogPage({ initialPage = 1 }) {
                   key={blog._id}
                   className="border-b border-[#EBEBEB] pb-9 mb-12.5"
                 >
+                  
                   <Image
-                    src={blog.image}
+                    src={`https://camberfarms-project.onrender.com/${blog.image}`}
                     alt={blog.title}
                     width={800}
                     height={400}

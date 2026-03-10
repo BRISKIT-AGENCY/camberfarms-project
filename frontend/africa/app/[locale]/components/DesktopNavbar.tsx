@@ -16,16 +16,16 @@ interface DesktopNavbarProps {
 }
 
 const LANGUAGES = [
-  { label: 'ENG', code: 'en', country: 'US' },
-  { label: 'FRA', code: 'fr', country: 'FR' },
-  { label: 'RUS', code: 'ru', country: 'RU' },
-  { label: 'ARA', code: 'ar', country: 'SA' },
-  { label: 'CHN', code: 'zh', country: 'CN' },
-  { label: 'NLD', code: 'nl', country: 'NL' },
-  { label: 'DEU', code: 'de', country: 'DE' },
-  { label: 'ITA', code: 'it', country: 'IT' },
-  { label: 'POR', code: 'pt', country: 'PT' },
-  { label: 'ESP', code: 'es', country: 'ES' }
+  { label: 'United States', code: 'en', country: 'US' },
+  { label: 'France', code: 'fr', country: 'FR' },
+  { label: 'Россия', code: 'ru', country: 'RU' },
+  { label: 'المملكة العربية السعودية', code: 'ar', country: 'SA' },
+  { label: '中国', code: 'zh', country: 'CN' },
+  { label: 'Nederland', code: 'nl', country: 'NL' },
+  { label: 'Deutschland', code: 'de', country: 'DE' },
+  { label: 'Italia', code: 'it', country: 'IT' },
+  { label: 'Portugal', code: 'pt', country: 'PT' },
+  { label: 'España', code: 'es', country: 'ES' }
 ]
 
 const DesktopNavbar = ({
@@ -94,7 +94,7 @@ const DesktopNavbar = ({
         <div className="relative">
           <button
             onClick={() => handleDropdown('about')}
-            className="flex items-center gap-1"
+            className="flex items-center gap-1 cursor-pointer"
           >
             <span className={isActive('/about') ? 'text-[#1AD329]' : linkTextColor}>
               {t('about')}
@@ -102,8 +102,8 @@ const DesktopNavbar = ({
             <Image
               src="/images/arrowdown.png"
               alt="Arrow Down"
-              width={24}
-              height={24}
+              width={20}
+              height={20}
               className={`transition-transform ${isAboutOpen ? 'rotate-180' : ''}`}
             />
           </button>
@@ -111,7 +111,7 @@ const DesktopNavbar = ({
           {isAboutOpen && (
             <div className="absolute top-full mt-2 w-56 bg-white rounded-xl shadow-lg z-50">
               <Link
-                href="/about/vision-mission"
+                href="/about/#vision-mission"
                 onClick={closeAllDropdowns}
                 className="block px-4 py-3 text-black hover:bg-gray-100 rounded-t-xl"
               >
@@ -125,7 +125,7 @@ const DesktopNavbar = ({
                 Theory of Change
               </Link>
               <Link
-                href="/about/values"
+                href="/about/#values"
                 onClick={closeAllDropdowns}
                 className="block px-4 py-3 text-black hover:bg-gray-100 rounded-b-xl"
               >
@@ -139,7 +139,7 @@ const DesktopNavbar = ({
         <div className="relative">
           <button
             onClick={() => handleDropdown('ourWork')}
-            className="flex items-center gap-1"
+            className="flex items-center gap-1 cursor-pointer"
           >
             <span className={isActive('/our-works') ? 'text-[#1AD329]' : linkTextColor}>
               {t('ourWork')}
@@ -147,8 +147,8 @@ const DesktopNavbar = ({
             <Image
               src="/images/arrowdown.png"
               alt="Arrow Down"
-              width={24}
-              height={24}
+              width={20}
+              height={20}
               className={`transition-transform ${isOurWorkOpen ? 'rotate-180' : ''}`}
             />
           </button>
@@ -185,10 +185,10 @@ const DesktopNavbar = ({
         </Link>
 
         {/* RESOURCES */}
-        <div className="relative">
+        {/*<div className="relative">
           <button
             onClick={() => handleDropdown('resources')}
-            className="flex items-center gap-1"
+            className="flex items-center gap-1 cursor-pointer"
           >
             <span className={isActive('/resources') ? 'text-[#1AD329]' : linkTextColor}>
               {t('resources')}
@@ -196,8 +196,8 @@ const DesktopNavbar = ({
             <Image
               src="/images/arrowdown.png"
               alt="Arrow Down"
-              width={24}
-              height={24}
+              width={20}
+              height={20}
               className={`transition-transform ${isResourcesOpen ? 'rotate-180' : ''}`}
             />
           </button>
@@ -220,7 +220,7 @@ const DesktopNavbar = ({
               </Link>
             </div>
           )}
-        </div>
+        </div> */}
 
         <Link
           href="/contact"
@@ -241,8 +241,8 @@ const DesktopNavbar = ({
             <Image
               src="/images/arrowdown.png"
               alt="Arrow Down"
-              width={24}
-              height={24}
+              width={20}
+              height={20}
               className={`transition-transform ${isLangOpen ? 'rotate-180' : ''}`}
             />
           </button>
@@ -268,9 +268,14 @@ const DesktopNavbar = ({
       </div>
 
       {/* CTA */}
-      <button className={`h-12 rounded-xl px-6 ${buttonBgColor} cursor-pointer`}>
-        <p className={`font-bold ${buttonTextColor}`}>{tBtn('explore')}</p>
-      </button>
+      <Link
+        href="https://camberexports.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`inline-flex items-center justify-center h-12 rounded-xl px-6 cursor-pointer font-bold ${buttonBgColor} ${buttonTextColor}`}
+      >
+        {tBtn('explore')}
+      </Link>
     </div>
   )
 }
