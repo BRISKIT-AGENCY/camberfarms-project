@@ -8,7 +8,7 @@ const WhoWeAre = async() => {
   const t = await getTranslations('WhoWeAre')
 
   return (
-    <div className='h-118.75 md:h-221.5 w-full md:-25 md:py-41.25 px-6 py-15.5'>
+    <div className='h-fit w-full px-6 pt-10'>
       <div className='w-full h-full '>
         <h1 className='md:text-[48px] text-[32px] font-bold'>
           {t('title')}

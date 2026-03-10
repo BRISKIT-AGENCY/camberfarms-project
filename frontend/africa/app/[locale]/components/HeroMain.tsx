@@ -6,7 +6,7 @@ const HeroMain = async () => {
   const t = await getTranslations('Hero')
 
   return (
-    <div className="mt-40.75 mx-5 sm:mx-6 md:mx-12 lg:mx-20 xl:mx-52.5 flex flex-col items-center text-center">
+    <div className="mt-2 mx-5 sm:mx-6 md:mx-12 lg:mx-20 xl:mx-52.5 flex flex-col items-center text-center">
       <h1 className="text-white text-2xl md:text-6xl font-bold md:leading-22.5">
         {t('title')}
       </h1>

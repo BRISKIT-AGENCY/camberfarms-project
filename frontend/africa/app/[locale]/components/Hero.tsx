@@ -4,7 +4,7 @@ import Image from "next/image"
 
 const Hero = () => {
   return (
-    <div className="relative w-full h-screen">
+    <div className="relative w-full h-fit">
       <Image
         src="/images/hero-bg.png"
         alt="Hero background"
@@ -22,7 +22,7 @@ const Hero = () => {
         <div className="hidden xl:block">
           <Navbar logoSrc="/images/logo.png" />
         </div>
-        <div className="flex pb-56 w-full">
+        <div className="flex pb-10 w-full justify-center items-center">
           <HeroMain />
         </div>
       </div>

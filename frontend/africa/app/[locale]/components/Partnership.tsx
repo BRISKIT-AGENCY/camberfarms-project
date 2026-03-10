@@ -7,14 +7,14 @@ const Partnership = async () => {
 
   // Array of logos if you want to map over them
   const logos = [
-    '/images/nafdac.png',
-    '/images/nafdac.png',
-    '/images/nafdac.png',
-    '/images/nafdac.png'
+    '/images/wfp.jpeg',
+    '/images/boa.jpeg',
+    '/images/adb.jpeg',
+    '/images/adf.jpeg'
   ]
 
   return (
-    <div className='h-fit sm:h-211.25 w-full lg:px-24 lg:py-52 py-25.5 px-6'>
+    <div className='h-fit w-full lg:px-24 py-20 px-6'>
       <div className='h-full w-full flex flex-col items-center'>
         <div className='text-center'>
           <h1 className='font-bold text-[24px] sm:text-[46px] text-[#1AD329]'>
@@ -25,7 +25,7 @@ const Partnership = async () => {
           </p>
         </div>
 
-        <div className='flex justify-evenly w-full mt-12.5 md:mt-25'>
+        <div className='flex justify-evenly w-full mt-12.5 md:mt-25 bg-white'>
           {logos.map((src, idx) => (
             <Image
               key={idx}
@@ -33,7 +33,7 @@ const Partnership = async () => {
               alt={t('altText')}
               width={198}
               height={198}
-              className='w-17.5 h-17.5 sm:w-32 sm:h-32 lg:w-49.5 lg:h-49.5'
+              className='w-17.5 h-17.5 sm:w-32 sm:h-32 lg:w-49.5 lg:h-49.5 bg-white'
             />
           ))}
         </div>

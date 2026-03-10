@@ -28,7 +28,7 @@ const Impact: React.FC<ImpactProps> = async ({
 
   return (
     <div
-      className="w-full lg:h-254.25 h-fit lg:py-46 lg:px-25 px-6 py-29.5"
+      className="w-full h-fit lg:px-25 px-6 py-20"
       style={{ backgroundColor: bgColor }}
     >
       <div className="w-full h-full">

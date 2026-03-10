@@ -6,7 +6,7 @@ const WhatWeDo = async () => {
     const t = await getTranslations('WhatWeDo') // namespace "whatWeDo"
 
     return (
-        <div className='h-fit sm:h-326.75 w-full px-3 lg:px-25 lg:py-42.75 py-21'>
+        <div className='h-fit w-full px-3 lg:px-25 pt-20'>
             <div className='w-full h-full flex flex-col items-center'>
                 <h1 className='font-bold text-[24px] md:text-[46px]'>{t('title')}</h1>
 

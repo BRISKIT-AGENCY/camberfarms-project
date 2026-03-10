@@ -49,7 +49,7 @@ const BlogHeader = () => {
   if (!blog) return null
 
   return (
-    <div className="w-full bg-[#808080] text-white py-6 px-6 md:px-17.5">
+    <div className="w-full bg-[#808080] text-white py-4 px-6 md:px-17.5">
       <div className="flex gap-4 w-full items-center sm:justify-between">
         <h1 className="md:text-[32px] text-[18px] font-bold w-[60%]">
           {blog.title}

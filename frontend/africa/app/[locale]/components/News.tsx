@@ -74,7 +74,7 @@ const News = ({ header }: NewsProps) => {
   }
 
   return (
-    <div className="h-fit w-full px-6 py-23.5 md:py-45.75 md:px-25 bg-[#F2F2F2]">
+    <div className="h-fit w-full px-6 py-14.5 md:px-25 bg-[#F2F2F2]">
       <div className="h-full w-full">
         {/* Always show header and description */}
         <h1 className="md:text-[46px] text-[24px] font-bold text-center">

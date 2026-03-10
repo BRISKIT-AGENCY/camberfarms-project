@@ -8,16 +8,16 @@ import { usePathname, useRouter } from '@/i18n/navigation'
 import ReactCountryFlag from 'react-country-flag'
 
 const LANGUAGES = [
-  { label: 'ENG', code: 'en', country: 'US' },
-  { label: 'FRA', code: 'fr', country: 'FR' },
-  { label: 'RUS', code: 'ru', country: 'RU' },
-  { label: 'ARA', code: 'ar', country: 'SA' },
-  { label: 'CHN', code: 'zh', country: 'CN' },
-  { label: 'NLD', code: 'nl', country: 'NL' },
-  { label: 'DEU', code: 'de', country: 'DE' },
-  { label: 'ITA', code: 'it', country: 'IT' },
-  { label: 'POR', code: 'pt', country: 'PT' },
-  { label: 'ESP', code: 'es', country: 'ES' }
+  { label: 'United States', code: 'en', country: 'US' },
+  { label: 'France', code: 'fr', country: 'FR' },
+  { label: 'Россия', code: 'ru', country: 'RU' },
+  { label: 'المملكة العربية السعودية', code: 'ar', country: 'SA' },
+  { label: '中国', code: 'zh', country: 'CN' },
+  { label: 'Nederland', code: 'nl', country: 'NL' },
+  { label: 'Deutschland', code: 'de', country: 'DE' },
+  { label: 'Italia', code: 'it', country: 'IT' },
+  { label: 'Portugal', code: 'pt', country: 'PT' },
+  { label: 'España', code: 'es', country: 'ES' }
 ]
 
 const MobileNavbar = () => {
@@ -191,7 +191,7 @@ const MobileNavbar = () => {
           </Link>
 
           {/* RESOURCES */}
-          <div className="flex flex-col w-full mt-6">
+          {/*<div className="flex flex-col w-full mt-6">
             <button
               onClick={() => setIsResourcesOpen(prev => !prev)}
               className="flex justify-between w-full items-center cursor-pointer"
@@ -227,7 +227,7 @@ const MobileNavbar = () => {
                 </Link>
               </div>
             )}
-          </div>
+          </div> */}
 
           {/* CONTACT */}
           <Link
@@ -246,7 +246,7 @@ const MobileNavbar = () => {
             >
               <ReactCountryFlag svg countryCode={currentCountry} style={{ width: 24, height: 24 }} />
               <span>{currentLang}</span>
-              <Image src="/images/arrowdown.png" alt="Arrow Down" width={24} height={24} className='cursor-pointer'/>
+              <Image src="/images/arrowdown.png" alt="Arrow Down" width={24} height={24} className='cursor-pointer' />
             </button>
 
             {isLangOpen && (
@@ -268,12 +268,15 @@ const MobileNavbar = () => {
             )}
           </div>
 
-          <button
+          <Link
+            href="https://camberexports.com"
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={closeMenu}
-            className="h-12 rounded-xl bg-[#1AD329] px-6 cursor-pointer"
+            className="inline-flex items-center justify-center h-12 rounded-xl bg-[#1AD329] px-6 text-white font-bold"
           >
-            <p className="text-white font-bold">{tBtn('explore')}</p>
-          </button>
+            {tBtn('explore')}
+          </Link>
         </div>
       )}
     </div>

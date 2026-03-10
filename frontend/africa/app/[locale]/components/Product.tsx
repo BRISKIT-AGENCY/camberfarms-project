@@ -42,7 +42,7 @@ const Products = ({
 
   return (
     <div className="h-fit w-full">
-      <div className="py-20 px-6 xl:py-50.5 xl:px-25 w-full h-full flex flex-col xl:flex-row xl:justify-between items-center gap-15.75">
+      <div className="py-20 px-6 xl:py-15 xl:px-25 w-full h-full flex flex-col xl:flex-row xl:justify-between items-center gap-15.75">
 
         {/* Text Content */}
         <div className="xl:w-[50%] flex flex-col items-center xl:items-start">

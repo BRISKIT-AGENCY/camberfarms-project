@@ -6,57 +6,107 @@ import Navbar from '../components/Navbar'
 import Link from 'next/link'
 
 const page = () => {
-    const t= useTranslations("Contact")
-    const v=useTranslations("ContactPage")
+    const t = useTranslations("Contact")
+    const v = useTranslations("ContactPage")
     return (
         <div className='w-full'>
             <div className='hidden xl:block'>
                 <Navbar logoSrc="/images/logo2.png" linkTextColor="text-black" buttonBgColor="bg-[#1AD329]" buttonTextColor='text-white' />
             </div>
-            <div className='md:px-25  md:w-196.75  py-25'>
-                <div className='pl-6 md:pl-0 pr-14 md:pr-0 w-full'>
-                    <h1 className="md:text-[56px] text-[32px] font-bold text-[#1AD329]">{v('title')}</h1>
-                    <p className="md:text-[18px] text-[16px] mt-2 md:mt-6">{v('description')}</p>
-                    <Link href={'contact#contact'} className='mt-12.5 flex'>
-                        <p className='bg-[#1AD329] text-white py-2.75 px-4 md:px-6 md:py-4 rounded-[100px] text-[14px] md:text-[24px]'>{v('button')}</p>
-                    </Link>
-                </div>
+            <div className="w-full px-10 md:px-20 py-20 lg:pt-36">
+                <h1
+                    className="font-poppins capitalize font-bold text-primary text-2xl sm:text-3xl lg:text-4xl"
+                    id="contact"
+                >
+                    {v('title')}
+                </h1>
+                <p className="text-sm max-w-xl mt-4 lg:text-base lg:max-w-2xl">
+                    {v('description')}
+                </p>
+                <Link
+                    href={'contact#message'}
+                    className="w-fit mt-6 flex items-center justify-center px-6 py-2 rounded-full capitalize bg-[#1AD329] text-white font-sans font-medium cursor-pointer hover:bg-primary/70 transition-colors ease-in-out"
+                >
+                    {v('button')}
+                </Link>
             </div>
-            <div className='w-full mt-17 bg-[#1AD329] text-white'>
-                <div className='md:pl-25 pl-6 py-28'>
-                    <div className='flex md:gap-8.25 gap-3 items-center'>
-                        <img src="/images/contact-email.png" alt="email logo" className='md:h-12.5 md:w-12.5 h-11 w-11' />
-                        <div className='flex flex-col gap-2'>
-                            <h3 className='font-bold md:text-[36px] text-[18px]'>{v('email')}</h3>
-                            <a href="mailto:camberfarmafrica@gmail.com" className='text-[14px] md:text-[20px] hover:underline'>info@camberfarmexport.com</a>
-                        </div>
-                    </div>
-                    <div className='flex md:gap-8.25 gap-3 items-center md:mt-20 mt-12.5'>
-                        <img src="/images/contact-phone.png" alt="phone logo" className='md:h-12.5 md:w-12.5 h-11 w-11' />
-                        <div className='flex flex-col gap-2'>
-                            <h3 className='font-bold md:text-[36px] text-[18px]'>{v('phone')}</h3>
-                            <a href="tel:+234909746104" className='text-[14px] md:text-[20px] hover:underline'>+234 901 6789 123</a>
-                        </div>
-                    </div>
-                    <div className='flex md:gap-8.25 gap-3 items-center md:mt-20 mt-12.5'>
-                        <img src="/images/contact-address.png" alt="address logo" className='md:h-12.5 md:w-12.5 h-11 w-11' />
-                        <div className='flex flex-col gap-2'>
-                            <h3 className='font-bold md:text-[36px] text-[18px]'>{v('address')}</h3>
-                            <p className='text-[14px] md:text-[20px]'>123 Trade Zone, Lagos, Nigeria</p>
-                        </div>
-                    </div>
-                    <div className='flex md:gap-8.25 gap-3 items-center md:mt-20 mt-12.5'>
-                        <img src="/images/contact-time.png" alt="time logo" className='md:h-12.5 md:w-12.5 h-11 w-11' />
-                        <div className='flex flex-col gap-2'>
-                            <h3 className='font-bold md:text-[36px] text-[18px]'>{v('businessHours')}</h3>
-                            <p className='text-[14px] md:text-[20px]'>{v('days')} | 8:00 AM - 6:00 PM</p>
-                        </div>
+            <section className="w-full py-20 px-10 md:px-20 bg-[#1AD329] text-white flex flex-col items-start gap-5">
+                {/* Email */}
+                <div className="flex items-center gap-5">
+                    <img
+                        src="/images/contact-email.png"
+                        alt="email logo"
+                        width={50}
+                        height={50}
+                        className="bg-secondary rounded-full object-fill w-8 aspect-square"
+                    />
+                    <div>
+                        <h6 className="font-poppins font-semibold text-lg capitalize">{v('email')}</h6>
+                        <a
+                            href="mailto:camberfarmafrica@gmail.com"
+                            className="text-sm text-light-grey hover:underline"
+                        >
+                            info@camberfarmexport.com
+                        </a>
                     </div>
                 </div>
 
-            </div>
+                {/* Phone */}
+                <div className="flex items-center gap-5">
+                    <img
+                        src="/images/contact-phone.png"
+                        alt="phone logo"
+                        width={50}
+                        height={50}
+                        className="bg-secondary rounded-full object-fill w-8 aspect-square"
+                    />
+                    <div className='flex flex-col'>
+                        <h6 className="font-poppins font-semibold text-lg capitalize">{v('phone')}</h6>
+                        <a href="tel:+2348133486885" className="text-sm text-light-grey hover:underline">
+                            +234 813 348 6885
+                        </a>
+                        <a href="tel:+2348068290641" className="text-sm text-light-grey hover:underline">
+                            +234 806 829 0641
+                        </a>
+                    </div>
+                </div>
+
+                {/* Address */}
+                <div className="flex items-center gap-5">
+                    <img
+                        src="/images/contact-address.png"
+                        alt="address logo"
+                        width={50}
+                        height={50}
+                        className="bg-secondary rounded-full object-fill w-8 aspect-square"
+                    />
+                    <div>
+                        <h6 className="font-poppins font-semibold text-lg capitalize">{v('address')}</h6>
+                        <address className="text-sm text-light-grey not-italic">
+                            Graceland Plaza, by Mobil Junction along Nkpolu-Rumuigbo east west road, Port Harcourt Rivers State Nigeria.
+                        </address>
+                    </div>
+                </div>
+
+                {/* Business Hours */}
+                <div className="flex items-center gap-5">
+                    <img
+                        src="/images/contact-time.png"
+                        alt="time logo"
+                        width={50}
+                        height={50}
+                        className="bg-secondary rounded-full object-fill w-8 aspect-square"
+                    />
+                    <div>
+                        <h6 className="font-poppins font-semibold text-lg capitalize">{v('businessHours')}</h6>
+                        <time className="text-sm text-light-grey">
+                            {v('days')} | 8:00 AM - 6:00 PM
+                        </time>
+                    </div>
+                </div>
+            </section>
             <div id='contact'>
-                <Contact heading={t('heading2')} description={t('description2')} button={t('sendButton2')} placeholder={t('placeholders.message2')}/>
+                <Contact heading={t('heading2')} description={t('description2')} button={t('sendButton2')} placeholder={t('placeholders.message2')} />
             </div>
             <div className=''>
                 <Map />

@@ -18,10 +18,12 @@ const inter = Inter({
 	variable: '--font-inter',
 	subsets: ['latin'],
 })
-
 export const metadata: Metadata = {
 	title: 'CamberFarms Africa',
 	description: 'African agricultural community.',
+	icons:{
+		icon:"/images/metadata-logo.png"
+	}
 }
 
 export default function RootLayout({
