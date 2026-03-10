@@ -31,7 +31,8 @@ const allowedOrigins = [
   "https://camberfarms-project.vercel.app",
   "https://camberfarms.org",
   "https://dashboard.camberexports.com",
-  "https://camberexports.com"
+  "https://camberexports.com",
+  "http://localhost:3000"
 ];
 
 app.use(
