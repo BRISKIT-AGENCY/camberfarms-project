@@ -54,13 +54,51 @@ router.post('/login', async (req, res) => {
     return res.status(401).json({ message: 'Invalid credentials' })
   }
 
+  // Generate 6-digit OTP
+  const otp = crypto.randomInt(100000, 999999).toString()
+  const expiresAt = new Date(Date.now() + 10 * 60 * 1000) // 10 min
+
+  // Save OTP directly to this admin
+  admin.twoFactor = { code: otp, expiresAt, verified: false }
+  await admin.save()
+
+  // Send OTP via email
+  await sendEmail(
+    admin.email,
+    'Your login verification code',
+    `Your OTP is: ${otp}. It expires in 10 minutes.`
+  )
+
+  res.status(200).json({
+    message: 'OTP sent to your email. Verify to complete login.'
+    // no need to send adminId
+  })
+})
+
+
+router.post('/login/verify-otp', async (req, res) => {
+  const { email, otp } = req.body
+
+  const admin = await Admin.findOne({ email })
+  if (!admin) return res.status(404).json({ message: 'Admin not found' })
+
+  if (!admin.twoFactor || admin.twoFactor.code !== otp) {
+    return res.status(401).json({ message: 'Invalid OTP' })
+  }
+
+  if (new Date() > admin.twoFactor.expiresAt) {
+    return res.status(401).json({ message: 'OTP expired' })
+  }
+
+  // Mark OTP as verified
+  admin.twoFactor.verified = true
+  await admin.save()
+
+  // Generate JWT after successful OTP verification
   const token = jwt.sign(
-    {
-      adminId: admin._id,
-      role: admin.role
-    },
+    { adminId: admin._id, role: admin.role },
     process.env.JWT_SECRET,
-    { expiresIn: '1d' }
+    { expiresIn: '3h' }
   )
 
   res.status(200).json({
@@ -74,7 +112,6 @@ router.post('/login', async (req, res) => {
     }
   })
 })
-
 
 router.post('/reset-password/request-otp', adminAuth, async (req, res) => {
   try {
@@ -2003,68 +2040,83 @@ router.patch('/products/:id', adminAuth, productUpload, async (req, res) => {
       const newImages = req.files.map(file => `/uploads/products/${file.filename}`)
 
       if (existingProduct.images) {
-        existingProduct.images.forEach(img => {
+        for (const img of existingProduct.images) {
           try {
-            fs.unlinkSync(`.${img}`)
+            await fs.promises.unlink(`.${img}`)
           } catch (err) {
             console.warn('Old image not found:', err.message)
           }
-        })
+        }
       }
 
       updateData.images = newImages
     }
 
     // =========================
-    // FIELD CHANGE DETECTION
+    // TRANSLATION HANDLING
     // =========================
+    const existingEn = existingProduct.translations?.get('en')
+
+    if (!existingEn) {
+      return res.status(500).json({ message: 'English translation missing' })
+    }
+
     const nameChanged = updateData.name !== undefined
     const categoryChanged = updateData.category !== undefined
     const descriptionChanged = updateData.description !== undefined
-    const variantsChanged = Array.isArray(updateData.variants)
+    const variantsChanged = updateData.variants !== undefined
 
     if (nameChanged || categoryChanged || descriptionChanged || variantsChanged) {
-      const existingEn = existingProduct.translations.en
 
       const newName = nameChanged ? updateData.name : existingEn.name
       const newCategory = categoryChanged ? updateData.category : existingEn.category
       const newDescription = descriptionChanged ? updateData.description : existingEn.description
 
+      // Convert Map to plain object if exists
+      const existingVariants = existingEn.variants
+        ? Object.fromEntries(existingEn.variants)
+        : {}
+
       const newVariants = variantsChanged
         ? updateData.variants
-        : existingEn.variants || []
+        : existingVariants
 
-      const translations = {
-        en: {
-          name: newName,
-          category: newCategory,
-          description: newDescription,
-          variants: newVariants
-        }
-      }
+      const translations = new Map()
 
+      // English
+      translations.set('en', {
+        name: newName,
+        category: newCategory,
+        description: newDescription,
+        variants: newVariants
+      })
+
+      // Other languages
       for (const lang of SUPPORTED_LANGUAGES) {
         if (lang === 'en') continue
 
-        translations[lang] = {
+        translations.set(lang, {
           name: await translateTexts(newName, lang),
           category: await translateTexts(newCategory, lang),
           description: await translateTexts(newDescription, lang),
-          variants: newVariants.length
+          variants: Object.keys(newVariants).length
             ? await translateVariants(newVariants, lang)
-            : []
-        }
+            : {}
+        })
       }
 
       updateData.translations = translations
 
-      // Remove top-level fields so they don't overwrite schema structure
+      // Prevent top-level overwrite
       delete updateData.name
       delete updateData.category
       delete updateData.description
       delete updateData.variants
     }
 
+    // =========================
+    // UPDATE PRODUCT
+    // =========================
     const updatedProduct = await Product.findByIdAndUpdate(
       id,
       updateData,
