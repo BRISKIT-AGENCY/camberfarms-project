@@ -1,30 +1,20 @@
-import { useQuery } from '@tanstack/react-query'
+// import { useQuery } from '@tanstack/react-query'
 import { format, parseISO } from 'date-fns'
 import { MdOutlineRemoveRedEye } from 'react-icons/md'
 import { Link } from 'react-router-dom'
-import axiosInstance from '../../api/axios'
+// import axiosInstance from '../../api/axios'
 import { Table } from '../../components/Table'
 import type { Membership } from '../../types/membership'
 
-export default function MembershipTable() {
-	const { data, isPending, isRefetching } = useQuery({
-		queryKey: ['membership'],
-		queryFn: async () => {
-			const res = await axiosInstance.get('membership')
-			return res.data as {
-				count: number
-				members: Membership[]
-			}
-		},
-		refetchOnWindowFocus: false,
-	})
-
-	if (isPending || isRefetching)
-		return <div className="w-full text-center">Loading...</div>
-
+export default function MembershipTable({
+	members,
+}: {
+	members: Membership[]
+}) {
+	// console.log('members: ', members)
 	return (
 		<div className="w-full mb-10">
-			<Table columns={affiliateColumns} data={data?.members} />
+			<Table columns={affiliateColumns} data={members} />
 		</div>
 	)
 }

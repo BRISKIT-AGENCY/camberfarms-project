@@ -80,7 +80,7 @@ export default function App() {
 						<section className="hidden w-full min-h-screen sm:grid grid-cols-[75px_auto] lg:grid-cols-[250px_auto] bg-light-grey dark:bg-dark-grey text-foreground dark:text-background">
 							<Sidebar />
 							<main className="w-full space-y-6 overflow-y-auto dark:bg-dark-grey">
-								<Topbar name={user?.email} />
+								<Topbar name={user?.email} avatar={user?.profilePhoto} />
 								<Routes>
 									<Route element={<ProtectedRoute />}>
 										{/* home */}

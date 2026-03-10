@@ -2,7 +2,13 @@ import { LuCalendar } from 'react-icons/lu'
 import { RiNotification2Fill } from 'react-icons/ri'
 import { Link } from 'react-router-dom'
 
-export default function Topbar({ name = 'admin' }: { name?: string }) {
+export default function Topbar({
+	name = 'admin',
+	avatar,
+}: {
+	name?: string
+	avatar?: string
+}) {
 	const now = new Date()
 	const dayOfWeek = now.toLocaleDateString('en-US', { weekday: 'long' })
 	const month = now.toLocaleDateString('en-US', { month: 'short' })
@@ -26,9 +32,20 @@ export default function Topbar({ name = 'admin' }: { name?: string }) {
 				</Link>
 				<Link
 					to={'/account'}
-					className="p-2 w-10 flex items-center justify-center aspect-square bg-primary rounded-full text-white text-base font-poppins font-bold capitalize"
+					className="w-10 text-white text-base font-poppins font-bold capitalize"
 				>
-					{name[0]}
+					{!avatar && (
+						<span className="w-full p-2 flex items-center justify-center aspect-square bg-primary rounded-full">
+							{name[0]}
+						</span>
+					)}
+					{avatar && (
+						<img
+							src={avatar}
+							className="w-full object-cover object-center rounded-full"
+							alt=""
+						/>
+					)}
 				</Link>
 			</div>
 		</div>

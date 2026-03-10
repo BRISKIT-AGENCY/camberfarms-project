@@ -31,7 +31,7 @@ export default function CardItem({
 		>
 			{image && (
 				<img
-					src={image}
+					src={`https://camberfarms-project.onrender.com${image}`}
 					className="w-full object-fill object-center h-55 rounded-t-xl pb-2"
 				/>
 			)}

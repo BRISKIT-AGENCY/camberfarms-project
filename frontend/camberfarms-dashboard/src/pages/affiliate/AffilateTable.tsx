@@ -1,31 +1,17 @@
-import { useQuery } from '@tanstack/react-query'
 import { format, parseISO } from 'date-fns'
 import { MdOutlineRemoveRedEye } from 'react-icons/md'
 import { Link } from 'react-router-dom'
-import axiosInstance from '../../api/axios'
 import { Table } from '../../components/Table'
 import type { Affiliate } from '../../types/affiliate'
 
-export default function AffilateTable() {
-	const { data, isPending, isRefetching } = useQuery({
-		queryKey: ['affiliates'],
-		queryFn: async () => {
-			const res = await axiosInstance.get('affiliate')
-			return res.data as {
-				total: number
-				data: Affiliate[]
-			}
-		},
-		refetchOnWindowFocus: false,
-		refetchOnMount: false,
-	})
-
-	if (isPending || isRefetching)
-		return <div className="w-full text-center">Loading...</div>
-
+export default function AffilateTable({
+	affiliates,
+}: {
+	affiliates: Affiliate[]
+}) {
 	return (
 		<div className="w-full mb-10">
-			<Table columns={affiliateColumns} data={data?.data} />
+			<Table columns={affiliateColumns} data={affiliates} />
 		</div>
 	)
 }

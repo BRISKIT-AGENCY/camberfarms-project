@@ -1,8 +1,10 @@
+export type FarmFundStatus = 'new' | 'pending' | 'replied'
+
 export type FarmFundEnquiry = {
 	name: string
 	email: string
 	country: string
-	status: 'new' | 'pending' | 'replied'
+	status: FarmFundStatus
 	createdAt: string
 	_id: string | number
 	residence: string

@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { GoKey } from 'react-icons/go'
 import { IoMoonOutline } from 'react-icons/io5'
 import {
+	MdInfoOutline,
 	MdKeyboardArrowRight,
-	MdOutlineToggleOff,
 	MdOutlineToggleOn,
 } from 'react-icons/md'
 import { TbLock } from 'react-icons/tb'
@@ -11,7 +11,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useRequestOTPUser } from '../../hooks/useRequestOTPUser'
 
 export default function AccountSettings() {
-	const [enable2FA, setEnable2FA] = useState(true)
+	const [showInfo, setShowInfo] = useState(false)
 	const navigate = useNavigate()
 	const onSuccess = () => navigate('/account/user/verification')
 	const { mutate, isPending } = useRequestOTPUser(onSuccess)
@@ -43,24 +43,28 @@ export default function AccountSettings() {
 				/>
 			</button>
 			<button
-				onClick={() => setEnable2FA((prev) => !prev)}
+				// onClick={() => setEnable2FA((prev) => !prev)}
 				// to={'2factor'}
-				className="flex w-full items-center gap-4 px-2 py-4 border-b text-black dark:text-white border-grey/30 cursor-pointer"
+				className="flex w-full items-center gap-4 px-2 py-4 border-b text-black dark:text-white border-grey/30 opacity-50"
 			>
 				<TbLock size={20} className="text-primary" />
 				<span>Enable 2 Factor Authentication for other devices</span>
-				{enable2FA && (
-					<MdOutlineToggleOn
-						size={30}
-						className={`inline-flex ml-auto text-primary transition-all duration-200 ease-in-out transition-discrete`}
+				<div className="w-fit -ml-2 relative flex items-center">
+					<MdInfoOutline
+						onClick={() => setShowInfo((prev) => !prev)}
+						className="text-blue-400 text-lg cursor-pointer"
 					/>
-				)}
-				{!enable2FA && (
-					<MdOutlineToggleOff
-						size={30}
-						className={`inline-flex ml-auto text-primary transition-all duration-200 ease-in-out transition-discrete`}
-					/>
-				)}
+					{showInfo && (
+						<p className="absolute -top-5 left-2 w-40 lg:w-80 lg:-top-2 text-black dark:text-white text-sm opacity-100">
+							To protect your account, this has been disabled.
+						</p>
+					)}
+				</div>
+
+				<MdOutlineToggleOn
+					size={30}
+					className={`inline-flex ml-auto text-primary transition-all duration-200 ease-in-out transition-discrete`}
+				/>
 			</button>
 		</div>
 	)

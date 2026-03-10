@@ -1,28 +1,14 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import axiosInstance from '../../api/axios'
-// import grainImg from '../../assets/img/grains-product.png'
-// import productImg from '../../assets/img/wheat-product.png'
-import toast from 'react-hot-toast'
 import CardItem from '../../components/CardItem'
 // import { formatImgUrl } from '../../helpers/formatImgUrl'
-import type { Product, ProductStats } from '../../types/product'
+import type { Product } from '../../types/product'
 
-export default function Products() {
+export default function Products({ products }: { products: Product[] }) {
 	const queryClient = useQueryClient()
-	const { data, isPending, isRefetching } = useQuery({
-		queryKey: ['products'],
-		queryFn: async () => {
-			const res = await axiosInstance.get('products')
-			return res.data as {
-				products: Product[]
-				stats: ProductStats[]
-				total: number
-				success: boolean
-			}
-		},
-		refetchOnWindowFocus: false,
-	})
+
 	// delete product
 	const { mutate: deleteProduct, isPending: deleting } = useMutation({
 		// mutationKey: ['products'],
@@ -42,25 +28,25 @@ export default function Products() {
 		navigate(`edit/${id}`)
 	}
 
-	if (isPending || isRefetching || !data?.products)
-		return <div className="w-full text-center">Loading...</div>
+	// if (isPending || isRefetching || !data?.products)
+	// 	return <div className="w-full text-center">Loading...</div>
 
 	return (
 		<section className="w-full bg-light-grey dark:bg-dark-grey mb-20">
 			<h4 className="text-black dark:text-white text-2xl font-semibold">
-				Products ({data?.total})
+				Products ({products?.length})
 			</h4>
 			<p className="text-sm text-grey dark:text-light-grey mb-6 mt-2">
 				Manage your products inventory
 			</p>
 			<div className="w-full grid grid-cols-2 xl:grid-cols-3 items-stretch gap-x-10 gap-y-6 mt-6">
-				{data &&
-					data.products.map((item) => (
+				{products &&
+					products.map((item) => (
 						<CardItem
 							key={item._id}
 							disabled={deleting}
 							title={item.translations?.en?.name}
-							image={`https://camberfarms-project.onrender.com${item.images?.[0]}`}
+							image={item.images?.[0]}
 							flag={item.translations?.en?.category}
 							flagColor={getFlagColor(item.translations?.en?.category)}
 							primaryBtnText="edit"
@@ -103,60 +89,3 @@ export default function Products() {
 		</section>
 	)
 }
-
-// const products: Product[] = [
-// 	{
-// 		title: 'premium wheat seeds',
-// 		desc: 'High-yield wheat seeds perfect for commercial farming',
-// 		quantity: 100,
-// 		category: 'spices',
-// 		image: productImg,
-// 		id: 1,
-// 		status: 'active',
-// 	},
-// 	{
-// 		title: 'premium wheat seeds',
-// 		desc: 'High-yield wheat seeds perfect for commercial farming',
-// 		quantity: 100,
-// 		category: 'spices',
-// 		image: productImg,
-// 		id: 2,
-// 		status: 'active',
-// 	},
-// 	{
-// 		title: 'premium wheat seeds',
-// 		desc: 'High-yield wheat seeds perfect for commercial farming',
-// 		quantity: 100,
-// 		category: 'spices',
-// 		image: productImg,
-// 		id: 3,
-// 		status: 'active',
-// 	},
-// 	{
-// 		title: 'premium wheat seeds',
-// 		desc: 'High-yield wheat seeds perfect for commercial farming',
-// 		quantity: 100,
-// 		category: 'grains',
-// 		image: grainImg,
-// 		id: 4,
-// 		status: 'active',
-// 	},
-// 	{
-// 		title: 'premium wheat seeds',
-// 		desc: 'High-yield wheat seeds perfect for commercial farming',
-// 		quantity: 100,
-// 		category: 'grains',
-// 		image: grainImg,
-// 		id: 5,
-// 		status: 'inactive',
-// 	},
-// 	{
-// 		title: 'premium wheat seeds',
-// 		desc: 'High-yield wheat seeds perfect for commercial farming',
-// 		quantity: 100,
-// 		category: 'spices',
-// 		image: productImg,
-// 		id: 6,
-// 		status: 'inactive',
-// 	},
-// ]

@@ -63,7 +63,7 @@ export default function AddGallery() {
 						onClick={() => handleSubmit(images)}
 						className="bg-transparent text-secondary border-2 border-secondary font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer disabled:opacity-50"
 					>
-						Upload to Export
+						{isPending ? 'Loading...' : 'Upload to Export'}
 					</button>
 					{/* <button className="bg-primary text-white font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer">
 						Upload to Africa

@@ -1,3 +1,5 @@
+export type AffiliateStatus = 'rejected' | 'pending' | 'approved'
+
 export type Affiliate = {
 	aboutCommission: string
 	aboutInterest: string
@@ -13,7 +15,7 @@ export type Affiliate = {
 	productVolume: string
 	referralPlatform: string
 	referralPlatformOthers: string
-	status: 'rejected' | 'pending' | 'approved'
+	status: AffiliateStatus
 	understandTerms: 'yes' | 'no'
 	_id: string
 }

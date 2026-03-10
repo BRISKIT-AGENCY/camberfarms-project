@@ -130,11 +130,11 @@ export default function ViewEnquiry() {
 				{/* message */}
 				<h6 className="my-1 text-base">Message</h6>
 				<textarea
-					name=""
+					name="message"
 					id=""
 					value={enquiry?.message}
 					readOnly
-					className="w-full resize-none bg-grey/10 px-4 py-2 rounded-lg text-grey dark:text-light-grey border-0 outline-0 focus-within:border focus-within:border-primary"
+					className="w-full field-sizing-content resize-none bg-grey/10 px-4 py-2 rounded-lg text-grey dark:text-light-grey border-0 outline-0 focus-within:border focus-within:border-primary"
 				></textarea>
 
 				<div className="w-full flex gap-6 items-center justify-end py-4 mt-4 border-t border-grey/40">

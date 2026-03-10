@@ -5,24 +5,24 @@ import { RiReplyLine } from 'react-icons/ri'
 import { Link } from 'react-router-dom'
 // import axiosInstance from '../../api/axios'
 import { Table } from '../../components/Table'
-import useGetEnquiries from '../../hooks/useGetEnquiries'
+// import useGetEnquiries from '../../hooks/useGetEnquiries'
 import type { Enquiry } from '../../types/enquiry'
 
-export default function EnquiriesTable() {
-	const { data, isPending, isRefetching, error } = useGetEnquiries()
+export default function EnquiriesTable({
+	enquiries,
+}: {
+	enquiries: Enquiry[]
+}) {
+	// const { data, isPending, isRefetching, error } = useGetEnquiries()
 
-	if (isPending || isRefetching) return <div>Loading...</div>
+	// if (isPending || isRefetching) return <div>Loading...</div>
 
-	if (error)
-		return <div className="px-8">Something went wrong: {error.message}</div>
+	// if (error)
+	// 	return <div className="px-8">Something went wrong: {error.message}</div>
 
 	return (
 		<div className="w-full mb-10">
-			<Table
-				columns={EnquiryColumns}
-				data={data?.enquiries}
-				wrapContent={true}
-			/>
+			<Table columns={EnquiryColumns} data={enquiries} wrapContent={true} />
 		</div>
 	)
 }

@@ -61,7 +61,7 @@ export default function GalleryContainer() {
 				{data?.galleries.map((item) => (
 					<CardItem
 						key={item._id}
-						image={`https://camberfarms-project.onrender.com${item.images?.[0]?.url}`}
+						image={item.images?.[0]?.url}
 						primaryBtnText="change image"
 						primaryBtnClick={() => changeImage(item._id)}
 						secondaryBtnText="delete"

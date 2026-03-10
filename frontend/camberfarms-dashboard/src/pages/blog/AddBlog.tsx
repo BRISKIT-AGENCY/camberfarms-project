@@ -22,7 +22,7 @@ const initialState = {
 export default function AddBlog() {
 	const [showPreview, setShowPreview] = useState(false)
 	const {
-		sections,
+		sections: blogSections,
 		addSection,
 		removeSection,
 		updateHeading,
@@ -47,11 +47,11 @@ export default function AddBlog() {
 	} = useForm({ defaultValues: initialState })
 
 	const submitToAfrica = (data: CreateBlogFormValues) => {
-		postToAfrica({ ...data, sections })
+		postToAfrica({ ...data, sections: blogSections })
 	}
 
 	const submitToExport = (data: CreateBlogFormValues) => {
-		postToExport({ ...data, sections })
+		postToExport({ ...data, sections: blogSections })
 	}
 
 	return (
@@ -99,7 +99,7 @@ export default function AddBlog() {
 								<span className="text-grey text-sm">Upload image</span>
 								<input
 									type="file"
-									{...register('image', { required: true })}
+									{...register('image')}
 									id="image"
 									accept="image/*"
 									multiple={false}
@@ -143,7 +143,7 @@ export default function AddBlog() {
 							</button>
 							{showPreview && (
 								<div className="border border-dark-grey rounded-sm bg-light-grey dark:bg-dark-grey p-4 my-2">
-									{sections.map((s) => (
+									{blogSections.map((s) => (
 										<div key={s._id} className="my-3">
 											<h6 className="font-medium mb-4 text-lg">{s.heading}</h6>
 											{s.paragraphs.map((p, index) => (
@@ -157,7 +157,7 @@ export default function AddBlog() {
 							)}
 							{/* sections */}
 							<div className="space-y-6">
-								{sections.map((section) => (
+								{blogSections.map((section) => (
 									<div
 										key={section._id}
 										className="space-y-4 bg-light-grey dark:bg-black p-4"

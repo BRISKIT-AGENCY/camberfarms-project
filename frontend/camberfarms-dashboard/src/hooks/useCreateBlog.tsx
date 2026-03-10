@@ -11,9 +11,13 @@ export function useCreateBlog(url: string, queryKey: string) {
 	const navigate = useNavigate()
 	return useMutation({
 		mutationFn: async (values: CreateBlogFormValues) => {
-			// const excerpt = values.body.trim().slice(0, 200)
 			// const sections = createSections(values.body)
 			const slug = createSlug(values.title)
+			// remove _id's from sections
+			const sections = values.sections.map((s) => ({
+				heading: s.heading,
+				paragraphs: s.paragraphs,
+			}))
 
 			const formData = new FormData()
 
@@ -21,7 +25,7 @@ export function useCreateBlog(url: string, queryKey: string) {
 			formData.append('excerpt', values.excerpt)
 			formData.append('slug', slug)
 
-			formData.append('sections', JSON.stringify([values.sections]))
+			formData.append('sections', JSON.stringify(sections))
 
 			formData.append(
 				'publishedAt',
@@ -39,7 +43,7 @@ export function useCreateBlog(url: string, queryKey: string) {
 		},
 		onSuccess: () => {
 			toast.success('Content uploaded successfully')
-			queryClient.invalidateQueries({ queryKey: [...queryKey], type: 'all' })
+			queryClient.invalidateQueries({ queryKey: [queryKey], type: 'all' })
 			navigate(`/${queryKey}`)
 		},
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any

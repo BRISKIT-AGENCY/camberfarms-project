@@ -2,12 +2,28 @@ import { useMutation } from '@tanstack/react-query'
 import { FiUpload } from 'react-icons/fi'
 import { IoMdRefresh } from 'react-icons/io'
 import axiosInstance from '../../api/axios'
-import Searchbar from '../../components/Searchbar'
+// import Searchbar from '../../components/Searchbar'
+import type { Dispatch, SetStateAction } from 'react'
+import LocalSearchbar from '../../components/LocalSearchbar'
 import { exportToPDF } from '../../helpers/ExportToPDF'
 import { useRefetchQueries } from '../../hooks/useRefetchQueries'
 import EnquiriesStats from './EnquiriesStats'
 
-export default function EnquiriesHeader() {
+type SiteType = 'all' | 'export' | 'africa'
+
+type HeaderProps = {
+	setSite: Dispatch<SetStateAction<SiteType>>
+	setQuery: Dispatch<SetStateAction<string>>
+	q: string
+	site: string
+}
+
+export default function EnquiriesHeader({
+	q,
+	site,
+	setQuery,
+	setSite,
+}: HeaderProps) {
 	const refreshEnquiries = useRefetchQueries('enquiries')
 	const { isPending, mutate } = useMutation({
 		mutationKey: ['enquiries'],
@@ -61,13 +77,21 @@ export default function EnquiriesHeader() {
 			</div>
 			<EnquiriesStats />
 			<div className="w-full bg-white dark:bg-black mb-10 p-6 grid grid-cols-[2fr_1fr] items-center justify-between gap-6 flex-nowrap rounded-lg shadow-2xs">
-				<Searchbar placeholder="Search enquiries by name, email..." url="" />
+				<LocalSearchbar
+					placeholder="Search enquiries by name, email..."
+					query={q}
+					setState={setQuery}
+				/>
 				<select
 					name="status"
 					id="status"
+					value={site}
+					onChange={(e) => setSite(e.target.value as SiteType)}
 					className="bg-white dark:bg-black px-4 py-2 rounded-xl w-full border-2 border-grey inline-flex outline-0"
 				>
 					<option value="all">website</option>
+					<option value="africa">Africa</option>
+					<option value="export">Export</option>
 				</select>
 			</div>
 		</section>

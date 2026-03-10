@@ -1,8 +1,10 @@
+export type MembershipStatus = 'reject' | 'pending' | 'approved'
+
 export type Membership = {
 	name: string
 	email: string
 	country: string
-	status: 'reject' | 'pending' | 'approved'
+	status: MembershipStatus
 	createdAt: string
 	_id: string | number
 	gender: 'male' | 'female'

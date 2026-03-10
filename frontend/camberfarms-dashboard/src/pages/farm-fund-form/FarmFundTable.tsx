@@ -1,36 +1,36 @@
-import { useQuery } from '@tanstack/react-query'
+// import { useQuery } from '@tanstack/react-query'
 import { format, parseISO } from 'date-fns'
 import { MdOutlineRemoveRedEye } from 'react-icons/md'
 import { RiReplyLine } from 'react-icons/ri'
 import { Link } from 'react-router-dom'
-import axiosInstance from '../../api/axios'
+// import axiosInstance from '../../api/axios'
 import { Table } from '../../components/Table'
 import type { FarmFundEnquiry } from '../../types/farm-fund'
 
-export default function FarmFundTable() {
-	const { data, error, isPending, isRefetching } = useQuery({
-		queryKey: ['farm-fund'],
-		queryFn: async () => {
-			const res = await axiosInstance.get('farm-fund')
-			return res.data as {
-				count: number
-				registrations: FarmFundEnquiry[]
-			}
-		},
-		refetchOnWindowFocus: false,
-	})
+export default function FarmFundTable({
+	registrations,
+}: {
+	registrations: FarmFundEnquiry[]
+}) {
+	// const { data, error, isPending, isRefetching } = useQuery({
+	// 	queryKey: ['farm-fund'],
+	// 	queryFn: async () => {
+	// 		const res = await axiosInstance.get('farm-fund')
+	// 		return res.data as {
+	// 			count: number
+	// 			registrations: FarmFundEnquiry[]
+	// 		}
+	// 	},
+	// 	refetchOnWindowFocus: false,
+	// })
 
-	if (isPending || isRefetching) return <div>Loading...</div>
-	if (error)
-		return <div className="px-8">Something went wrong: {error.message}</div>
+	// if (isPending || isRefetching) return <div>Loading...</div>
+	// if (error)
+	// 	return <div className="px-8">Something went wrong: {error.message}</div>
 
 	return (
 		<div className="w-full mb-10">
-			<Table
-				columns={EnquiryColumns}
-				data={data?.registrations}
-				wrapContent={true}
-			/>
+			<Table columns={EnquiryColumns} data={registrations} wrapContent={true} />
 		</div>
 	)
 }
