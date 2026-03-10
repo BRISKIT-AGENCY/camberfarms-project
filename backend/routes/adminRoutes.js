@@ -54,13 +54,51 @@ router.post('/login', async (req, res) => {
     return res.status(401).json({ message: 'Invalid credentials' })
   }
 
+  // Generate 6-digit OTP
+  const otp = crypto.randomInt(100000, 999999).toString()
+  const expiresAt = new Date(Date.now() + 10 * 60 * 1000) // 10 min
+
+  // Save OTP directly to this admin
+  admin.twoFactor = { code: otp, expiresAt, verified: false }
+  await admin.save()
+
+  // Send OTP via email
+  await sendEmail(
+    admin.email,
+    'Your login verification code',
+    `Your OTP is: ${otp}. It expires in 10 minutes.`
+  )
+
+  res.status(200).json({
+    message: 'OTP sent to your email. Verify to complete login.'
+    // no need to send adminId
+  })
+})
+
+
+router.post('/login/verify-otp', async (req, res) => {
+  const { email, otp } = req.body
+
+  const admin = await Admin.findOne({ email })
+  if (!admin) return res.status(404).json({ message: 'Admin not found' })
+
+  if (!admin.twoFactor || admin.twoFactor.code !== otp) {
+    return res.status(401).json({ message: 'Invalid OTP' })
+  }
+
+  if (new Date() > admin.twoFactor.expiresAt) {
+    return res.status(401).json({ message: 'OTP expired' })
+  }
+
+  // Mark OTP as verified
+  admin.twoFactor.verified = true
+  await admin.save()
+
+  // Generate JWT after successful OTP verification
   const token = jwt.sign(
-    {
-      adminId: admin._id,
-      role: admin.role
-    },
+    { adminId: admin._id, role: admin.role },
     process.env.JWT_SECRET,
-    { expiresIn: '1d' }
+    { expiresIn: '3h' }
   )
 
   res.status(200).json({
@@ -74,7 +112,6 @@ router.post('/login', async (req, res) => {
     }
   })
 })
-
 
 router.post('/reset-password/request-otp', adminAuth, async (req, res) => {
   try {
