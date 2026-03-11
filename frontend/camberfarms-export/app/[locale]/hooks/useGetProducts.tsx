@@ -1,4 +1,5 @@
 'use client'
+import { useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'
 import axiosInstance from '../api/axios'
 import { Product } from '../types/product'
@@ -8,6 +9,8 @@ import {
 } from '../utils/getProductCategories'
 
 export default function useGetProducts(locale: string) {
+	const t = useTranslations('common')
+	const target = t('others') // translated "others"
 	const [data, setData] = useState<Product[] | null>(null)
 	const [categories, setCategories] = useState<UniqueProduct[]>([])
 	const [isPending, setIsPending] = useState(false)
@@ -28,9 +31,20 @@ export default function useGetProducts(locale: string) {
 					total: number
 					products: Product[]
 				}
-				console.log('result: ', result.products)
+
 				setData(result?.products)
 				const cat = getUniqueCategories(result?.products)
+
+				// rearrange categories so 'others' comes last
+				cat.sort((a, b) => {
+					if (a.category.toLocaleLowerCase() == target) return 1
+					if (
+						a.category.toLocaleLowerCase() !== target &&
+						b.category.toLocaleLowerCase() === target
+					)
+						return -1
+					return 0
+				})
 				setCategories(cat)
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			} catch (err: any) {
@@ -47,7 +61,7 @@ export default function useGetProducts(locale: string) {
 		return () => {
 			controller.abort()
 		}
-	}, [locale])
+	}, [locale, target])
 
 	return { data, isPending, error, categories }
 }

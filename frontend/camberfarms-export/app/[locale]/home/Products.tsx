@@ -10,6 +10,7 @@ export default function Products() {
 	const t = useTranslations('home.products')
 	const locale = useLocale()
 	const { categories } = useGetProducts(locale)
+	const products = categories.slice(0, 7)
 
 	return (
 		<section
@@ -25,8 +26,8 @@ export default function Products() {
 
 			<SecondaryBtnLink link={'/products'}>{t('link')}</SecondaryBtnLink>
 			<div className="w-full grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 mt-14">
-				{categories &&
-					categories?.map((p) => (
+				{products &&
+					products?.map((p) => (
 						<Link
 							href={`products/${p._id}`}
 							key={p._id}

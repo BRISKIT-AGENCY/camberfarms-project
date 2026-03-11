@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { iBlogContent } from './page'
 
 type BlogPropType = {
@@ -13,9 +14,23 @@ export default async function BlogContent({ blog }: BlogPropType) {
 		)
 
 	return (
-		<div className="w-full bg-[#F3F5F7] md:pt-38.25 md:px-25 px-6 pt-15 pb-19.5">
+		<div className="w-full bg-[#F3F5F7] md:pt-18.25 md:px-25 px-6 pt-15">
+			{/* IMAGE */}
+			{blog.image && (
+				<div className="w-full h-75 lg:h-85 xl:h-95 relative mb-4 bg-light-grey">
+					<Image
+						src={`https://api.camberfarms.org${blog.image}`}
+						alt={blog.title}
+						fill
+						// placeholder="blur"
+						className="w-full object-cover object-center rounded-2xl"
+					/>
+				</div>
+			)}
 			{/* TITLE */}
-			<h1 className="font-bold md:text-[36px] text-[16px]">{blog.title}</h1>
+			<h1 className="font-bold md:text-[36px] text-[16px] capitalize">
+				{blog.title}
+			</h1>
 
 			<p className="md:text-[18px] text-[#808080] mt-2">
 				Date: {new Date(blog.publishedAt).toDateString()}
@@ -25,7 +40,7 @@ export default async function BlogContent({ blog }: BlogPropType) {
 			<div className="mt-12">
 				{blog.sections.map((section, index) => (
 					<div key={index} className="w-full md:mt-12.5 mt-6">
-						<h2 className="font-medium md:text-[28px] text-[16px]">
+						<h2 className="font-medium md:text-[28px] text-[16px] capitalize">
 							{section.heading}
 						</h2>
 

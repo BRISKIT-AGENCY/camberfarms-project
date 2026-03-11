@@ -27,7 +27,7 @@ export default function BlogMain({
 							{blog.image && (
 								<div className="w-full h-75 relative mb-4">
 									<Image
-										src={`https://camberfarms-project.onrender.com${blog.image}`}
+										src={`https://api.camberfarms.org${blog.image}`}
 										alt={blog.title}
 										fill
 										// placeholder="blur"

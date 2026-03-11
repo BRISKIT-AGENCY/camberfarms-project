@@ -17,7 +17,7 @@ export default function ProductItem({ name, img, content, _id }: ProductProps) {
 				</h5>
 				<p className="text-xs sm:text-base text-center md:w-4/5">{content}</p>
 				<Link
-					href={`products/${_id}`}
+					href={`products/${_id}#quotation`}
 					className="w-fit py-3 px-6 rounded-4xl bg-white text-black capitalize font-poppins font-semibold text-lg border group-odd:border-secondary group-even:border-primary"
 				>
 					Get a quote

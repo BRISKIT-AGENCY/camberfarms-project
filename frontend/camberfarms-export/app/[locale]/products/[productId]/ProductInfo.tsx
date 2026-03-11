@@ -17,7 +17,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
 				<div className="w-full flex items-center gap-6 flex-wrap mb-6 border border-primary/50 rounded-sm">
 					{product?.images.map((img, index) => (
 						<Image
-							src={`https://camberfarms-project.onrender.com${img}`}
+							src={`https://api.camberfarms.org${img}`}
 							alt={product?.name}
 							width={520}
 							height={500}

@@ -7,6 +7,7 @@ import BlogContent from './BlogContent'
 export type iBlogContent = {
 	title: string
 	publishedAt: string
+	image: string
 	sections: {
 		heading: string
 		paragraphs: string[]

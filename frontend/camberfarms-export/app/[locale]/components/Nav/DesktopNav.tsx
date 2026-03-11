@@ -28,11 +28,11 @@ export default function DesktopNav({ darkBg }: NavProps) {
 
 	return (
 		<nav
-			className={`hidden w-full lg:flex items-center justify-between py-6 px-8 absolute top-0 z-20 ${
+			className={`hidden w-full lg:flex items-center justify-between py-3 px-8 absolute top-0 z-20 ${
 				darkBg ? 'bg-transparent text-white' : 'bg-white text-black shadow-xs'
 			}`}
 		>
-			<div className="h-10 w-20 relative">
+			<Link href={'/'} className="h-20 w-30 relative">
 				{darkBg && (
 					<Image
 						src={'./logo-white.svg'}
@@ -51,7 +51,7 @@ export default function DesktopNav({ darkBg }: NavProps) {
 						className="object-contain"
 					/>
 				)}
-			</div>
+			</Link>
 			<div className="flex items-center gap-4">
 				<NavLink href="/" darkBg={darkBg}>
 					{t('home')}
@@ -113,7 +113,7 @@ export default function DesktopNav({ darkBg }: NavProps) {
 			<Link
 				href={'https://camberfarms.org/'}
 				target="_blank"
-				className={`py-2 px-4 rounded-lg font-poppins font-bold capitalize ${
+				className={`py-3 px-4 rounded-lg font-poppins font-bold capitalize ${
 					darkBg ? 'bg-white text-primary' : 'bg-primary text-white'
 				}`}
 			>

@@ -62,7 +62,7 @@ export default function LocaleSwitcher() {
 			</button>
 
 			{isOpen && (
-				<div className="absolute mt-2 ml-4 bg-white border rounded-lg shadow-md right-0 w-max px-2">
+				<div className="absolute mt-2 ml-4 bg-white border rounded-lg shadow-md -left-4 w-max px-2">
 					{LANGUAGES.map((lang) => (
 						<button
 							key={lang.code}

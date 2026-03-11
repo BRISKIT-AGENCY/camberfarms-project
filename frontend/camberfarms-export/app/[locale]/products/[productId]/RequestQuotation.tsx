@@ -51,7 +51,10 @@ export default function RequestQuotation() {
 			}}
 			className="w-full h-fit py-10 px-10 lg:px-12 xl:px-20 md:py-14 relative"
 		>
-			<h4 className="font-poppins capitalize font-bold text-black text-xl sm:text-2xl mb-8">
+			<h4
+				id="quotation"
+				className="font-poppins capitalize font-bold text-black text-xl sm:text-2xl mb-8"
+			>
 				request quotation
 			</h4>
 			<fieldset className="flex flex-col gap-6">

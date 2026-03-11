@@ -28,7 +28,7 @@ export default function MobileNav() {
 			className="lg:hidden w-full h-auto py-4 px-8 bg-white text-grey flex items-center justify-between capitalize shadow relative"
 			ref={ref}
 		>
-			<div className="h-10 w-20 relative">
+			<Link href={'/'} className="h-20 w-30 relative">
 				<Image
 					src={'/logo.png'}
 					alt="camberfarms"
@@ -36,12 +36,12 @@ export default function MobileNav() {
 					priority
 					className="object-contain"
 				/>
-			</div>
+			</Link>
 			{isOpenNav && <NavMenu closeNav={closeNav} />}
 			<button
 				type="button"
 				aria-label="toggle navigation"
-				className="h-10 w-20 cursor-pointer relative"
+				className="h-8 w-8 cursor-pointer relative"
 				onClick={() => setIsOpenNav(!isOpenNav)}
 			>
 				{isOpenNav && (

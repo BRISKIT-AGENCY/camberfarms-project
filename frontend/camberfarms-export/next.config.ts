@@ -15,6 +15,11 @@ const nextConfig: NextConfig = {
 				hostname: 'camberfarms-project.onrender.com',
 				pathname: '/uploads/**',
 			},
+			{
+				protocol: 'https',
+				hostname: 'api.camberfarms.org',
+				pathname: '/uploads/**',
+			},
 		],
 	},
 	// i18n: {

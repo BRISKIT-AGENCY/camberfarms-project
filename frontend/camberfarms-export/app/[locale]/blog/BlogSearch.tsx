@@ -98,7 +98,7 @@ export default function BlogSearch() {
 							<Link
 								key={post.slug}
 								href={`/blog/${post.slug}`}
-								className="block text-primary hover:underline"
+								className="block text-primary capitalize hover:underline"
 							>
 								{post.title}
 							</Link>
