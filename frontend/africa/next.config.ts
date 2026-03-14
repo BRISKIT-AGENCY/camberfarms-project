@@ -11,15 +11,17 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'api.camberfarms.org',
+        pathname: '/uploads/**',
+      },
+      // Optional: keep this if you still use render
+      {
+        protocol: 'https',
         hostname: 'camberfarms-project.onrender.com',
-        pathname: '/uploads/**', // matches your blog images
+        pathname: '/uploads/**',
       },
     ],
   },
-  // i18n: {
-  //   locales: ['en', 'fr', 'de'],
-  //   defaultLocale: 'en',
-  // },
 }
 
 const withNextIntl = createNextIntlPlugin()

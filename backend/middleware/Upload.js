@@ -1,5 +1,10 @@
 import multer from 'multer';
 import path from 'path';
+import fs from 'fs';
+
+
+const UPLOAD_DIR = 'uploads/ids';
+if (!fs.existsSync(UPLOAD_DIR)) fs.mkdirSync(UPLOAD_DIR, { recursive: true });
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -13,7 +18,7 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (req, file, cb) => {
-  const allowedTypes = /jpeg|jpg|png|pdf/;
+  const allowedTypes = /jpeg|jpg|png|webp|pdf/;
   const isValid =
     allowedTypes.test(file.mimetype) &&
     allowedTypes.test(

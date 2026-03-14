@@ -127,7 +127,7 @@ export default function BlogPage({ initialPage = 1 }) {
                 >
                   
                   <Image
-                    src={`https://camberfarms-project.onrender.com/${blog.image}`}
+                    src={`${API_URL}${blog.image}`}
                     alt={blog.title}
                     width={800}
                     height={400}

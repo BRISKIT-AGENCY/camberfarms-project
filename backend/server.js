@@ -15,6 +15,7 @@ import messageRouter from './routes/messageRoutes.js';
 import productRouter from './routes/productRoutes.js';
 import enquiryRouter from './routes/enquiryRoutes.js'
 import { trackVisitor } from "./middleware/trackVisitor.js";
+import multer from "multer";
 
 
 dotenv.config();
@@ -30,6 +31,7 @@ const allowedOrigins = [
   "https://camberfarms-dashboard.vercel.app",
   "https://camberfarms-project.vercel.app",
   "https://camberfarms.org",
+  "https://www.camberfarms.org",
   "https://dashboard.camberexports.com",
   "https://camberexports.com",
   "http://localhost:3000"
@@ -51,18 +53,35 @@ app.use(
 );
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
+app.use((err, req, res, next) => {
+  if (err instanceof multer.MulterError) {
+    return res.status(400).json({
+      success: false,
+      message: err.message
+    })
+  }
 
-const connectDB= async()=>{
-    try {
-        mongoose.connection.on('connected', ()=> {
-          console.log('Database connected');
-        }
-        )
-        await mongoose.connect(`${MONGO_URI}`)
+  if (err.message.includes("Only images")) {
+    return res.status(400).json({
+      success: false,
+      message: err.message
+    })
+  }
 
-    } catch (error) {
-        console.error('connection error:', error);
+  next(err)
+})
+
+const connectDB = async () => {
+  try {
+    mongoose.connection.on('connected', () => {
+      console.log('Database connected');
     }
+    )
+    await mongoose.connect(`${MONGO_URI}`)
+
+  } catch (error) {
+    console.error('connection error:', error);
+  }
 }
 
 await connectDB()
@@ -84,6 +103,6 @@ app.use('/api/', enquiryRouter)
 
 
 
-app.listen(PORT, ()=>{
-    console.log(`App is running on port ${PORT}`)
+app.listen(PORT, () => {
+  console.log(`App is running on port ${PORT}`)
 })

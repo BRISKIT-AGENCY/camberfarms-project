@@ -47,7 +47,7 @@ router.post(
         });
       }
 
-      const filePaths = req.files?.map(file => file.path) || [];
+      const filePaths = req.files.map(file => `https://api.camberfarms.org/uploads/ids/${file.filename}`);
 
       const membership = await Membership.create({
         name,

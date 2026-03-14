@@ -26,7 +26,8 @@ import { getEnquiries } from '../services/enquiries.js'
 import { exportToPDF } from '../utils/exportPdf.js'
 import crypto from 'crypto'
 import fs from 'fs'
-import sharp from 'sharp'
+import path from 'path'
+import sizeOf from 'image-size'
 import { exportRegistrationsToPDF } from '../utils/exportFarmFundPdf.js'
 import { translateText } from '../utils/translate.js'
 import { translateSections } from '../utils/translateSections.js'
@@ -41,7 +42,42 @@ dotenv.config();
 const router = express.Router()
 
 // Admin login route
+
 router.post('/login', async (req, res) => {
+  const { email, password } = req.body
+
+  const admin = await Admin.findOne({ email })
+  if (!admin) {
+    return res.status(401).json({ message: 'Invalid credentials' })
+  }
+
+  const isMatch = await bcrypt.compare(password, admin.passwordHash)
+  if (!isMatch) {
+    return res.status(401).json({ message: 'Invalid credentials' })
+  }
+
+  const token = jwt.sign(
+    {
+      adminId: admin._id,
+      role: admin.role
+    },
+    process.env.JWT_SECRET,
+    { expiresIn: '3h' }
+  )
+
+  res.status(200).json({
+    message: 'Login successful',
+    token,
+    admin: {
+      id: admin._id,
+      email: admin.email,
+      role: admin.role,
+      profilePhoto: admin.profilePhoto
+    }
+  })
+})
+
+{/*router.post('/login', async (req, res) => {
   const { email, password } = req.body
 
   const admin = await Admin.findOne({ email })
@@ -112,6 +148,7 @@ router.post('/login/verify-otp', async (req, res) => {
     }
   })
 })
+*/}
 
 router.post('/reset-password/request-otp', adminAuth, async (req, res) => {
   try {
@@ -286,149 +323,187 @@ router.post('/forgot-password/reset', async (req, res) => {
 
 
 // Upload or update the single admin's profile photo
-router.post('/admin/profile-photo', adminAuth, adminUpload, async (req, res) => {
+router.post('/profile-photo', adminAuth, adminUpload, async (req, res) => {
   try {
-    // Assuming there is only one admin in the collection
     const admin = await Admin.findOne()
+
     if (!admin) {
-      return res.status(404).json({ success: false, message: 'Admin not found' })
+      return res.status(404).json({
+        success: false,
+        message: 'Admin not found'
+      })
     }
 
     if (!req.file) {
-      return res.status(400).json({ success: false, message: 'No file uploaded' })
+      return res.status(400).json({
+        success: false,
+        message: 'No file uploaded'
+      })
     }
 
-    // Save file path to admin document
-    admin.profilePhoto = `/uploads/admins/${req.file.filename}`
+    // Delete old profile photo if it exists
+    if (admin.profilePhoto) {
+      const oldPath = path.join(process.cwd(), admin.profilePhoto)
+
+      try {
+        if (fs.existsSync(oldPath)) {
+          fs.unlinkSync(oldPath)
+        }
+      } catch (err) {
+        console.log("Failed to delete old profile photo:", err)
+      }
+    }
+
+    // Save new photo
+    admin.profilePhoto = `uploads/admins/${req.file.filename}`
     await admin.save()
 
     res.status(200).json({
       success: true,
       message: 'Profile photo updated successfully',
-      profilePhoto: admin.profilePhoto
+      profilePhoto: `https://api.camberfarms.org/${admin.profilePhoto}`
     })
+
   } catch (error) {
     console.error('Upload profile photo error:', error)
-    res.status(500).json({ success: false, message: 'Failed to upload profile photo' })
-  }
-})
 
-
-router.get('/gallery', adminAuth, async (req, res) => {
-  try {
-    const galleries = await Gallery.find().sort({ createdAt: -1 })
-    res.status(200).json({ success: true, total: galleries.length, galleries })
-  } catch (error) {
-    console.error(error)
-    res.status(500).json({ success: false, message: 'Failed to fetch galleries' })
-  }
-})
-
-router.get('/gallery/:id', adminAuth, async (req, res) => {
-  try {
-    const gallery = await Gallery.findById(req.params.id)
-    if (!gallery) return res.status(404).json({ success: false, message: 'Gallery not found' })
-    res.status(200).json({ success: true, gallery })
-  } catch (error) {
-    console.error(error)
-    res.status(500).json({ success: false, message: 'Failed to fetch gallery' })
-  }
-})
-
-router.post('/gallery', adminAuth, galleryUpload.array('images', 20), async (req, res) => {
-  try {
-    if (!req.files || req.files.length === 0) {
-      return res.status(400).json({ message: 'No images uploaded' })
-    }
-
-    const imagesWithMeta = await Promise.all(
-      req.files.map(async (file) => {
-        const metadata = await sharp(file.path).metadata()
-
-        return {
-          url: `/uploads/gallery/${file.filename}`,
-          size: file.size, // bytes
-          width: metadata.width,
-          height: metadata.height,
-          aspectRatio: metadata.width && metadata.height
-            ? (metadata.width / metadata.height).toFixed(2)
-            : null,
-          uploadedAt: new Date()
-        }
-      })
-    )
-
-    const gallery = new Gallery({
-      images: imagesWithMeta
-    })
-
-    await gallery.save()
-
-    res.status(201).json({
-      success: true,
-      gallery
-    })
-  } catch (error) {
-    console.error(error)
     res.status(500).json({
       success: false,
-      message: 'Failed to upload gallery'
+      message: 'Failed to upload profile photo'
     })
   }
 })
 
-router.patch(
-  '/gallery/:id',
-  adminAuth,
-  galleryUpload.array('images', 20),
-  async (req, res) => {
-    try {
-      if (!req.files || req.files.length === 0) {
-        return res.status(400).json({ message: 'At least one image is required' })
-      }
 
-      const gallery = await Gallery.findById(req.params.id)
-      if (!gallery) {
-        return res.status(404).json({ success: false, message: 'Gallery not found' })
-      }
-
-      // Optional: delete old images from disk
-      gallery.images.forEach(img => {
-        const filePath = img.replace('/', '')
-        if (fs.existsSync(filePath)) fs.unlinkSync(filePath)
-      })
-
-      // Save new images
-      const images = req.files.map(
-        file => `/uploads/gallery/${file.filename}`
-      )
-
-      gallery.images = images
-      await gallery.save()
-
-      res.status(200).json({
-        success: true,
-        message: 'Gallery images updated successfully',
-        gallery
-      })
-    } catch (error) {
-      console.error(error)
-      res.status(500).json({ message: 'Failed to update gallery images' })
-    }
-  }
-)
-
-
-router.delete('/gallery/:id', adminAuth, async (req, res) => {
+router.get("/gallery", async (req, res) => {
   try {
-    const gallery = await Gallery.findByIdAndDelete(req.params.id)
-    if (!gallery) return res.status(404).json({ success: false, message: 'Gallery not found' })
-    res.status(200).json({ success: true, message: 'Gallery deleted successfully' })
+
+    const images = await Gallery
+      .find()
+      .sort({ uploadedAt: -1 })
+
+    res.json({
+      success: true,
+      total: images.length,
+      images
+    })
+
   } catch (error) {
-    console.error(error)
-    res.status(500).json({ success: false, message: 'Failed to delete gallery' })
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch images"
+    })
   }
 })
+
+
+router.get("/gallery/:id", async (req, res) => {
+  try {
+    const image = await Gallery.findById(req.params.id);
+
+    if (!image) {
+      return res.status(404).json({ success: false, message: "Image not found" });
+    }
+
+    res.json({ success: true, image });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+// POST multiple images
+router.post("/gallery", adminAuth, galleryUpload.array("images", 20), async (req, res) => {
+  try {
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({ success: false, message: "No images uploaded" });
+    }
+
+    const images = await Promise.all(
+      req.files.map(async (file) => {
+        const buffer = await fs.promises.readFile(file.path);
+        const dimensions = sizeOf(buffer);
+
+        return {
+          url: `https://api.camberfarms.org/uploads/gallery/${file.filename}`,
+          size: file.size,
+          width: dimensions.width,
+          height: dimensions.height,
+          aspectRatio: dimensions.width && dimensions.height
+            ? Number((dimensions.width / dimensions.height).toFixed(2))
+            : null,
+          uploadedAt: new Date()
+        };
+      })
+    );
+
+    const savedImages = await Gallery.insertMany(images);
+
+    res.status(201).json({ success: true, images: savedImages });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Upload failed" });
+  }
+});
+
+// PATCH single image
+router.patch("/gallery/:id", adminAuth, galleryUpload.single("images"), async (req, res) => {
+  try {
+    const image = await Gallery.findById(req.params.id);
+    if (!image) return res.status(404).json({ success: false, message: "Image not found" });
+
+    if (!req.file) return res.status(400).json({ success: false, message: "No new image uploaded" });
+
+    // Delete old image safely
+    if (image.url) {
+      let oldPath = image.url.replace('https://api.camberfarms.org/', '');
+      oldPath = path.join(process.cwd(), oldPath);
+
+      if (fs.existsSync(oldPath)) {
+        fs.unlinkSync(oldPath);
+      }
+    }
+
+    // Update with new image
+    image.url = `https://api.camberfarms.org/uploads/gallery/${req.file.filename}`;
+    image.size = req.file.size;
+    image.uploadedAt = new Date();
+
+    await image.save();
+
+    res.json({ success: true, image });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Update failed" });
+  }
+});
+
+// DELETE single image
+router.delete("/gallery/:id", adminAuth, async (req, res) => {
+  try {
+    const image = await Gallery.findById(req.params.id);
+    if (!image) return res.status(404).json({ success: false, message: "Image not found" });
+
+    // Delete file safely
+    if (image.url) {
+      let filePath = image.url.replace('https://api.camberfarms.org/', '');
+      filePath = path.join(process.cwd(), filePath);
+
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+      }
+    }
+
+    await image.deleteOne();
+
+    res.json({ success: true, message: "Image deleted" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Delete failed" });
+  }
+});
+
+
 
 // GET all Africa blogs
 router.get('/africa-blogs', async (req, res) => {
@@ -500,10 +575,18 @@ router.post(
       if (!slug) return res.status(400).json({ message: 'Slug is required' });
       if (!req.file) return res.status(400).json({ message: 'Blog image is required' });
 
+      const slugExists = await Blog.findOne({ slug });
+
+      if (slugExists) {
+        return res.status(400).json({
+          message: "Slug already exists"
+        });
+      }
+
       // 2️⃣ Parse sections if it's a string
       if (sections && typeof sections === 'string') sections = JSON.parse(sections);
 
-      const imagePath = `/uploads/blogs/${req.file.filename}`;
+      const imagePath = `https://api.camberfarms.org/uploads/blogs/${req.file.filename}`;
 
       // 3️⃣ Prepare translations object
       const translations = {};
@@ -555,114 +638,173 @@ router.post(
 
 
 // update a africa blog
-router.patch('/africa-blogs/:id', adminAuth, blogUpload.single('image'), async (req, res) => {
-  try {
-    const { id } = req.params;
-    let updateData = { ...req.body };
+router.patch(
+  "/africa-blogs/:id",
+  adminAuth,
+  blogUpload.single("image"),
+  async (req, res) => {
+    try {
+      const { id } = req.params
+      let updateData = { ...req.body }
 
-    // Parse sections if sent as JSON string
-    if (updateData.sections && typeof updateData.sections === 'string') {
-      updateData.sections = JSON.parse(updateData.sections);
-    }
-
-    // Find existing blog
-    const existingBlog = await Blog.findById(id);
-    if (!existingBlog) return res.status(404).json({ message: 'Blog not found' });
-
-    // IMAGE HANDLING
-    if (req.file) {
-      updateData.image = `/uploads/blogs/${req.file.filename}`;
-
-      // Delete old image
-      if (existingBlog.image) {
-        try {
-          fs.unlinkSync(`.${existingBlog.image}`);
-        } catch (err) {
-          console.warn('Old image not found:', err.message);
-        }
-      }
-    }
-
-    // TRANSLATION HANDLING
-    const titleChanged = updateData.title !== undefined;
-    const excerptChanged = updateData.excerpt !== undefined;
-    const sectionsChanged = updateData.sections !== undefined;
-
-    if (titleChanged || excerptChanged || sectionsChanged) {
-      const existingEn = existingBlog.translations.get('en');
-
-      const newTitle = updateData.title || existingEn.title;
-      const newExcerpt = updateData.excerpt || existingEn.excerpt;
-      const newSections = updateData.sections || existingEn.sections;
-
-      const translations = {
-        en: {
-          title: newTitle,
-          excerpt: newExcerpt,
-          sections: newSections
-        }
-      };
-
-      for (const lang of SUPPORTED_LANGUAGES) {
-        translations[lang] = {
-          title: await translateText(newTitle, lang),
-          excerpt: await translateText(newExcerpt, lang),
-          sections: await translateSections(newSections, lang)
-        };
+      // Parse sections if JSON string
+      if (updateData.sections && typeof updateData.sections === "string") {
+        updateData.sections = JSON.parse(updateData.sections)
       }
 
-      updateData.translations = translations;
+      const existingBlog = await Blog.findById(id)
 
-      // Remove raw fields to avoid schema conflicts
-      delete updateData.title;
-      delete updateData.excerpt;
-      delete updateData.sections;
+      if (!existingBlog) {
+        return res.status(404).json({
+          success: false,
+          message: "Blog not found"
+        })
+      }
+
+      // =========================
+      // IMAGE HANDLING
+      // =========================
+      if (req.file) {
+
+        // Save relative path to DB
+        const newImagePath = `uploads/blogs/${req.file.filename}`
+        updateData.image = newImagePath
+
+        // Delete old image
+        if (existingBlog.image) {
+
+          const oldImagePath = path.join(
+            process.cwd(),
+            existingBlog.image
+          )
+
+          if (fs.existsSync(oldImagePath)) {
+            fs.unlinkSync(oldImagePath)
+          }
+        }
+      }
+
+      // =========================
+      // TRANSLATIONS
+      // =========================
+      const titleChanged = updateData.title !== undefined
+      const excerptChanged = updateData.excerpt !== undefined
+      const sectionsChanged = updateData.sections !== undefined
+
+      if (titleChanged || excerptChanged || sectionsChanged) {
+
+        const existingEn = existingBlog.translations.get("en")
+
+        const newTitle = updateData.title || existingEn.title
+        const newExcerpt = updateData.excerpt || existingEn.excerpt
+        const newSections = updateData.sections || existingEn.sections
+
+        const translations = {
+          en: {
+            title: newTitle,
+            excerpt: newExcerpt,
+            sections: newSections
+          }
+        }
+
+        for (const lang of SUPPORTED_LANGUAGES) {
+          translations[lang] = {
+            title: await translateText(newTitle, lang),
+            excerpt: await translateText(newExcerpt, lang),
+            sections: await translateSections(newSections, lang)
+          }
+        }
+
+        updateData.translations = translations
+
+        delete updateData.title
+        delete updateData.excerpt
+        delete updateData.sections
+      }
+
+      // Date conversion
+      if (updateData.publishedAt) {
+        updateData.publishedAt = new Date(updateData.publishedAt)
+      }
+
+      const updatedBlog = await Blog.findByIdAndUpdate(
+        id,
+        updateData,
+        { new: true, runValidators: true }
+      )
+
+      // Create notification
+      await Notification.create({
+        title: "Blog Updated",
+        description: updatedBlog.translations?.en?.title || "Blog updated",
+        type: "blog",
+        sourceWebsite: "africa",
+        link: `/blogs/${updatedBlog.slug}`,
+        date: new Date()
+      })
+
+      // Convert image path to full URL before sending response
+      const blogResponse = updatedBlog.toObject()
+
+      if (blogResponse.image) {
+        blogResponse.image = `https://api.camberfarms.org/${blogResponse.image}`
+      }
+
+      res.status(200).json({
+        success: true,
+        message: "Blog updated successfully",
+        blog: blogResponse
+      })
+
+    } catch (error) {
+      console.error(error)
+
+      res.status(500).json({
+        success: false,
+        message: "Failed to update blog",
+        error: error.message
+      })
     }
-
-    // Update publishedAt if provided
-    if (updateData.publishedAt) updateData.publishedAt = new Date(updateData.publishedAt);
-
-    const updatedBlog = await Blog.findByIdAndUpdate(id, updateData, { new: true, runValidators: true });
-
-    await Notification.create({
-      title: 'Blog Updated',
-      description: updatedBlog.translations?.en?.title || 'Blog updated',
-      type: 'blog',
-      sourceWebsite: 'africa',
-      link: `/blogs/${updatedBlog.slug}`,
-      date: new Date()
-    });
-
-    res.status(200).json({
-      message: 'Blog updated successfully',
-      blog: updatedBlog
-    });
-
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Failed to update blog', error: error.message });
   }
-});
+)
 
 
 // delete a africa blog
 router.delete('/africa-blogs/:id', adminAuth, async (req, res) => {
   try {
     const { id } = req.params
+
+    // Find and delete the blog
     const deletedBlog = await Blog.findByIdAndDelete(id)
 
-    if (!deletedBlog) return res.status(404).json({ message: 'Blog not found' })
+    if (!deletedBlog) {
+      return res.status(404).json({ message: 'Blog not found' })
+    }
 
-    // Delete the blog image
+    // =========================
+    // DELETE BLOG IMAGE
+    // =========================
     if (deletedBlog.image) {
       try {
-        fs.unlinkSync(`.${deletedBlog.image}`);
+        // Convert full URL to relative path if needed
+        let imagePath = deletedBlog.image
+        if (imagePath.startsWith('https://api.camberfarms.org/')) {
+          imagePath = imagePath.replace('https://api.camberfarms.org/', '')
+        }
+
+        const fullPath = path.join(process.cwd(), imagePath)
+
+        if (fs.existsSync(fullPath)) {
+          fs.unlinkSync(fullPath)
+        }
       } catch (err) {
-        console.warn('Image not found:', err.message);
+        console.warn('Image not found or failed to delete:', err.message)
       }
     }
 
-    // Create notification
+    // =========================
+    // CREATE NOTIFICATION
+    // =========================
     await Notification.create({
       title: 'Blog Deleted',
       description: deletedBlog.translations?.en?.title || 'Blog deleted',
@@ -670,9 +812,10 @@ router.delete('/africa-blogs/:id', adminAuth, async (req, res) => {
       sourceWebsite: 'africa',
       link: '/blogs',
       date: new Date()
-    });
+    })
 
     res.status(200).json({ message: 'Blog deleted successfully' })
+
   } catch (error) {
     console.error(error)
     res.status(500).json({ message: 'Failed to delete blog', error: error.message })
@@ -797,6 +940,14 @@ router.post(
       if (!slug) return res.status(400).json({ message: 'Slug is required' });
       if (!req.file) return res.status(400).json({ message: 'ExportBlog image is required' });
 
+      const slugExists = await exportBlog.findOne({ slug });
+
+      if (slugExists) {
+        return res.status(400).json({
+          message: "Slug already exists"
+        });
+      }
+
       // Parse sections
       if (sections && typeof sections === 'string') {
         sections = JSON.parse(sections);
@@ -856,49 +1007,81 @@ router.post(
 
 // UPDATE export blog
 router.patch(
-  '/export-blogs/:id',
+  "/export-blogs/:id",
   adminAuth,
-  exportBlogUpload.single('image'),
+  exportBlogUpload.single("image"),
   async (req, res) => {
     try {
-      const { id } = req.params;
-      let updateData = { ...req.body };
 
-      // Parse sections
-      if (updateData.sections && typeof updateData.sections === 'string') {
-        updateData.sections = JSON.parse(updateData.sections);
+      const { id } = req.params
+      let updateData = { ...req.body }
+
+      // =========================
+      // SLUG CHECK
+      // =========================
+      if (updateData.slug) {
+        const slugExists = await exportBlog.findOne({
+          slug: updateData.slug,
+          _id: { $ne: id }
+        })
+
+        if (slugExists) {
+          return res.status(400).json({
+            message: "Slug already exists"
+          })
+        }
       }
 
-      // Find existing blog
-      const existingBlog = await exportBlog.findById(id);
+      // =========================
+      // PARSE SECTIONS
+      // =========================
+      if (updateData.sections && typeof updateData.sections === "string") {
+        updateData.sections = JSON.parse(updateData.sections)
+      }
+
+      const existingBlog = await exportBlog.findById(id)
+
       if (!existingBlog) {
-        return res.status(404).json({ message: 'ExportBlog not found' });
+        return res.status(404).json({
+          message: "ExportBlog not found"
+        })
       }
 
+      // =========================
       // IMAGE HANDLING
+      // =========================
       if (req.file) {
-        updateData.image = `/uploads/export-blogs/${req.file.filename}`;
+
+        const newImagePath = `uploads/export-blogs/${req.file.filename}`
+        updateData.image = newImagePath
 
         if (existingBlog.image) {
-          try {
-            fs.unlinkSync(`.${existingBlog.image}`);
-          } catch (err) {
-            console.warn('Old image not found:', err.message);
+
+          const oldImagePath = path.join(
+            process.cwd(),
+            existingBlog.image
+          )
+
+          if (fs.existsSync(oldImagePath)) {
+            fs.unlinkSync(oldImagePath)
           }
         }
       }
 
-      // TRANSLATION HANDLING
-      const titleChanged = updateData.title !== undefined;
-      const excerptChanged = updateData.excerpt !== undefined;
-      const sectionsChanged = updateData.sections !== undefined;
+      // =========================
+      // TRANSLATIONS
+      // =========================
+      const titleChanged = updateData.title !== undefined
+      const excerptChanged = updateData.excerpt !== undefined
+      const sectionsChanged = updateData.sections !== undefined
 
       if (titleChanged || excerptChanged || sectionsChanged) {
-        const existingEn = existingBlog.translations.get('en');
 
-        const newTitle = updateData.title || existingEn.title;
-        const newExcerpt = updateData.excerpt || existingEn.excerpt;
-        const newSections = updateData.sections || existingEn.sections;
+        const existingEn = existingBlog.translations.get("en")
+
+        const newTitle = updateData.title || existingEn.title
+        const newExcerpt = updateData.excerpt || existingEn.excerpt
+        const newSections = updateData.sections || existingEn.sections
 
         const translations = {
           en: {
@@ -906,54 +1089,76 @@ router.patch(
             excerpt: newExcerpt,
             sections: newSections
           }
-        };
+        }
 
         for (const lang of SUPPORTED_LANGUAGES) {
           translations[lang] = {
             title: await translateText(newTitle, lang),
             excerpt: await translateText(newExcerpt, lang),
             sections: await translateSections(newSections, lang)
-          };
+          }
         }
 
-        updateData.translations = translations;
+        updateData.translations = translations
 
-        delete updateData.title;
-        delete updateData.excerpt;
-        delete updateData.sections;
+        delete updateData.title
+        delete updateData.excerpt
+        delete updateData.sections
       }
 
+      // =========================
+      // DATE FIX
+      // =========================
       if (updateData.publishedAt) {
-        updateData.publishedAt = new Date(updateData.publishedAt);
+        updateData.publishedAt = new Date(updateData.publishedAt)
       }
 
       const updatedBlog = await exportBlog.findByIdAndUpdate(
         id,
         updateData,
         { new: true, runValidators: true }
-      );
+      )
 
-      // 🔔 Create notification
+      // =========================
+      // CREATE NOTIFICATION
+      // =========================
       await Notification.create({
-        title: 'Export Blog Updated',
-        description: updatedBlog.translations?.en?.title || 'Export blog updated',
-        type: 'blog',
-        sourceWebsite: 'export',
+        title: "Export Blog Updated",
+        description:
+          updatedBlog.translations?.en?.title || "Export blog updated",
+        type: "blog",
+        sourceWebsite: "export",
         link: `/blogs/${updatedBlog.slug}`,
         date: new Date()
-      });
+      })
+
+      // =========================
+      // FORMAT RESPONSE IMAGE
+      // =========================
+      const blogResponse = updatedBlog.toObject()
+
+      if (blogResponse.image) {
+        blogResponse.image = `https://api.camberfarms.org/${blogResponse.image}`
+      }
 
       res.status(200).json({
-        message: 'ExportBlog updated successfully',
-        exportBlog: updatedBlog
-      });
+        success: true,
+        message: "ExportBlog updated successfully",
+        exportBlog: blogResponse
+      })
 
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Failed to update ExportBlog', error: error.message });
+
+      console.error(error)
+
+      res.status(500).json({
+        success: false,
+        message: "Failed to update ExportBlog",
+        error: error.message
+      })
     }
   }
-);
+)
 
 
 // DELETE export blog
@@ -961,21 +1166,36 @@ router.delete('/export-blogs/:id', adminAuth, async (req, res) => {
   try {
     const { id } = req.params;
 
+    // Find and delete the blog
     const deletedBlog = await exportBlog.findByIdAndDelete(id);
     if (!deletedBlog) {
       return res.status(404).json({ message: 'ExportBlog not found' });
     }
 
-    // Delete image
+    // =========================
+    // DELETE BLOG IMAGE
+    // =========================
     if (deletedBlog.image) {
       try {
-        fs.unlinkSync(`.${deletedBlog.image}`);
+        // Convert full URL to relative path if needed
+        let imagePath = deletedBlog.image;
+        if (imagePath.startsWith('https://api.camberfarms.org/')) {
+          imagePath = imagePath.replace('https://api.camberfarms.org/', '');
+        }
+
+        const fullPath = path.join(process.cwd(), imagePath);
+
+        if (fs.existsSync(fullPath)) {
+          fs.unlinkSync(fullPath);
+        }
       } catch (err) {
-        console.warn('Image not found:', err.message);
+        console.warn('Image not found or failed to delete:', err.message);
       }
     }
 
-    // 🔔 Create notification
+    // =========================
+    // CREATE NOTIFICATION
+    // =========================
     await Notification.create({
       title: 'Export Blog Deleted',
       description: deletedBlog.translations?.en?.title || 'Export blog deleted',
@@ -985,9 +1205,7 @@ router.delete('/export-blogs/:id', adminAuth, async (req, res) => {
       date: new Date()
     });
 
-    res.status(200).json({
-      message: 'ExportBlog deleted successfully'
-    });
+    res.status(200).json({ message: 'ExportBlog deleted successfully' });
 
   } catch (error) {
     console.error(error);
@@ -1621,11 +1839,19 @@ router.post('/news', adminAuth, newsUpload.single('image'), async (req, res) => 
     if (!slug) return res.status(400).json({ message: 'Slug is required' });
     if (!req.file) return res.status(400).json({ message: 'News image is required' });
 
+    const slugExists = await News.findOne({ slug });
+
+    if (slugExists) {
+      return res.status(400).json({
+        message: "Slug already exists"
+      });
+    }
+
     if (sections && typeof sections === 'string') {
       sections = JSON.parse(sections);
     }
 
-    const imagePath = `/uploads/news/${req.file.filename}`;
+    const imagePath = `https://api.camberfarms.org/uploads/news/${req.file.filename}`;
 
     const translations = {};
 
@@ -1683,6 +1909,22 @@ router.patch('/news/:id', adminAuth, newsUpload.single('image'), async (req, res
     const { id } = req.params;
     let updateData = { ...req.body };
 
+    // =========================
+    // SLUG CHECK
+    // =========================
+    if (updateData.slug) {
+      const slugExists = await News.findOne({
+        slug: updateData.slug,
+        _id: { $ne: id }
+      });
+      if (slugExists) {
+        return res.status(400).json({ message: "Slug already exists" });
+      }
+    }
+
+    // =========================
+    // PARSE SECTIONS
+    // =========================
     if (updateData.sections && typeof updateData.sections === 'string') {
       updateData.sections = JSON.parse(updateData.sections);
     }
@@ -1692,20 +1934,36 @@ router.patch('/news/:id', adminAuth, newsUpload.single('image'), async (req, res
       return res.status(404).json({ message: 'News item not found' });
     }
 
+    // =========================
     // IMAGE HANDLING
+    // =========================
     if (req.file) {
-      updateData.image = `/uploads/news/${req.file.filename}`;
+      const newImagePath = `uploads/news/${req.file.filename}`;
+      updateData.image = newImagePath;
 
+      // Delete old image
       if (existingNews.image) {
         try {
-          fs.unlinkSync(`.${existingNews.image}`);
+          let oldPath = existingNews.image;
+
+          // Convert full URL to relative path if needed
+          if (oldPath.startsWith('https://api.camberfarms.org/')) {
+            oldPath = oldPath.replace('https://api.camberfarms.org/', '');
+          }
+
+          const fullOldPath = path.join(process.cwd(), oldPath);
+          if (fs.existsSync(fullOldPath)) {
+            fs.unlinkSync(fullOldPath);
+          }
         } catch (err) {
-          console.warn('Old image not found:', err.message);
+          console.warn('Old image not found or failed to delete:', err.message);
         }
       }
     }
 
+    // =========================
     // TRANSLATION HANDLING
+    // =========================
     const titleChanged = updateData.title !== undefined;
     const excerptChanged = updateData.excerpt !== undefined;
     const sectionsChanged = updateData.sections !== undefined;
@@ -1718,11 +1976,7 @@ router.patch('/news/:id', adminAuth, newsUpload.single('image'), async (req, res
       const newSections = updateData.sections || existingEn.sections;
 
       const translations = {
-        en: {
-          title: newTitle,
-          excerpt: newExcerpt,
-          sections: newSections
-        }
+        en: { title: newTitle, excerpt: newExcerpt, sections: newSections }
       };
 
       for (const lang of SUPPORTED_LANGUAGES) {
@@ -1735,35 +1989,51 @@ router.patch('/news/:id', adminAuth, newsUpload.single('image'), async (req, res
 
       updateData.translations = translations;
 
+      // Remove raw fields to avoid schema conflicts
       delete updateData.title;
       delete updateData.excerpt;
       delete updateData.sections;
     }
 
+    // =========================
+    // UPDATE NEWS ITEM
+    // =========================
     const updatedNews = await News.findByIdAndUpdate(
       id,
       updateData,
       { new: true, runValidators: true }
     );
 
-    // 🔔 Notification for update
+    // =========================
+    // NOTIFICATION
+    // =========================
     await Notification.create({
       title: 'News article updated',
-      description: updatedNews.translations.get('en').title,
+      description: updatedNews.translations?.get('en')?.title || 'News updated',
       type: 'news',
       sourceWebsite: 'africa',
       link: `/news/${updatedNews.slug}`,
       date: new Date()
     });
 
+    // =========================
+    // FORMAT IMAGE URL FOR RESPONSE
+    // =========================
+    const newsResponse = updatedNews.toObject();
+    if (newsResponse.image) {
+      newsResponse.image = `https://api.camberfarms.org/${newsResponse.image}`;
+    }
+
     res.status(200).json({
+      success: true,
       message: 'News updated successfully',
-      newsItem: updatedNews
+      newsItem: newsResponse
     });
 
   } catch (error) {
     console.error(error);
     res.status(500).json({
+      success: false,
       message: 'Failed to update news item',
       error: error.message
     });
@@ -1773,34 +2043,54 @@ router.patch('/news/:id', adminAuth, newsUpload.single('image'), async (req, res
 router.delete('/news/:id', adminAuth, async (req, res) => {
   try {
     const { id } = req.params;
-    const deletedNews = await News.findByIdAndDelete(id);
 
+    // Find and delete the news item
+    const deletedNews = await News.findByIdAndDelete(id);
     if (!deletedNews) {
       return res.status(404).json({ message: 'News item not found' });
     }
 
+    // =========================
+    // DELETE IMAGE
+    // =========================
     if (deletedNews.image) {
       try {
-        fs.unlinkSync(`.${deletedNews.image}`);
+        let imagePath = deletedNews.image;
+
+        // Convert full URL to relative path if needed
+        if (imagePath.startsWith('https://api.camberfarms.org/')) {
+          imagePath = imagePath.replace('https://api.camberfarms.org/', '');
+        }
+
+        const fullPath = path.join(process.cwd(), imagePath);
+        if (fs.existsSync(fullPath)) {
+          fs.unlinkSync(fullPath);
+        }
       } catch (err) {
-        console.warn('Image already deleted');
+        console.warn('Image already deleted or failed to delete:', err.message);
       }
     }
 
-    // 🔔 Notification for deletion
+    // =========================
+    // CREATE NOTIFICATION
+    // =========================
     await Notification.create({
       title: 'News article deleted',
-      description: deletedNews.translations.get('en').title,
+      description: deletedNews.translations?.get('en')?.title || 'News deleted',
       type: 'news',
       sourceWebsite: 'africa',
-      link: '',
+      link: '/news',
       date: new Date()
     });
 
     res.status(200).json({ message: 'News item deleted successfully' });
+
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Failed to delete news item', error: error.message });
+    res.status(500).json({
+      message: 'Failed to delete news item',
+      error: error.message
+    });
   }
 });
 
@@ -1964,246 +2254,237 @@ router.get('/products/:id', adminAuth, async (req, res) => {
 // CREATE PRODUCT
 router.post('/products', adminAuth, productUpload, async (req, res) => {
   try {
-    let { name, category, description, stockQuantity, variants } = req.body
+    const { name, category, description, stockQuantity, variants } = req.body;
 
-    if (!name) return res.status(400).json({ message: 'Product name is required' })
-    if (!category) return res.status(400).json({ message: 'Category is required' })
-    if (!description) return res.status(400).json({ message: 'Description is required' })
+    // Validate required fields
+    if (!name) return res.status(400).json({ message: 'Product name is required' });
+    if (!category) return res.status(400).json({ message: 'Category is required' });
+    if (!description) return res.status(400).json({ message: 'Description is required' });
     if (!req.files || req.files.length === 0)
-      return res.status(400).json({ message: 'At least one product image is required' })
+      return res.status(400).json({ message: 'At least one product image is required' });
+    if (stockQuantity && stockQuantity < 0)
+      return res.status(400).json({ message: "Stock quantity cannot be negative" });
 
-    const images = req.files.map(file => `/uploads/products/${file.filename}`)
+    // Map uploaded files to relative paths
+    const images = req.files.map(file => `uploads/products/${file.filename}`);
 
-    let parsedVariants = {}
-
+    // Parse variants
+    let parsedVariants = {};
     if (variants) {
-      parsedVariants = JSON.parse(JSON.stringify(variants))
-    }
-
-    const translations = {
-      en: { name, category, description, variants: parsedVariants || {} }
-    }
-
-    for (const lang of SUPPORTED_LANGUAGES) {
-      if (lang === 'en') continue
-      translations[lang] = {
-        name: await translateTexts(name, lang),
-        category: await translateTexts(category, lang),
-        description: await translateTexts(description, lang),
-        variants: await translateVariants(variants, lang)
+      try {
+        parsedVariants = typeof variants === 'string' ? JSON.parse(variants) : variants;
+      } catch (err) {
+        return res.status(400).json({ message: 'Invalid variants format' });
       }
     }
 
+    // Build translations
+    const translations = new Map();
+    translations.set('en', { name, category, description, variants: parsedVariants || {} });
+
+    for (const lang of SUPPORTED_LANGUAGES) {
+      if (lang === 'en') continue;
+      translations.set(lang, {
+        name: await translateTexts(name, lang),
+        category: await translateTexts(category, lang),
+        description: await translateTexts(description, lang),
+        variants: Object.keys(parsedVariants).length
+          ? await translateVariants(parsedVariants, lang)
+          : {}
+      });
+    }
+
+    // Save product
     const product = new Product({
-      name,
-      category,
-      description,
       stockQuantity: stockQuantity || 0,
-      variants,
       images,
       translations
-    })
+    });
 
-    await product.save()
+    await product.save();
 
-    // CREATE NOTIFICATION
+    // Create notification
     await Notification.create({
       title: 'New product added',
-      description: `${name} has been added to your store`,
-      sourceWebsite: 'export', // adjust as needed
+      description: `Product "${name}" has been added`,
+      sourceWebsite: 'export',
       type: 'product',
       link: `/products/${product._id}`
-    })
+    });
 
-    res.status(201).json({ message: 'Product created successfully', product })
+    // Return full URLs for frontend
+    const productResponse = product.toObject();
+    productResponse.images = productResponse.images.map(img => `https://api.camberfarms.org/${img}`);
+
+    res.status(201).json({ message: 'Product created successfully', product: productResponse });
   } catch (err) {
-    console.error(err)
-    res.status(500).json({ message: 'Failed to create product', error: err.message })
+    console.error(err);
+    res.status(500).json({ message: 'Failed to create product', error: err.message });
   }
-})
+});
+
 
 // UPDATE PRODUCT
 router.patch('/products/:id', adminAuth, productUpload, async (req, res) => {
   try {
-    const { id } = req.params
-    let updateData = { ...req.body }
+    const { id } = req.params;
+    const updateData = { ...req.body };
 
-    const existingProduct = await Product.findById(id)
-    if (!existingProduct) {
-      return res.status(404).json({ message: 'Product not found' })
-    }
+    const product = await Product.findById(id);
+    if (!product) return res.status(404).json({ message: 'Product not found' });
 
     // =========================
     // IMAGE HANDLING
     // =========================
     if (req.files && req.files.length > 0) {
-      const newImages = req.files.map(file => `/uploads/products/${file.filename}`)
+      const newImages = req.files.map(file => `uploads/products/${file.filename}`);
 
-      if (existingProduct.images) {
-        for (const img of existingProduct.images) {
+      // Delete old images
+      if (product.images?.length) {
+        for (const img of product.images) {
           try {
-            await fs.promises.unlink(`.${img}`)
+            let oldPath = img;
+            if (oldPath.startsWith('https://api.camberfarms.org/')) {
+              oldPath = oldPath.replace('https://api.camberfarms.org/', '');
+            }
+            const fullOldPath = path.join(process.cwd(), oldPath);
+            if (fs.existsSync(fullOldPath)) await fs.promises.unlink(fullOldPath);
           } catch (err) {
-            console.warn('Old image not found:', err.message)
+            console.warn('Old image not found:', err.message);
           }
         }
       }
 
-      updateData.images = newImages
+      product.images = newImages;
     }
 
     // =========================
     // TRANSLATION HANDLING
     // =========================
-    const existingEn = existingProduct.translations?.get('en')
+    const existingEn = product.translations?.get('en');
+    if (!existingEn) return res.status(500).json({ message: 'English translation missing' });
 
-    if (!existingEn) {
-      return res.status(500).json({ message: 'English translation missing' })
+    // Parse variants if coming from form-data
+    if (typeof updateData.variants === 'string') {
+      updateData.variants = JSON.parse(updateData.variants);
     }
 
-    const nameChanged = updateData.name !== undefined
-    const categoryChanged = updateData.category !== undefined
-    const descriptionChanged = updateData.description !== undefined
-    const variantsChanged = updateData.variants !== undefined
+    const nameChanged = updateData.name !== undefined;
+    const categoryChanged = updateData.category !== undefined;
+    const descriptionChanged = updateData.description !== undefined;
+    const variantsChanged = updateData.variants !== undefined;
 
     if (nameChanged || categoryChanged || descriptionChanged || variantsChanged) {
+      if (nameChanged) existingEn.name = updateData.name;
+      if (categoryChanged) existingEn.category = updateData.category;
+      if (descriptionChanged) existingEn.description = updateData.description;
+      if (variantsChanged) existingEn.variants = updateData.variants || {};
 
-      const newName = nameChanged ? updateData.name : existingEn.name
-      const newCategory = categoryChanged ? updateData.category : existingEn.category
-      const newDescription = descriptionChanged ? updateData.description : existingEn.description
+      product.translations.set('en', existingEn);
 
-      // Convert Map to plain object if exists
-      const existingVariants = existingEn.variants
-        ? Object.fromEntries(existingEn.variants)
-        : {}
-
-      const newVariants = variantsChanged
-        ? updateData.variants
-        : existingVariants
-
-      const translations = new Map()
-
-      // English
-      translations.set('en', {
-        name: newName,
-        category: newCategory,
-        description: newDescription,
-        variants: newVariants
-      })
-
-      // Other languages
       for (const lang of SUPPORTED_LANGUAGES) {
-        if (lang === 'en') continue
-
-        translations.set(lang, {
-          name: await translateTexts(newName, lang),
-          category: await translateTexts(newCategory, lang),
-          description: await translateTexts(newDescription, lang),
-          variants: Object.keys(newVariants).length
-            ? await translateVariants(newVariants, lang)
-            : {}
-        })
+        if (lang === 'en') continue;
+        const existingLang = product.translations.get(lang) || {};
+        if (nameChanged) existingLang.name = await translateTexts(existingEn.name, lang);
+        if (categoryChanged) existingLang.category = await translateTexts(existingEn.category, lang);
+        if (descriptionChanged) existingLang.description = await translateTexts(existingEn.description, lang);
+        if (variantsChanged)
+          existingLang.variants = Object.keys(existingEn.variants || {}).length
+            ? await translateVariants(existingEn.variants, lang)
+            : {};
+        product.translations.set(lang, existingLang);
       }
-
-      updateData.translations = translations
-
-      // Prevent top-level overwrite
-      delete updateData.name
-      delete updateData.category
-      delete updateData.description
-      delete updateData.variants
     }
 
     // =========================
-    // UPDATE PRODUCT
+    // OTHER FIELD UPDATES
     // =========================
-    const updatedProduct = await Product.findByIdAndUpdate(
-      id,
-      updateData,
-      { new: true, runValidators: true }
-    )
+    if (updateData.stockQuantity !== undefined) product.stockQuantity = updateData.stockQuantity;
+    product.status = product.stockQuantity === 0 ? 'inactive' : 'active';
 
-    const enTranslation = updatedProduct.translations.get('en')
+    await product.save();
+
+    const enTranslation = product.translations.get('en');
 
     await Notification.create({
       title: 'Product updated',
       description: `Product "${enTranslation?.name || 'Unnamed'}" was updated`,
       sourceWebsite: 'export',
       type: 'product',
-      link: `/products/${updatedProduct._id}`
-    })
+      link: `/products/${product._id}`
+    });
 
-    res.status(200).json({
-      message: 'Product updated successfully',
-      product: updatedProduct
-    })
+    // Convert image paths to full URLs
+    const productResponse = product.toObject();
+    productResponse.images = productResponse.images.map(img => `https://api.camberfarms.org/${img}`);
 
+    res.status(200).json({ message: 'Product updated successfully', product: productResponse });
   } catch (err) {
-    console.error(err)
-    res.status(500).json({
-      message: 'Failed to update product',
-      error: err.message
-    })
+    console.error(err);
+    res.status(500).json({ message: 'Failed to update product', error: err.message });
   }
-})
+});
 
 
 // DELETE PRODUCT
 router.delete('/products/:id', adminAuth, async (req, res) => {
   try {
-    const { id } = req.params
+    const { id } = req.params;
 
-    const deletedProduct = await Product.findByIdAndDelete(id)
-    if (!deletedProduct) return res.status(404).json({ message: 'Product not found' })
+    const deletedProduct = await Product.findByIdAndDelete(id);
+    if (!deletedProduct) return res.status(404).json({ message: 'Product not found' });
 
-    // Delete all product images safely
+    // =========================
+    // DELETE IMAGES
+    // =========================
     await Promise.all(
       deletedProduct.images?.map(async img => {
         try {
-          const filePath = `.${img}`
-          if (fs.existsSync(filePath)) await fs.promises.unlink(filePath)
+          let filePath = img;
+          if (filePath.startsWith('https://api.camberfarms.org/')) {
+            filePath = filePath.replace('https://api.camberfarms.org/', '');
+          }
+          const fullPath = path.join(process.cwd(), filePath);
+          if (fs.existsSync(fullPath)) await fs.promises.unlink(fullPath);
         } catch (err) {
-          console.warn('Failed to delete image:', img, err.message)
+          console.warn('Failed to delete image:', img, err.message);
         }
       }) || []
-    )
+    );
 
-    // CREATE NOTIFICATION
+    const enTranslation = deletedProduct.translations?.get('en');
+
     await Notification.create({
       title: 'Product deleted',
-      description: `Product "${deletedProduct.translations.en.name}" was removed`,
+      description: `Product "${enTranslation?.name || 'Unnamed'}" was removed`,
       sourceWebsite: 'export',
       type: 'product',
       link: '/products'
-    })
+    });
 
-    res.status(200).json({ message: 'Product deleted successfully' })
+    res.status(200).json({ message: 'Product deleted successfully' });
   } catch (error) {
-    console.error(error)
-    res.status(500).json({ message: 'Failed to delete product', error: error.message })
+    console.error(error);
+    res.status(500).json({ message: 'Failed to delete product', error: error.message });
   }
-})
+});
+
 
 
 // GET product images count
 router.get('/products/images/count', adminAuth, async (req, res) => {
   try {
-    const mainImagesCount = await Product.countDocuments({ image: { $exists: true, $ne: '' } })
+    const products = await Product.find({}, 'images')
 
-    const variantImagesCountAgg = await Product.aggregate([
-      { $unwind: '$variants' },
-      { $match: { 'variants.image': { $exists: true, $ne: '' } } },
-      { $count: 'variantImages' }
-    ])
-    const variantImagesCount = variantImagesCountAgg[0]?.variantImages || 0
+    const totalImages = products.reduce(
+      (sum, p) => sum + (p.images?.length || 0),
+      0
+    )
 
     res.status(200).json({
-      mainImagesCount,
-      variantImagesCount,
-      totalImages: mainImagesCount + variantImagesCount
+      totalImages
     })
   } catch (error) {
-    console.error(error)
     res.status(500).json({
       message: 'Failed to fetch image count',
       error: error.message

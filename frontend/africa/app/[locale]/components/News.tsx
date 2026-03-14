@@ -107,7 +107,7 @@ const News = ({ header }: NewsProps) => {
               {newsData.map((news, index) => (
                 <div key={news.id} className="shrink-0 w-full snap-center rounded-lg">
                   <Image
-                    src={STATIC_IMAGES[index] || STATIC_IMAGES[0]}
+                    src={`${API_URL}${news.image}`}
                     alt={news.title || 'News image'}
                     width={380}
                     height={320}
