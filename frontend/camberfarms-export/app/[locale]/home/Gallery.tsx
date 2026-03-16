@@ -6,10 +6,19 @@ import GalleryItem from './GalleryItem'
 import { Splide, SplideSlide } from 'react-splide-ts'
 import 'react-splide-ts/css'
 import useGetGalleries from '../hooks/useGetGalleries'
+import { GalleryImageItem } from '../types/gallery'
 
 export default function Gallery() {
 	const t = useTranslations('home.gallery')
-	const { data: gallery, isPending } = useGetGalleries()
+	const { data, isPending } = useGetGalleries()
+	// split images into groups of 4
+	const chunkSize = 4
+	const gallery: GalleryImageItem[][] = []
+
+	for (let i = 0; i < Number(data?.length); i += chunkSize) {
+		const chunk = data?.slice(i, i + chunkSize) || []
+		gallery.push(chunk)
+	}
 
 	if (isPending || !gallery) return null
 
@@ -38,9 +47,9 @@ export default function Gallery() {
 					}}
 				>
 					{gallery &&
-						gallery?.map((item) => (
-							<SplideSlide key={item._id}>
-								<GalleryItem images={item.images} />
+						gallery?.map((item, index) => (
+							<SplideSlide key={index}>
+								<GalleryItem images={item} />
 							</SplideSlide>
 						))}
 				</Splide>

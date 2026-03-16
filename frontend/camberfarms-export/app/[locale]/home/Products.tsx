@@ -12,6 +12,8 @@ export default function Products() {
 	const { categories } = useGetProducts(locale)
 	const products = categories.slice(0, 7)
 
+	// console.log(`https://api.camberfarms.org/${products?.[0]?.images?.[0]}`)
+
 	return (
 		<section
 			className="w-full bg-light-grey text-start py-28 px-6 md:px-12"
@@ -38,7 +40,7 @@ export default function Products() {
 								src={`https://api.camberfarms.org/${p?.images?.[0]}`}
 								alt={p?.name}
 								fill
-								sizes="300px"
+								sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
 								// placeholder="blur"
 								className="object-cover object-center"
 							/>

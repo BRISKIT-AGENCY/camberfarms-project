@@ -20,9 +20,10 @@ export default function BlogContent({ blog }: BlogPropType) {
 			{blog.image && (
 				<div className="w-full h-75 lg:h-85 xl:h-95 relative mb-4 bg-light-grey">
 					<Image
-						src={`https://api.camberfarms.org${blog.image}`}
+						src={`https://api.camberfarms.org/${blog.image.replace(/^\//, '')}`}
 						alt={blog.title}
 						fill
+						sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
 						// placeholder="blur"
 						className="w-full object-cover object-center rounded-2xl"
 					/>

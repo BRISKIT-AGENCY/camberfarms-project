@@ -1,4 +1,4 @@
-import { getTranslations } from 'next-intl/server'
+import { getLocale, getTranslations } from 'next-intl/server'
 import Image from 'next/image'
 import Link from 'next/link'
 import axiosInstance from '../api/axios'
@@ -6,11 +6,11 @@ import arrowIcon from '../assets/icon/arrow-r-white.svg'
 import userAvatar from '../assets/img/user-avatar.png'
 import { iBlog } from '../blog/page'
 
-async function getBlogs(): Promise<iBlog[] | null> {
+async function getBlogs(locale: string): Promise<iBlog[] | null> {
 	try {
 		// using an instance of axios with baseURL set
 		const res = await axiosInstance.get(`/api/export/blog`, {
-			params: { page: 1, limit: 2 },
+			params: { page: 1, limit: 2, lang: locale },
 		})
 		return res.data.data
 	} catch {
@@ -20,8 +20,8 @@ async function getBlogs(): Promise<iBlog[] | null> {
 }
 
 export default async function Blog() {
-	// temporarily fill data with dummy local content (if fetch fails)
-	const data = await getBlogs()
+	const locale = await getLocale()
+	const data = await getBlogs(locale)
 	const t = await getTranslations('home.blog')
 
 	return (
@@ -53,16 +53,12 @@ export default async function Blog() {
 							</p>
 							<Link
 								href={`blog/${b.slug}`}
-								className="text-sm font-inter text-secondary"
+								className="text-sm font-inter text-secondary hover:underline transition-all ease-in-out duration-200"
 							>
 								Read more
 							</Link>
 							<Image
-								src={
-									b.image
-										? `https://api.camberfarms.org/${b?.image.replace(/^\//, '')}`
-										: userAvatar
-								}
+								src={userAvatar}
 								alt=""
 								width={300}
 								height={300}

@@ -19,6 +19,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
 						<Image
 							src={`https://api.camberfarms.org/${img}`}
 							alt={product?.name}
+							sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
 							width={520}
 							height={500}
 							key={index}
