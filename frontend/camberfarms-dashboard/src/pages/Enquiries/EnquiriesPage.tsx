@@ -7,9 +7,9 @@ import EnquiriesTable from './EnquiriesTable'
 
 export default function EnquiriesPage() {
 	const [site, setSite] = useState<'all' | 'africa' | 'export'>('all')
-	const [query, setQuery] = useState('')
+	const [q, setQuery] = useState('')
 
-	const { data, isPending, isRefetching, error } = useGetEnquiries()
+	const { data, isPending, error } = useGetEnquiries()
 
 	const enquiry =
 		site == 'all'
@@ -17,11 +17,14 @@ export default function EnquiriesPage() {
 			: data?.enquiries.filter((e) => e.source == site)
 
 	const filteredEnquiry =
-		enquiry?.filter((e) => e.message.includes(query)) ||
-		enquiry?.filter((e) => e.name.includes(query)) ||
-		[]
+		enquiry?.filter((a) => {
+			const name = a?.name?.toLowerCase() || ''
+			const message = a?.message?.toLowerCase() || ''
 
-	if (isPending || isRefetching) return <LoadingSpinner />
+			return name.includes(q) || message.includes(q)
+		}) || []
+
+	if (isPending) return <LoadingSpinner />
 
 	if (error)
 		return <div className="px-8">Something went wrong: {error.message}</div>
@@ -32,7 +35,7 @@ export default function EnquiriesPage() {
 				site={site}
 				setSite={setSite}
 				setQuery={setQuery}
-				q={query}
+				q={q}
 			/>
 			<EnquiriesTable enquiries={filteredEnquiry} />
 			{/* This will render the overlay */}

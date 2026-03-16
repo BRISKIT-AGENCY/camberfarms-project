@@ -1,26 +1,71 @@
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 import { IoClose } from 'react-icons/io5'
-import { useLocation, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import axiosInstance from '../../api/axios'
 import { Dropzone } from '../../components/Dropzone'
+import LoadingSpinner from '../../components/LoadingSpinner'
 import OverlayWrapper from '../../components/OverlayWrapper'
-// import { formatImgUrl } from '../../helpers/formatImgUrl'
 import { useGoBack } from '../../hooks/useGoBack'
 import type { GalleryImage } from './GalleryContainer'
 
-// TODO fix updating gallery
+type ImageUpload = File[] | null
+
 export default function EditGallery() {
+	const queryClient = useQueryClient()
+	const navigate = useNavigate()
 	const goBack = useGoBack('/gallery')
-	const [image, setImage] = useState<File | null>(null)
-	const location = useLocation()
-	const imageData: GalleryImage = location.state?.image
+	const [image, setImage] = useState<File[] | null>(null)
 	const params = useParams()
+	// fetch image details
+	const { data, isPending, error } = useQuery({
+		queryKey: ['gallery', params.imageId],
+		queryFn: async () => {
+			const { data } = await axiosInstance.get(`gallery/${params.imageId}`)
+			return data as {
+				success: boolean
+				image: GalleryImage
+			}
+		},
+		enabled: !!params.imageId,
+	})
+	// Upload new image
+	const { mutate, isPending: updating } = useMutation({
+		mutationFn: async (data: FormData) =>
+			axiosInstance.patch(`gallery/${params.imageId}`, data),
+		onSuccess: () => {
+			toast.success('gallery updated successful')
+			queryClient.invalidateQueries({ queryKey: ['gallery'] })
+			navigate('/gallery')
+		},
+	})
 
 	useEffect(() => {
 		if (!params?.imageId) {
 			const timer = setTimeout(goBack, 1000)
 			return () => clearTimeout(timer)
 		}
-	}, [params.imageId, image, goBack])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [params.imageId])
+
+	async function handleSubmit(images: ImageUpload) {
+		if (!images || images.length === 0) {
+			toast.error('Please upload an image')
+			return
+		}
+		const formData = new FormData()
+
+		if (Array.isArray(images) && images.length > 0) {
+			images.forEach((file) => {
+				formData.append('image', file)
+			})
+		}
+
+		mutate(formData)
+	}
+
+	if (isPending) return <LoadingSpinner />
 
 	return (
 		<OverlayWrapper>
@@ -30,15 +75,21 @@ export default function EditGallery() {
 						id="page-title"
 						className="text-2xl lg:text-3xl capitalize font-bold"
 					>
-						upload image
+						Edit image
 					</h1>
 					<IoClose size={30} className="cursor-pointer" onClick={goBack} />
 				</div>
+				{error && (
+					<p className="text-red-400 my-2" aria-live="assertive">
+						{error.message}
+					</p>
+				)}
 				<div className="w-full">
 					<Dropzone
 						styleVariant="h-105 has-[img]:rounded-lg"
 						setState={setImage}
-						image={`https://camberfarms-project.onrender.com${imageData.images?.[0]?.url}`}
+						isMultiple
+						image={data?.image?.url}
 					/>
 				</div>
 				<div className="w-full flex gap-6 items-center justify-end py-6 mt-8 border-t border-grey/50">
@@ -50,10 +101,12 @@ export default function EditGallery() {
 						Cancel
 					</button>
 					<button
-						type="submit"
-						className="bg-primary text-white font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer"
+						type="button"
+						onClick={() => handleSubmit(image)}
+						disabled={updating}
+						className="bg-primary text-white font-poppins font-medium text-base py-2 px-4 rounded-lg cursor-pointer disabled:opacity-50"
 					>
-						Save Changes
+						{updating ? 'Loading...' : 'Save Changes'}
 					</button>
 				</div>
 			</section>

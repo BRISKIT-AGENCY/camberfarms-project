@@ -1,24 +1,29 @@
 import { useMutation } from '@tanstack/react-query'
 import { format } from 'date-fns'
+// import { useMemo } from 'react'
+import { useState } from 'react'
 import { FaArrowRight } from 'react-icons/fa6'
 import { useNavigate } from 'react-router-dom'
 import axiosInstance from '../../api/axios'
 import CardItem from '../../components/CardItem'
+import LocalSearchbar from '../../components/LocalSearchbar'
 import useGetBlogs from '../../hooks/useGetBlogs'
 import { useRefetchQueries } from '../../hooks/useRefetchQueries'
 import type { Blog } from '../../types/blog'
 
-const shuffleBlogs = (blogs: Blog[]): Blog[] => {
-	const shuffled = [...blogs] // Copy to keep it immutable
-	for (let i = shuffled.length - 1; i > 0; i--) {
-		const j = Math.floor(Math.random() * (i + 1))
-		;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
-	}
-	return shuffled
-}
+// FOR LATER
+// const shuffleBlogs = (blogs: Blog[]): Blog[] => {
+// 	const shuffled = [...blogs] // Copy to keep it immutable
+// 	for (let i = shuffled.length - 1; i > 0; i--) {
+// 		const j = Math.floor(Math.random() * (i + 1))
+// 		;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+// 	}
+// 	return shuffled
+// }
 
 export default function BlogContainer() {
 	const navigate = useNavigate()
+	const [q, setQuery] = useState('')
 	// invalidate/refetch blog queries
 	const refetchBlogs = useRefetchQueries('blog')
 
@@ -43,8 +48,10 @@ export default function BlogContainer() {
 	const modifiedAfricaBlogs: Blog[] = data?.africa.blogs
 		? data.africa.blogs.map((blog: Blog) => ({ ...blog, website: 'africa' }))
 		: []
-	// shuffle blogs
-	const blogs = shuffleBlogs([...modifiedAfricaBlogs, ...modifiedExportBlogs])
+
+	const blogs = [...modifiedExportBlogs, ...modifiedAfricaBlogs].filter((b) =>
+		b.translations?.en?.title?.toLowerCase().includes(q),
+	)
 
 	const editBlog = (id: string, siteId: string) => {
 		navigate(`edit/${siteId}/${id}`)
@@ -67,7 +74,14 @@ export default function BlogContainer() {
 		)
 
 	return (
-		<section className="w-full bg-light-grey dark:bg-dark-grey mb-20">
+		<section className="w-full bg-light-grey dark:bg-dark-grey mb-20 transition-discrete ease-in duration-200">
+			<div className="w-full bg-white dark:bg-black my-10 p-6 grid grid-cols-1 items-center justify-between gap-6 flex-nowrap rounded-lg shadow-2xs">
+				<LocalSearchbar
+					placeholder="Search blogs"
+					query={q}
+					setState={setQuery}
+				/>
+			</div>
 			<h4 className="text-black dark:text-white text-2xl font-semibold">
 				blog post
 			</h4>

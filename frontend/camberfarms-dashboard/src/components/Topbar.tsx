@@ -1,6 +1,7 @@
 import { LuCalendar } from 'react-icons/lu'
 import { RiNotification2Fill } from 'react-icons/ri'
 import { Link } from 'react-router-dom'
+import { formatImgUrl } from '../helpers/formatImgUrl'
 
 export default function Topbar({
 	name = 'admin',
@@ -32,7 +33,7 @@ export default function Topbar({
 				</Link>
 				<Link
 					to={'/account'}
-					className="w-10 text-white text-base font-poppins font-bold capitalize"
+					className="w-10 aspect-square text-white text-base font-poppins font-bold capitalize"
 				>
 					{!avatar && (
 						<span className="w-full p-2 flex items-center justify-center aspect-square bg-primary rounded-full">
@@ -41,8 +42,8 @@ export default function Topbar({
 					)}
 					{avatar && (
 						<img
-							src={avatar}
-							className="w-full object-cover object-center rounded-full"
+							src={formatImgUrl(avatar)}
+							className="w-full h-full object-fill object-center rounded-full shadow"
 							alt=""
 						/>
 					)}

@@ -9,18 +9,13 @@ import CardItem from '../../components/CardItem'
 import { useRefetchQueries } from '../../hooks/useRefetchQueries'
 
 export type GalleryImage = {
+	aspectRatio: string
+	height: number
+	size: number
+	width: number
+	url: string
+	uploadedAt: string
 	_id: string
-	createdAt: string
-	updatedAt: string
-	images: {
-		aspectRatio: string
-		height: number
-		size: number
-		width: number
-		url: string
-		uploadedAt: string
-		_id: string
-	}[]
 }
 
 export default function GalleryContainer() {
@@ -33,7 +28,7 @@ export default function GalleryContainer() {
 			return res.data as {
 				success: boolean
 				total: number
-				galleries: GalleryImage[]
+				images: GalleryImage[]
 			}
 		},
 		refetchOnWindowFocus: false,
@@ -58,10 +53,10 @@ export default function GalleryContainer() {
 	return (
 		<section className="w-full bg-light-grey dark:bg-dark-grey mb-20">
 			<div className="w-full grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 items-stretch gap-x-10 gap-y-6 mt-6">
-				{data?.galleries.map((item) => (
+				{data?.images?.map((item) => (
 					<CardItem
 						key={item._id}
-						image={item.images?.[0]?.url}
+						image={item.url}
 						primaryBtnText="change image"
 						primaryBtnClick={() => changeImage(item._id)}
 						secondaryBtnText="delete"
@@ -69,23 +64,20 @@ export default function GalleryContainer() {
 					>
 						<div className="w-full px-3 text-grey text-sm font-inter">
 							<div className="flex gap-1 items-center justify-between">
-								<span>
-									Size: {(item.images[0].size / 1024 / 1024).toFixed(3)}MB
-								</span>
+								<span>Size: {(item.size / 1024 / 1024).toFixed(3)}MB</span>
 								<span className="">{10} views</span>
 							</div>
 							<p className="my-2">
-								Dimensions: {item.images?.[0]?.width} x{' '}
-								{item.images?.[0]?.height}
+								Dimensions: {item?.width} x {item?.height}
 							</p>
 							<p className="w-fit my-1 text-sm text-grey">
-								Uploaded: {format(new Date(item.updatedAt), 'dd/MM/yyyy')}
+								Uploaded: {format(new Date(item.uploadedAt), 'dd/MM/yyyy')}
 							</p>
 						</div>
 					</CardItem>
 				))}
 			</div>
-			{(error || !data.galleries.length) && (
+			{(error || !data.images?.length) && (
 				<div className="w-full text-center">No gallery images found.</div>
 			)}
 		</section>

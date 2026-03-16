@@ -9,8 +9,8 @@ import MembershipTable from './MembershipTable'
 
 export default function MembershipPage() {
 	const [status, setStatus] = useState<'all' | MembershipStatus>('all')
-	const [query, setQuery] = useState('')
-	const { data, isPending, isRefetching } = useQuery({
+	const [q, setQuery] = useState('')
+	const { data, isPending } = useQuery({
 		queryKey: ['membership'],
 		queryFn: async () => {
 			const res = await axiosInstance.get('membership')
@@ -27,13 +27,15 @@ export default function MembershipPage() {
 			? data?.members
 			: data?.members.filter((m) => m.status.toLowerCase() == status)
 
-	const filteredNames =
-		members?.filter((m) => m.name.toLowerCase().includes(query)) || []
-	const filteredEmail = members?.filter((m) => m.email.includes(query)) || []
+	const filteredMembers =
+		members?.filter((m) => {
+			const name = m?.name?.toLowerCase() || ''
+			const email = m?.email?.toLowerCase() || ''
 
-	const filteredMembers = [...filteredNames, ...filteredEmail]
+			return name.includes(q) || email.includes(q)
+		}) || []
 
-	if (isPending || isRefetching) return <LoadingSpinner />
+	if (isPending) return <LoadingSpinner />
 
 	return (
 		<section className="w-full p-6">
@@ -41,7 +43,7 @@ export default function MembershipPage() {
 				status={status}
 				setStatus={setStatus}
 				setQuery={setQuery}
-				q={query}
+				q={q}
 			/>
 			<MembershipTable members={filteredMembers} />
 			{/* This will render the overlay */}

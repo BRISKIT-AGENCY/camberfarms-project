@@ -9,8 +9,8 @@ import AffiliateHeader from './AffiliateHeader'
 
 export default function AffiliatePage() {
 	const [status, setStatus] = useState<'all' | AffiliateStatus>('all')
-	const [query, setQuery] = useState('')
-	const { data, isPending, isRefetching, error } = useQuery({
+	const [q, setQuery] = useState('')
+	const { data, isPending, error } = useQuery({
 		queryKey: ['affiliates'],
 		queryFn: async () => {
 			const res = await axiosInstance.get('affiliate')
@@ -26,13 +26,15 @@ export default function AffiliatePage() {
 	const affiliate =
 		status == 'all' ? data?.data : data?.data.filter((a) => a.status == status)
 
-	const filteredNames =
-		affiliate?.filter((a) => a.fullName.toLowerCase().includes(query)) || []
-	const filteredEmail = affiliate?.filter((a) => a.email.includes(query)) || []
+	const filteredAffiliate =
+		affiliate?.filter((a) => {
+			const name = a?.fullName?.toLowerCase() || ''
+			const email = a?.email?.toLowerCase() || ''
 
-	const filteredAffiliate = [...filteredNames, ...filteredEmail]
+			return name.includes(q) || email.includes(q)
+		}) || []
 
-	if (isPending || isRefetching) return <LoadingSpinner />
+	if (isPending) return <LoadingSpinner />
 
 	if (error)
 		return <div className="px-8">Something went wrong: {error.message}</div>
@@ -43,7 +45,7 @@ export default function AffiliatePage() {
 				status={status}
 				setStatus={setStatus}
 				setQuery={setQuery}
-				q={query}
+				q={q}
 			/>
 			<AffilateTable affiliates={filteredAffiliate} />
 			{/* This will render the overlay */}

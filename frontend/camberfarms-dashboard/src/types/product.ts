@@ -47,6 +47,6 @@ export type EditProductType = {
 	category: string
 	description: string
 	stockQuantity: number
-	variants?: ProductVariants
+	variants: ProductVariants
 	images?: File[] | string[]
 }

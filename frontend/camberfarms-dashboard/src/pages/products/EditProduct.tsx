@@ -24,6 +24,7 @@ function flattenProductInfo(product: Product | undefined): EditProductType {
 		images: [],
 		stockQuantity: product?.stockQuantity || 0,
 		_id: product?._id || '',
+		variants: {},
 	}
 }
 

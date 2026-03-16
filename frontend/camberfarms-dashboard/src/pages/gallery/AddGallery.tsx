@@ -9,18 +9,18 @@ import OverlayWrapper from '../../components/OverlayWrapper'
 import { useGoBack } from '../../hooks/useGoBack'
 
 type ImageUpload = File[] | null
-// TODO make this work
+
 export default function AddGallery() {
 	const queryClient = useQueryClient()
 	const navigate = useNavigate()
 	const goBack = useGoBack('/gallery')
 	const [images, setImages] = useState<ImageUpload>(null)
 	const { mutate, isPending } = useMutation({
-		mutationKey: ['galleries'],
+		mutationKey: ['gallery'],
 		mutationFn: async (data: FormData) => axiosInstance.post('gallery', data),
 		onSuccess: () => {
 			toast.success('gallery upload successful')
-			queryClient.invalidateQueries({ queryKey: ['galleries'] })
+			queryClient.invalidateQueries({ queryKey: ['gallery'] })
 			navigate('/gallery')
 		},
 	})
@@ -56,6 +56,9 @@ export default function AddGallery() {
 						setState={setImages}
 					/>
 				</div>
+				<p className="my-2 text-dark-grey dark:text-light-grey font-poppins font-semibold opacity-50">
+					For best user experience, upload only 4 images at a time.
+				</p>
 				<div className="w-full flex gap-6 items-center justify-end py-6 mt-8 border-t border-grey/50">
 					<button
 						type="button"

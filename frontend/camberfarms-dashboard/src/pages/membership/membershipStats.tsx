@@ -63,7 +63,7 @@ export default function MembershipStats() {
 		{
 			title: 'approved',
 			count: Number(data?.reply?.totalApproved) || 0,
-			percent: `+${Number(data?.reply?.approvedPercentage) || 0}%`,
+			percent: `+${Number(data?.reply?.approvedPercentage)?.toFixed(2) || 0}%`,
 			info: 'verified rate',
 			Icon: MdOutlineDoneAll,
 			Icolor: 'text-primary',
@@ -74,7 +74,7 @@ export default function MembershipStats() {
 		{
 			title: 'new applications',
 			count: Number(data?.newm?.totalNewMessages) || 0,
-			percent: `+${Number(data?.newm?.monthlyBreakdown?.[0]?.percentage) || 0}%`,
+			percent: `+${Number(data?.newm?.monthlyBreakdown?.[0]?.percentage)?.toFixed(2) || 0}%`,
 			info: 'new inputs',
 			Icon: MdAccessTime,
 			Icolor: 'text-[#0088FF]',

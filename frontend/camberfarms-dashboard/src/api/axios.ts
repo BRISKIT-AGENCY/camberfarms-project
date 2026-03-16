@@ -2,7 +2,7 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 
 const axiosInstance = axios.create({
-	baseURL: 'https://camberfarms-project.onrender.com/api/admin',
+	baseURL: 'https://api.camberfarms.org/api/admin',
 })
 
 const token = Cookies.get('token')

@@ -9,8 +9,8 @@ import FarmFundTable from './FarmFundTable'
 
 export default function FarmFundPage() {
 	const [status, setStatus] = useState<'all' | FarmFundStatus>('all')
-	const [query, setQuery] = useState('')
-	const { data, error, isPending, isRefetching } = useQuery({
+	const [q, setQuery] = useState('')
+	const { data, error, isPending } = useQuery({
 		queryKey: ['farm-fund'],
 		queryFn: async () => {
 			const res = await axiosInstance.get('farm-fund')
@@ -27,13 +27,15 @@ export default function FarmFundPage() {
 			? data?.registrations
 			: data?.registrations.filter((m) => m.status == status)
 
-	const filteredNames =
-		members?.filter((m) => m.name.toLowerCase().includes(query)) || []
-	const filteredEmail = members?.filter((m) => m.email.includes(query)) || []
+	const filteredFarmFund =
+		members?.filter((f) => {
+			const name = f?.name?.toLowerCase() || ''
+			const email = f?.email?.toLowerCase() || ''
 
-	const filteredMembers = [...filteredNames, ...filteredEmail]
+			return name.includes(q) || email.includes(q)
+		}) || []
 
-	if (isPending || isRefetching) return <LoadingSpinner />
+	if (isPending) return <LoadingSpinner />
 
 	if (error)
 		return <div className="px-8">Something went wrong: {error.message}</div>
@@ -44,9 +46,9 @@ export default function FarmFundPage() {
 				status={status}
 				setStatus={setStatus}
 				setQuery={setQuery}
-				q={query}
+				q={q}
 			/>
-			<FarmFundTable registrations={filteredMembers} />
+			<FarmFundTable registrations={filteredFarmFund} />
 			{/* This will render the overlay */}
 			<Outlet />
 		</section>

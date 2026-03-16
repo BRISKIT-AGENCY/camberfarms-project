@@ -1,6 +1,6 @@
 import { FaPlus } from 'react-icons/fa6'
 import { Link } from 'react-router-dom'
-import Searchbar from '../../components/Searchbar'
+// import Searchbar from '../../components/Searchbar'
 
 export default function BlogHeader() {
 	return (
@@ -22,9 +22,9 @@ export default function BlogHeader() {
 					post new blog
 				</Link>
 			</div>
-			<div className="w-full bg-white dark:bg-black my-10 p-6 grid grid-cols-1 items-center justify-between gap-6 flex-nowrap rounded-lg shadow-2xs">
+			{/* <div className="w-full bg-white dark:bg-black my-10 p-6 grid grid-cols-1 items-center justify-between gap-6 flex-nowrap rounded-lg shadow-2xs">
 				<Searchbar placeholder="Search blogs" url="" />
-			</div>
+			</div> */}
 		</section>
 	)
 }

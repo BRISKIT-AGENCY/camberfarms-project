@@ -58,7 +58,11 @@ export default async function Blog() {
 								Read more
 							</Link>
 							<Image
-								src={b?.image || userAvatar}
+								src={
+									b.image
+										? `https://api.camberfarms.org/${b?.image.replace(/^\//, '')}`
+										: userAvatar
+								}
 								alt=""
 								width={300}
 								height={300}

@@ -9,7 +9,7 @@ import {
 } from 'react'
 // import { setAuthToken } from '../api/axios'
 
-interface User {
+export interface User {
 	id: number
 	profilePhoto: string
 	email: string
@@ -24,6 +24,7 @@ interface AuthState {
 type AuthAction =
 	| { type: 'LOGIN'; user: User; token: string }
 	| { type: 'LOGOUT' }
+	| { type: 'CHANGE_PROFILE'; url: string }
 
 interface AuthContextType extends AuthState {
 	dispatch: Dispatch<AuthAction>
@@ -38,6 +39,12 @@ function reducer(state: AuthState, action: AuthAction): AuthState {
 			return {
 				user: action.user,
 				token: action.token,
+			}
+
+		case 'CHANGE_PROFILE':
+			return {
+				user: { ...state.user!, profilePhoto: action.url },
+				token: state.token,
 			}
 
 		case 'LOGOUT':

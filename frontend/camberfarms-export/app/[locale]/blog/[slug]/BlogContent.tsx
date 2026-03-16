@@ -1,3 +1,4 @@
+'use client'
 import Image from 'next/image'
 import { iBlogContent } from './page'
 
@@ -5,7 +6,7 @@ type BlogPropType = {
 	blog: iBlogContent | null
 }
 
-export default async function BlogContent({ blog }: BlogPropType) {
+export default function BlogContent({ blog }: BlogPropType) {
 	if (blog === null)
 		return (
 			<div className="w-full p-6 text-grey">

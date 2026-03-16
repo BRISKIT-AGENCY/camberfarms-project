@@ -9,9 +9,9 @@ import ProductsHeader from './ProductsHeader'
 
 export default function ProductsPage() {
 	const [category, setCategory] = useState('all')
-	const [query, setQuery] = useState('')
+	const [q, setQuery] = useState('')
 
-	const { data, isPending, isRefetching } = useQuery({
+	const { data, isPending } = useQuery({
 		queryKey: ['products'],
 		queryFn: async () => {
 			const res = await axiosInstance.get('products')
@@ -33,10 +33,14 @@ export default function ProductsPage() {
 				)
 
 	const filteredProducts =
-		products?.filter((p) => p.translations?.en?.name.includes(query)) &&
-		products?.filter((p) => p.translations?.en?.description.includes(query))
+		products?.filter((p) => {
+			const name = p.translations?.en?.name?.toLowerCase() || ''
+			const desc = p.translations?.en?.description?.toLowerCase() || ''
 
-	if (isPending || isRefetching || !data?.products) return <LoadingSpinner />
+			return name.includes(q) || desc.includes(q)
+		}) || []
+
+	if (isPending) return <LoadingSpinner />
 
 	return (
 		<section className="w-full p-6">
@@ -44,9 +48,9 @@ export default function ProductsPage() {
 				cat={category}
 				setCategory={setCategory}
 				setQuery={setQuery}
-				q={query}
+				q={q}
 			/>
-			<Products products={filteredProducts || []} />
+			<Products products={filteredProducts} />
 			{/* This will render the overlay */}
 			<Outlet />
 		</section>

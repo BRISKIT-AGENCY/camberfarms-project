@@ -66,6 +66,7 @@ const AccountPage = lazy(() => import('./pages/account/AccountPage'))
 // route validation
 import VerifyOTPUser from './pages/account/changePassword/VerifyOTPUser'
 import CreateNewPassword from './pages/account/forgotPassword/CreateNewPassword'
+import VerifyLoginOTP from './pages/VerifyLoginOTP'
 import LoginRoute from './utils/LoginRoute'
 import ProtectedRoute from './utils/ProtectedRoute'
 
@@ -179,6 +180,7 @@ export default function App() {
 									{/* login */}
 									<Route element={<LoginRoute />}>
 										<Route path="login" element={<Login />} />
+										<Route path="login/verify" element={<VerifyLoginOTP />} />
 										<Route path="iforgot" element={<ForgotPassword />} />
 									</Route>
 									<Route path="account/verification" element={<VerifyOTP />} />

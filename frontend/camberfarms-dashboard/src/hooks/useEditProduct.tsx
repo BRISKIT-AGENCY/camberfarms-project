@@ -33,11 +33,17 @@ async function editProduct(input: EditProductType) {
 		formData.append('stockQuantity', String(input.stockQuantity))
 	}
 	// append variants
-	if (input.variants) {
-		Object.entries(input.variants).forEach(([key, value]) => {
-			formData.append(`variants[${key}]`, String(value))
-		})
-	}
+	formData.append('variants', JSON.stringify(input.variants ?? []))
+
+	// TODO remove this
+	// if (input.variants) {
+	// 	formData.append('variants', JSON.stringify(input.variants))
+	// 	// Object.entries(input.variants).forEach(([key, value]) => {
+	// 	// 	formData.append(`variants[${key}]`, String(value))
+	// 	// })
+	// } else {
+	// 	formData.append('variants', String([]))
+	// }
 
 	//   append images
 	if (typeof input.images === 'object' && input.images?.length) {
@@ -49,7 +55,7 @@ async function editProduct(input: EditProductType) {
 	const { data } = await axiosInstance.patch(
 		`products/${input._id}`,
 		formData,
-		{ params: { id: input._id } },
+		// { params: { id: input._id } },
 	)
 	return data
 }

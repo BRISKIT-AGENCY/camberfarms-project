@@ -35,7 +35,7 @@ export default function Products() {
 							className="w-full flex items-center justify-center h-80 xl:h-96 border-3 border-primary rounded-lg relative"
 						>
 							<Image
-								src={`https://camberfarms-project.onrender.com${p?.images?.[0]}`}
+								src={`https://api.camberfarms.org/${p?.images?.[0]}`}
 								alt={p?.name}
 								fill
 								sizes="300px"

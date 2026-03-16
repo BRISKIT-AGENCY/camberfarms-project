@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
+import toast from 'react-hot-toast'
 import { IoClose } from 'react-icons/io5'
 import { MdVerified } from 'react-icons/md'
 import axiosInstance from '../../api/axios'
@@ -7,16 +8,40 @@ import editIcon from '../../assets/icon/edit.svg'
 import userAvatar from '../../assets/img/user-avatar.png'
 import { Dropzone } from '../../components/Dropzone'
 import OverlayWrapper from '../../components/OverlayWrapper'
+import type { User } from '../../context/AuthContext'
+import { formatImgUrl } from '../../helpers/formatImgUrl'
 import { useAuth } from '../../hooks/useAuth'
 
+type ChangeProfile = {
+	success: boolean
+	message: string
+	profilePhoto: string
+}
+
+const baseURL = 'https://api.camberfarms.org/'
+
 export default function AccountProfile() {
-	const { user } = useAuth()
+	const { dispatch } = useAuth()
+	const user: User = JSON.parse(localStorage.getItem('user') || '')!
 	const [profileImg, setProfileImg] = useState<File | null>(null)
+	const [avatar, setAvatar] = useState(
+		formatImgUrl(user?.profilePhoto) || userAvatar,
+	)
 	const [showForm, setShowForm] = useState(false)
-	const { mutateAsync, data, isPending } = useMutation({
+	const { mutateAsync, isPending } = useMutation({
 		mutationFn: async (data: FormData) => {
-			const res = await axiosInstance.post('/admin/profile-photo', data)
+			const res = await axiosInstance.post('/profile-photo', data)
 			return res.data
+		},
+		onSuccess: (data: ChangeProfile) => {
+			const url = data.profilePhoto.replace(baseURL, '')
+			dispatch({ type: 'CHANGE_PROFILE', url })
+			setAvatar(`${baseURL}/${url}`)
+			user.profilePhoto = url
+			localStorage.setItem('user', JSON.stringify(user))
+		},
+		onError: (error) => {
+			toast.error(error.message)
 		},
 	})
 
@@ -26,20 +51,20 @@ export default function AccountProfile() {
 			throw new Error('Image is required')
 		}
 
-		formData.append('file', profileImg)
+		formData.append('profilePhoto', profileImg)
 		await mutateAsync(formData)
-		console.log('data: ', data)
+		// console.log('data: ', data)
 		setShowForm(false)
 	}
 
 	return (
 		<div className="w-full mb-4 rounded-t-xl bg-[url('./account-bg1.png')] bg-no-repeat bg-cover bg-top-left">
 			<div className="w-full from-[#11881A99] via-[#11881A90] to-[#1AD32999] bg-linear-360 text-white px-6 py-10 mt-6 rounded-t-xl flex items-center">
-				<div className="w-28 lg:w-32 aspect-square ml-2 mr-6">
+				<div className="w-28 lg:w-32 aspect-square ml-2 mr-6 border border-primary rounded-full">
 					<img
-						src={user?.profilePhoto || userAvatar}
+						src={avatar}
 						alt=""
-						className="object-fill object-center w-full rounded-full"
+						className="object-fill object-center w-full h-full rounded-full"
 					/>
 				</div>
 				<div className="w-fit flex flex-col gap-1">

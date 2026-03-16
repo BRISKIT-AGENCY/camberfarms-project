@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import axiosInstance from '../../api/axios'
 import CardItem from '../../components/CardItem'
 // import { formatImgUrl } from '../../helpers/formatImgUrl'
+import { formatImgUrl } from '../../helpers/formatImgUrl'
 import type { Product } from '../../types/product'
 
 export default function Products({ products }: { products: Product[] }) {
@@ -28,9 +29,6 @@ export default function Products({ products }: { products: Product[] }) {
 		navigate(`edit/${id}`)
 	}
 
-	// if (isPending || isRefetching || !data?.products)
-	// 	return <div className="w-full text-center">Loading...</div>
-
 	return (
 		<section className="w-full bg-light-grey dark:bg-dark-grey mb-20">
 			<h4 className="text-black dark:text-white text-2xl font-semibold">
@@ -46,7 +44,7 @@ export default function Products({ products }: { products: Product[] }) {
 							key={item._id}
 							disabled={deleting}
 							title={item.translations?.en?.name}
-							image={item.images?.[0]}
+							image={formatImgUrl(item.images?.[0])}
 							flag={item.translations?.en?.category}
 							flagColor={getFlagColor(item.translations?.en?.category)}
 							primaryBtnText="edit"

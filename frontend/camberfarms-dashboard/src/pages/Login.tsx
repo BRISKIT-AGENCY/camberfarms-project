@@ -1,10 +1,10 @@
-import Cookies from 'js-cookie'
+// import Cookies from 'js-cookie'
 import { useState } from 'react'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { PiEyeSlashThin, PiEyeThin } from 'react-icons/pi'
 import { Link, useNavigate } from 'react-router-dom'
 import OverlayWrapper from '../components/OverlayWrapper'
-import { useAuth } from '../hooks/useAuth'
+// import { useAuth } from '../hooks/useAuth'
 // import { useLogin } from '../hooks/useLogin'
 import axiosInstance from '../api/axios'
 
@@ -17,7 +17,7 @@ export default function Login() {
 	const [showPswd, setShowPswd] = useState(false)
 	const [isPending, setIsPending] = useState(false)
 	const [error, setError] = useState(null)
-	const { dispatch } = useAuth()
+	// const { dispatch } = useAuth()
 	const navigate = useNavigate()
 	// const { mutate, data: userInfo, isPending, error } = useLogin()
 	const {
@@ -36,16 +36,16 @@ export default function Login() {
 		try {
 			// await mutate(data)
 			setIsPending(true)
-			const res = await axiosInstance.post('login', data)
-			const userInfo = res.data
+			await axiosInstance.post('login', data)
+			navigate('/login/verify', { state: { email: data.email } })
+			// const userInfo = res.data
 
-			dispatch({ type: 'LOGIN', token: userInfo.token, user: userInfo.admin })
-			Cookies.set('token', userInfo.token, { expires: 1 })
-			localStorage.setItem('user', JSON.stringify(userInfo.admin))
-			// console.log('user: ', userInfo)
-			navigate('/')
-			// naive fix for preflight authentication
-			window.location.reload()
+			// dispatch({ type: 'LOGIN', token: userInfo.token, user: userInfo.admin })
+			// Cookies.set('token', userInfo.token, { expires: 1 / 12 })
+			// localStorage.setItem('user', JSON.stringify(userInfo.admin))
+			// // console.log('user: ', userInfo)
+			// // naive fix for preflight authentication
+			// window.location.reload()
 
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		} catch (err: any) {
