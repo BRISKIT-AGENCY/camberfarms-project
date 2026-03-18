@@ -3,9 +3,7 @@ import Link from 'next/link'
 import arrowIcon from '../assets/icon/arrow-r-white.svg'
 import facebookIcon from '../assets/icon/facebook-f.svg'
 import instagramIcon from '../assets/icon/instagram.svg'
-// import linkedinIcon from '../assets/icon/linkedin-in.svg'
 import locationIcon from '../assets/icon/location-white.svg'
-// import twitterIcon from '../assets/icon/twitter-x.svg'
 import nutsBgImgSmall from '../assets/img/nuts-bg.webp'
 import tomatoesImg from '../assets/img/tomato-shrubs.png'
 
@@ -82,11 +80,32 @@ export default async function Hero() {
 									src={s.icon}
 									alt={s.name}
 									fill
-									sizes="100px"
+									// sizes="100px"
 									className="object-cover object-center"
 								/>
 							</a>
 						))}
+						{/* tiktok */}
+						<a
+							href="https://www.tiktok.com/@camber.exports?_r=1&amp;_t=ZS-931qhot2Dez"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="w-9 h-9 z-0 flex items-center justify-center rounded-full bg-primary p-2"
+						>
+							<svg
+								data-prefix="fab"
+								data-icon="tiktok"
+								className="svg-inline--fa fa-tiktok text-white w-full"
+								role="img"
+								viewBox="0 0 448 512"
+								aria-hidden="true"
+							>
+								<path
+									fill="currentColor"
+									d="M448.5 209.9c-44 .1-87-13.6-122.8-39.2l0 178.7c0 33.1-10.1 65.4-29 92.6s-45.6 48-76.6 59.6-64.8 13.5-96.9 5.3-60.9-25.9-82.7-50.8-35.3-56-39-88.9 2.9-66.1 18.6-95.2 40-52.7 69.6-67.7 62.9-20.5 95.7-16l0 89.9c-15-4.7-31.1-4.6-46 .4s-27.9 14.6-37 27.3-14 28.1-13.9 43.9 5.2 31 14.5 43.7 22.4 22.1 37.4 26.9 31.1 4.8 46-.1 28-14.4 37.2-27.1 14.2-28.1 14.2-43.8l0-349.4 88 0c-.1 7.4 .6 14.9 1.9 22.2 3.1 16.3 9.4 31.9 18.7 45.7s21.3 25.6 35.2 34.6c19.9 13.1 43.2 20.1 67 20.1l0 87.4z"
+								></path>
+							</svg>
+						</a>
 					</div>
 					<div className="w-full min-h-1/2 px-8 flex items-center gap-2 text-[8px] sm:text-sm lg:text-lg lg:gap-4 font-semibold font-poppins">
 						<Image

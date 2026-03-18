@@ -109,12 +109,12 @@
 				{
 					"id": 2,
 					"name": "Adebayo L",
-					"content": "“We appreciate their consistency in quality and after service. Their corporation with rural African farmers is also commendable.” Moreover, we deeply admire their proactive efforts towards customer satisfaction."
+					"content": "“Partnering with Camberfarms has changed how we grow and sell our crops. We now produce better yields and reach buyers we never thought possible."
 				},
 				{
 					"id": 3,
 					"name": "Chuks David",
-					"content": "“We appreciate their consistency in quality and after service. Their corporation with rural African farmers is also commendable.” Moreover, we deeply admire their proactive efforts towards customer satisfaction."
+					"content": "“We highly appreciate their consistent delivery of premium agricultural produce and their reliable after-sales support. Their strong partnerships with rural African farmers and commitment to sustainable sourcing are truly commendable. Furthermore, we deeply value their proactive approach to meeting client needs and ensuring exceptional customer satisfaction throughout the export process."
 				}
 			]
 		},
@@ -184,10 +184,66 @@
 			"paragraph3": "As an Affiliate partner, you will be at the forefront of this mission, helping to connect our prodcuts with the clients across the globe while enjoying lucrative rewards for your efforts."
 		},
 		"benefits": {
-			"heading": "Benefits Of Joining Our Affiliate Program"
+			"heading": "Benefits Of Joining Our Affiliate Program",
+			"revenue": {
+				"heading": "Recurring Revenue from Bulk Buyers:",
+				"text": [
+					"Unlike typical affiliate programs that rely on one-off purchases, agro exports often involve repeat B2B transactions (importers, distributors, manufacturers). As an affiliate, you can earn recurring commissions from long-term supply contracts and repeat orders."
+				]
+			},
+			"commission": {
+				"heading": "High-Ticket Commission Structure:",
+				"text": [
+					"Agro-export deals are usually bulk and high-value transactions (e.g., tons of sesame seeds, cashew nuts, ginger, hibiscus). This means:",
+					"• Fewer deals needed",
+					"• Higher commission per conversion",
+					"One successful deal can outperform months of low-ticket affiliate sales."
+				]
+			},
+			"credibility": {
+				"heading": "Credibility Through Tangible Products:",
+				"text": [
+					"Unlike digital or speculative offers, agricultural products are real, essential, and verifiable. This increases:",
+					"• Buyer trust",
+					"• Conversion rates",
+					"It also makes your marketing more persuasive because you're offering physical value with clear supply chains."
+				]
+			},
+			"upside": {
+				"heading": "Low Barrier to Entry with High Upside:",
+				"text": [
+					"You don't need to:",
+					"• Own a farm",
+					"• Handle logistics",
+					"• Manage export documentation",
+					"The company handles operations, while you focus purely on deal sourcing, and lead generation—a highly scalable role with minimal capital."
+				]
+			},
+			"alignment": {
+				"heading": "Alignment with Impact & Sustainability:",
+				"text": [
+					"Agro-export businesses often:",
+					"• Empower local farmers",
+					"• Create rural employment",
+					"• Promote sustainable agriculture",
+					"As an affiliate, you're not just earning—you're participating in economic development and value chain transformation, which can strengthen your personal brand and attract mission-driven partners."
+				]
+			}
 		},
 		"join": {
-			"heading": "Who Can Join?"
+			"heading": "Who Can Join?",
+			"p0": "Our Affiliate Program welcomes a broad range of partners, including:",
+			"p1": "Agro-Export Brokers",
+			"p2": "Introduce buyers to our premium African agricultural products while broadening your supply portfolio",
+			"p3": "Affiliate Marketers",
+			"p4": "Earn commissions by promoting Camberfarms products via websites, email campaigns, and social media platforms.",
+			"p5": "Industry Professionals",
+			"p6": "Partner with us to supply top-grade agricultural exports to companies within the food & beverage, wellness, and cosmetics sectors.",
+			"p7": "How the Program Works",
+			"p8": "Register",
+			"p9": "Join our affiliate network by completing a quick and straightforward sign-up process",
+			"p10": "Market Our Products",
+			"p11": "Leverage our ready-made marketing materials to promote Camberfarms hibiscus, Blackstone flowers, and other high-quality crops."
 		},
 		"commission": {
 			"heading": "EARN COMMISSIONS:",

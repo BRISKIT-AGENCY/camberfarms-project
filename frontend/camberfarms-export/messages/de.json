@@ -109,12 +109,12 @@
 				{
 					"id": 2,
 					"name": "Adebayo L",
-					"content": "„Wir schätzen ihre gleichbleibende Qualität und den After-Sales-Service sehr. Ihre Zusammenarbeit mit ländlichen afrikanischen Bauern ist ebenfalls lobenswert. Darüber hinaus bewundern wir ihr proaktives Engagement für die Kundenzufriedenheit.“"
+					"content": "„Die Zusammenarbeit mit Camberfarms hat verändert, wie wir unsere Ernten anbauen und verkaufen. Wir erzielen jetzt bessere Erträge und erreichen Käufer, die wir uns nie hätten vorstellen können.“"
 				},
 				{
 					"id": 3,
 					"name": "Chuks David",
-					"content": "„Wir schätzen ihre gleichbleibende Qualität und den After-Sales-Service sehr. Ihre Zusammenarbeit mit ländlichen afrikanischen Bauern ist ebenfalls lobenswert. Darüber hinaus bewundern wir ihr proaktives Engagement für die Kundenzufriedenheit.“"
+					"content": "Wir schätzen ihre kontinuierliche Lieferung hochwertiger landwirtschaftlicher Produkte sowie ihren zuverlässigen After-Sales-Support sehr. Ihre starken Partnerschaften mit ländlichen afrikanischen Landwirten und ihr Engagement für nachhaltige Beschaffung sind wirklich bemerkenswert. Darüber hinaus schätzen wir ihren proaktiven Ansatz, Kundenbedürfnisse zu erfüllen und während des gesamten Exportprozesses eine außergewöhnliche Kundenzufriedenheit sicherzustellen."
 				}
 			]
 		},
@@ -184,10 +184,66 @@
 			"paragraph3": "Als Affiliate-Partner stehen Sie an vorderster Front dieser Mission, verbinden unsere Produkte mit Kunden auf der ganzen Welt und erhalten attraktive Vergütungen für Ihre Bemühungen."
 		},
 		"benefits": {
-			"heading": "Vorteile der Teilnahme an unserem Affiliate-Programm"
+			"heading": "Vorteile der Teilnahme an unserem Partnerprogramm",
+			"revenue": {
+				"heading": "Wiederkehrende Einnahmen von Großabnehmern:",
+				"text": [
+					"Im Gegensatz zu typischen Partnerprogrammen, die auf einmaligen Käufen basieren, umfassen Agrarexporte häufig wiederkehrende B2B-Transaktionen (Importeure, Händler, Hersteller). Als Partner können Sie wiederkehrende Provisionen aus langfristigen Lieferverträgen und Folgeaufträgen verdienen."
+				]
+			},
+			"commission": {
+				"heading": "Hochwertige Provisionsstruktur:",
+				"text": [
+					"Agrarexportgeschäfte sind in der Regel großvolumige und hochpreisige Transaktionen (z. B. Tonnen von Sesamsamen, Cashewnüssen, Ingwer, Hibiskus). Das bedeutet:",
+					"• Weniger Abschlüsse erforderlich",
+					"• Höhere Provision pro Conversion",
+					"Ein einzelner erfolgreicher Abschluss kann Monate von niedrigpreisigen Affiliate-Verkäufen übertreffen."
+				]
+			},
+			"credibility": {
+				"heading": "Glaubwürdigkeit durch greifbare Produkte:",
+				"text": [
+					"Im Gegensatz zu digitalen oder spekulativen Angeboten sind landwirtschaftliche Produkte real, essenziell und überprüfbar. Dies erhöht:",
+					"• Das Vertrauen der Käufer",
+					"• Die Conversion-Rate",
+					"Außerdem macht es Ihr Marketing überzeugender, da Sie einen physischen Mehrwert mit klaren Lieferketten anbieten."
+				]
+			},
+			"upside": {
+				"heading": "Niedrige Einstiegshürde mit hohem Potenzial:",
+				"text": [
+					"Sie müssen nicht:",
+					"• Einen Bauernhof besitzen",
+					"• Sich um die Logistik kümmern",
+					"• Exportdokumente verwalten",
+					"Das Unternehmen übernimmt die operativen Abläufe, während Sie sich ausschließlich auf die Akquise von Geschäften und die Leadgenerierung konzentrieren — eine hoch skalierbare Rolle mit minimalem Kapitaleinsatz."
+				]
+			},
+			"alignment": {
+				"heading": "Ausrichtung auf Wirkung und Nachhaltigkeit:",
+				"text": [
+					"Agrarexportunternehmen:",
+					"• Stärken lokale Landwirte",
+					"• Schaffen Arbeitsplätze im ländlichen Raum",
+					"• Fördern nachhaltige Landwirtschaft",
+					"Als Partner verdienen Sie nicht nur — Sie tragen auch zur wirtschaftlichen Entwicklung und zur Transformation der Wertschöpfungskette bei, was Ihre persönliche Marke stärken und missionsorientierte Partner anziehen kann."
+				]
+			}
 		},
 		"join": {
-			"heading": "Wer kann teilnehmen?"
+			"heading": "Wer kann teilnehmen?",
+			"p0": "Unser Partnerprogramm begrüßt eine Vielzahl von Partnern, darunter:",
+			"p1": "Agroexport-Makler",
+			"p2": "Stellen Sie Käufern unsere hochwertigen afrikanischen Agrarprodukte vor und erweitern Sie gleichzeitig Ihr Lieferportfolio",
+			"p3": "Affiliate-Marketer",
+			"p4": "Verdienen Sie Provisionen, indem Sie Camberfarms-Produkte über Websites, E-Mail-Kampagnen und soziale Medien bewerben.",
+			"p5": "Branchenexperten",
+			"p6": "Arbeiten Sie mit uns zusammen, um erstklassige landwirtschaftliche Exporte an Unternehmen in den Bereichen Lebensmittel und Getränke, Wellness und Kosmetik zu liefern.",
+			"p7": "So funktioniert das Programm",
+			"p8": "Registrieren",
+			"p9": "Treten Sie unserem Partnernetzwerk bei, indem Sie einen schnellen und einfachen Anmeldeprozess abschließen",
+			"p10": "Vermarkten Sie unsere Produkte",
+			"p11": "Nutzen Sie unsere fertigen Marketingmaterialien, um Camberfarms-Hibiskus, Blackstone-Blumen und andere hochwertige Produkte zu bewerben."
 		},
 		"commission": {
 			"heading": "PROVISIONEN VERDIENEN:",

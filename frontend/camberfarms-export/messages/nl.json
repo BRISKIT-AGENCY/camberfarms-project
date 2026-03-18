@@ -109,12 +109,12 @@
 				{
 					"id": 2,
 					"name": "Adebayo L",
-					"content": "“Wij waarderen hun consistente kwaliteit en aftersalesservice. Hun samenwerking met Afrikaanse plattelandsboeren is ook prijzenswaardig. Daarnaast bewonderen wij hun proactieve inzet voor klanttevredenheid.”"
+					"content": "“De samenwerking met Camberfarms heeft veranderd hoe wij onze gewassen telen en verkopen. We behalen nu betere opbrengsten en bereiken kopers die we nooit voor mogelijk hielden.”"
 				},
 				{
 					"id": 3,
 					"name": "Chuks David",
-					"content": "“Wij waarderen hun consistente kwaliteit en aftersalesservice. Hun samenwerking met Afrikaanse plattelandsboeren is ook prijzenswaardig. Daarnaast bewonderen wij hun proactieve inzet voor klanttevredenheid.”"
+					"content": "Wij waarderen hun consistente levering van hoogwaardige landbouwproducten en hun betrouwbare aftersalesondersteuning zeer. Hun sterke samenwerkingen met plattelandsboeren in Afrika en hun inzet voor duurzame inkoop zijn werkelijk bewonderenswaardig. Daarnaast waarderen wij hun proactieve aanpak om aan de behoeften van klanten te voldoen en een uitzonderlijke klanttevredenheid gedurende het hele exportproces te waarborgen.”"
 				}
 			]
 		},
@@ -184,10 +184,66 @@
 			"paragraph3": "Als affiliatepartner staat u in de voorhoede van deze missie en helpt u onze producten te verbinden met klanten over de hele wereld, terwijl u aantrekkelijke beloningen ontvangt voor uw inspanningen."
 		},
 		"benefits": {
-			"heading": "Voordelen van deelname aan ons affiliateprogramma"
+			"heading": "Voordelen van deelname aan ons affiliateprogramma",
+			"revenue": {
+				"heading": "Terugkerende inkomsten van grootschalige kopers:",
+				"text": [
+					"In tegenstelling tot traditionele affiliateprogramma’s die afhankelijk zijn van eenmalige aankopen, omvatten agro-exporten vaak herhaalde B2B-transacties (importeurs, distributeurs, fabrikanten). Als affiliate kun je terugkerende commissies verdienen via langlopende leveringscontracten en herhaalde bestellingen."
+				]
+			},
+			"commission": {
+				"heading": "Commissiestructuur met hoge waarde:",
+				"text": [
+					"Agro-exportdeals zijn meestal grootschalige en waardevolle transacties (bijvoorbeeld: tonnen sesamzaad, cashewnoten, gember, hibiscus). Dit betekent:",
+					"• Minder deals nodig",
+					"• Hogere commissie per conversie",
+					"Eén succesvolle deal kan maanden aan low-ticket affiliateverkopen overtreffen."
+				]
+			},
+			"credibility": {
+				"heading": "Geloofwaardigheid door tastbare producten:",
+				"text": [
+					"In tegenstelling tot digitale of speculatieve aanbiedingen zijn landbouwproducten echt, essentieel en verifieerbaar. Dit verhoogt:",
+					"• Vertrouwen van kopers",
+					"• Conversieratio’s",
+					"Het maakt je marketing ook overtuigender, omdat je fysieke waarde aanbiedt met duidelijke toeleveringsketens."
+				]
+			},
+			"upside": {
+				"heading": "Lage instapdrempel met groot potentieel:",
+				"text": [
+					"Je hoeft niet:",
+					"• Een boerderij te bezitten",
+					"• Logistiek te regelen",
+					"• Exportdocumentatie te beheren",
+					"Het bedrijf verzorgt de operationele kant, terwijl jij je volledig richt op het vinden van deals en het genereren van leads — een zeer schaalbare rol met minimale investering."
+				]
+			},
+			"alignment": {
+				"heading": "Afstemming met impact en duurzaamheid:",
+				"text": [
+					"Agro-exportbedrijven:",
+					"• Ondersteunen lokale boeren",
+					"• Creëren werkgelegenheid op het platteland",
+					"• Bevorderen duurzame landbouw",
+					"Als affiliate verdien je niet alleen — je draagt ook bij aan economische ontwikkeling en de transformatie van de waardeketen, wat je persoonlijke merk kan versterken en missiegedreven partners kan aantrekken."
+				]
+			}
 		},
 		"join": {
-			"heading": "Wie kan deelnemen?"
+			"heading": "Wie kan deelnemen?",
+			"p0": "Ons affiliateprogramma verwelkomt een breed scala aan partners, waaronder:",
+			"p1": "Agro-exportmakelaars",
+			"p2": "Introduceer kopers aan onze premium Afrikaanse landbouwproducten en breid tegelijkertijd uw leveringsportfolio uit",
+			"p3": "Affiliate marketeers",
+			"p4": "Verdien commissies door Camberfarms-producten te promoten via websites, e-mailcampagnes en sociale media.",
+			"p5": "Professionals uit de sector",
+			"p6": "Werk met ons samen om hoogwaardige landbouwexporten te leveren aan bedrijven in de voedingsmiddelen- en drankenindustrie, wellness en cosmetica.",
+			"p7": "Hoe het programma werkt",
+			"p8": "Registreren",
+			"p9": "Sluit u aan bij ons affiliatenetwerk door een snel en eenvoudig registratieproces te voltooien",
+			"p10": "Promoot onze producten",
+			"p11": "Gebruik onze kant-en-klare marketingmaterialen om Camberfarms hibiscus, Blackstone-bloemen en andere hoogwaardige gewassen te promoten."
 		},
 		"commission": {
 			"heading": "VERDIEN COMMISSIES:",

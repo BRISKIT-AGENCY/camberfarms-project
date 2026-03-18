@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
@@ -23,6 +24,8 @@ type Inputs = {
 }
 
 export default function AffiliateForm() {
+	const t = useTranslations('affiliate.form')
+	const p = useTranslations('affiliate.form.placeholder')
 	const [isLoading, setIsLoading] = useState(false)
 	const {
 		register,
@@ -59,13 +62,9 @@ export default function AffiliateForm() {
 			id="message"
 		>
 			<h4 className="font-inter uppercase font-medium text-black text-xl sm:text-2xl">
-				START YOUR JOURNEY WITH CAMBERFARMS TODAY!
+				{t('heading')}
 			</h4>
-			<p className="mt-2 mb-8 text-dark-grey text-sm">
-				Ready to take your brokerage or marketing career to the next level? Join
-				the Camberfarms Affiliate Program and become a key player in the
-				thriving agro-export industry.
-			</p>
+			<p className="mt-2 mb-8 text-dark-grey text-sm">{t('paragraph')}</p>
 			<fieldset className="flex flex-col gap-6 mb-6 text-grey">
 				<input
 					{...register('fullName', {
@@ -74,7 +73,7 @@ export default function AffiliateForm() {
 						maxLength: 20,
 					})}
 					type="text"
-					placeholder="Full name"
+					placeholder={p('name')}
 					className="w-full rounded-3xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				/>
 				{errors.fullName && (
@@ -86,7 +85,7 @@ export default function AffiliateForm() {
 				<input
 					{...register('email', { required: true })}
 					type="email"
-					placeholder="Email"
+					placeholder={p('email')}
 					className="w-full rounded-3xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				/>
 				{errors.email && (
@@ -102,7 +101,7 @@ export default function AffiliateForm() {
 						maxLength: 14,
 					})}
 					type="tel"
-					placeholder="Phone number"
+					placeholder={p('phone')}
 					className="w-full rounded-3xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				/>
 				{errors.phone && (
@@ -114,7 +113,7 @@ export default function AffiliateForm() {
 				<input
 					{...register('country', { required: true })}
 					type="text"
-					placeholder="Country"
+					placeholder={p('country')}
 					className="w-full rounded-3xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				/>
 				{errors.country && (
@@ -126,7 +125,7 @@ export default function AffiliateForm() {
 				<input
 					{...register('city', { required: true })}
 					type="text"
-					placeholder="City"
+					placeholder={p('city')}
 					className="w-full rounded-3xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				/>
 				{errors.city && (
@@ -136,10 +135,7 @@ export default function AffiliateForm() {
 				)}
 			</fieldset>
 			<fieldset className="w-full flex">
-				<legend className="flex-1">
-					Do you truly understand the terms of commission as an export brokerage
-					above?
-				</legend>
+				<legend className="flex-1">{p('terms.label')}</legend>
 				<label className="flex items-center gap-1 text-grey capitalize mr-4">
 					<input
 						{...register('understandTerms')}
@@ -149,7 +145,7 @@ export default function AffiliateForm() {
 						id="understand-terms-yes"
 						className="accent-primary"
 					/>
-					<span>yes</span>
+					<span>{p('terms.value.0')}</span>
 				</label>
 				<label className="flex items-center gap-1 text-grey capitalize mr-4">
 					<input
@@ -160,11 +156,11 @@ export default function AffiliateForm() {
 						id="understand-terms-no"
 						className="accent-primary"
 					/>
-					<span>no</span>
+					<span>{p('terms.value.1')}</span>
 				</label>
 			</fieldset>
 			<fieldset className="w-full flex my-6">
-				<legend className="flex-1">Do you have a buyer already?</legend>
+				<legend className="flex-1">{p('buyer.label')}</legend>
 				<label className="flex items-center gap-1 text-grey capitalize mr-4">
 					<input
 						{...register('haveABuyer')}
@@ -174,7 +170,7 @@ export default function AffiliateForm() {
 						id="have-a-buyer-yes"
 						className="accent-primary"
 					/>
-					<span>yes</span>
+					<span>{p('buyer.value.0')}</span>
 				</label>
 				<label className="flex items-center gap-1 text-grey capitalize mr-4">
 					<input
@@ -185,13 +181,11 @@ export default function AffiliateForm() {
 						id="have-a-buyer-no"
 						className="accent-primary"
 					/>
-					<span>no</span>
+					<span>{p('buyer.value.1')}</span>
 				</label>
 			</fieldset>
 			<fieldset className="flex flex-col gap-6 mb-6 text-grey">
-				<legend className="mb-4 text-dark-grey">
-					*If you selected “yes” fill out your buyers details below
-				</legend>
+				<legend className="mb-4 text-dark-grey">{p('ifYes')}</legend>
 				<input
 					{...register('buyerCountry', {
 						minLength: 3,
@@ -204,7 +198,7 @@ export default function AffiliateForm() {
 						},
 					})}
 					type="text"
-					placeholder="Buyer's country"
+					placeholder={p('buyerCountry')}
 					className="w-full rounded-3xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				/>
 				{errors.buyerCountry && (
@@ -225,7 +219,7 @@ export default function AffiliateForm() {
 						},
 					})}
 					type="text"
-					placeholder="Buyer's products"
+					placeholder={p('buyerProduct')}
 					className="w-full rounded-3xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				/>
 				{errors.buyerProduct && (
@@ -246,7 +240,7 @@ export default function AffiliateForm() {
 						},
 					})}
 					type="text"
-					placeholder="Product volume"
+					placeholder={p('volume')}
 					className="w-full rounded-3xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				/>
 				{errors.productVolume && (
@@ -262,24 +256,24 @@ export default function AffiliateForm() {
 						maxLength: 200,
 					})}
 					type="text"
-					placeholder="Tell us about your interest in our affiliate program"
+					placeholder={p('interest')}
 					className="w-full rounded-3xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				/>
 				{errors.aboutInterest && (
 					<span className="text-red-500 text-sm -mt-4 ml-4" role="alert">
-						Please tell us about your interest in our affiliate program
+						{p('interest')}
 					</span>
 				)}
 
 				<input
 					{...register('aboutCommission', { required: true })}
 					type="text"
-					placeholder="How would you prefer your commissions to be paid?"
+					placeholder={p('payment')}
 					className="w-full rounded-3xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				/>
 				{errors.aboutCommission && (
 					<span className="text-red-500 text-sm -mt-4 ml-4" role="alert">
-						How would you prefer your commissions to be paid?
+						{p('payment')}
 					</span>
 				)}
 
@@ -298,7 +292,7 @@ export default function AffiliateForm() {
 					})}
 					className="w-full rounded-xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				>
-					<option value="">How did you hear about us?</option>
+					<option value="">{p('referral.0')}</option>
 					<option value="facebook">Facebook</option>
 					<option value="instagram">Instagram</option>
 					<option value="linkedIn">LinkedIn</option>
@@ -324,7 +318,7 @@ export default function AffiliateForm() {
 						},
 					})}
 					type="text"
-					placeholder="If other medium please state"
+					placeholder={p('referral.1')}
 					className="w-full rounded-3xl border outline-0 text-grey py-2 px-4 focus-within:border-primary transition-all duration-200 ease-in-out focus-within:caret-primary focus-within:border-2"
 				/>
 			</fieldset>
@@ -332,7 +326,7 @@ export default function AffiliateForm() {
 				disabled={isLoading}
 				className="w-fit mt-6 flex items-center justify-center px-6 py-2 rounded-full capitalize bg-primary text-white font-sans font-medium cursor-pointer hover:bg-primary/70 transition-colors ease-in-out disabled:bg-slate-400 disabled:text-dark-grey disabled:cursor-not-allowed"
 			>
-				submit
+				{t('button')}
 			</button>
 		</form>
 	)

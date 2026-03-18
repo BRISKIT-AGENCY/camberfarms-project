@@ -109,12 +109,12 @@
 				{
 					"id": 2,
 					"name": "Adebayo L",
-					"content": "« Nous apprécions leur constance en matière de qualité et de service après-vente. Leur collaboration avec les agriculteurs africains ruraux est également louable. » De plus, nous admirons profondément leurs efforts proactifs en faveur de la satisfaction client."
+					"content": "Le partenariat avec Camberfarms a transformé notre façon de cultiver et de vendre nos récoltes. Nous obtenons désormais de meilleurs rendements et atteignons des acheteurs que nous n’aurions jamais imaginés."
 				},
 				{
 					"id": 3,
 					"name": "Chuks David",
-					"content": "« Nous apprécions leur constance en matière de qualité et de service après-vente. Leur collaboration avec les agriculteurs africains ruraux est également louable. » De plus, nous admirons profondément leurs efforts proactifs en faveur de la satisfaction client."
+					"content": "“We highly appreciate their consistent delivery of premium agricultural produce and their reliable after-sales support. Their strong partnerships with rural African farmers and commitment to sustainable sourcing are truly commendable. Furthermore, we deeply value their proactive approach to meeting client needs and ensuring exceptional customer satisfaction throughout the export process."
 				}
 			]
 		},
@@ -184,10 +184,66 @@
 			"paragraph3": "En tant que partenaire affilié, vous serez au cœur de cette mission, en aidant à connecter nos produits aux clients du monde entier tout en bénéficiant de récompenses attractives pour vos efforts."
 		},
 		"benefits": {
-			"heading": "Avantages de rejoindre notre programme d’affiliation"
+			"heading": "Avantages de rejoindre notre programme d’affiliation",
+			"revenue": {
+				"heading": "Revenus récurrents provenant des acheteurs en gros :",
+				"text": [
+					"Contrairement aux programmes d’affiliation classiques qui reposent sur des achats ponctuels, les exportations agricoles impliquent souvent des transactions B2B répétées (importateurs, distributeurs, fabricants). En tant qu’affilié, vous pouvez gagner des commissions récurrentes grâce à des contrats d’approvisionnement à long terme et à des commandes répétées."
+				]
+			},
+			"commission": {
+				"heading": "Structure de commission à forte valeur :",
+				"text": [
+					"Les transactions d’exportation agricole sont généralement des opérations en gros et de grande valeur (par exemple : des tonnes de graines de sésame, de noix de cajou, de gingembre, d’hibiscus). Cela signifie :",
+					"• Moins de transactions nécessaires",
+					"• Commission plus élevée par conversion",
+					"Une seule transaction réussie peut surpasser plusieurs mois de ventes d’affiliation à faible valeur."
+				]
+			},
+			"credibility": {
+				"heading": "Crédibilité grâce à des produits tangibles :",
+				"text": [
+					"Contrairement aux offres numériques ou spéculatives, les produits agricoles sont réels, essentiels et vérifiables. Cela augmente :",
+					"• La confiance des acheteurs",
+					"• Les taux de conversion",
+					"Cela rend également votre marketing plus persuasif, car vous proposez une valeur physique avec des chaînes d’approvisionnement claires."
+				]
+			},
+			"upside": {
+				"heading": "Faible barrière à l’entrée avec un fort potentiel :",
+				"text": [
+					"Vous n’avez pas besoin de :",
+					"• Posséder une ferme",
+					"• Gérer la logistique",
+					"• Gérer la documentation d’exportation",
+					"L’entreprise s’occupe des opérations, tandis que vous vous concentrez uniquement sur la recherche de contrats et la génération de prospects — un rôle hautement évolutif avec un capital minimal."
+				]
+			},
+			"alignment": {
+				"heading": "Alignement avec l’impact et la durabilité :",
+				"text": [
+					"Les entreprises d’exportation agricole :",
+					"• Autonomisent les agriculteurs locaux",
+					"• Créent des emplois ruraux",
+					"• Favorisent une agriculture durable",
+					"En tant qu’affilié, vous ne faites pas que gagner de l’argent — vous participez au développement économique et à la transformation de la chaîne de valeur, ce qui peut renforcer votre marque personnelle et attirer des partenaires engagés."
+				]
+			}
 		},
 		"join": {
-			"heading": "Qui peut rejoindre ?"
+			"heading": "Qui peut rejoindre ?",
+			"p0": "Notre programme d’affiliation accueille un large éventail de partenaires, notamment :",
+			"p1": "Courtiers en agro-exportation",
+			"p2": "Présentez des acheteurs à nos produits agricoles africains de qualité supérieure tout en élargissant votre portefeuille d’approvisionnement",
+			"p3": "Marketeurs affiliés",
+			"p4": "Gagnez des commissions en promouvant les produits Camberfarms via des sites web, des campagnes e-mail et les réseaux sociaux.",
+			"p5": "Professionnels du secteur",
+			"p6": "Collaborez avec nous pour fournir des exportations agricoles de première qualité aux entreprises des secteurs de l’alimentation et des boissons, du bien-être et des cosmétiques.",
+			"p7": "Comment fonctionne le programme",
+			"p8": "S’inscrire",
+			"p9": "Rejoignez notre réseau d’affiliés en complétant un processus d’inscription rapide et simple",
+			"p10": "Commercialisez nos produits",
+			"p11": "Utilisez nos supports marketing prêts à l’emploi pour promouvoir l’hibiscus Camberfarms, les fleurs Blackstone et d’autres cultures de haute qualité."
 		},
 		"commission": {
 			"heading": "GAGNEZ DES COMMISSIONS :",

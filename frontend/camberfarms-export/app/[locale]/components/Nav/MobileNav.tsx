@@ -25,10 +25,10 @@ export default function MobileNav() {
 
 	return (
 		<nav
-			className="lg:hidden w-full h-auto py-4 px-8 bg-white text-grey flex items-center justify-between capitalize shadow relative"
+			className="lg:hidden w-full h-dvh py-2 px-8 bg-white text-grey flex items-center justify-between capitalize shadow relative"
 			ref={ref}
 		>
-			<Link href={'/'} className="h-20 w-30 relative">
+			<Link href={'/'} className="h-16 w-26 relative">
 				<Image
 					src={'/logo.png'}
 					alt="camberfarms"
@@ -75,7 +75,7 @@ function NavMenu({ closeNav }: NavMenuProps) {
 	const tBtn = useTranslations('common.buttons')
 
 	return (
-		<div className="flex items-start flex-col gap-3 w-full bg-white z-20 absolute top-16 border-t border-light-grey px-10 py-6 left-0 shadow">
+		<div className="flex items-start flex-col gap-3 w-full bg-white z-20 absolute top-18 border-t border-light-grey px-10 py-6 left-0 shadow">
 			<NavLink
 				href="/"
 				onClick={closeNav}

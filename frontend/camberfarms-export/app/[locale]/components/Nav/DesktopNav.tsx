@@ -113,7 +113,7 @@ export default function DesktopNav({ darkBg }: NavProps) {
 			<Link
 				href={'https://camberfarms.org/'}
 				target="_blank"
-				className={`py-3 px-4 rounded-lg font-poppins font-bold capitalize ${
+				className={`py-3 px-4 rounded-lg font-poppins font-bold capitalize hover:opacity-80 transition-all ease-in-out duration-200 ${
 					darkBg ? 'bg-white text-primary' : 'bg-primary text-white'
 				}`}
 			>

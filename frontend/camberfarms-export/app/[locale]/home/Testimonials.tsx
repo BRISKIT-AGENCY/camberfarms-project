@@ -54,13 +54,13 @@ const TESTIMONIALS = [
 		name: 'Adebayo L',
 		img: user2,
 		content:
-			'“We appreciate their consistency in quality and after service. Their corporation with rural African farmers is also commendable.” Moreover, we deeply admire their proactive efforts towards customer satisfaction.',
+			'“Partnering with Camberfarms has changed how we grow and sell our crops. We now produce better yields and reach buyers we never thought possible.',
 	},
 	{
 		id: 3,
 		name: 'Chuks David',
 		img: user3,
 		content:
-			'“We appreciate their consistency in quality and after service. Their corporation with rural African farmers is also commendable.” Moreover, we deeply admire their proactive efforts towards customer satisfaction.',
+			'“We highly appreciate their consistent delivery of premium agricultural produce and their reliable after-sales support. Their strong partnerships with rural African farmers and commitment to sustainable sourcing are truly commendable. Furthermore, we deeply value their proactive approach to meeting client needs and ensuring exceptional customer satisfaction throughout the export process.',
 	},
 ]
