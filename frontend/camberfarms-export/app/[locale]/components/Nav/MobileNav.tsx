@@ -25,7 +25,7 @@ export default function MobileNav() {
 
 	return (
 		<nav
-			className="lg:hidden w-full h-dvh py-2 px-8 bg-white text-grey flex items-center justify-between capitalize shadow relative"
+			className="lg:hidden w-full h-auto py-2 px-8 bg-white text-grey flex items-center justify-between capitalize shadow relative"
 			ref={ref}
 		>
 			<Link href={'/'} className="h-16 w-26 relative">

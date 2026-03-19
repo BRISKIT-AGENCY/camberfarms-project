@@ -13,7 +13,7 @@ export default async function Hero() {
 	const t = await getTranslations('home.hero')
 
 	return (
-		<section className="w-full h-dvh flex flex-col items-center justify-center px-6 py-10 bg-black/70 text-white relative">
+		<section className="w-full h-svh lg:h-dvh flex flex-col items-center justify-center px-6 py-10 bg-black/70 text-white relative">
 			<picture>
 				<source
 					media="(min-width: 1024px)"
