@@ -17,35 +17,46 @@ const numberOfDigits = 6
 
 export default function VerifyLoginOTP() {
 	const navigate = useNavigate()
+	const goBack = () => navigate('/login')
 	const { dispatch } = useAuth()
 	const location = useLocation()
-	const { email } = location.state
-	// const { mutateAsync, isPending, error } = useRequestOTP()
-	const goBack = () => navigate('/login')
 	const [otp, setOtp] = useState<string[]>(new Array(numberOfDigits).fill(''))
-	const maskedEmail = maskEmail(email)
+	const [error, setError] = useState('')
+	const email = location.state?.email
+	// const { mutateAsync, isPending, error } = useRequestOTP()
 	// const { minutes, seconds, isExpired, } = useOtpTimer({
 	// 	duration: 600,
 	// })
 
 	const { mutate, isPending: verifyingOTP } = useMutation({
 		mutationFn: async (data: { otp: string; email: string }) => {
-			await axiosInstance.post('login/verify-otp', data)
+			const res = await axiosInstance.post('login/verify-otp', data)
+			return res.data
 		},
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		onSuccess: (data: any) => {
+		onSuccess: (res: any) => {
 			// const userInfo = res.data
 
-			dispatch({ type: 'LOGIN', token: data?.token, user: data.admin })
-			Cookies.set('token', data.token, { expires: 1 / 12 })
-			localStorage.setItem('user', JSON.stringify(data.admin))
+			dispatch({ type: 'LOGIN', token: res?.token, user: res.admin })
+			Cookies.set('token', res.token, { expires: 1 / 12 })
+			localStorage.setItem('user', JSON.stringify(res.admin))
 			// console.log('user: ', userInfo)
 			navigate('/')
 			// naive fix for preflight authentication
 			window.location.reload()
 		},
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		onError: (err: any) => {
+			console.error('otp error: ', error)
+			setError(err.response?.data?.message || 'Unable to verify otp')
+		},
 	})
 
+	if (!email) {
+		navigate('/login')
+		return null
+	}
+	const maskedEmail = maskEmail(email)
 	const disableSubmit = otp.some((input) => input === '') || verifyingOTP
 
 	function verifyOTP() {
@@ -105,11 +116,12 @@ export default function VerifyLoginOTP() {
 						</button>
 					</p>
 				)} */}
+				{error && <p className="text-red-400 py-4">{error}</p>}
 				<button
 					type="button"
 					onClick={verifyOTP}
 					disabled={disableSubmit}
-					className="w-full text-center bg-primary text-white py-2 px-6 font-medium font-poppins text-lg cursor-pointer rounded-lg disabled:opacity-30"
+					className="w-full text-center bg-primary text-white py-2 px-6 mt-4 font-medium font-poppins text-lg cursor-pointer rounded-lg disabled:opacity-30"
 				>
 					Continue
 				</button>

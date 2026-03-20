@@ -25,7 +25,8 @@ export default function VerifyOTPUser() {
 
 	const { mutate, isPending: verifyingOTP } = useMutation({
 		mutationFn: async (data: { otp: string }) => {
-			await axiosInstance.post('reset-password/verify-otp', data)
+			const res = await axiosInstance.post('reset-password/verify-otp', data)
+			return res.data
 		},
 		onSuccess: () => navigate('/account/user/reset-password'),
 	})
