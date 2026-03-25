@@ -67,7 +67,7 @@ const Contact = ({ heading, description, button, placeholder }: ContactProps) =>
   })
 
   return (
-    <div className="h-fit py-24.5 px-3 lg:px-25">
+    <div className="h-fit py-10 px-3 lg:px-25">
       <div className="w-full h-full">
         <h1 className="md:text-[46px] text-[24px] font-bold">
           {heading}

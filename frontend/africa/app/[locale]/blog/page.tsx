@@ -23,7 +23,6 @@ type Blog = {
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 export default function BlogPage({ initialPage = 1 }) {
-  console.log(API_URL);
   
   const locale = useLocale()
   const t = useTranslations('Blog')
@@ -127,10 +126,11 @@ export default function BlogPage({ initialPage = 1 }) {
                 >
                   
                   <Image
-                    src={`${API_URL}${blog.image}`}
+                    src={`${blog.image}`}
                     alt={blog.title}
                     width={800}
                     height={400}
+                    unoptimized
                     className="w-full h-65.25 object-cover rounded-xl"
                   />
 

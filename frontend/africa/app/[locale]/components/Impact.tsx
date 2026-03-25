@@ -28,7 +28,7 @@ const Impact: React.FC<ImpactProps> = async ({
 
   return (
     <div
-      className="w-full h-fit lg:px-25 px-6 py-20"
+      className="w-full h-fit lg:px-25 px-6 py-10 md:py-20"
       style={{ backgroundColor: bgColor }}
     >
       <div className="w-full h-full">
@@ -53,7 +53,7 @@ const Impact: React.FC<ImpactProps> = async ({
           ))}
         </div>
 
-        <div className="mt-25 w-full bg-[#FF741F] flex justify-center items-center h-25 rounded-3xl">
+        <div className="mt-6 lg:mt-25 w-full bg-[#FF741F] flex justify-center items-center h-25 rounded-3xl">
           <Link href='/contact' className="bg-white flex justify-center items-center text-[#1AD329] rounded-[100px] text-[14px] md:text-[24px] h-[60%] lg:w-75 w-[70%]">
             {t('button')}
           </Link>

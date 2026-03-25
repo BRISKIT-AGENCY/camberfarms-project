@@ -23,7 +23,7 @@ export default async function Home({ params }: PageProps<'/[locale]'>) {
         titleKey="membership_title"
         descriptionKey="membership_description"
         buttonTextKey="membership_button"
-        imageSrc="/images/membership.png"
+        imageSrc="/images/membership.webp"
         imageAlt="image of members"
        
       />
@@ -33,7 +33,7 @@ export default async function Home({ params }: PageProps<'/[locale]'>) {
         titleKey="farmFund_title"
         descriptionKey="farmFund_description"
         buttonTextKey="farmFund_button"
-        imageSrc="/images/farm-fund.png"
+        imageSrc="/images/farm-fund.webp"
         imageAlt="image of funds"
        
       />
@@ -43,11 +43,11 @@ export default async function Home({ params }: PageProps<'/[locale]'>) {
         titleKey="export_title"
         descriptionKey="export_description"
         buttonTextKey="export_button"
-        imageSrc="/images/exportation.png"
+        imageSrc="/images/exportation.webp"
         imageAlt="image of cargo ship"
      
       />
-      <Process showImage={false} mdPy='md:py-25' py='py-25' mdMt='md:mt-12.5' mt='mt-6'/>
+      <Process showImage={false} mdPy='md:py-10' py='py-6' mdMt='md:mt-12.5' mt='mt-6'/>
       <WhoWeAre />
       <WhatWeDo />
       <div id='impact'>

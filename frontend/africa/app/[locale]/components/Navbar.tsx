@@ -29,7 +29,7 @@ const Navbar = ({
       {/* ✅ Show BlogHeader ONLY on homepage */}
       {isHomePage && <BlogHeader />}
 
-      <div className="relative mx-6 xl:py-8 py-5">
+      <div className="relative mx-6 xl:py-2">
         <DesktopNavbar
           logoSrc={logoSrc}
           linkTextColor={linkTextColor}

@@ -7,14 +7,14 @@ const Partnership = async () => {
 
   // Array of logos if you want to map over them
   const logos = [
-    '/images/wfp.jpeg',
-    '/images/boa.jpeg',
-    '/images/adb.jpeg',
-    '/images/adf.jpeg'
+    '/images/wfp.webp',
+    '/images/boa.webp',
+    '/images/adb-removebg.webp',
+    '/images/adf.webp'
   ]
 
   return (
-    <div className='h-fit w-full lg:px-24 py-20 px-6'>
+    <div className='h-fit w-full lg:px-24 pt-20 px-6 pb-4'>
       <div className='h-full w-full flex flex-col items-center'>
         <div className='text-center'>
           <h1 className='font-bold text-[24px] sm:text-[46px] text-[#1AD329]'>

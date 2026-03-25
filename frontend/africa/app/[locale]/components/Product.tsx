@@ -42,7 +42,7 @@ const Products = ({
 
   return (
     <div className="h-fit w-full">
-      <div className="py-20 px-6 xl:py-15 xl:px-25 w-full h-full flex flex-col xl:flex-row xl:justify-between items-center gap-15.75">
+      <div className="px-6 py-6 xl:px-25 w-full h-full flex flex-col xl:flex-row xl:justify-between items-center xl:gap-15.75 gap-6">
 
         {/* Text Content */}
         <div className="xl:w-[50%] flex flex-col items-center xl:items-start">
@@ -54,21 +54,21 @@ const Products = ({
               height={32}
               className="w-4 h-4 md:w-6 md:h-6 xl:w-8 xl:h-8"
             />
-            <h2 className="text-2xl font-bold md:text-[48px] md:font-semibold">
+            <h2 className="text-2xl font-bold md:text-[35px] md:font-semibold">
               {t(titleKey)}
             </h2>
           </div>
 
-          <p className="mt-6 text-[14px] md:text-[28px]">
+          <p className="mt-6 text-[14px] md:text-[18px]">
             {t(descriptionKey)}
           </p>
 
           {buttonTextKey && (
             <Link
               href={link}
-              className='mt-12.5'
+              className='mt-6'
             >
-              <p className='bg-[#1AD329] text-white py-2.75 px-6 rounded-[100px] text-[18px]'>
+              <p className='bg-[#1AD329] text-white py-2 px-4 rounded-[100px] text-[12px] md:text-[16px]'>
                 {t(buttonTextKey)}
               </p>
             </Link>
@@ -76,11 +76,11 @@ const Products = ({
         </div>
 
         {/* Image */}
-        <div className="h-full xl:w-[50%]">
+        <div className="h-[300px] md:w-[50%] bg-red-300 overflow-hidden rounded-xl">
           <img
             src={imageSrc}
             alt={imageAlt}
-            className="h-full w-full object-cover"
+            className="w-full h-full object-cover"
           />
         </div>
       </div>

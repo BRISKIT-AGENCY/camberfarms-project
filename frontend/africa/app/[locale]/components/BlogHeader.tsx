@@ -59,7 +59,7 @@ const BlogHeader = () => {
           href={`/blog/${blog.slug}`}
           className="hover:underline w-[40%] sm:w-auto flex items-center justify-center cursor-pointer"
         >
-          <p className='bg-[#1AD329] text-white py-3 px-6 rounded-[100px] md:text-[18px] text-[12px] '>{t('button')} →</p>
+          <p className='bg-[#1AD329] text-white py-2 px-4 rounded-[100px] md:text-[16px] text-[12px] '>{t('button')} →</p>
         </Link>
       </div>
     </div>

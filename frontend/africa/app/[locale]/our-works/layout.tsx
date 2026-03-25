@@ -5,29 +5,30 @@ import { usePathname } from 'next/navigation';
 import Navbar from '../components/Navbar';
 import { useTranslations, useLocale } from 'next-intl';
 
+
 export default function OurWorksLayout({
   children
 }: {
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const t= useTranslations('OurWorks');
-  const locale=useLocale()
-const defaultLocale = 'en'; // replace with your actual defaultLocale
+  const t = useTranslations('OurWorks');
+  const locale = useLocale()
+  const defaultLocale = 'en'; // replace with your actual defaultLocale
 
-const links = [
-  { label: t('tabs.membership'), path: '/our-works/membership' },
-  { label: t('tabs.farmFund'), path: '/our-works/farm-fund' },
-  { label: t('tabs.exportation'), path: '/our-works/exportation' },
-  { label: t('tabs.technology'), path: '/our-works/technology' },
-  { label: t('tabs.process'), path: '/our-works/process' },
-];
+  const links = [
+    { label: t('tabs.membership'), path: '/our-works/membership' },
+    { label: t('tabs.farmFund'), path: '/our-works/farm-fund' },
+    { label: t('tabs.exportation'), path: '/our-works/exportation' },
+    { label: t('tabs.technology'), path: '/our-works/technology' },
+    { label: t('tabs.process'), path: '/our-works/process' },
+  ];
 
-// Add locale prefix only if it's not the default
-const linksWithHref = links.map(link => ({
-  ...link,
-  href: locale === defaultLocale ? link.path : `/${locale}${link.path}`
-}));
+  // Add locale prefix only if it's not the default
+  const linksWithHref = links.map(link => ({
+    ...link,
+    href: locale === defaultLocale ? link.path : `/${locale}${link.path}`
+  }));
 
   return (
     <div className="w-full">
@@ -43,7 +44,7 @@ const linksWithHref = links.map(link => ({
       {/* HERO */}
       <div className="relative w-full md:h-177.5 h-128">
         <img
-          src="/images/our-work-hero.png"
+          src='/images/our-work-hero.webp'
           alt={t('hero.imageAlt')}
           className="h-full w-full object-cover"
         />
@@ -76,15 +77,15 @@ const linksWithHref = links.map(link => ({
           "
         >
           {linksWithHref.map(link => {
-  const isActive = pathname === link.href;
+            const isActive = pathname === link.href;
 
-  return (
-    <Link key={link.href} href={link.href} className="relative pb-2 font-medium shrink-0">
-      {link.label}
-      {isActive && <span className="absolute left-0 bottom-0 w-full h-0.75 bg-[#1AD329]" />}
-    </Link>
-  );
-})}
+            return (
+              <Link key={link.href} href={link.href} className="relative pb-2 font-medium shrink-0">
+                {link.label}
+                {isActive && <span className="absolute left-0 bottom-0 w-full h-0.75 bg-[#1AD329]" />}
+              </Link>
+            );
+          })}
 
         </div>
       </div>

@@ -87,8 +87,16 @@ const MobileNavbar = () => {
       {isMenuOpen && (
         <div className="absolute top-26.5 left-0 w-full bg-white p-4 flex flex-col gap-4 text-black z-50 rounded-b-xl shadow-lg">
 
+          <Link
+            href="/"
+            onClick={closeMenu}
+            className={`mt-6 ${anyAccordionOpen ? 'text-[#808080]' : 'text-black'}`}
+          >
+            {t('home')}
+          </Link>
+
           {/* ABOUT */}
-          <div className="flex flex-col w-full">
+          <div className="flex flex-col w-full mt-6">
             <button
               onClick={() => setIsAboutOpen(prev => !prev)}
               className="flex justify-between w-full items-center"
@@ -191,7 +199,7 @@ const MobileNavbar = () => {
           </Link>
 
           {/* RESOURCES */}
-          {/*<div className="flex flex-col w-full mt-6">
+          <div className="flex flex-col w-full mt-6">
             <button
               onClick={() => setIsResourcesOpen(prev => !prev)}
               className="flex justify-between w-full items-center cursor-pointer"
@@ -219,15 +227,15 @@ const MobileNavbar = () => {
             {isResourcesOpen && (
               <div className="mt-2 flex flex-col gap-2 text-sm text-gray-700">
                 <hr className="border-[0.5px] border-[#1AD329]" />
-                <Link href="/resources/gallery" onClick={closeMenu} className="mt-3">
+                <Link href="" onClick={closeMenu} className="mt-3">
                   Gallery
                 </Link>
-                <Link href="/resources/faq" onClick={closeMenu}>
+                <Link href="" onClick={closeMenu}>
                   FAQ
                 </Link>
               </div>
             )}
-          </div> */}
+          </div>
 
           {/* CONTACT */}
           <Link

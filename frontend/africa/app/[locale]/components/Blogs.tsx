@@ -54,7 +54,7 @@ const Blogs = () => {
   }, [locale])
 
   return (
-    <div className="h-fit py-14.5 px-6 w-full md:px-25 bg-[#F2F2F2]">
+    <div className="h-fit pt-6 pb-2 px-6 w-full md:px-25 bg-[#F2F2F2]">
       <div className="w-full h-full">
         {/* HEADER */}
         <div>

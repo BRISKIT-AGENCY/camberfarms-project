@@ -74,7 +74,7 @@ const News = ({ header }: NewsProps) => {
   }
 
   return (
-    <div className="h-fit w-full px-6 py-14.5 md:px-25 bg-[#F2F2F2]">
+    <div className="h-fit w-full px-6 pt-10 pb-4 md:px-25 bg-[#F2F2F2]">
       <div className="h-full w-full">
         {/* Always show header and description */}
         <h1 className="md:text-[46px] text-[24px] font-bold text-center">
@@ -107,7 +107,7 @@ const News = ({ header }: NewsProps) => {
               {newsData.map((news, index) => (
                 <div key={news.id} className="shrink-0 w-full snap-center rounded-lg">
                   <Image
-                    src={`${API_URL}${news.image}`}
+                    src={`${news.image}`}
                     alt={news.title || 'News image'}
                     width={380}
                     height={320}

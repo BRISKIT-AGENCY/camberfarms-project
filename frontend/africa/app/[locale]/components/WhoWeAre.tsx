@@ -8,13 +8,13 @@ const WhoWeAre = async() => {
   const t = await getTranslations('WhoWeAre')
 
   return (
-    <div className='h-fit w-full px-6 pt-10'>
+    <div className='h-fit w-full px-6 pt-8'>
       <div className='w-full h-full '>
-        <h1 className='md:text-[48px] text-[32px] font-bold'>
+        <h1 className='md:text-[38px] text-[22px] font-bold'>
           {t('title')}
         </h1>
 
-        <p className='md:text-[36px] text-[16px] md:mt-12.5 mt-7'>
+        <p className='md:text-[26px] text-[16px] md:mt-12.5 mt-7'>
           <span className='md:text-[100px] text-[50px] text-[#FF741F] leading-0'>“</span>
           {t('description')}
         </p>

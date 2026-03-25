@@ -6,11 +6,11 @@ const WhatWeDo = async () => {
     const t = await getTranslations('WhatWeDo') // namespace "whatWeDo"
 
     return (
-        <div className='h-fit w-full px-3 lg:px-25 pt-20'>
+        <div className='h-fit w-full px-6 lg:px-25 pt-12'>
             <div className='w-full h-full flex flex-col items-center'>
                 <h1 className='font-bold text-[24px] md:text-[46px]'>{t('title')}</h1>
 
-                <div className='md:mt-25 mt-12.5'>
+                <div className='md:mt-15 mt-12.5'>
                     <div className='flex md:flex-row flex-col md:gap-50 gap-12.5'>
                         {/* Item 1 */}
                         <div className='md:w-1/2'>
@@ -31,7 +31,7 @@ const WhatWeDo = async () => {
                         </div>
                     </div>
 
-                    <div className='flex md:flex-row flex-col md:gap-50 gap-12.5 mt-25'>
+                    <div className='flex md:flex-row flex-col md:gap-50 gap-12.5 mt-10'>
                         {/* Item 3 */}
                         <div className='md:w-1/2'>
                             <div>

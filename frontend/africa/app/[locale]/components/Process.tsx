@@ -112,7 +112,7 @@ const Process = ({
                   {/* Onboarding image */}
                   {showImage && (
                     <img
-                      src="/images/onboarding.png"
+                      src="/images/onboarding.webp"
                       alt="educating farmers"
                       className="w-full md:h-125 h-75 mt-3"
                     />

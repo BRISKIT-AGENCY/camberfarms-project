@@ -94,8 +94,9 @@ export default function NewsPage({ initialPage = 1 }) {
             {!loading && !error && newsData.map(news => (
               <div key={news._id} className="border-b border-[#EBEBEB] pb-9 mb-12.5">
                 <Image
-                  src={`${API_URL}${news.image}`}
+                  src={`${news.image}`}
                   alt={news.title}
+                  unoptimized
                   width={800}
                   height={400}
                   className="w-full h-65.25 object-cover rounded-xl"

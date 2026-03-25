@@ -5,6 +5,9 @@ import Navbar from "../components/Navbar"
 import Image from "next/image"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
+import aboutHero from '@/public/images/about-hero.webp'
+import aboutHeroSm from '@/public/images/about-herosm.webp'
+
 
 
 const VALUE_KEYS = [
@@ -31,7 +34,7 @@ const About = async () => {
             </div>
 
             <div className="lg:px-25 px-6 pb-28.5">
-                <div className="md:px-23.25 flex flex-col items-center justify-center text-center">
+                <div className="md:px-23.25 flex flex-col items-center justify-center text-center mt-10">
                     <h1 className="md:text-[56px] text-[32px] font-bold text-[#1AD329]">
                         {t("hero.title")}
                     </h1>
@@ -52,7 +55,7 @@ const About = async () => {
 
                 {/* Mobile image */}
                 <Image
-                    src="/images/about-herosm.png"
+                    src={aboutHeroSm}
                     alt={t("images.mobileAlt")}
                     width={768}
                     height={264}
@@ -61,7 +64,7 @@ const About = async () => {
 
                 {/* Desktop image */}
                 <Image
-                    src="/images/about-hero.png"
+                    src={aboutHero}
                     alt={t("images.desktopAlt")}
                     width={1920}
                     height={524}
@@ -70,50 +73,50 @@ const About = async () => {
 
                 {/* Our Story (mobile only) */}
                 <div className="md:hidden py-14">
-                    <h1 className="font-bold text-[24px] text-[#1AD329]">
+                    <h1 className="font-bold text-[14px] text-[#1AD329]">
                         {t("story.title")}
                     </h1>
 
-                    <p className="text-[24px] mt-8">{t("story.p1")}</p>
-                    <p className="text-[24px] mt-4">{t("story.p2")}</p>
-                    <p className="text-[24px] mt-4">{t("story.p3")}</p>
+                    <p className="text-[14px] mt-8">{t("story.p1")}</p>
+                    <p className="text-[14px] mt-4">{t("story.p2")}</p>
+                    <p className="text-[14px] mt-4">{t("story.p3")}</p>
                 </div>
 
-                <div className="sm:mt-68.25">
+                <div className="sm:mt-28.25">
                     {/* Mission */}
                     <div id="mission">
                         <div className="md:border-l-10 border-l-5 border-[#FF741F] pl-9">
-                            <h2 className="font-bold text-[24px] md:text-[50px] text-[#1AD329]">
+                            <h2 className="font-bold text-[24px] md:text-[40px] text-[#1AD329]">
                                 {t("mission.title")}
                             </h2>
                         </div>
 
-                        <p className="text-[14px] md:text-[36px] mt-8 md:mt-12.5">
+                        <p className="text-[14px] md:text-[20px] mt-8 md:mt-12.5">
                             {t("mission.description")}
                         </p>
                     </div>
 
                     {/* Vision */}
-                    <div id="vision" className="mt-12.5 md:mt-37.5">
+                    <div id="vision" className="mt-12.5 md:mt-17.5">
                         <div className="md:border-l-10 border-l-5 border-[#FF741F] pl-9">
-                            <h2 className="font-bold text-[24px] md:text-[50px] text-[#1AD329]">
+                            <h2 className="font-bold text-[24px] md:text-[40px] text-[#1AD329]">
                                 {t("vision.title")}
                             </h2>
                         </div>
 
-                        <p className="text-[14px] md:text-[36px] mt-8 md:mt-12.5">
+                        <p className="text-[14px] md:text-[20px] mt-8 md:mt-12.5">
                             {t("vision.description")}
                         </p>
                     </div>
 
                     {/* Core Values */}
-                    <div id='values' className="mt-12.5 md:mt-37.5">
+                    <div id='values' className="mt-12.5 md:mt-17.5">
                         <div className="md:border-l-10 border-l-5 border-[#FF741F] pl-9">
-                            <h2 className="font-bold text-[24px] md:text-[50px] text-[#1AD329]">
+                            <h2 className="font-bold text-[24px] md:text-[40px] text-[#1AD329]">
                                 {t("values.title")}
                             </h2>
 
-                            <p className="text-[14px] md:text-[36px] mt-8 md:mt-12.5">
+                            <p className="text-[14px] md:text-[20px] mt-8 md:mt-12.5">
                                 {t("values.intro")}
                             </p>
                         </div>
@@ -124,7 +127,7 @@ const About = async () => {
                         {VALUE_KEYS.map((key) => (
                             <ul
                                 key={key}
-                                className="list-disc list-outside pl-5 md:mt-12.5 mt-6 text-[14px] md:text-[36px]"
+                                className="list-disc list-outside pl-5 md:mt-12.5 mt-6 text-[14px] md:text-[20px]"
                             >
                                 <li>
                                     <span className="block mt-2">

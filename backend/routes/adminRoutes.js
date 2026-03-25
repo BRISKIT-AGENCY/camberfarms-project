@@ -43,7 +43,7 @@ const router = express.Router()
 
 // Admin login route
 
-router.post('/login', async (req, res) => {
+{/*router.post('/login', async (req, res) => {
   const { email, password } = req.body
 
   const admin = await Admin.findOne({ email })
@@ -75,9 +75,9 @@ router.post('/login', async (req, res) => {
       profilePhoto: admin.profilePhoto
     }
   })
-})
+})*/}
 
-{/*router.post('/login', async (req, res) => {
+router.post('/login', async (req, res) => {
   const { email, password } = req.body
 
   const admin = await Admin.findOne({ email })
@@ -148,7 +148,7 @@ router.post('/login/verify-otp', async (req, res) => {
     }
   })
 })
-*/}
+
 
 router.post('/reset-password/request-otp', adminAuth, async (req, res) => {
   try {
@@ -375,12 +375,23 @@ router.post('/profile-photo', adminAuth, adminUpload, async (req, res) => {
 })
 
 
+// GET ALL IMAGES
+//
 router.get("/gallery", async (req, res) => {
   try {
+    const gallery = await Gallery.findOne()
 
-    const images = await Gallery
-      .find()
-      .sort({ uploadedAt: -1 })
+    if (!gallery || !gallery.images) {
+      return res.json({
+        success: true,
+        total: 0,
+        images: []
+      })
+    }
+
+    const images = [...gallery.images].sort(
+      (a, b) => new Date(b.uploadedAt) - new Date(a.uploadedAt)
+    )
 
     res.json({
       success: true,
@@ -389,6 +400,8 @@ router.get("/gallery", async (req, res) => {
     })
 
   } catch (error) {
+    console.error(error)
+
     res.status(500).json({
       success: false,
       message: "Failed to fetch images"
@@ -396,112 +409,244 @@ router.get("/gallery", async (req, res) => {
   }
 })
 
-
-router.get("/gallery/:id", async (req, res) => {
+//
+// GET SINGLE IMAGE
+//
+router.get("/gallery/:imageId", async (req, res) => {
   try {
-    const image = await Gallery.findById(req.params.id);
+    const gallery = await Gallery.findOne()
+
+    if (!gallery || !gallery.images) {
+      return res.status(404).json({
+        success: false,
+        message: "Image not found"
+      })
+    }
+
+    const image = gallery.images.id(req.params.imageId)
 
     if (!image) {
-      return res.status(404).json({ success: false, message: "Image not found" });
-    }
-
-    res.json({ success: true, image });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: "Server error" });
-  }
-});
-
-// POST multiple images
-router.post("/gallery", adminAuth, galleryUpload.array("images", 20), async (req, res) => {
-  try {
-    if (!req.files || req.files.length === 0) {
-      return res.status(400).json({ success: false, message: "No images uploaded" });
-    }
-
-    const images = await Promise.all(
-      req.files.map(async (file) => {
-        const buffer = await fs.promises.readFile(file.path);
-        const dimensions = sizeOf(buffer);
-
-        return {
-          url: `https://api.camberfarms.org/uploads/gallery/${file.filename}`,
-          size: file.size,
-          width: dimensions.width,
-          height: dimensions.height,
-          aspectRatio: dimensions.width && dimensions.height
-            ? Number((dimensions.width / dimensions.height).toFixed(2))
-            : null,
-          uploadedAt: new Date()
-        };
+      return res.status(404).json({
+        success: false,
+        message: "Image not found"
       })
-    );
+    }
 
-    const savedImages = await Gallery.insertMany(images);
+    res.json({
+      success: true,
+      image
+    })
 
-    res.status(201).json({ success: true, images: savedImages });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: "Upload failed" });
+    console.error(error)
+
+    res.status(500).json({
+      success: false,
+      message: "Server error"
+    })
   }
-});
+})
 
-// PATCH single image
-router.patch("/gallery/:id", adminAuth, galleryUpload.single("images"), async (req, res) => {
-  try {
-    const image = await Gallery.findById(req.params.id);
-    if (!image) return res.status(404).json({ success: false, message: "Image not found" });
+//
+// UPLOAD IMAGES
+//
+router.post(
+  "/gallery",
+  adminAuth,
+  galleryUpload.array("images", 20),
+  async (req, res) => {
 
-    if (!req.file) return res.status(400).json({ success: false, message: "No new image uploaded" });
+    try {
 
-    // Delete old image safely
-    if (image.url) {
-      let oldPath = image.url.replace('https://api.camberfarms.org/', '');
-      oldPath = path.join(process.cwd(), oldPath);
+      if (!req.files || req.files.length === 0) {
+        return res.status(400).json({
+          success: false,
+          message: "No images uploaded"
+        })
+      }
+
+      let gallery = await Gallery.findOne()
+
+      if (!gallery) {
+        gallery = new Gallery({ images: [] })
+      }
+
+      // Ensure images array exists
+      gallery.images = gallery.images || []
+
+      const newImages = await Promise.all(
+        req.files.map(async (file) => {
+
+          const buffer = await fs.promises.readFile(file.path)
+          const dimensions = sizeOf(buffer)
+
+          return {
+            url: `https://api.camberfarms.org/uploads/gallery/${file.filename}`,
+            size: file.size,
+            width: dimensions.width,
+            height: dimensions.height,
+            aspectRatio:
+              dimensions.width && dimensions.height
+                ? (dimensions.width / dimensions.height).toFixed(2)
+                : null,
+            uploadedAt: new Date()
+          }
+        })
+      )
+
+      gallery.images.push(...newImages)
+
+      await gallery.save()
+
+      res.status(201).json({
+        success: true,
+        images: newImages
+      })
+
+    } catch (error) {
+      console.error(error)
+
+      res.status(500).json({
+        success: false,
+        message: "Upload failed"
+      })
+    }
+  }
+)
+
+//
+// UPDATE IMAGE
+//
+router.patch(
+  "/gallery/:imageId",
+  adminAuth,
+  galleryUpload.single("image"),
+  async (req, res) => {
+
+    try {
+
+      const gallery = await Gallery.findOne()
+
+      if (!gallery || !gallery.images) {
+        return res.status(404).json({
+          success: false,
+          message: "Image not found"
+        })
+      }
+
+      const image = gallery.images.id(req.params.imageId)
+
+      if (!image) {
+        return res.status(404).json({
+          success: false,
+          message: "Image not found"
+        })
+      }
+
+      if (!req.file) {
+        return res.status(400).json({
+          success: false,
+          message: "No new image uploaded"
+        })
+      }
+
+      // Delete old file
+      let oldPath = image.url.replace(
+        "https://api.camberfarms.org/",
+        ""
+      )
+
+      oldPath = path.join(process.cwd(), oldPath)
 
       if (fs.existsSync(oldPath)) {
-        fs.unlinkSync(oldPath);
+        fs.unlinkSync(oldPath)
       }
+
+      const buffer = await fs.promises.readFile(req.file.path)
+      const dimensions = sizeOf(buffer)
+
+      image.url = `https://api.camberfarms.org/uploads/gallery/${req.file.filename}`
+      image.size = req.file.size
+      image.width = dimensions.width
+      image.height = dimensions.height
+      image.aspectRatio =
+        dimensions.width && dimensions.height
+          ? (dimensions.width / dimensions.height).toFixed(2)
+          : null
+      image.uploadedAt = new Date()
+
+      await gallery.save()
+
+      res.json({
+        success: true,
+        image
+      })
+
+    } catch (error) {
+      console.error(error)
+
+      res.status(500).json({
+        success: false,
+        message: "Update failed"
+      })
     }
-
-    // Update with new image
-    image.url = `https://api.camberfarms.org/uploads/gallery/${req.file.filename}`;
-    image.size = req.file.size;
-    image.uploadedAt = new Date();
-
-    await image.save();
-
-    res.json({ success: true, image });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: "Update failed" });
   }
-});
+)
 
-// DELETE single image
-router.delete("/gallery/:id", adminAuth, async (req, res) => {
+//
+// DELETE IMAGE
+//
+router.delete("/gallery/:imageId", adminAuth, async (req, res) => {
+
   try {
-    const image = await Gallery.findById(req.params.id);
-    if (!image) return res.status(404).json({ success: false, message: "Image not found" });
 
-    // Delete file safely
-    if (image.url) {
-      let filePath = image.url.replace('https://api.camberfarms.org/', '');
-      filePath = path.join(process.cwd(), filePath);
+    const gallery = await Gallery.findOne()
 
-      if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
-      }
+    if (!gallery || !gallery.images) {
+      return res.status(404).json({
+        success: false,
+        message: "Image not found"
+      })
     }
 
-    await image.deleteOne();
+    const image = gallery.images.id(req.params.imageId)
 
-    res.json({ success: true, message: "Image deleted" });
+    if (!image) {
+      return res.status(404).json({
+        success: false,
+        message: "Image not found"
+      })
+    }
+
+    let filePath = image.url.replace(
+      "https://api.camberfarms.org/",
+      ""
+    )
+
+    filePath = path.join(process.cwd(), filePath)
+
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath)
+    }
+
+    image.deleteOne()
+
+    await gallery.save()
+
+    res.json({
+      success: true,
+      message: "Image deleted"
+    })
+
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: "Delete failed" });
+    console.error(error)
+
+    res.status(500).json({
+      success: false,
+      message: "Delete failed"
+    })
   }
-});
+})
 
 
 
@@ -875,7 +1020,10 @@ router.get('/africa-blogs/stats', adminAuth, async (req, res) => {
 router.get('/export-blogs', async (req, res) => {
   try {
     // Fetch all blogs, newest first
-    const exportBlogs = await exportBlog.find().sort({ createdAt: -1 })
+    const exportBlogs = await exportBlog
+      .find()
+      .sort({ createdAt: -1 })
+      .populate('author', 'email profilePhoto')
 
     res.status(200).json({
       success: true,
@@ -896,7 +1044,9 @@ router.get('/export-blogs/:id', async (req, res) => {
   try {
     const { id } = req.params
 
-    const blog = await exportBlog.findById(id)
+    const blog = await exportBlog
+      .findById(id)
+      .populate('author', 'email profilePhoto')
 
     if (!blog) {
       return res.status(404).json({
@@ -976,6 +1126,7 @@ router.post(
       const exportBlogDoc = new exportBlog({
         slug,
         image: imagePath,
+        author: req.admin.adminId,
         publishedAt: publishedAt ? new Date(publishedAt) : new Date(),
         translations
       });
@@ -2272,7 +2423,11 @@ router.post('/products', adminAuth, productUpload, async (req, res) => {
     let parsedVariants = {};
     if (variants) {
       try {
-        parsedVariants = typeof variants === 'string' ? JSON.parse(variants) : variants;
+        const v = typeof variants === 'string' ? JSON.parse(variants) : variants;
+
+        // Convert null-prototype object to plain object
+        parsedVariants = JSON.parse(JSON.stringify(v));
+
       } catch (err) {
         return res.status(400).json({ message: 'Invalid variants format' });
       }
@@ -2366,7 +2521,8 @@ router.patch('/products/:id', adminAuth, productUpload, async (req, res) => {
 
     // Parse variants if coming from form-data
     if (typeof updateData.variants === 'string') {
-      updateData.variants = JSON.parse(updateData.variants);
+      const parsed = JSON.parse(updateData.variants);
+      updateData.variants = JSON.parse(JSON.stringify(parsed));
     }
 
     const nameChanged = updateData.name !== undefined;

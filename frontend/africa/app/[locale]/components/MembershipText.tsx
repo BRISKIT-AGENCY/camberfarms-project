@@ -7,8 +7,8 @@ const MembershipText = async() => {
     return (
         <div className='mt-25 pb-33.75 md:px-25 px-6'>
             <h1 className='md:text-[46px] text-[24px] font-bold'>{t('title')}</h1>
-            <img src="/images/membership-hero.png" alt={t('imgAlt')} className='w-full h-108 object-center hidden md:block mt-6' />
-            <img src="/images/membership-hero-sm.png" alt={t('imgAlt')} className='w-full h-75  md:hidden block mt-2' />
+            <img src="/images/membership-hero.webp" alt={t('imgAlt')} className='w-full h-108 object-center hidden md:block mt-6' />
+            <img src="/images/membership-hero-sm.webp" alt={t('imgAlt')} className='w-full h-75  md:hidden block mt-2' />
             <p className='mt-12.5 md:text-[18px] text-[14px]'>{t('p1')}</p>
             <ul className='list-disc mt-6 md:text-[18px] text-[14px]'>
                 <li>{t('l1')}</li>

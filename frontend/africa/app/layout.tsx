@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 	title: 'CamberFarms Africa',
 	description: 'African agricultural community.',
 	icons:{
-		icon:"/images/metadata-logo.png"
+		icon:"/images/metadata-logo-removebg.png"
 	}
 }
 

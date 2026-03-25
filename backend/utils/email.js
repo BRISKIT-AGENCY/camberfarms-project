@@ -8,7 +8,7 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 export async function sendEmail(to, subject, text) {
   try {
     // For testing, force sending to your verified email
-    const testRecipient = 'axleositech@gmail.com'
+    const testRecipient = 'pastorphillofficial@gmail.com'
 
     const response = await resend.emails.send({
       from: 'Camber Farms <onboarding@resend.dev>', // fine for testing

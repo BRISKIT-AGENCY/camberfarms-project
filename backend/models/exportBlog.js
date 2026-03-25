@@ -21,7 +21,14 @@ const exportBlogSchema = new mongoose.Schema(
     },
 
     image: String,
-    publishedAt: Date
+    publishedAt: Date,
+
+    // 👇 ADD THIS
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Admin',
+      required: true
+    }
   },
   { timestamps: true }
 )

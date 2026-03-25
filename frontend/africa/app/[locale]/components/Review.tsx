@@ -8,18 +8,18 @@ const Review = () => {
   
 
   return (
-    <div className="h-fit  w-full px-3 lg:px-25 lg:py-42.75 py-21 bg-[#1AD329]">
+    <div className="h-fit  w-full px-3 lg:px-25 lg:py-10 bg-[#1AD329]">
       <div className="w-full h-full flex flex-col items-center">
         <h1 className="font-bold text-[24px] md:text-[46px] text-white">
           What Our Client Says
         </h1>
 
         {/* GRID WRAPPER */}
-        <div className="md:mt-25 mt-12.5 flex gap-9">
+        <div className="md:mt-10 mt-6 flex gap-9">
 
           {/* LEFT COLUMN */}
           <div className="w-1/2 flex flex-col gap-7.25">
-            <div className="w-full border md:border-[3px] rounded-3xl border-[#FFCC00] md:p-12.5 p-3.75">
+            <div className="w-full border md:border-[3px] rounded-3xl border-[#FFCC00] md:p-8 p-3.75">
               <div className="flex justify-end">
                 <Image
                   src="/images/star.png"
@@ -50,7 +50,7 @@ const Review = () => {
               </div>
             </div>
 
-            <div className="w-full border md:border-[3px] rounded-3xl border-[#FFCC00] md:p-12.5 p-3.75">
+            <div className="w-full border md:border-[3px] rounded-3xl border-[#FFCC00] md:p-8 p-3.75">
               <div className="flex justify-end">
                 <Image
                   src="/images/star.png"
@@ -84,7 +84,7 @@ const Review = () => {
 
           {/* RIGHT COLUMN */}
           <div className="w-1/2 flex flex-col gap-7.25 mt-11.25">
-            <div className="w-full border md:border-[3px] rounded-3xl border-[#FFCC00] md:p-12.5 p-3.75">
+            <div className="w-full border md:border-[3px] rounded-3xl border-[#FFCC00] md:p-8 p-3.75">
               <div className="flex justify-end">
                 <Image
                   src="/images/star.png"
@@ -115,7 +115,7 @@ const Review = () => {
               </div>
             </div>
 
-            <div className="w-full border md:border-[3px] rounded-3xl border-[#FFCC00] md:p-12.5 p-3.75">
+            <div className="w-full border md:border-[3px] rounded-3xl border-[#FFCC00] md:p-8 p-3.75">
               <div className="flex justify-end">
                 <Image
                   src="/images/star.png"

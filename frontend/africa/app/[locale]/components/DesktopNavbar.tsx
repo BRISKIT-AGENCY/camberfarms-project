@@ -185,7 +185,7 @@ const DesktopNavbar = ({
         </Link>
 
         {/* RESOURCES */}
-        {/*<div className="relative">
+        <div className="relative">
           <button
             onClick={() => handleDropdown('resources')}
             className="flex items-center gap-1 cursor-pointer"
@@ -205,14 +205,14 @@ const DesktopNavbar = ({
           {isResourcesOpen && (
             <div className="absolute top-full mt-2 w-48 bg-white rounded-xl shadow-lg z-50">
               <Link
-                href="/resources/gallery"
+                href=""
                 onClick={closeAllDropdowns}
                 className="block px-4 py-3 text-black hover:bg-gray-100 rounded-t-xl"
               >
                 Gallery
               </Link>
               <Link
-                href="/resources/faq"
+                href=""
                 onClick={closeAllDropdowns}
                 className="block px-4 py-3 text-black hover:bg-gray-100 rounded-b-xl"
               >
@@ -220,7 +220,7 @@ const DesktopNavbar = ({
               </Link>
             </div>
           )}
-        </div> */}
+        </div>
 
         <Link
           href="/contact"
@@ -272,7 +272,7 @@ const DesktopNavbar = ({
         href="https://camberexports.com"
         target="_blank"
         rel="noopener noreferrer"
-        className={`inline-flex items-center justify-center h-12 rounded-xl px-6 cursor-pointer font-bold ${buttonBgColor} ${buttonTextColor}`}
+        className={`inline-flex items-center justify-center h-10 rounded-xl px-4 cursor-pointer font-bold ${buttonBgColor} ${buttonTextColor}`}
       >
         {tBtn('explore')}
       </Link>
