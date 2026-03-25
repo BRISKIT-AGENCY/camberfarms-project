@@ -1,18 +1,18 @@
 'use client'
 
 import { useLocale, useTranslations } from 'next-intl'
-import Image from 'next/image'
+// import Image from 'next/image'
 import Link from 'next/link'
 import { SecondaryBtnLink } from '../components/Buttons'
+import ImageWithFallback from '../components/ImageWithFallback'
 import useGetProducts from '../hooks/useGetProducts'
 
 export default function Products() {
 	const t = useTranslations('home.products')
 	const locale = useLocale()
 	const { categories } = useGetProducts(locale)
+	// show only the recent 6
 	const products = categories.slice(0, 7)
-
-	// console.log(`https://api.camberfarms.org/${products?.[0]?.images?.[0]}`)
 
 	return (
 		<section
@@ -36,13 +36,14 @@ export default function Products() {
 							title={p?.category}
 							className="w-full flex items-center justify-center h-80 xl:h-96 border-3 border-primary rounded-lg relative"
 						>
-							<Image
-								src={`https://api.camberfarms.org/${p?.images?.[0]}`}
+							<div className="absolute inset-0 bg-dark-grey/10 z-0" />
+							<ImageWithFallback
+								src={p?.images?.[0]}
 								alt={p?.name}
-								fill
-								sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-								// placeholder="blur"
-								className="object-cover object-center"
+								// fill
+								// sizes="(max-width: 768px) 28vw, (max-width: 1280px) 30vw, 33vw"
+								// // placeholder="blur"
+								// className="object-cover object-center"
 							/>
 							<h6 className="capitalize font-bold text-primary text-2xl z-3">
 								{p?.name}

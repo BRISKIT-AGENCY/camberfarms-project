@@ -6,11 +6,15 @@ import GalleryItem from './GalleryItem'
 import { Splide, SplideSlide } from 'react-splide-ts'
 import 'react-splide-ts/css'
 import useGetGalleries from '../hooks/useGetGalleries'
+import { useImageCheck } from '../hooks/useImageCheck'
 import { GalleryImageItem } from '../types/gallery'
+import FallbackGallery from './FallbackGallery'
 
 export default function Gallery() {
 	const t = useTranslations('home.gallery')
 	const { data, isPending } = useGetGalleries()
+	// check if the 1st image in gallery is valid
+	const imgWorking = useImageCheck(data?.[0]?.url || '')
 	// split images into groups of 4
 	const chunkSize = 4
 	const gallery: GalleryImageItem[][] = []
@@ -20,7 +24,7 @@ export default function Gallery() {
 		gallery.push(chunk)
 	}
 
-	if (isPending || !gallery) return null
+	if (isPending) return null
 
 	return (
 		<section
@@ -37,22 +41,26 @@ export default function Gallery() {
 				{t('paragraph')}
 			</p>
 			<div className="w-full mx-auto">
-				<Splide
-					aria-label="gallery images"
-					// hasTrack={false}
-					options={{
-						rewind: true,
-						autoplay: true,
-						arrows: true,
-					}}
-				>
-					{gallery &&
-						gallery?.map((item, index) => (
-							<SplideSlide key={index}>
-								<GalleryItem images={item} />
-							</SplideSlide>
-						))}
-				</Splide>
+				{imgWorking ? (
+					<Splide
+						aria-label="gallery images"
+						// hasTrack={false}
+						options={{
+							rewind: true,
+							autoplay: true,
+							arrows: true,
+						}}
+					>
+						{gallery &&
+							gallery?.map((item, index) => (
+								<SplideSlide key={index}>
+									<GalleryItem images={item} />
+								</SplideSlide>
+							))}
+					</Splide>
+				) : (
+					<FallbackGallery />
+				)}
 			</div>
 		</section>
 	)

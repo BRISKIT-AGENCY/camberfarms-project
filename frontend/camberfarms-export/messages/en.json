@@ -288,7 +288,7 @@
 	"privacy": {
 		"header": {
 			"title": "PRIVACY POLICY",
-			"lastUpdated": "Last Updated: {{date}} — Version Number: {{version}}.",
+			"lastUpdated": "Last Updated: 01 March 2026 — Version Number: 1.0.",
 			"date": "07 November 2025",
 			"version": "1.0",
 			"cta": "read"
@@ -334,7 +334,7 @@
 					"Request data portability.",
 					"File a complaint with a relevant data protection authority."
 				],
-				"contact": "To exercise these rights, contact us at {{email}}.",
+				"contact": "To exercise these rights, contact us at",
 				"email": "info@camberfarmgroup.com"
 			}
 		},

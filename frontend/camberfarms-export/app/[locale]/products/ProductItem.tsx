@@ -1,7 +1,8 @@
 'use client'
 
-import Image from 'next/image'
+// import Image from 'next/image'
 import Link from 'next/link'
+import ImageWithFallback from '../components/ImageWithFallback'
 
 type ProductProps = {
 	name: string
@@ -25,13 +26,16 @@ export default function ProductItem({ name, img, content, _id }: ProductProps) {
 					Get a quote
 				</Link>
 			</div>
-			<div className="w-full md:w-1/2 h-45 md:h-80 border-2 border-primary relative">
-				<Image
-					src={`https://api.camberfarms.org/${img}`}
+			<div className="w-full md:w-1/2 h-45 md:h-80 border-2 border-primary relative group-odd:bg-secondary/10 group-even:bg-primary/10">
+				<p className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 top-1/2 z-0 text-2xl font-poppins capitalize w-fit">
+					{name}
+				</p>
+				<ImageWithFallback
+					src={img}
 					alt={name}
-					fill
+					// fill
 					// placeholder="blur"
-					className="object-cover object-center"
+					// className="object-cover object-center"
 				/>
 			</div>
 		</article>

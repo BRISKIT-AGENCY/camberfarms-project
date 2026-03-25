@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { useImageCheck } from '../hooks/useImageCheck'
 import BlogPagination from './BlogPagination'
 import { iBlog } from './page'
 
@@ -15,8 +16,10 @@ type BlogsPropType = {
 
 export default function BlogMain({
 	blogs,
-	pagination = { currentPage: 1, totalPages: 8 },
+	pagination = { currentPage: 1, totalPages: 1 },
 }: BlogsPropType) {
+	const imgWorking = useImageCheck(blogs?.[0]?.image || '')
+
 	return (
 		<div className="w-full flex flex-col">
 			<section className="w-full min-h-72 bg-light-grey md:bg-white md:p-6 rounded-2xl space-y-8 md:shadow-xs">
@@ -26,7 +29,7 @@ export default function BlogMain({
 							className="w-full flex flex-col pb-4 border-b-2 border-[#EBEBEB] md:last:border-none"
 							key={index}
 						>
-							{blog.image && (
+							{imgWorking && blog.image && (
 								<div className="w-full h-75 relative mb-4">
 									<Image
 										src={`https://api.camberfarms.org/${blog.image.replace(/^\//, '')}`}
@@ -42,8 +45,8 @@ export default function BlogMain({
 								{blog.title}
 							</h5>
 							<p className="text-sm font-inter text-grey">{blog.excerpt}</p>
-							<p className="text-sm font-inter text-grey mb-4">
-								{blog.publishedAt}
+							<p className="text-sm font-inter text-dark-grey/50 mt-2 mb-4">
+								{new Date(blog?.publishedAt)?.toDateString()}
 							</p>
 							<Link
 								href={`blog/${blog.slug}`}

@@ -36,7 +36,7 @@ export default function BlogSearch() {
 
 			try {
 				const res = await axiosInstance.get(
-					`/api/export/blog/search?q=${debouncedQuery}&lang=${locale}`,
+					`/api/export/blog/search?q=${debouncedQuery.toLocaleLowerCase()}&lang=${locale}`,
 					{ signal: controller.signal },
 				)
 
@@ -49,11 +49,11 @@ export default function BlogSearch() {
 				setResult(data)
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			} catch (err: any) {
-				if (err.name !== 'AbortError') {
-					console.error('Search failed:', err)
-					setError(true)
-					setResult([])
-				}
+				if (err.name === 'AbortError') return null
+
+				console.error('Search failed:', err)
+				setError(true)
+				setResult([])
 			} finally {
 				setLoading(false)
 			}

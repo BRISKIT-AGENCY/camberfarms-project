@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { useImageCheck } from '../../hooks/useImageCheck'
 import { Product } from '../../types/product'
 
 type ProductInfoProps = {
@@ -6,6 +7,7 @@ type ProductInfoProps = {
 }
 
 export default function ProductInfo({ product }: ProductInfoProps) {
+	const imgWorking = useImageCheck(product?.images?.[0] || '')
 	if (!product) return null
 
 	return (
@@ -14,19 +16,21 @@ export default function ProductInfo({ product }: ProductInfoProps) {
 				{product?.name}
 			</h1>
 			<div className="w-full px-10 lg:px-14 xl:px-20 py-6 text-grey">
-				<div className="w-full flex items-center gap-6 flex-wrap mb-6 border border-primary/50 rounded-sm">
-					{product?.images.map((img, index) => (
-						<Image
-							src={`https://api.camberfarms.org/${img}`}
-							alt={product?.name}
-							sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-							width={520}
-							height={500}
-							key={index}
-							className="w-full flex-1 md:w-1/2 h-87.5 md:h-105 lg:h-130 object-center object-cover"
-						/>
-					))}
-				</div>
+				{imgWorking && (
+					<div className="w-full flex items-center gap-6 flex-wrap mb-6 border border-primary/50 rounded-sm">
+						{product?.images.map((img, index) => (
+							<Image
+								src={`https://api.camberfarms.org/${img}`}
+								alt={product?.name}
+								sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+								width={520}
+								height={500}
+								key={index}
+								className="w-full flex-1 md:w-1/2 h-87.5 md:h-105 lg:h-130 object-center object-cover"
+							/>
+						))}
+					</div>
+				)}
 				<h5 className="font-poppins capitalize font-semibold text-black text-xl sm:text-2xl mb-4">
 					{product?.name}
 				</h5>

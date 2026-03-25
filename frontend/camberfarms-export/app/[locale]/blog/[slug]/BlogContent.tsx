@@ -1,5 +1,6 @@
 'use client'
 import Image from 'next/image'
+import { useImageCheck } from '../../hooks/useImageCheck'
 import { iBlogContent } from './page'
 
 type BlogPropType = {
@@ -7,6 +8,8 @@ type BlogPropType = {
 }
 
 export default function BlogContent({ blog }: BlogPropType) {
+	const imgWorking = useImageCheck(blog?.image || '')
+
 	if (blog === null)
 		return (
 			<div className="w-full p-6 text-grey">
@@ -17,7 +20,7 @@ export default function BlogContent({ blog }: BlogPropType) {
 	return (
 		<div className="w-full bg-[#F3F5F7] md:pt-18.25 md:px-25 px-6 pt-15">
 			{/* IMAGE */}
-			{blog.image && (
+			{imgWorking && blog.image && (
 				<div className="w-full h-75 lg:h-85 xl:h-95 relative mb-4 bg-light-grey">
 					<Image
 						src={`https://api.camberfarms.org/${blog.image.replace(/^\//, '')}`}
