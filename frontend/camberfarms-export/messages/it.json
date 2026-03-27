@@ -285,7 +285,160 @@
 			"button": "Invia"
 		}
 	},
-	"privacy": {},
+	"privacy": {
+		"header": {
+			"title": "INFORMATIVA SULLA PRIVACY",
+			"lastUpdated": "Ultimo aggiornamento: 01 marzo 2026 — Numero di versione: 1.0.",
+			"date": "07 novembre 2025",
+			"version": "1.0",
+			"cta": "leggi"
+		},
+		"cookiesAndData": {
+			"cookiesAndTracking": {
+				"title": "Cookie e tecnologie di tracciamento",
+				"paragraphs": [
+					"Il nostro sito web può utilizzare cookie e tecnologie simili per migliorare l’esperienza dell’utente e raccogliere dati analitici.",
+					"I cookie ci aiutano a comprendere il traffico del sito, ricordare le preferenze e migliorare le prestazioni del sito.",
+					"Puoi scegliere di disabilitare i cookie tramite le impostazioni del tuo browser, anche se alcune parti del sito potrebbero non funzionare correttamente di conseguenza."
+				]
+			},
+			"dataRetention": {
+				"title": "Conservazione dei dati",
+				"paragraphs": [
+					"Conserviamo i dati personali solo per il tempo necessario a soddisfare le finalità indicate in questa informativa, adempiere agli obblighi legali o risolvere controversie. Una volta che le informazioni non sono più necessarie, vengono eliminate in modo sicuro o anonimizzate."
+				]
+			},
+			"dataSharingAndDisclosure": {
+				"title": "Condivisione e divulgazione dei dati",
+				"intro": "Potremmo condividere informazioni limitate con terze parti fidate che ci assistono nella gestione della nostra attività, tra cui:",
+				"list": [
+					"Fornitori di hosting e manutenzione del sito web.",
+					"Servizi di analisi e comunicazione via email.",
+					"Autorità normative o legali (quando richiesto dalla legge)."
+				],
+				"outro": "Tutti i partner terzi sono tenuti a mantenere la massima riservatezza e a rispettare gli standard di protezione dei dati."
+			},
+			"dataSecurity": {
+				"title": "Sicurezza dei dati",
+				"paragraphs": [
+					"Adottiamo misure tecniche e organizzative adeguate per proteggere i tuoi dati personali da accessi, modifiche, divulgazioni o distruzioni non autorizzate. Queste includono crittografia, server sicuri, controlli di accesso e revisioni periodiche della sicurezza. Sebbene adottiamo tutte le precauzioni ragionevoli, nessun sistema online è completamente sicuro. Condividi le tue informazioni a tua discrezione."
+				]
+			},
+			"yourRights": {
+				"title": "I tuoi diritti",
+				"intro": "A seconda della tua giurisdizione, potresti avere il diritto di:",
+				"list": [
+					"Accedere ai dati personali che deteniamo su di te",
+					"Richiedere la correzione o la cancellazione di dati inesatti o obsoleti.",
+					"Revocare il consenso per determinati utilizzi dei dati.",
+					"Richiedere la portabilità dei dati.",
+					"Presentare un reclamo a un’autorità competente per la protezione dei dati."
+				],
+				"contact": "Per esercitare questi diritti, contattaci a",
+				"email": "info@camberfarmgroup.com"
+			}
+		},
+		"intro": {
+			"intro": {
+				"title": "Introduzione",
+				"paragraph": "Presso Camberfarm Export e la sua consociata Camberfarm Africa, rispettiamo la tua privacy e ci impegniamo a proteggere le tue informazioni personali. Questa Informativa sulla Privacy spiega come raccogliamo, utilizziamo, divulghiamo e proteggiamo i tuoi dati quando visiti il nostro sito web, ci contatti o utilizzi i nostri servizi. Ti invitiamo a leggere attentamente questa informativa per comprendere le nostre pratiche e i tuoi diritti in merito alle tue informazioni."
+			},
+			"informationWeCollect": {
+				"title": "Informazioni che raccogliamo",
+				"description": "Raccogliamo informazioni personali e non personali per offrire la migliore esperienza possibile e adempiere ai nostri obblighi aziendali.",
+				"intro": "I tipi di informazioni che possiamo raccogliere includono:",
+				"personal": {
+					"title": "1.1 Informazioni personali",
+					"list": [
+						"Nome, indirizzo email, numero di telefono e nome dell’azienda.",
+						"Dettagli forniti nei moduli di contatto o richiesta.",
+						"Informazioni che condividi quando comunichi con il nostro team via email o tramite il sito web."
+					]
+				},
+				"nonPersonal": {
+					"title": "1.2 Informazioni non personali",
+					"list": [
+						"Tipo di browser, informazioni sul dispositivo e sistema operativo.",
+						"Indirizzo IP e posizione (approssimativa).",
+						"Dati di utilizzo del sito raccolti tramite cookie, strumenti di analisi o tecnologie simili."
+					]
+				}
+			},
+			"howWeUseInformation": {
+				"title": "Come utilizziamo le tue informazioni",
+				"intro": "Utilizziamo le informazioni raccolte nei seguenti modi:",
+				"list": [
+					"Rispondere alle tue richieste, domande e feedback.",
+					"Fornire informazioni sui nostri prodotti, servizi e processi di esportazione.",
+					"Migliorare la funzionalità del nostro sito web, l’esperienza utente e la pertinenza dei contenuti.",
+					"Mantenere registri interni e rispettare gli obblighi normativi.",
+					"Comunicare aggiornamenti aziendali, se hai scelto di riceverli."
+				],
+				"outro": "Non venderemo né affitteremo mai le tue informazioni a terzi."
+			},
+			"legalBasis": {
+				"title": "Base giuridica del trattamento",
+				"intro": "Camberfarm tratta i dati personali sulla base di uno o più dei seguenti presupposti giuridici:",
+				"list": [
+					"Consenso: quando fornisci volontariamente informazioni tramite i nostri moduli o comunicazioni.",
+					"Necessità contrattuale: quando il trattamento è necessario per rispondere a richieste o fornire servizi.",
+					"Interesse legittimo: quando necessario per migliorare l’esperienza utente o proteggere i nostri sistemi da abusi.",
+					"Conformità legale: quando richiesto dalle leggi applicabili sulla protezione dei dati o dalle autorità competenti."
+				]
+			}
+		},
+		"others": {
+			"thirdPartyLinks": {
+				"title": "Link a terze parti",
+				"paragraph": "Il nostro sito web può contenere link a siti esterni gestiti da terze parti. Non siamo responsabili per le pratiche sulla privacy o i contenuti di tali siti. Ti invitiamo a consultare le rispettive informative sulla privacy prima di fornire qualsiasi informazione personale."
+			},
+			"internationalDataTransfers": {
+				"title": "Trasferimenti internazionali di dati",
+				"paragraph": "Se accedi al nostro sito web da fuori della Nigeria, tieni presente che i tuoi dati potrebbero essere trasferiti e trattati in paesi in cui si trovano i nostri server o quelli dei nostri fornitori terzi. Garantiamo che tali trasferimenti siano effettuati in conformità con le leggi applicabili sulla protezione dei dati."
+			},
+			"childrenPrivacy": {
+				"title": "Privacy dei minori",
+				"paragraph": "Il nostro sito web e i nostri servizi non sono destinati a minori di età inferiore ai 16 anni. Non raccogliamo né conserviamo consapevolmente dati personali di minori. Se ritieni che un minore abbia fornito dati personali, contattaci immediatamente affinché possiamo eliminarli."
+			},
+			"updates": {
+				"title": "Aggiornamenti a questa informativa",
+				"paragraph": "Potremmo aggiornare periodicamente questa Informativa sulla Privacy per riflettere cambiamenti nelle nostre operazioni, obblighi legali o tecnologie. Tutti gli aggiornamenti saranno pubblicati su questa pagina con una data di “Ultimo aggiornamento” aggiornata. Ti invitiamo a consultare regolarmente questa informativa."
+			},
+			"contact": {
+				"title": "Contattaci",
+				"intro": "Se hai domande, richieste o dubbi riguardo a questa Informativa sulla Privacy, contattaci a:",
+				"email": "info@camberfarmgroup.com",
+				"location": "Lagos, Nigeria",
+				"hours": "Lun - Ven, 9:00 - 17:00 (WAT)"
+			}
+		},
+		"nav": {
+			"sidebar": {
+				"title": "in questa pagina",
+				"links": {
+					"introduction": "introduzione",
+					"informationWeCollect": "informazioni che raccogliamo",
+					"howWeUseInformation": "come utilizziamo le tue informazioni",
+					"legalBasis": "base giuridica del trattamento",
+					"cookiesAndTracking": "cookie e tecnologie di tracciamento",
+					"dataRetention": "conservazione dei dati",
+					"dataSharing": "condivisione e divulgazione dei dati",
+					"dataSecurity": "sicurezza dei dati",
+					"yourRights": "i tuoi diritti",
+					"thirdPartyLinks": "link a terze parti",
+					"internationalDataTransfer": "trasferimenti internazionali di dati",
+					"childrenPrivacy": "privacy dei minori",
+					"updates": "aggiornamenti a questa informativa",
+					"contact": "contattaci"
+				},
+				"cta": {
+					"title": "Hai bisogno di metterti in contatto?",
+					"description": "Inizieremo con alcune domande per indirizzarti al posto giusto.",
+					"button": "contattaci"
+				}
+			}
+		}
+	},
 	"about": {
 		"hero": {
 			"heading": "Chi Siamo",

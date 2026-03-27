@@ -285,7 +285,160 @@
 			"button": "Verzenden"
 		}
 	},
-	"privacy": {},
+	"privacy": {
+		"header": {
+			"title": "PRIVACYBELEID",
+			"lastUpdated": "Laatst bijgewerkt: 1 maart 2026 — Versienummer: 1.0.",
+			"date": "7 november 2025",
+			"version": "1.0",
+			"cta": "lezen"
+		},
+		"cookiesAndData": {
+			"cookiesAndTracking": {
+				"title": "Cookies en trackingtechnologieën",
+				"paragraphs": [
+					"Onze website kan cookies en vergelijkbare technologieën gebruiken om de gebruikerservaring te verbeteren en analytische gegevens te verzamelen.",
+					"Cookies helpen ons het websiteverkeer te begrijpen, voorkeuren te onthouden en de prestaties van de site te verbeteren.",
+					"U kunt ervoor kiezen cookies uit te schakelen via uw browserinstellingen, hoewel sommige delen van de website hierdoor mogelijk niet goed functioneren."
+				]
+			},
+			"dataRetention": {
+				"title": "Gegevensbewaring",
+				"paragraphs": [
+					"Wij bewaren persoonsgegevens alleen zolang als nodig is om de in dit beleid beschreven doeleinden te vervullen, te voldoen aan wettelijke verplichtingen of geschillen op te lossen. Wanneer informatie niet langer nodig is, wordt deze veilig verwijderd of geanonimiseerd."
+				]
+			},
+			"dataSharingAndDisclosure": {
+				"title": "Gegevensdeling en openbaarmaking",
+				"intro": "Wij kunnen beperkte informatie delen met vertrouwde derden die ons helpen bij het uitvoeren van onze bedrijfsactiviteiten, waaronder:",
+				"list": [
+					"Aanbieders van websitehosting en onderhoud.",
+					"Analyse- en e-mailcommunicatiediensten.",
+					"Toezichthoudende of juridische autoriteiten (wanneer wettelijk vereist)."
+				],
+				"outro": "Alle externe partners zijn verplicht strikte vertrouwelijkheid te waarborgen en te voldoen aan de normen voor gegevensbescherming."
+			},
+			"dataSecurity": {
+				"title": "Gegevensbeveiliging",
+				"paragraphs": [
+					"Wij nemen passende technische en organisatorische maatregelen om uw persoonsgegevens te beschermen tegen ongeoorloofde toegang, wijziging, openbaarmaking of vernietiging. Deze omvatten versleuteling, beveiligde servers, toegangscontroles en regelmatige beveiligingscontroles. Hoewel wij alle redelijke voorzorgsmaatregelen nemen, is geen enkel online systeem volledig veilig. U deelt informatie op eigen risico."
+				]
+			},
+			"yourRights": {
+				"title": "Uw rechten",
+				"intro": "Afhankelijk van uw rechtsgebied kunt u de volgende rechten hebben:",
+				"list": [
+					"Toegang tot de persoonsgegevens die wij over u bewaren",
+					"Correctie of verwijdering van onjuiste of verouderde gegevens aanvragen.",
+					"Toestemming voor bepaalde gegevensverwerkingen intrekken.",
+					"Gegevensoverdraagbaarheid aanvragen.",
+					"Een klacht indienen bij een relevante gegevensbeschermingsautoriteit."
+				],
+				"contact": "Om deze rechten uit te oefenen, kunt u contact met ons opnemen via",
+				"email": "info@camberfarmgroup.com"
+			}
+		},
+		"intro": {
+			"intro": {
+				"title": "Inleiding",
+				"paragraph": "Bij Camberfarm Export en haar dochteronderneming Camberfarm Africa respecteren wij uw privacy en zetten wij ons in voor de bescherming van uw persoonsgegevens. Dit privacybeleid legt uit hoe wij uw gegevens verzamelen, gebruiken, openbaar maken en beschermen wanneer u onze website bezoekt, contact met ons opneemt of gebruikmaakt van onze diensten. Lees dit beleid zorgvuldig door om onze werkwijze en uw rechten met betrekking tot uw informatie te begrijpen."
+			},
+			"informationWeCollect": {
+				"title": "Welke informatie wij verzamelen",
+				"description": "Wij verzamelen zowel persoonlijke als niet-persoonlijke informatie om u de best mogelijke ervaring te bieden en aan onze zakelijke verplichtingen te voldoen.",
+				"intro": "De soorten informatie die wij kunnen verzamelen omvatten:",
+				"personal": {
+					"title": "1.1 Persoonsgegevens",
+					"list": [
+						"Naam, e-mailadres, telefoonnummer en bedrijfsnaam.",
+						"Gegevens die worden verstrekt in contact- of aanvraagformulieren.",
+						"Informatie die u deelt wanneer u met ons team communiceert via e-mail of de website."
+					]
+				},
+				"nonPersonal": {
+					"title": "1.2 Niet-persoonlijke informatie",
+					"list": [
+						"Browsertype, apparaatinformatie en besturingssysteem.",
+						"IP-adres en (benaderde) locatie.",
+						"Websitegebruikgegevens verzameld via cookies, analysetools of vergelijkbare technologieën."
+					]
+				}
+			},
+			"howWeUseInformation": {
+				"title": "Hoe wij uw informatie gebruiken",
+				"intro": "Wij gebruiken de verzamelde informatie op de volgende manieren:",
+				"list": [
+					"Om te reageren op uw vragen, verzoeken en feedback.",
+					"Om informatie te verstrekken over onze producten, diensten en exportprocessen.",
+					"Om de functionaliteit van de website, gebruikerservaring en relevantie van de inhoud te verbeteren.",
+					"Om interne administratie bij te houden en te voldoen aan wettelijke verplichtingen.",
+					"Om u bedrijfsupdates te sturen als u hiervoor toestemming heeft gegeven."
+				],
+				"outro": "Wij zullen uw gegevens nooit verkopen of verhuren aan derden."
+			},
+			"legalBasis": {
+				"title": "Rechtsgrond voor verwerking",
+				"intro": "Camberfarm verwerkt persoonsgegevens op basis van een of meer van de volgende rechtsgronden:",
+				"list": [
+					"Toestemming: wanneer u vrijwillig informatie verstrekt via onze formulieren of communicatie.",
+					"Contractuele noodzaak: wanneer verwerking vereist is om op verzoeken te reageren of diensten te leveren.",
+					"Gerechtvaardigd belang: wanneer dit nodig is om de gebruikerservaring te verbeteren of onze systemen te beschermen tegen misbruik.",
+					"Wettelijke verplichting: wanneer dit vereist is door toepasselijke wet- en regelgeving of autoriteiten."
+				]
+			}
+		},
+		"others": {
+			"thirdPartyLinks": {
+				"title": "Links naar derden",
+				"paragraph": "Onze website kan links bevatten naar externe websites die door derden worden beheerd. Wij zijn niet verantwoordelijk voor het privacybeleid of de inhoud van deze sites. Wij raden u aan hun privacybeleid te raadplegen voordat u persoonlijke gegevens verstrekt."
+			},
+			"internationalDataTransfers": {
+				"title": "Internationale gegevensoverdracht",
+				"paragraph": "Als u onze website bezoekt van buiten Nigeria, houd er dan rekening mee dat uw gegevens kunnen worden overgedragen naar en verwerkt in landen waar onze servers of die van externe dienstverleners zich bevinden. Wij zorgen ervoor dat dergelijke overdrachten voldoen aan de toepasselijke wetgeving inzake gegevensbescherming."
+			},
+			"childrenPrivacy": {
+				"title": "Privacy van kinderen",
+				"paragraph": "Onze website en diensten zijn niet gericht op kinderen jonger dan 16 jaar. Wij verzamelen of bewaren niet bewust persoonsgegevens van minderjarigen. Als u denkt dat een kind persoonsgegevens heeft verstrekt, neem dan onmiddellijk contact met ons op zodat wij deze kunnen verwijderen."
+			},
+			"updates": {
+				"title": "Updates van dit beleid",
+				"paragraph": "Wij kunnen dit privacybeleid periodiek bijwerken om wijzigingen in onze activiteiten, wettelijke verplichtingen of technologie te weerspiegelen. Alle updates worden op deze pagina geplaatst met een bijgewerkte datum van ‘Laatst bijgewerkt’. Wij raden gebruikers aan dit beleid regelmatig te raadplegen."
+			},
+			"contact": {
+				"title": "Contact opnemen",
+				"intro": "Als u vragen, verzoeken of zorgen heeft over dit privacybeleid, neem dan contact met ons op via:",
+				"email": "info@camberfarmgroup.com",
+				"location": "Lagos, Nigeria",
+				"hours": "Ma - Vr, 09:00 - 17:00 (WAT)"
+			}
+		},
+		"nav": {
+			"sidebar": {
+				"title": "op deze pagina",
+				"links": {
+					"introduction": "inleiding",
+					"informationWeCollect": "welke informatie wij verzamelen",
+					"howWeUseInformation": "hoe wij uw informatie gebruiken",
+					"legalBasis": "rechtsgrond voor verwerking",
+					"cookiesAndTracking": "cookies en trackingtechnologieën",
+					"dataRetention": "gegevensbewaring",
+					"dataSharing": "gegevensdeling en openbaarmaking",
+					"dataSecurity": "gegevensbeveiliging",
+					"yourRights": "uw rechten",
+					"thirdPartyLinks": "links naar derden",
+					"internationalDataTransfer": "internationale gegevensoverdracht",
+					"childrenPrivacy": "privacy van kinderen",
+					"updates": "updates van dit beleid",
+					"contact": "contact opnemen"
+				},
+				"cta": {
+					"title": "Contact opnemen?",
+					"description": "We stellen eerst enkele vragen en verwijzen u naar de juiste plek.",
+					"button": "contact opnemen"
+				}
+			}
+		}
+	},
 	"about": {
 		"hero": {
 			"heading": "Over ons",

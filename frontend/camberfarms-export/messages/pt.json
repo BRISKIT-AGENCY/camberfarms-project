@@ -285,7 +285,160 @@
 			"button": "Enviar"
 		}
 	},
-	"privacy": {},
+	"privacy": {
+		"header": {
+			"title": "POLÍTICA DE PRIVACIDADE",
+			"lastUpdated": "Última atualização: 01 de março de 2026 — Número da versão: 1.0.",
+			"date": "07 de novembro de 2025",
+			"version": "1.0",
+			"cta": "ler"
+		},
+		"cookiesAndData": {
+			"cookiesAndTracking": {
+				"title": "Cookies e tecnologias de rastreamento",
+				"paragraphs": [
+					"Nosso site pode utilizar cookies e tecnologias semelhantes para melhorar a experiência do usuário e coletar dados analíticos.",
+					"Os cookies nos ajudam a entender o tráfego do site, lembrar preferências e melhorar o desempenho do site.",
+					"Você pode optar por desativar os cookies nas configurações do seu navegador, embora algumas partes do site possam não funcionar corretamente como resultado."
+				]
+			},
+			"dataRetention": {
+				"title": "Retenção de dados",
+				"paragraphs": [
+					"Retemos os dados pessoais apenas pelo tempo necessário para cumprir os objetivos descritos nesta política, atender às obrigações legais ou resolver disputas. Quando as informações não são mais necessárias, elas são excluídas com segurança ou anonimizadas."
+				]
+			},
+			"dataSharingAndDisclosure": {
+				"title": "Compartilhamento e divulgação de dados",
+				"intro": "Podemos compartilhar informações limitadas com terceiros confiáveis que nos auxiliam na operação do nosso negócio, incluindo:",
+				"list": [
+					"Provedores de hospedagem e manutenção de sites.",
+					"Serviços de análise e comunicação por e-mail.",
+					"Autoridades regulatórias ou legais (quando exigido por lei)."
+				],
+				"outro": "Todos os parceiros terceirizados são obrigados a manter estrita confidencialidade e cumprir os padrões de proteção de dados."
+			},
+			"dataSecurity": {
+				"title": "Segurança dos dados",
+				"paragraphs": [
+					"Implementamos medidas técnicas e organizacionais adequadas para proteger seus dados pessoais contra acesso, alteração, divulgação ou destruição não autorizados. Essas medidas incluem criptografia, servidores seguros, controles de acesso e revisões periódicas de segurança. Embora tomemos todas as precauções razoáveis, nenhum sistema online é totalmente seguro. Você compartilha suas informações por sua própria conta e risco."
+				]
+			},
+			"yourRights": {
+				"title": "Seus direitos",
+				"intro": "Dependendo da sua jurisdição, você pode ter o direito de:",
+				"list": [
+					"Acessar os dados pessoais que mantemos sobre você",
+					"Solicitar a correção ou exclusão de dados imprecisos ou desatualizados.",
+					"Retirar o consentimento para determinados usos de dados.",
+					"Solicitar a portabilidade dos dados.",
+					"Apresentar uma reclamação a uma autoridade de proteção de dados competente."
+				],
+				"contact": "Para exercer esses direitos, entre em contato conosco em",
+				"email": "info@camberfarmgroup.com"
+			}
+		},
+		"intro": {
+			"intro": {
+				"title": "Introdução",
+				"paragraph": "Na Camberfarm Export e sua subsidiária, Camberfarm Africa, respeitamos sua privacidade e estamos comprometidos em proteger suas informações pessoais. Esta Política de Privacidade explica como coletamos, usamos, divulgamos e protegemos seus dados quando você visita nosso site, entra em contato conosco ou utiliza nossos serviços. Leia atentamente esta política para entender nossas práticas e seus direitos em relação às suas informações."
+			},
+			"informationWeCollect": {
+				"title": "Informações que coletamos",
+				"description": "Coletamos informações pessoais e não pessoais para oferecer a melhor experiência possível e cumprir nossas obrigações comerciais.",
+				"intro": "Os tipos de informações que podemos coletar incluem:",
+				"personal": {
+					"title": "1.1 Informações pessoais",
+					"list": [
+						"Nome, endereço de e-mail, número de telefone e nome da empresa.",
+						"Detalhes fornecidos em formulários de contato ou consulta.",
+						"Informações que você compartilha ao se comunicar com nossa equipe por e-mail ou pelo site."
+					]
+				},
+				"nonPersonal": {
+					"title": "1.2 Informações não pessoais",
+					"list": [
+						"Tipo de navegador, informações do dispositivo e sistema operacional.",
+						"Endereço IP e localização (aproximada).",
+						"Dados de uso do site coletados por meio de cookies, ferramentas de análise ou tecnologias semelhantes."
+					]
+				}
+			},
+			"howWeUseInformation": {
+				"title": "Como usamos suas informações",
+				"intro": "Utilizamos as informações que coletamos das seguintes maneiras:",
+				"list": [
+					"Responder às suas perguntas, solicitações e feedback.",
+					"Fornecer informações sobre nossos produtos, serviços e processos de exportação.",
+					"Melhorar a funcionalidade do nosso site, a experiência do usuário e a relevância do conteúdo.",
+					"Manter registros internos e cumprir obrigações regulatórias.",
+					"Comunicar atualizações da empresa, caso você tenha optado por recebê-las."
+				],
+				"outro": "Nunca venderemos ou alugaremos suas informações a terceiros."
+			},
+			"legalBasis": {
+				"title": "Base legal para o tratamento",
+				"intro": "A Camberfarm processa dados pessoais com base em um ou mais dos seguintes fundamentos legais:",
+				"list": [
+					"Consentimento: quando você fornece informações voluntariamente por meio de nossos formulários ou comunicações.",
+					"Necessidade contratual: quando o processamento é necessário para responder a consultas ou fornecer serviços.",
+					"Interesse legítimo: quando necessário para melhorar a experiência do usuário ou proteger nossos sistemas contra uso indevido.",
+					"Conformidade legal: quando exigido pelas leis de proteção de dados aplicáveis ou autoridades competentes."
+				]
+			}
+		},
+		"others": {
+			"thirdPartyLinks": {
+				"title": "Links de terceiros",
+				"paragraph": "Nosso site pode conter links para sites externos operados por terceiros. Não somos responsáveis pelas práticas de privacidade ou pelo conteúdo desses sites. Recomendamos que você revise suas respectivas políticas de privacidade antes de fornecer qualquer informação pessoal."
+			},
+			"internationalDataTransfers": {
+				"title": "Transferências internacionais de dados",
+				"paragraph": "Se você estiver acessando nosso site de fora da Nigéria, observe que seus dados podem ser transferidos e processados em países onde nossos servidores ou os de nossos provedores terceirizados estão localizados. Garantimos que tais transferências sejam realizadas em conformidade com as leis de proteção de dados aplicáveis."
+			},
+			"childrenPrivacy": {
+				"title": "Privacidade das crianças",
+				"paragraph": "Nosso site e serviços não são direcionados a crianças menores de 16 anos. Não coletamos ou armazenamos intencionalmente dados pessoais de menores. Se você acredita que uma criança forneceu dados pessoais, entre em contato conosco imediatamente para que possamos removê-los."
+			},
+			"updates": {
+				"title": "Atualizações desta política",
+				"paragraph": "Podemos atualizar esta Política de Privacidade periodicamente para refletir mudanças em nossas operações, obrigações legais ou tecnologia. Todas as atualizações serão publicadas nesta página com uma data de “Última atualização” revisada. Recomendamos que os usuários revisem esta política regularmente."
+			},
+			"contact": {
+				"title": "Fale conosco",
+				"intro": "Se você tiver alguma dúvida, solicitação ou preocupação sobre esta Política de Privacidade, entre em contato conosco em:",
+				"email": "info@camberfarmgroup.com",
+				"location": "Lagos, Nigéria",
+				"hours": "Seg - Sex, 9:00 - 17:00 (WAT)"
+			}
+		},
+		"nav": {
+			"sidebar": {
+				"title": "nesta página",
+				"links": {
+					"introduction": "introdução",
+					"informationWeCollect": "informações que coletamos",
+					"howWeUseInformation": "como usamos suas informações",
+					"legalBasis": "base legal para o tratamento",
+					"cookiesAndTracking": "cookies e tecnologias de rastreamento",
+					"dataRetention": "retenção de dados",
+					"dataSharing": "compartilhamento e divulgação de dados",
+					"dataSecurity": "segurança dos dados",
+					"yourRights": "seus direitos",
+					"thirdPartyLinks": "links de terceiros",
+					"internationalDataTransfer": "transferências internacionais de dados",
+					"childrenPrivacy": "privacidade das crianças",
+					"updates": "atualizações desta política",
+					"contact": "fale conosco"
+				},
+				"cta": {
+					"title": "Precisa entrar em contato?",
+					"description": "Começaremos com algumas perguntas para direcioná-lo ao lugar certo.",
+					"button": "fale conosco"
+				}
+			}
+		}
+	},
 	"about": {
 		"hero": {
 			"heading": "Sobre Nós",

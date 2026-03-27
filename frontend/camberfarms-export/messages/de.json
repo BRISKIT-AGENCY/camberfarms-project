@@ -285,7 +285,160 @@
 			"button": "Absenden"
 		}
 	},
-	"privacy": {},
+	"privacy": {
+		"header": {
+			"title": "DATENSCHUTZERKLÄRUNG",
+			"lastUpdated": "Zuletzt aktualisiert: 1. März 2026 — Versionsnummer: 1.0.",
+			"date": "7. November 2025",
+			"version": "1.0",
+			"cta": "lesen"
+		},
+		"cookiesAndData": {
+			"cookiesAndTracking": {
+				"title": "Cookies und Tracking-Technologien",
+				"paragraphs": [
+					"Unsere Website kann Cookies und ähnliche Technologien verwenden, um die Benutzererfahrung zu verbessern und Analysedaten zu erfassen.",
+					"Cookies helfen uns, den Website-Traffic zu verstehen, Präferenzen zu speichern und die Leistung der Website zu verbessern.",
+					"Sie können Cookies über Ihre Browsereinstellungen deaktivieren, allerdings funktionieren einige Teile der Website möglicherweise nicht korrekt."
+				]
+			},
+			"dataRetention": {
+				"title": "Datenspeicherung",
+				"paragraphs": [
+					"Wir speichern personenbezogene Daten nur so lange, wie es erforderlich ist, um die in dieser Richtlinie beschriebenen Zwecke zu erfüllen, gesetzlichen Verpflichtungen nachzukommen oder Streitigkeiten beizulegen. Sobald die Informationen nicht mehr benötigt werden, werden sie sicher gelöscht oder anonymisiert."
+				]
+			},
+			"dataSharingAndDisclosure": {
+				"title": "Datenweitergabe und Offenlegung",
+				"intro": "Wir können begrenzte Informationen an vertrauenswürdige Dritte weitergeben, die uns beim Betrieb unseres Unternehmens unterstützen, darunter:",
+				"list": [
+					"Anbieter für Website-Hosting und Wartung.",
+					"Analyse- und E-Mail-Kommunikationsdienste.",
+					"Regulierungs- oder Strafverfolgungsbehörden (wenn gesetzlich erforderlich)."
+				],
+				"outro": "Alle Drittpartner sind verpflichtet, strenge Vertraulichkeit zu wahren und die Datenschutzstandards einzuhalten."
+			},
+			"dataSecurity": {
+				"title": "Datensicherheit",
+				"paragraphs": [
+					"Wir ergreifen geeignete technische und organisatorische Maßnahmen, um Ihre personenbezogenen Daten vor unbefugtem Zugriff, Änderung, Offenlegung oder Zerstörung zu schützen. Dazu gehören Verschlüsselung, sichere Server, Zugriffskontrollen und regelmäßige Sicherheitsüberprüfungen. Trotz aller angemessenen Vorsichtsmaßnahmen ist kein Online-System vollständig sicher. Sie geben Informationen nach eigenem Ermessen weiter."
+				]
+			},
+			"yourRights": {
+				"title": "Ihre Rechte",
+				"intro": "Abhängig von Ihrer Gerichtsbarkeit haben Sie möglicherweise das Recht:",
+				"list": [
+					"Zugriff auf die personenbezogenen Daten zu erhalten, die wir über Sie gespeichert haben",
+					"Die Berichtigung oder Löschung unrichtiger oder veralteter Daten zu verlangen.",
+					"Ihre Einwilligung zur Nutzung bestimmter Daten zu widerrufen.",
+					"Datenübertragbarkeit zu verlangen.",
+					"Eine Beschwerde bei einer zuständigen Datenschutzbehörde einzureichen."
+				],
+				"contact": "Um diese Rechte auszuüben, kontaktieren Sie uns unter",
+				"email": "info@camberfarmgroup.com"
+			}
+		},
+		"intro": {
+			"intro": {
+				"title": "Einleitung",
+				"paragraph": "Bei Camberfarm Export und seiner Tochtergesellschaft Camberfarm Africa respektieren wir Ihre Privatsphäre und verpflichten uns, Ihre personenbezogenen Daten zu schützen. Diese Datenschutzerklärung erläutert, wie wir Ihre Daten erfassen, verwenden, offenlegen und schützen, wenn Sie unsere Website besuchen, uns kontaktieren oder unsere Dienstleistungen nutzen. Bitte lesen Sie diese Richtlinie sorgfältig, um unsere Praktiken und Ihre Rechte in Bezug auf Ihre Daten zu verstehen."
+			},
+			"informationWeCollect": {
+				"title": "Welche Daten wir erheben",
+				"description": "Wir erfassen personenbezogene und nicht personenbezogene Daten, um Ihnen die bestmögliche Erfahrung zu bieten und unsere geschäftlichen Verpflichtungen zu erfüllen.",
+				"intro": "Zu den von uns erhobenen Daten können gehören:",
+				"personal": {
+					"title": "1.1 Personenbezogene Daten",
+					"list": [
+						"Name, E-Mail-Adresse, Telefonnummer und Firmenname.",
+						"Angaben, die in Kontakt- oder Anfrageformularen gemacht werden.",
+						"Informationen, die Sie bei der Kommunikation mit unserem Team per E-Mail oder über die Website bereitstellen."
+					]
+				},
+				"nonPersonal": {
+					"title": "1.2 Nicht personenbezogene Daten",
+					"list": [
+						"Browsertyp, Geräteinformationen und Betriebssystem.",
+						"IP-Adresse und ungefähre Standortdaten.",
+						"Nutzungsdaten der Website, die über Cookies, Analysetools oder ähnliche Technologien erfasst werden."
+					]
+				}
+			},
+			"howWeUseInformation": {
+				"title": "Wie wir Ihre Daten verwenden",
+				"intro": "Wir verwenden die gesammelten Daten wie folgt:",
+				"list": [
+					"Um auf Ihre Anfragen, Wünsche und Rückmeldungen zu reagieren.",
+					"Um Informationen über unsere Produkte, Dienstleistungen und Exportprozesse bereitzustellen.",
+					"Um die Funktionalität der Website, die Benutzererfahrung und die Relevanz der Inhalte zu verbessern.",
+					"Um interne Aufzeichnungen zu führen und gesetzliche Anforderungen einzuhalten.",
+					"Um Ihnen Unternehmensupdates zu senden, sofern Sie dem zugestimmt haben."
+				],
+				"outro": "Wir werden Ihre Daten niemals an Dritte verkaufen oder vermieten."
+			},
+			"legalBasis": {
+				"title": "Rechtsgrundlage der Verarbeitung",
+				"intro": "Camberfarm verarbeitet personenbezogene Daten auf Grundlage einer oder mehrerer der folgenden Rechtsgrundlagen:",
+				"list": [
+					"Einwilligung: Wenn Sie freiwillig Informationen über unsere Formulare oder Kommunikation bereitstellen.",
+					"Vertragserfüllung: Wenn die Verarbeitung erforderlich ist, um auf Anfragen zu reagieren oder Dienstleistungen bereitzustellen.",
+					"Berechtigtes Interesse: Wenn dies erforderlich ist, um die Benutzererfahrung zu verbessern oder unsere Systeme vor Missbrauch zu schützen.",
+					"Gesetzliche Verpflichtung: Wenn dies durch geltende Datenschutzgesetze oder Behörden vorgeschrieben ist."
+				]
+			}
+		},
+		"others": {
+			"thirdPartyLinks": {
+				"title": "Links zu Drittanbietern",
+				"paragraph": "Unsere Website kann Links zu externen Websites enthalten, die von Dritten betrieben werden. Wir sind nicht für deren Datenschutzpraktiken oder Inhalte verantwortlich. Wir empfehlen Ihnen, deren Datenschutzrichtlinien zu prüfen, bevor Sie personenbezogene Daten bereitstellen."
+			},
+			"internationalDataTransfers": {
+				"title": "Internationale Datenübertragungen",
+				"paragraph": "Wenn Sie unsere Website von außerhalb Nigerias aufrufen, beachten Sie bitte, dass Ihre Daten in Länder übertragen und dort verarbeitet werden können, in denen sich unsere Server oder die Server von Drittanbietern befinden. Wir stellen sicher, dass solche Übertragungen im Einklang mit den geltenden Datenschutzgesetzen erfolgen."
+			},
+			"childrenPrivacy": {
+				"title": "Datenschutz von Kindern",
+				"paragraph": "Unsere Website und Dienstleistungen richten sich nicht an Kinder unter 16 Jahren. Wir erfassen oder speichern wissentlich keine personenbezogenen Daten von Minderjährigen. Wenn Sie glauben, dass ein Kind personenbezogene Daten bereitgestellt hat, kontaktieren Sie uns bitte umgehend, damit wir diese entfernen können."
+			},
+			"updates": {
+				"title": "Aktualisierungen dieser Richtlinie",
+				"paragraph": "Wir können diese Datenschutzerklärung regelmäßig aktualisieren, um Änderungen in unseren Abläufen, gesetzlichen Verpflichtungen oder Technologien widerzuspiegeln. Alle Aktualisierungen werden auf dieser Seite mit einem überarbeiteten Datum „Zuletzt aktualisiert“ veröffentlicht. Wir empfehlen, diese Richtlinie regelmäßig zu überprüfen."
+			},
+			"contact": {
+				"title": "Kontakt",
+				"intro": "Wenn Sie Fragen, Anfragen oder Bedenken zu dieser Datenschutzerklärung haben, kontaktieren Sie uns bitte unter:",
+				"email": "info@camberfarmgroup.com",
+				"location": "Lagos, Nigeria",
+				"hours": "Mo - Fr, 09:00 - 17:00 (WAT)"
+			}
+		},
+		"nav": {
+			"sidebar": {
+				"title": "auf dieser Seite",
+				"links": {
+					"introduction": "Einleitung",
+					"informationWeCollect": "Welche Daten wir erheben",
+					"howWeUseInformation": "Wie wir Ihre Daten verwenden",
+					"legalBasis": "Rechtsgrundlage der Verarbeitung",
+					"cookiesAndTracking": "Cookies und Tracking-Technologien",
+					"dataRetention": "Datenspeicherung",
+					"dataSharing": "Datenweitergabe und Offenlegung",
+					"dataSecurity": "Datensicherheit",
+					"yourRights": "Ihre Rechte",
+					"thirdPartyLinks": "Links zu Drittanbietern",
+					"internationalDataTransfer": "Internationale Datenübertragungen",
+					"childrenPrivacy": "Datenschutz von Kindern",
+					"updates": "Aktualisierungen dieser Richtlinie",
+					"contact": "Kontakt"
+				},
+				"cta": {
+					"title": "Möchten Sie Kontakt aufnehmen?",
+					"description": "Wir stellen Ihnen zunächst einige Fragen und leiten Sie dann an die richtige Stelle weiter.",
+					"button": "Kontakt aufnehmen"
+				}
+			}
+		}
+	},
 	"about": {
 		"hero": {
 			"heading": "Über uns",

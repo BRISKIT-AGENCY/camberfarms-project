@@ -11,6 +11,7 @@ export type iBlog = {
 	publishedAt: string
 	image: string | undefined
 	slug: string
+	profilePhoto?: string
 }
 
 async function getBlogs(page: number, locale: string) {
@@ -21,12 +22,6 @@ async function getBlogs(page: number, locale: string) {
 		})
 		return res.data
 	} catch (_) {
-		// console.error(
-		// 	'Failed to fetch blogs:',
-		// 	error.response?.data || error.message
-		// )
-		// throw new Error('Failed to fetch blogs', error)
-
 		// since this is a server component, console.log won't work
 		// this is the expected shape of valid data
 		// the hardcoded pagination values is to 'maintain the layout' of the page
@@ -34,7 +29,7 @@ async function getBlogs(page: number, locale: string) {
 			data: null,
 			pagination: {
 				currentPage: 1,
-				totalPages: 8,
+				totalPages: 1,
 			},
 		}
 	}

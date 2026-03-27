@@ -53,12 +53,12 @@ export default async function Blog() {
 							</p>
 							<Link
 								href={`blog/${b.slug}`}
-								className="text-sm font-inter text-secondary hover:underline transition-all ease-in-out duration-200"
+								className="text-sm w-fit font-inter text-secondary hover:underline transition-all ease-in-out duration-200"
 							>
 								Read more
 							</Link>
 							<Image
-								src={userAvatar}
+								src={b.profilePhoto || userAvatar}
 								alt=""
 								width={300}
 								height={300}
