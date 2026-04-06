@@ -21,7 +21,7 @@ const Hero = () => {
       <div className="absolute inset-0 bg-linear-to-b from-black/70 via-black/40 to-black/70" />
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col justify-center h-full">
+      <div className="relative z-10 flex flex-col justify-center min-h-[calc(100vh-90px)]">
         <div className="hidden xl:block">
           <Navbar logoSrc="/images/logo.png" />
         </div>

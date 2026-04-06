@@ -1,17 +1,12 @@
-
 import React from 'react'
 import Image from 'next/image'
 
-
-
 const Review = () => {
-  
-
   return (
-    <div className="h-fit  w-full px-3 lg:px-25 lg:py-10 bg-[#1AD329]">
+    <div className="h-fit w-full px-3 lg:px-25 lg:py-10 bg-[#1AD329]">
       <div className="w-full h-full flex flex-col items-center">
         <h1 className="font-bold text-[24px] md:text-[46px] text-white">
-          What Our Client Says
+          What Our Clients Say
         </h1>
 
         {/* GRID WRAPPER */}
@@ -31,8 +26,8 @@ const Review = () => {
               </div>
 
               <h2 className="mt-6 md:mt-9 md:text-[24px] text-[12px] font-medium text-white">
-                “Partnering with Camberfarm has changed how we grow and sell our crops.
-                We now produce better yields and reach buyers we never thought possible.”
+                “Working with CamberFarms has truly transformed our farm operations. 
+                Our harvests are more abundant, and we've discovered new buyers beyond our expectations.”
               </h2>
 
               <div className="flex items-center gap-4 md:mt-7.5 mt-[7.5px]">
@@ -43,9 +38,7 @@ const Review = () => {
                 />
                 <div className="text-white">
                   <p className="md:text-[24px] text-[12px]">Amina Yusuf</p>
-                  <p className="text-[8px] md:text-[18px]">
-                    Farmer, Kaduna Region
-                  </p>
+                  <p className="text-[8px] md:text-[18px]">Farmer, Kaduna Region</p>
                 </div>
               </div>
             </div>
@@ -62,21 +55,19 @@ const Review = () => {
               </div>
 
               <h2 className="mt-6 md:mt-9 md:text-[24px] text-[12px] font-medium text-white">
-                “Partnering with Camberfarm has changed how we grow and sell our crops.
-                We now produce better yields and reach buyers we never thought possible.”
+                “CamberFarms helped us optimize our planting schedules and crop selection. 
+                The results exceeded what we hoped for—higher profits and healthier produce.”
               </h2>
 
               <div className="flex items-center gap-4 md:mt-7.5 mt-[7.5px]">
                 <img
-                  src="/images/client.png"
+                  src="/images/client2.png"
                   alt="image of client"
                   className="md:w-20 md:h-20 w-10 h-10"
                 />
                 <div className="text-white">
-                  <p className="md:text-[24px] text-[12px]">Amina Yusuf</p>
-                  <p className="text-[8px] md:text-[18px]">
-                    Farmer, Kaduna Region
-                  </p>
+                  <p className="md:text-[24px] text-[12px]">Emeka Okafor</p>
+                  <p className="text-[8px] md:text-[18px]">Agricultural Consultant, Enugu</p>
                 </div>
               </div>
             </div>
@@ -96,21 +87,19 @@ const Review = () => {
               </div>
 
               <h2 className="mt-6 md:mt-9 md:text-[24px] text-[12px] font-medium text-white">
-                “Partnering with Camberfarm has changed how we grow and sell our crops.
-                We now produce better yields and reach buyers we never thought possible.”
+                “Since partnering with CamberFarms, our distribution network has expanded significantly. 
+                We now connect directly with buyers nationwide with ease.”
               </h2>
 
               <div className="flex items-center gap-4 md:mt-7.5 mt-[7.5px]">
                 <img
-                  src="/images/client.png"
+                  src="/images/client3.png"
                   alt="image of client"
                   className="md:w-20 md:h-20 w-10 h-10"
                 />
                 <div className="text-white">
-                  <p className="md:text-[24px] text-[12px]">Amina Yusuf</p>
-                  <p className="text-[8px] md:text-[18px]">
-                    Farmer, Kaduna Region
-                  </p>
+                  <p className="md:text-[24px] text-[12px]">Fatima Bello</p>
+                  <p className="text-[8px] md:text-[18px]">Organic Farmer, Kano</p>
                 </div>
               </div>
             </div>
@@ -127,27 +116,25 @@ const Review = () => {
               </div>
 
               <h2 className="mt-6 md:mt-9 md:text-[24px] text-[12px] font-medium text-white">
-                “Partnering with Camberfarm has changed how we grow and sell our crops.
-                We now produce better yields and reach buyers we never thought possible.”
+                “Their expert guidance helped us improve soil management and crop rotation. 
+                Our farm productivity is at an all-time high thanks to CamberFarms.”
               </h2>
 
               <div className="flex items-center gap-4 md:mt-7.5 mt-[7.5px]">
                 <img
-                  src="/images/client.png"
+                  src="/images/client4.png"
                   alt="image of client"
                   className="md:w-20 md:h-20 w-10 h-10"
                 />
                 <div className="text-white">
-                  <p className="md:text-[24px] text-[12px]">Amina Yusuf</p>
-                  <p className="text-[8px] md:text-[18px]">
-                    Farmer, Kaduna Region
-                  </p>
+                  <p className="md:text-[24px] text-[12px]">John Ade</p>
+                  <p className="text-[8px] md:text-[18px]">Farm Owner, Lagos</p>
                 </div>
               </div>
             </div>
           </div>
 
-        </div> 
+        </div>
       </div>
     </div>
   )

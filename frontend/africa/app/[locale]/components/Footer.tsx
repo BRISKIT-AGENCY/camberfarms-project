@@ -47,16 +47,16 @@ const Footer = () => {
 
             <div className="flex items-center gap-2 mt-3 md:mt-0">
               <Image src="/images/email.png" alt={t('Footer.emailAlt')} width={24} height={24} />
-              <a href="mailto:camberfarmafrica@gmail.com" className="hover:underline">
-                camberfarmafrica@gmail.com
+              <a href="mailto:camberwallresorts@gmail.com" className="hover:underline">
+                camberwallresorts@gmail.com
               </a>
             </div>
 
             <div className="flex items-center gap-2 mt-3 md:mt-0">
               <Image src="/images/phone.png" alt={t('Footer.phoneAlt')} width={24} height={24} />
-              <a href="tel:+234909746104" className="hover:underline">+234 90 974 6104</a>
+              <a href="tel:+2348062741841" className="hover:underline">+234 806 274 1841</a>
               <span>,</span>
-              <a href="tel:+2348109748304" className="hover:underline">+234 810 974 8304</a>
+              <a href="tel:+2348133486885" className="hover:underline">+234 813 348 6885</a>
             </div>
 
             <div className='flex gap-3 mt-4 md:mt-0'>

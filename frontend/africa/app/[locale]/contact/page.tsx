@@ -43,10 +43,10 @@ const page = () => {
                     <div>
                         <h6 className="font-poppins font-semibold text-lg capitalize">{v('email')}</h6>
                         <a
-                            href="mailto:camberfarmafrica@gmail.com"
+                            href="mailto:camberwallresorts@gmail.com"
                             className="text-sm text-light-grey hover:underline"
                         >
-                            info@camberfarmexport.com
+                            camberwallresorts@gmail.com
                         </a>
                     </div>
                 </div>
@@ -62,11 +62,11 @@ const page = () => {
                     />
                     <div className='flex flex-col'>
                         <h6 className="font-poppins font-semibold text-lg capitalize">{v('phone')}</h6>
+                        <a href="tel:+2348062741841" className="text-sm text-light-grey hover:underline">
+                            +234 806 274 1841
+                        </a>
                         <a href="tel:+2348133486885" className="text-sm text-light-grey hover:underline">
                             +234 813 348 6885
-                        </a>
-                        <a href="tel:+2348068290641" className="text-sm text-light-grey hover:underline">
-                            +234 806 829 0641
                         </a>
                     </div>
                 </div>
