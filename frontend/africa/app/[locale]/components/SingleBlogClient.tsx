@@ -6,16 +6,23 @@ import BlogSearchSidebar from './BlogSearchSidebar'
 import { useLocale, useTranslations } from 'next-intl'
 import getRecentPosts, { type RecentPost } from './RecentPost'
 
+
+type Section = {
+  heading?: string
+  paragraphs: string[]
+}
+
 type Blog = {
   title?: string
   publishedAt?: string
-  sections?: { heading: string; paragraphs: string[] }[]
+  sections?: Section[]
 }
 
 export default function SingleBlogClient({ blog }: { blog?: Blog }) {
   
   const locale = useLocale()
   const t = useTranslations('Blog')
+  
 
   const [recentPosts, setRecentPosts] = useState<RecentPost[]>([])
   const [recentError, setRecentError] = useState(false)
@@ -103,7 +110,7 @@ export default function SingleBlogClient({ blog }: { blog?: Blog }) {
                     ))
                   ) : (
                     <p className="text-[#808080] mt-4">
-                      {t('empty')}
+                      
                     </p>
                   )}
                 </div>

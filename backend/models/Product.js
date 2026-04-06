@@ -8,7 +8,10 @@ const productSchema = new mongoose.Schema(
         name: { type: String, required: true, trim: true },
         category: { type: String, required: true, trim: true },
         description: { type: String, required: true, trim: true },
-        variants: { type: Map, of: mongoose.Schema.Types.Mixed, required: false },
+        variants: {
+          type: mongoose.Schema.Types.Mixed,
+          default: {},
+        },
       }, { _id: false })
     },
     images: [
