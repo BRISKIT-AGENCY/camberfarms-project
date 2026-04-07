@@ -68,7 +68,7 @@ const Review = () => {
 
               <div className="flex items-center gap-4 md:mt-7.5 mt-[7.5px]">
                 <img
-                  src="/images/client.png"
+                  src="/images/user.webp"
                   alt="image of client"
                   className="md:w-20 md:h-20 w-10 h-10"
                 />
@@ -102,7 +102,7 @@ const Review = () => {
 
               <div className="flex items-center gap-4 md:mt-7.5 mt-[7.5px]">
                 <img
-                  src="/images/client.png"
+                  src="/images/user.webp"
                   alt="image of client"
                   className="md:w-20 md:h-20 w-10 h-10"
                 />
@@ -133,7 +133,7 @@ const Review = () => {
 
               <div className="flex items-center gap-4 md:mt-7.5 mt-[7.5px]">
                 <img
-                  src="/images/client.png"
+                  src="/images/user.webp"
                   alt="image of client"
                   className="md:w-20 md:h-20 w-10 h-10"
                 />

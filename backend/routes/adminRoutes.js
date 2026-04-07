@@ -221,6 +221,14 @@ router.post('/reset-password', adminAuth, async (req, res) => {
   admin.twoFactor = undefined
   await admin.save()
 
+  await Notification.create({
+    title: 'Password Reset',
+    description: `${admin.email} successfully reset their password.`,
+    sourceWebsite: 'africa',
+    type: 'security',
+    link: `/admin/profile`
+  });
+
   res.json({ message: 'Password updated successfully' })
 })
 
@@ -313,6 +321,14 @@ router.post('/forgot-password/reset', async (req, res) => {
 
     await admin.save();
 
+    await Notification.create({
+      title: 'Password Reset',
+      description: `${admin.email} successfully reset their password.`,
+      sourceWebsite: 'africa',
+      type: 'security',
+      link: `/admin/profile`
+    });
+
     res.json({ message: 'Password reset successfully' });
   } catch (err) {
     console.error(err);
@@ -357,6 +373,14 @@ router.post('/profile-photo', adminAuth, adminUpload, async (req, res) => {
     // Save new photo
     admin.profilePhoto = `uploads/admins/${req.file.filename}`
     await admin.save()
+
+    await Notification.create({
+      title: 'Profile photo change',
+      description: `${admin.email} successfully updated their profile photo.`,
+      sourceWebsite: 'africa',
+      type: 'security',
+      link: `/admin/profile`
+    });
 
     res.status(200).json({
       success: true,
@@ -498,6 +522,14 @@ router.post(
 
       await gallery.save()
 
+      await Notification.create({
+        title: 'Gallery Updated',
+        description: `${newImages.length} new image(s) uploaded to gallery.`,
+        sourceWebsite: 'export',
+        type: 'gallery',
+        link: `/gallery`
+      })
+
       res.status(201).json({
         success: true,
         images: newImages
@@ -577,6 +609,14 @@ router.patch(
 
       await gallery.save()
 
+      await Notification.create({
+        title: 'Gallery Image Updated',
+        description: `An image in the gallery was updated.`,
+        sourceWebsite: 'export',
+        type: 'gallery',
+        link: `/gallery/${image._id}`
+      })
+
       res.json({
         success: true,
         image
@@ -632,6 +672,14 @@ router.delete("/gallery/:imageId", adminAuth, async (req, res) => {
     image.deleteOne()
 
     await gallery.save()
+
+    await Notification.create({
+      title: 'Gallery Image Deleted',
+      description: `An image was removed from the gallery.`,
+      sourceWebsite: 'export',
+      type: 'gallery',
+      link: `/gallery`
+    })
 
     res.json({
       success: true,

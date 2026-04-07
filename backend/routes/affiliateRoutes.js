@@ -81,7 +81,7 @@ router.post('/affiliate', async (req, res) => {
     await Notification.create({
       title: 'New Affiliate Application',
       description: `${fullName} submitted an affiliate application.`,
-      sourceWebsite: 'camberfarm',
+      sourceWebsite: 'export',
       type: 'affiliate',
       link: `/affiliate/${affiliate._id}`
     })
