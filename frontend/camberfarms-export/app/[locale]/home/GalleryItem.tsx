@@ -8,7 +8,7 @@ type GalleryItemProps = {
 }
 
 export default function GalleryItem({ images }: GalleryItemProps) {
-	// console.log(images[0].url)
+	// console.log('image 1: ', images[0])
 	if (!images?.[0]?.url) return null
 
 	return (
@@ -19,7 +19,7 @@ export default function GalleryItem({ images }: GalleryItemProps) {
 				sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
 				width={600}
 				height={400}
-				className="w-full h-full col-span-3 rounded-3xl object-fill object-center overflow-hidden"
+				className="w-full h-full col-span-3 rounded-3xl object-cover object-center overflow-hidden"
 			/>
 			<Image
 				src={images?.[1]?.url || images?.[0]?.url}

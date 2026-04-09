@@ -1,10 +1,10 @@
 'use client'
 import { useEffect, useState } from 'react'
 import axiosInstance from '../api/axios'
-import { GalleryImageItem } from '../types/gallery'
+import { GalleryImage } from '../types/gallery'
 
 export default function useGetGalleries() {
-	const [data, setData] = useState<GalleryImageItem[] | null>(null)
+	const [data, setData] = useState<GalleryImage[] | null>(null)
 	const [isPending, setIsPending] = useState(false)
 	const [error, setError] = useState(null)
 
@@ -20,8 +20,9 @@ export default function useGetGalleries() {
 				const result = res.data as {
 					success: boolean
 					total: number
-					galleries: GalleryImageItem[]
+					galleries: GalleryImage[]
 				}
+				// console.log('gallery: ', result.galleries)
 				setData(result.galleries)
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			} catch (err: any) {

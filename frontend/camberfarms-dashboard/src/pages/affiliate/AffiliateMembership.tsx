@@ -28,9 +28,12 @@ export default function AffiliateMembership() {
 	})
 	// update status
 	const { mutate, isPending: settingStatus } = useMutation({
-		// mutationKey: [`affiliate/${params.id}`],
-		mutationFn: async (status: 'approved' | 'rejected') =>
-			axiosInstance.patch(`affiliate/${params.id}/status`, { status }),
+		mutationFn: async (status: 'approved' | 'rejected') => {
+			const res = await axiosInstance.patch(`affiliate/${params.id}/status`, {
+				status,
+			})
+			return res.data
+		},
 		onSuccess: () =>
 			queryClient.invalidateQueries({
 				queryKey: ['affiliates', params.id],

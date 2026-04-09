@@ -38,8 +38,8 @@ export default function AffiliateForm() {
 		setIsLoading(true)
 		console.log(data)
 		try {
-			const res = await axiosInstance.post('/api/affiliate', data)
-			console.log(res.data)
+			await axiosInstance.post('/api/affiliate', data)
+			// console.log(res.data)
 			toast.success('Form submitted successfully!')
 			// clear inputs
 			reset()
@@ -188,11 +188,11 @@ export default function AffiliateForm() {
 				<legend className="mb-4 text-dark-grey">{p('ifYes')}</legend>
 				<input
 					{...register('buyerCountry', {
-						minLength: 3,
+						// minLength: 3,
 						validate: {
 							// if user has a buyer, this field is required
-							checkBuyer: (_, { haveABuyer }) => {
-								if (haveABuyer === 'yes')
+							checkBuyer: (buyerCountry, { haveABuyer }) => {
+								if (haveABuyer === 'yes' && !buyerCountry)
 									return "Please provide your buyer's country"
 							},
 						},
@@ -209,11 +209,11 @@ export default function AffiliateForm() {
 
 				<input
 					{...register('buyerProduct', {
-						minLength: 3,
+						// minLength: 3,
 						validate: {
 							// if user has a buyer, this field is required
-							checkBuyer: (_, { haveABuyer }) => {
-								if (haveABuyer === 'yes')
+							checkBuyer: (buyerProduct, { haveABuyer }) => {
+								if (haveABuyer === 'yes' && !buyerProduct)
 									return "Please provide your buyer's selected product"
 							},
 						},
@@ -230,11 +230,11 @@ export default function AffiliateForm() {
 
 				<input
 					{...register('productVolume', {
-						minLength: 3,
+						// minLength: 3/
 						validate: {
 							// if user has a buyer, this field is required
-							checkBuyer: (_, { haveABuyer }) => {
-								if (haveABuyer === 'yes')
+							checkBuyer: (productVolume, { haveABuyer }) => {
+								if (haveABuyer === 'yes' && !productVolume)
 									return 'Please provide a valid product volume'
 							},
 						},
@@ -252,7 +252,7 @@ export default function AffiliateForm() {
 				<input
 					{...register('aboutInterest', {
 						required: true,
-						minLength: 10,
+						minLength: 5,
 						maxLength: 200,
 					})}
 					type="text"
@@ -311,8 +311,11 @@ export default function AffiliateForm() {
 						maxLength: 15,
 						validate: {
 							// check if user has selected referral platform
-							selectPlatform: (_, { referralPlatform }) => {
-								if (!referralPlatform)
+							selectPlatform: (
+								referralPlatformOthers,
+								{ referralPlatform },
+							) => {
+								if (!referralPlatform && !referralPlatformOthers)
 									return 'Please how did you hear about us?'
 							},
 						},

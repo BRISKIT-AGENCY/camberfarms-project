@@ -6,21 +6,23 @@ import GalleryItem from './GalleryItem'
 import { Splide, SplideSlide } from 'react-splide-ts'
 import 'react-splide-ts/css'
 import useGetGalleries from '../hooks/useGetGalleries'
-import { useImageCheck } from '../hooks/useImageCheck'
 import { GalleryImageItem } from '../types/gallery'
-import FallbackGallery from './FallbackGallery'
 
 export default function Gallery() {
 	const t = useTranslations('home.gallery')
 	const { data, isPending } = useGetGalleries()
-	// check if the 1st image in gallery is valid
-	const imgWorking = useImageCheck(data?.[0]?.url || '')
-	// split images into groups of 4
+	// flatten all images into one array
+	const images =
+		data?.reduce(
+			(acc: GalleryImageItem[], curr) => acc.concat(curr.images),
+			[],
+		) || []
+
 	const chunkSize = 4
 	const gallery: GalleryImageItem[][] = []
-
-	for (let i = 0; i < Number(data?.length); i += chunkSize) {
-		const chunk = data?.slice(i, i + chunkSize) || []
+	// split images into groups of 4
+	for (let i = 0; i < Number(images.length); i += chunkSize) {
+		const chunk = images.slice(i, i + chunkSize) || []
 		gallery.push(chunk)
 	}
 
@@ -41,26 +43,22 @@ export default function Gallery() {
 				{t('paragraph')}
 			</p>
 			<div className="w-full mx-auto">
-				{imgWorking ? (
-					<Splide
-						aria-label="gallery images"
-						// hasTrack={false}
-						options={{
-							rewind: true,
-							autoplay: true,
-							arrows: true,
-						}}
-					>
-						{gallery &&
-							gallery?.map((item, index) => (
-								<SplideSlide key={index}>
-									<GalleryItem images={item} />
-								</SplideSlide>
-							))}
-					</Splide>
-				) : (
-					<FallbackGallery />
-				)}
+				<Splide
+					aria-label="gallery images"
+					// hasTrack={false}
+					options={{
+						rewind: true,
+						autoplay: true,
+						arrows: true,
+					}}
+				>
+					{gallery?.length > 0 &&
+						gallery?.map((item, index) => (
+							<SplideSlide key={index}>
+								<GalleryItem images={item} />
+							</SplideSlide>
+						))}
+				</Splide>
 			</div>
 		</section>
 	)

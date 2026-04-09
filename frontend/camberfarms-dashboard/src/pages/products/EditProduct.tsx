@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { IoClose } from 'react-icons/io5'
 import { useParams } from 'react-router-dom'
 import axiosInstance from '../../api/axios'
@@ -45,7 +45,7 @@ export default function EditProduct() {
 			}
 		},
 	})
-
+	const productData = useMemo(() => data?.product, [data])
 	const [file, setFile] = useState<File[] | null | string[]>(null)
 	const initialProduct: EditProductType = flattenProductInfo(data?.product)
 	const [product, setFormData] = useState(initialProduct)
@@ -64,7 +64,7 @@ export default function EditProduct() {
 		e.preventDefault()
 		const formToSubmit: EditProductType = {
 			...product,
-			images: file!,
+			images: file || [],
 			variants,
 		}
 
@@ -83,11 +83,11 @@ export default function EditProduct() {
 	useEffect(() => {
 		// let loaded = false
 
-		if (!data?.product) return
+		if (!productData) return
 
-		setFormData(flattenProductInfo(data.product))
-		setVariants(data.product?.translations?.en?.variants)
-	}, [data?.product])
+		setFormData(flattenProductInfo(productData))
+		setVariants(productData?.translations?.en?.variants || {})
+	}, [productData])
 
 	if (isPending || !data?.product) return <LoadingSpinner />
 
@@ -111,7 +111,7 @@ export default function EditProduct() {
 						</p>
 					</div>
 				)}
-				{!error && product && (
+				{!error && (
 					<section className="">
 						<Dropzone
 							setState={setFile}

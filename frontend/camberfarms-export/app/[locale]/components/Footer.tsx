@@ -64,14 +64,13 @@ export default async function Footer() {
 						<div className="flex gap-3 mt-4 lg:mt-0">
 							<Image src={mailIcon} alt="Email icon" width={24} height={24} />
 							<a href="mailto:camberfarmexport@gmail.com">
-								camberfarmexport@gmail.com
+								hellocamberfarms@gmail.com
 							</a>
 						</div>
 						<div className="flex gap-3 mt-3 lg:mt-0">
 							<Image src={callIcon} alt="Phone icon" width={24} height={24} />
 							<p>
-								<a href="tel:+234909746104">+234 90 974 6104</a>,{' '}
-								<a href="tel:+2348109748304">+234 810 974 8304</a>
+								<a href="tel:+2348133486885">+234 813 348 6885</a>
 							</p>
 						</div>
 						<div className="flex gap-3 mt-4 lg:mt-0">

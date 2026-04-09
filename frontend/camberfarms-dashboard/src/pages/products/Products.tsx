@@ -55,16 +55,9 @@ export default function Products({ products }: { products: Product[] }) {
 							<div className="w-full px-2 text-grey">
 								<p className="text-sm font-inter line-clamp-3">
 									{item.translations?.en?.description}
-									{Object.entries(item.translations?.en?.variants).map(
-										([key, value]) => (
-											<span key={`${key}`}>
-												{key}:{value}
-											</span>
-										),
-									)}
 								</p>
 								<p className="text-sm font-inter flex flex-col mt-2 capitalize">
-									{Object.entries(item.translations?.en?.variants).map(
+									{Object.entries(item.translations?.en?.variants || {}).map(
 										([key, value]) => (
 											<span key={`${key}`}>
 												{key}: <strong>{value}</strong>

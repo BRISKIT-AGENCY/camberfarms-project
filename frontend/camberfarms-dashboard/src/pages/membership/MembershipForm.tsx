@@ -29,8 +29,12 @@ export default function MembershipForm() {
 	// update status
 	const { mutate, isPending: settingStatus } = useMutation({
 		mutationKey: [`membership/${params.id}`],
-		mutationFn: async (status: 'approved' | 'reject') =>
-			axiosInstance.patch(`membership/${params.id}/status`, { status }),
+		mutationFn: async (status: 'approved' | 'reject') => {
+			const res = await axiosInstance.patch(`membership/${params.id}/status`, {
+				status,
+			})
+			return res.data
+		},
 		onSuccess: () =>
 			queryClient.invalidateQueries({
 				queryKey: ['membership', `membership/${params.id}`],

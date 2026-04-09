@@ -35,9 +35,15 @@ export default function ReplyFarmFundEnquiry() {
 	// reply farm-fund
 	const { mutate, isPending: addingReply } = useMutation({
 		mutationKey: ['affiliates', params.id],
-		mutationFn: async (data: ReplyType) =>
-			axiosInstance.patch(`farm-fund/${params.enquiryId}`, data),
-		onSuccess: () => queryClient.invalidateQueries({ queryKey: [params.id] }),
+		mutationFn: async (data: ReplyType) => {
+			const res = await axiosInstance.patch(
+				`farm-fund/${params.enquiryId}`,
+				data,
+			)
+			return res.data
+		},
+		onSuccess: () =>
+			queryClient.invalidateQueries({ queryKey: ['farm-fund', params.id] }),
 	})
 
 	const [adminReply, setAdminReply] = useState(enquiry?.adminReply)

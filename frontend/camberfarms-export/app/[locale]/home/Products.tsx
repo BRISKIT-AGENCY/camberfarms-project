@@ -45,7 +45,7 @@ export default function Products() {
 								// // placeholder="blur"
 								// className="object-cover object-center"
 							/>
-							<h6 className="capitalize font-bold text-primary text-2xl z-3">
+							<h6 className="capitalize font-bold text-white text-shadow-xs text-shadow-primary text-2xl z-8 w-full h-full flex items-center justify-center">
 								{p?.name}
 							</h6>
 						</Link>

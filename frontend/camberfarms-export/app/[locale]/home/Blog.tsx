@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import axiosInstance from '../api/axios'
 import arrowIcon from '../assets/icon/arrow-r-white.svg'
-import userAvatar from '../assets/img/user-avatar.png'
+// import userAvatar from '../assets/img/user-avatar.png'
 import { iBlog } from '../blog/page'
 
 async function getBlogs(locale: string): Promise<iBlog[] | null> {
@@ -57,14 +57,16 @@ export default async function Blog() {
 							>
 								Read more
 							</Link>
-							<Image
-								src={b.profilePhoto || userAvatar}
-								alt=""
-								width={300}
-								height={300}
-								// placeholder="blur"
-								className="w-14 lg:w-20 aspect-square rounded-full object-fill object-center"
-							/>
+							{b?.author?.profilePhoto && (
+								<Image
+									src={b?.author?.profilePhoto}
+									alt=""
+									width={300}
+									height={300}
+									// placeholder="blur"
+									className="w-14 lg:w-20 aspect-square rounded-full object-fill object-center"
+								/>
+							)}
 						</div>
 					))}
 			</div>
