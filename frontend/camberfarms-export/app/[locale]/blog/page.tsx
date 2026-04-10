@@ -11,11 +11,7 @@ export type iBlog = {
 	publishedAt: string
 	image: string | undefined
 	slug: string
-	author: {
-		email: string
-		profilePhoto: string
-		_id: string
-	}
+	authorImage: string
 }
 
 async function getBlogs(page: number, locale: string) {

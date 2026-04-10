@@ -57,14 +57,14 @@ export default async function Blog() {
 							>
 								Read more
 							</Link>
-							{b?.author?.profilePhoto && (
+							{b?.authorImage && (
 								<Image
-									src={b?.author?.profilePhoto}
+									src={b?.authorImage}
 									alt=""
 									width={300}
 									height={300}
 									// placeholder="blur"
-									className="w-14 lg:w-20 aspect-square rounded-full object-fill object-center"
+									className="w-14 lg:w-20 aspect-square rounded-full object-cover object-center"
 								/>
 							)}
 						</div>
